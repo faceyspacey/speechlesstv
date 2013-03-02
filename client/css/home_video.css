@@ -1,0 +1,182 @@
+#top {
+max-width: 980px !important;
+height: 615px;
+margin-left: 20px !important;
+margin-top: 75px;
+}
+
+#top #home_video {
+
+width:980px;
+height:468px;
+margin-bottom:20px;
+}
+/*
+#top #home_video .video_count {
+background-color: #5BA0B8;
+width:309px;
+height:81px;
+float:right;
+margin-top:40px;
+font-size: 50px;
+font-weight:bold;
+font-family: 'Fjalla One', sans-serif;
+color: white;
+text-align:left;
+line-height:1.7;
+text-indent:10px;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}*/
+#top #home_video .video_title {
+font-size: 50px;
+font-weight:bold;
+font-family: 'Fjalla One', sans-serif;
+color: white;
+text-align:left;
+line-height:17;
+text-indent:10px;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+#top #vid_info {
+opacity: 0.9;
+margin-top: 12px;
+font-size: 20px;
+font-family: 'Fjalla One', sans-serif;
+float: left;
+color: #AAA;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+#top .fb-like {
+float: right;
+margin-right: 4px;
+margin-top: 12px;
+display: block;
+}
+#top .channelName p {
+float:left;
+font-size: 25px;
+font-weight:bold;
+font-family: 'Fjalla One', sans-serif;
+color: #cdcdcd;
+text-align:left;
+line-height:2.1;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+#top .channelName h1 {
+float:left;
+font-size: 40px;
+font-weight:bold;
+font-family: 'Fjalla One', sans-serif;
+color: #5BA0B8;
+text-align:left;
+line-height:1;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+#top .channelViews p {
+float:left;
+font-size: 25px;
+font-weight:bold;
+font-family: 'Fjalla One', sans-serif;
+color: #cdcdcd;
+text-align:left;
+line-height:1.5;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+#top .channelViews h1 {
+float:left;
+font-size: 25px;
+font-weight:bold;
+font-family: 'Fjalla One', sans-serif;
+color:#5BA0B8;
+text-align:left;
+line-height:1.5;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+
+#top .videoBio p {
+margin-top:-40px;
+float:right;
+width:450px;
+font-size: 16px;
+font-weight:normal;
+font-family: 'Fjalla One', sans-serif;
+color:#606060;
+text-align:left;
+line-height:1;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+#top .videoBio p a:link {
+text-decoration:none;
+font-size: 16px;
+font-weight:normal;
+font-family: 'Fjalla One', sans-serif;
+color:#5BA0B8;
+text-align:left;
+line-height:1;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+#top #votes{
+float:right;	
+}
+#top .respect {
+float:left;
+margin-right:10px;
+background-color:#1a1a1a;
+width:100px;
+height:30px;
+font-size: 20px;
+font-weight:bold;
+font-family: 'Fjalla One', sans-serif;
+color:white;
+text-align:center;
+line-height:1.6;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+#top .disrespect {
+float:left;
+background-color:#5BA0B8;
+width:120px;
+height:30px;
+font-size: 20px;
+font-weight:bold;
+font-family: 'Fjalla One', sans-serif;
+color:white;
+text-align:center;
+line-height:1.6;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+#top .respect:hover {opacity:.7;}
+#top .disrespect:hover {opacity:.7;}

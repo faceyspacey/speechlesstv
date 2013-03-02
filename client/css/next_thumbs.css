@@ -1,0 +1,31 @@
+#leftThumb {
+background:url('../../images/leftThumb.png')no-repeat;
+height:147px;
+width:37px;
+position: fixed;
+top: 230px;
+left: 0px;
+z-index: 1099;		
+}
+#leftThumb:hover {
+background:url('../../images/slideLopen.png')no-repeat;
+height:147px;
+width:260px;
+z-index: 1099;
+
+}
+#rightThumb {
+background:url('../../images/rightThumb.png')no-repeat;
+height:147px;
+width:37px;
+position: fixed;
+top: 230px;
+right: 0px;	
+z-index: 1099;	
+}
+#rightThumb:hover {
+background:url('../../images/slideRopen.png')no-repeat;
+height:147px;
+width:260px;
+z-index: 1099;	
+}

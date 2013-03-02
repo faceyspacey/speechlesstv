@@ -1,0 +1,13 @@
+<template name="categories">
+	<div id="categories">
+		{{#each categories}}
+			{{>category}}
+		{{/each}}
+		
+		<div style="clear:both"></div>
+	</div>
+</template>
+
+<template name="category">
+	<div id="navB" class="button {{class}}">{{upperCaseName}}</div>
+</template>

@@ -1,0 +1,21 @@
+<template name="being_watched">
+	<div id="being_watched">
+		<div class="groove"></div>
+			<div class="miniPlaylist">
+			{{#each videos}}
+		    	{{> being_watched_thumb}}
+			{{/each}}
+			
+			<img style="float:right; margin-top:12px;" src="images/bwn.png" width="60" height="71" alt="Bwn">
+			</div>
+		
+		
+		<div class="groove" style="margin-bottom: 25px"></div>
+	</div>
+</template>
+
+<template name="being_watched_thumb">
+	
+		<div class="miniVid" ><img src="http://img.youtube.com/vi/{{youtube_id}}/mqdefault.jpg"/></div>
+		
+</template>

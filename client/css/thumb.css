@@ -1,0 +1,107 @@
+.vid{
+height:156px;
+width:242px;
+float:left;
+margin-right:5px;
+margin-bottom:45px;
+position:relative;
+}
+
+.vid p {
+line-height:21;
+font-size: 16px;
+font-family: 'Fjalla One', sans-serif;
+float: left;
+color: #1a1a1a;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+
+.vid h1 {
+line-height:23;
+font-size: 16px;
+font-family: 'Fjalla One', sans-serif;
+float: right;
+color: #cdcdcd;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+
+
+.vid .thumbHover{
+background:url('../../images/thumbHover.png')no-repeat;
+width:240px;
+height:155px;
+z-index:1;
+position:absolute; top: 0; left: 0;
+margin-left:1px;
+padding-left:5px;
+padding-right:10px;
+opacity:0;
+}
+.vid .thumbHover:hover{
+opacity:1;
+}
+.vid .thumbHover p {
+line-height:2;
+text-indent:38px;
+font-size: 14px;
+font-family: 'Fjalla One', sans-serif;
+color: #1a1a1a;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+.vid .thumbHover h1 {
+line-height:.3;
+text-indent:58px;
+font-size: 14px;
+font-family: 'Fjalla One', sans-serif;
+color: #cdcdcd;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+
+.vid .thumbHover h2 {
+margin-top:-9px;
+text-indent:105px;
+font-size: 14px;
+font-family: 'Fjalla One', sans-serif;
+color: #cdcdcd;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+.vid .thumbHover h3 {
+margin-top:20px;
+padding-right:8px;
+padding-bottom:8px;
+
+text-indent:5px;
+font-size: 14px;
+font-family: 'PT sans', sans-serif;
+color: black;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+opacity:.7;
+}
+.vid .thumbHover a:link {
+text-decoration:none;
+font-size: 12px;
+font-family: 'PT sans', sans-serif;
+color: #5BA0B8;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}

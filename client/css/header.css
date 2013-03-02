@@ -1,0 +1,93 @@
+#header {
+width: 92%;
+background: #F7F7F7 !important;
+position: fixed;
+top: 0px;
+left: 4%;
+padding: 0 0 0 0;
+margin: 0 auto;
+z-index: 1099;
+height: 54px;
+-webkit-box-shadow: 0 8px 6px -8px #555;
+-moz-box-shadow: 0 8px 6px -8px #555;
+box-shadow: 0 8px 6px -8px #555;
+}
+#header .headerInner{
+max-width: 73.5em;
+margin: 0 auto;
+}
+#header #logo {
+background-color: #5BA0B8;
+float:left;
+margin-left:94px;
+margin-right:10px;
+width:60px;
+height:54px;
+font-size: 50px;
+font-weight:bold;
+font-family: 'Fjalla One', sans-serif;
+color: white;
+text-align:center;
+line-height:1.15;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;	
+}
+#header #title{
+font-size: 25px;
+font-weight:bold;
+font-family: 'Fjalla One', sans-serif;
+color: #cdcdcd;
+text-align:left;
+line-height:2.4;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+#header #facebook {
+background:url('../../images/facebook.png')no-repeat;
+height:23px;
+width:14px;	
+float:right;
+margin-top:-40px;
+margin-right:250px;
+padding-right:20px;
+}
+#header #facebook:hover {opacity:.7;}
+#header #twitter {
+background:url('../../images/youtube.png')no-repeat;
+height:23px;
+width:32px;	
+float:right;
+margin-top:-40px;
+margin-right:220px;
+}
+#header #twitter:hover {opacity:.7;}
+#header #youtube {
+background:url('../../images/twitterBird.png')no-repeat;
+height:23px;
+width:32px;	
+float:right;
+margin-top:-40px;
+margin-right:180px;
+}
+#header #youtube:hover {opacity:.7;}
+#header #tv {
+font-size: 25px;
+font-weight:bold;
+color: #606060;
+font-family: 'Fjalla One', sans-serif;
+line-height:1;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+float:right;
+margin-top:-40px;
+margin-right:71px;
+}
+#header #tv:hover {opacity:.7;}
+
+

@@ -1,0 +1,25 @@
+<template name="home_video">
+	<div id="top">
+		
+		<div id="home_video">
+			<iframe style="width: 100%; height: 100%;" src="http://www.youtube.com/embed/{{current_video.youtube_id}}?modestbranding=1&theme=light&color=red&rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>
+
+		</div>
+		<div class="channelName">
+			<h1>{{current_video.title}}</h1>
+		</div>
+		<div style="clear:both;"></div>
+		<div class="channelViews">
+			<p>{{category}}-</p>
+			<h1>{{current_video.channel}}</h1>
+		</div>
+		<div class="videoBio">
+			<p>{{current_video.description}}<a href="#">...</a></p>
+		</div>
+		<div style="clear:both;"></div>
+		<div id="votes">
+		<div class="respect">RESPECT</div>
+		<div class="disrespect">DISRESPECT</div>
+		</div>
+	</div>
+</template>

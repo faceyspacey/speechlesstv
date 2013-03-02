@@ -1,0 +1,33 @@
+#categories   {
+margin: 0 0 0 2%;
+width: 98.5%;
+margin-bottom: 30px!important;
+display: block;
+font-size: 20px;
+font-family: 'Fjalla One', sans-serif;
+color: white;
+text-align:center;
+line-height:1.8;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+#categories #navB{
+float:left;
+margin: 6px 4px;
+padding: 0 19px;
+height:34px;
+}
+#categories_bar {
+		
+}
+#categories .button:hover{
+opacity:.7;
+}
+#categories #navB.button{
+background-color:#1a1a1a;
+}
+#categories #navB.selected{
+background-color:#5BA0B8;
+}
