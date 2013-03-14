@@ -14,7 +14,11 @@
 		
 		{{>show_more}}	
 				
-		{{loginButtons}}
+		{{#if currentUser}}
+	
+		{{else}}
+			{{loginButtons}}
+		{{/if}}
 	
 
 </template>
