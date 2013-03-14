@@ -8,7 +8,7 @@ Meteor.methods({
 	console.log('emailing', info);
 	
     Email.send({
-      to: 'jamesgillmore@gmail.com',
+      to: 'emiliotelevision@gmail.com',
       from: info.email,
       subject: info.name + ' from ' + info.city,
       text: info.message
