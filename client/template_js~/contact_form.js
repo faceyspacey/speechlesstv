@@ -1,6 +1,6 @@
 Meteor.startup(function(){
 	$('#contact').on('click', function(){
-		console.log('yooo');
+		console.log('hey');
 		$('#page-wrap').animate({top:'100px'}, 500,'easeOutBack');
 		
 		scrollToTop();
