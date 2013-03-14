@@ -1,14 +1,20 @@
-Meteor.startup(function(){
-	var currentIndex = 0;
-	var totalVideos = 4;
-	
-	$('#leftThumb').bind('click', function() {
-		
-	   currentIndex++;
-	   var actualIndex = currentIndex % totalVideos;
-	   var youtubeID = $('#thumb_grid').eq(actualIndex).attr('youtube_id');
-	   Session.set('youtubeID', youtubeID);
-	});
-	
-});
+var currentVideoIndex = 0;
 
+Template.next_thumbs.events({
+	'click #leftThumb': function() {
+		currentVideoIndex = currentVideoIndex - 1; //currentVideoIndex--; OR currentVideoIndex -= 1;
+		currentVideoIndex = currentVideoIndex % Session.get('limit');
+		
+		console.log("CURRENT INDEX IS BITCH:", currentVideoIndex);
+		
+		$('.vid').eq(currentVideoIndex).click();
+	},
+	'click #rightThumb': function() {
+		currentVideoIndex = currentVideoIndex + 1; //currentVideoIndex++; OR currentVideoIndex += 1;
+		currentVideoIndex = currentVideoIndex % Session.get('limit');
+		
+		console.log("CURRENT INDEX IS BITCH:", currentVideoIndex);
+		
+		$('.vid').eq(currentVideoIndex).click();
+	}
+})

@@ -143,40 +143,10 @@ font-smoothing: antialiased;
 text-rendering: optimizeLegibility;
 }
 #top #votes{
-float:right;	
+float:right;
+margin-top:20px;	
 }
-#top .respect {
-float:left;
-margin-right:10px;
-background-color:#1a1a1a;
-width:100px;
-height:30px;
-font-size: 20px;
-font-weight:bold;
-font-family: 'Fjalla One', sans-serif;
-color:white;
-text-align:center;
-line-height:1.6;
--webkit-font-smoothing: antialiased;
--moz-font-smoothing: antialiased;
-font-smoothing: antialiased;
-text-rendering: optimizeLegibility;
+#top #votes li{
+display:inline;
+list-style:none;	
 }
-#top .disrespect {
-float:left;
-background-color:#5BA0B8;
-width:120px;
-height:30px;
-font-size: 20px;
-font-weight:bold;
-font-family: 'Fjalla One', sans-serif;
-color:white;
-text-align:center;
-line-height:1.6;
--webkit-font-smoothing: antialiased;
--moz-font-smoothing: antialiased;
-font-smoothing: antialiased;
-text-rendering: optimizeLegibility;
-}
-#top .respect:hover {opacity:.7;}
-#top .disrespect:hover {opacity:.7;}

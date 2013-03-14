@@ -14,7 +14,9 @@ blockquote:before, blockquote:after, q:before, q:after { content: ""; }
 blockquote, q {    quotes: "" ""; }
 .clearBoth { clear:both; }
 body{
-background:url('../../images/creampaper.png');	
+background:url('../../images/creampaper.png');
+overflow-x: hidden;
+overflow-y: scroll;	
 }
 #container {
 width: 100%;
@@ -22,5 +24,6 @@ margin: 0 auto;
 background-repeat: repeat-x;
 background-color: #F7F7F7;
 max-width: 1032px;
+padding-left:6px;
 }
 

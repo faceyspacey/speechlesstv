@@ -1,4 +1,4 @@
-#leftThumb {
+/*#leftThumb {
 background:url('../../images/leftThumb.png')no-repeat;
 height:147px;
 width:37px;
@@ -6,15 +6,54 @@ position: fixed;
 top: 230px;
 left: 0px;
 z-index: 1099;		
+}*/
+#leftThumb {
+background:url('../../images/slideLeft.png')no-repeat;
+height:147px;
+width:260px;
+position: fixed;
+top: 230px;
+left: 0px;
+z-index: 1099;		width="224" height="108"
 }
-#leftThumb:hover {
+#leftThumb img#iframeImg {
+height:108px;
+width:224px;		
+}
+#leftThumb img#time {
+float:right;
+margin-right:115px;	
+margin-top:-15px;	
+}
+#leftThumb p#title {
+margin-left:135px;
+line-height:1.25;
+font-size: 14px;
+font-family: 'Fjalla One', sans-serif;
+color: #1a1a1a;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+#leftThumb p#time {
+margin-left:150px;
+line-height:1.2;
+font-size: 14px;
+font-family: 'Fjalla One', sans-serif;
+color: #cdcdcd;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+/*#leftThumb:hover {
 background:url('../../images/slideLopen.png')no-repeat;
 height:147px;
 width:260px;
 z-index: 1099;
-
-}
-#rightThumb {
+}*/
+/*#rightThumb {
 background:url('../../images/rightThumb.png')no-repeat;
 height:147px;
 width:37px;
@@ -22,10 +61,51 @@ position: fixed;
 top: 230px;
 right: 0px;	
 z-index: 1099;	
+}*/
+#rightThumb {
+background:url('../../images/slideRight.png')no-repeat;
+height:147px;
+width:260px;
+position: fixed;
+top: 230px;
+right: 0px;	
+z-index: 1099;	
 }
-#rightThumb:hover {
+#rightThumb img#iframeImg {
+margin-left:37px;
+height:108px;
+width:224px;		
+}
+#rightThumb img#time {
+float:right;
+margin-right:80px;	
+margin-top:-15px;	
+}
+#rightThumb p#title {
+margin-left:170px;
+line-height:1.25;
+font-size: 14px;
+font-family: 'Fjalla One', sans-serif;
+color: #1a1a1a;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+#rightThumb p#time {
+margin-left:185px;
+line-height:1.2;
+font-size: 14px;
+font-family: 'Fjalla One', sans-serif;
+color: #cdcdcd;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+/*#rightThumb:hover {
 background:url('../../images/slideRopen.png')no-repeat;
 height:147px;
 width:260px;
 z-index: 1099;	
-}
+}*/

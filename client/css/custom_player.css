@@ -1,0 +1,185 @@
+/** position the video player as a whole in the natural "flow" of the page. Relative positioning allows u to move it away from where it would appear in the flow, but that's not why we are using relative positioning--we are using relative positioning so that absolute positioning of elements nested within #videoContainer works in a way that they are positioned relative to the boundaries of #videoContainer **/
+#videoContainer {
+position: relative; 
+width:980px;
+height:468px; 
+background-color:black;
+margin:0 auto;
+}
+
+
+/** position all sub-divs essentially relative to the boundaries of the #videoContainer element. i say "relatively" even though you're absolutely positioning them because the idea is that when positioned absolutely, they are in fact positioned "relatively" to the first parent element that is either relative or absolute positioned. **/
+#videoContainer div {
+position:absolute;
+}
+
+#video {
+width: 100%; 
+height: 90%; 
+background-color:black;
+}
+#video #largePlayPauseButton {
+position:relative; 
+top: 45%; 
+margin:0 auto; 
+width: 8%; 
+height: 19%; 
+background-color:#5BA0B8;
+color:white; 
+padding-top: 4px;
+}
+#video #largePlayPauseButton p {
+font-size: 60px;
+font-weight:bold;
+font-family: 'Fjalla One', sans-serif;
+color: white;
+text-align:center;
+line-height:1.3;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+
+#video #largePlayPauseButton .smallPlay {
+width: 0;
+height: 0;
+margin-left: 29%;
+margin-top: 22%;
+border-top: 20px solid transparent;
+border-left: 37px solid white;
+border-bottom: 20px solid transparent;
+
+}
+/** hide the large play button once the video starts **/
+#video .started {
+display:none;
+}
+
+#controls {
+background-color: #C0C0C0; 
+width: 100%; 
+bottom: 0px; 
+height: 10%;
+}
+    
+div#smallPlayPauseButton {
+background: url('../../images/pause.png') no-repeat;
+position: relative;
+margin-left:2%;
+margin-top:1.2%;  
+width: 4%; 
+height: 90%; 
+float:left;
+}
+div#groove {
+position: relative;
+float:left; 
+width:1px;
+height:100%;
+border-left: 1px solid rgb(214,214,214);
+border-right: 1px solid rgb(155,155,155);
+}
+div#bars {
+position:relative; 
+float:left; 
+width: 65%; 
+height: 50%;
+padding-top:.6%; 
+padding-left:.8%;
+margin-top:1.2%; 
+margin-left:1%;
+margin-right:1%;
+background-color: rgba(100, 100, 100, 0.5);
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px; /* future proofing */
+-khtml-border-radius: 5px;
+}
+
+#loadingBar {
+background-color: rgba(0, 0, 0, 0.2); 
+z-index: 1; 
+width: 75%; 
+height: 50%; 
+}
+#progressBar {
+background-color: rgba(91, 160, 184, 1);  
+z-index: 2; 
+width: 59%;
+height: 50%; 
+}
+
+/** see how the current time ball is moved to the left the same width as the progress bar!! **/
+#currentTimeBall {
+z-index: 3;
+background:url('../../images/progress_ball.png') no-repeat;
+left:59%; 
+width: 3%; 
+height: 100%; 
+top: 6.5%
+}
+#currentTimeBall.hover {
+background-color:green;
+}
+
+
+/** the idea i have in mind is that the #volume background will change widths depending on how hi/lo the user drags the volume; and on top of it will be a transparent .png that overlays a steps cookie-cutter like this: http://snapplr.com/xrsh **/
+div#volume {
+background:url('../../images/volume1.png') no-repeat;	
+position:relative; 
+float:left;
+margin-top:.9%; 
+width: 11%; 
+height: 90%;
+}
+
+div#volume .circle {
+width: 6%;
+height: 51%;
+margin-right:5px;
+background: black;
+-moz-border-radius: 5px / 8px;
+-webkit-border-radius: 5px / 8px;
+border-radius: 5px / 8px;
+}
+div#volume #background {
+background-color:#5BA0B8; 
+width: 70%; 
+height: 100%;
+}
+div#volume #foreground {
+background-color:black; 
+width:100%; 
+height: 80%;
+}
+div#minilogo{
+background-color:#5BA0B8; 
+position:relative; 
+float:left;
+height:100%;
+width:5%;
+margin-right:3%;
+font-size: 37px;
+font-weight:bold;
+font-family: 'Fjalla One', sans-serif;
+color: white;
+text-align:center;
+line-height:1.3;
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+/** you need to clear the divs in #controls so that #controls gets some height **/
+div#fullscreen {
+background:url('../../images/fullscreen.png') no-repeat;
+position:relative; 
+float:left; 
+width: 3%;
+height:90%; 
+margin-left: 2.3%;
+margin-top: 1%;
+}
+
+

@@ -14,5 +14,5 @@ font-smoothing: antialiased;
 text-rendering: optimizeLegibility;
 }
 #show_more:hover {
-opacity:.8;
+background-color:#B0AEAE;
 }

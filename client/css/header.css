@@ -13,7 +13,7 @@ height: 54px;
 box-shadow: 0 8px 6px -8px #555;
 }
 #header .headerInner{
-max-width: 73.5em;
+max-width: 73em;
 margin: 0 auto;
 }
 #header #logo {
@@ -57,24 +57,24 @@ padding-right:20px;
 }
 #header #facebook:hover {opacity:.7;}
 #header #twitter {
-background:url('../../images/youtube.png')no-repeat;
-height:23px;
-width:32px;	
-float:right;
-margin-top:-40px;
-margin-right:220px;
-}
-#header #twitter:hover {opacity:.7;}
-#header #youtube {
 background:url('../../images/twitterBird.png')no-repeat;
 height:23px;
 width:32px;	
 float:right;
 margin-top:-40px;
-margin-right:180px;
+margin-right:212px;
+}
+#header #twitter:hover {opacity:.7;}
+#header #youtube {
+background:url('../../images/youtube.png')no-repeat;
+height:23px;
+width:32px;	
+float:right;
+margin-top:-40px;
+margin-right:170px;
 }
 #header #youtube:hover {opacity:.7;}
-#header #tv {
+#header #contact {
 font-size: 25px;
 font-weight:bold;
 color: #606060;
@@ -86,7 +86,7 @@ font-smoothing: antialiased;
 text-rendering: optimizeLegibility;
 float:right;
 margin-top:-40px;
-margin-right:71px;
+margin-right:24%;
 }
 #header #tv:hover {opacity:.7;}
 

@@ -1,4 +1,4 @@
-Session.set('home_youtube_id', 'wsCpNnOGucE');
+Session.set('home_youtube_id', '4w41ESyvHxg');
 
 Template.home_video.category = function() {
 	if(Session.get('current_video')) {

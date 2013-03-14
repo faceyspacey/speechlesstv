@@ -4,7 +4,7 @@ Template.add_video_form.events({
 		var youtube_id = $('#youtube_id_field').val();
 		var channel = $('#channel_field').val();
 		var length = $('#length_field').val();
-		var category_id = $('#category_id_field').val();
+		var category_id = parseInt($('#category_id_field').val());
 		var description = $('#description_field').val();
 		
 		console.log('wtfhgfdhgfhg', title);
