@@ -15,4 +15,5 @@ text-rendering: optimizeLegibility;
 }
 #show_more:hover {
 background-color:#B0AEAE;
+cursor: pointer;
 }

@@ -128,6 +128,7 @@ line-height:1;
 -moz-font-smoothing: antialiased;
 font-smoothing: antialiased;
 text-rendering: optimizeLegibility;
+text-align: right;
 }
 #top .videoBio p a:link {
 text-decoration:none;
@@ -142,11 +143,13 @@ line-height:1;
 font-smoothing: antialiased;
 text-rendering: optimizeLegibility;
 }
-#top #votes{
-float:right;
-margin-top:20px;	
+#top #votes{	
+overflow: hidden;
+width: 100%;
 }
 #top #votes li{
 display:inline;
 list-style:none;	
+float: right;
+margin-left: 10px;
 }

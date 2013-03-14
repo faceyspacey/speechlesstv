@@ -1,16 +1,32 @@
 <template  name="thumb">
-	<div class="vid" style="background:url('//img.youtube.com/vi/{{youtube_id}}/mqdefault.jpg')no-repeat; ">
-		<p>{{title}}</p>
-		<div class="close-button"></div>
-		<h1><img src="images/timeIcon.png" width="13" height="13"  alt="TimeIcon" style="margin-right:2px;"/>{{length}}</h1>
+	<div class="vid">
+
+		<img class="video_image" src="http://img.youtube.com/vi/{{youtube_id}}/mqdefault.jpg">
 		
-		<div class="thumbHover">
-			<p>{{title}}</p>
-			
-			<p id="channel">{{channel}}</p>
-			<p id="description">
-			{{description}}
-			</p>
+		<p class="video_main_title">{{title}}</p>	
+		<div class="video_info_container">	
+			<h3>{{length}}</h3>
+			<img src="images/timeIcon.png"  alt="TimeIcon" />
 		</div>
+		
+
+
+		<div class="thumbHover">
+			<img class="thumb_over_img" src="images/mini-play-button.png" />
+			{{#if isAdmin}}
+				<img class="close-button" src="images/closebtn.png" />
+			{{/if}}
+			<div class="transparent_stuff">
+				<p class="video_title">{{title}} <br /><span class="channel">{{channel}}</span></p>
+					
+				<div class="description_container">
+					<p class="description">
+						{{description}}
+					</p>
+				</div>	
+			</div>	
+		</div>
+		
+		
 	</div>
 </template>

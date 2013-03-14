@@ -6,3 +6,8 @@ Template.thumb_grid.videos = function() {
 	return Videos.find({category_id: Session.get('current_category_id')});
 };
 
+var gridRendered = false;
+
+Template.thumb_grid.rendered = function() {
+	if(!gridRendered) setBackNextButtons(0);
+};

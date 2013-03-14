@@ -14,15 +14,34 @@
 			<h1>{{current_video.channel}}</h1>
 		</div>
 		<div class="videoBio">
-			<p>{{current_video.description}}<a href="#">...</a></p>
+			<p>{{current_video.description}}</p>
 		</div>
 		<div style="clear:both;"></div>
 		<div id="votes">
 			<ul>
-				<li><img src="../../images/likeme.png" width="91" height="20" alt="Likeme"></li>
-				<li><img src="../../images/shareme.png" width="96" height="20" alt="Shareme"></li>
-				<li><img src="../../images/followme.png" width="111" height="20" alt="Followme"></li>
+				{{#constant}}
+					<li>
+						<a href="https://twitter.com/share?via=emiliotv&url=http://www.emiliotelevision.com" target="_blank">
+							<img src="images/tweet.png" width="60" height="20" alt="Tweet Me" />
+						</a>
+					</li>
+				
+					<li>
+						<a href="https://twitter.com/emiliotv" target="_blank">
+							<img src="images/followme.png" width="111" height="20" alt="Follow Me" />
+						</a>
+					</li>
+				
+					<li>
+						{{>fb_like}}
+					</li>			
+				{{/constant}}
 			</ul>
 		</div>
 	</div>
+</template>
+
+
+<template name="fb_like">
+     <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.emiliotelevision.com&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=true&amp;font&amp;colorscheme=light&amp;action=like&amp;height=80&amp;appId=390914004314228" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:28px;" allowTransparency="true"></iframe>
 </template>

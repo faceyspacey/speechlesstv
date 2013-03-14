@@ -1,8 +1,7 @@
 /* CSS declarations go here */
 /* CSS RESET */
 
-html, #bodyContainer, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
-dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { margin: 0;    padding: 0;    border: 0; outline: 0; font-weight: inherit; font-style: inherit; font-size: 100%; font-family: inherit; vertical-align: baseline; }
+50px { margin: 0;    padding: 0;    border: 0; outline: 0; font-weight: inherit; font-style: inherit; font-size: 100%; font-family: inherit; vertical-align: baseline; }
 /* remember to define focus styles! */
 :focus { outline: 0; }
 body, #bodyContainer { line-height: 1; }
@@ -19,11 +18,9 @@ overflow-x: hidden;
 overflow-y: scroll;	
 }
 #container {
-width: 100%;
-margin: 0 auto;
 background-repeat: repeat-x;
 background-color: #F7F7F7;
-max-width: 1032px;
-padding-left:6px;
+width: 1032px;
+margin: 0 auto;
 }
 

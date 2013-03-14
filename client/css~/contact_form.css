@@ -44,19 +44,22 @@ height: 90px;
 border: 2px solid #5BA0B8;
 }
 #contact-area a {
-float: left;
 color: #5BA0B8;
-font-size: 12px;
+font-size: 18px;
 font-family: 'PT sans', sans-serif;
 -webkit-font-smoothing: antialiased;
 -moz-font-smoothing: antialiased;
 font-smoothing: antialiased;
 text-rendering: optimizeLegibility;
+float: right;
+margin-right: 20px;
+margin-top: 18px;
 }
 
 #contact-area input.submit-button {
 width: 100px;
 float: right;
+cursor: pointer;
 }
 
 label {

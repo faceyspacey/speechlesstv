@@ -13,21 +13,19 @@ Meteor.startup(function(){
 
 
 Template.contact_form.events({
-	'click #submit_button': function() {
-		var name = $('#Name').val();
-		var city = $('#City').val();
-		var email = $('#Email').val();
-		var message = $('#Message').val();
+	'click .submit-button': function(event) {
+		var info = {
+			name: $('#contact_name').val(),
+			city: $('#contact_city').val(),
+			email: $('#contact_email').val(),
+			message: $('#contact_message').val()		
+		};
 		
-		console.log('wtfhgfdhgfhg', name);
+		Meteor.call('emailMe', info);
 		
-		MyContacts.insert({
-			name:name,
-			city:city,
-			email:email,
-			message:message,
+		console.log('emailMe', info);
 		
-		});
+		$('#cancel_email').click();
 	}
 });
 

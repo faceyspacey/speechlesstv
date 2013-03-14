@@ -8,5 +8,8 @@ BeingWatched = new Meteor.Collection('beingWatched');
 
 MyContacts = new Meteor.Collection('mycontacts');
 
+
+
+
  
 

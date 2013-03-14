@@ -1,5 +1,4 @@
 #footer {
-width:96%;
 
 }
 
@@ -14,7 +13,7 @@ border-top: 1px solid #E8E8E8;
 border-bottom: 1px solid white;
 }
 #footer h4 {
-margin:35px 0 0 18px;
+margin: 20px 0 0 0px;
 font-size: 12px;
 font-weight:normal;
 font-family: 'Arial', sans-serif;
@@ -27,10 +26,13 @@ line-height:1;
 font-smoothing: antialiased;
 text-rendering: optimizeLegibility;	
 }
+
+#footer_logo_container {
+float:right;
+}
 #footer #logo2 {
 background-color: #5BA0B8;
 float:right;
-margin:0 -8px 0 10px;
 width:60px;
 height:60px;
 font-size: 50px;
@@ -46,6 +48,7 @@ text-rendering: optimizeLegibility;
 }
 #footer p {
 float:right;
+margin-right:10px;
 font-size: 25px;
 font-weight:bold;
 font-family: 'Fjalla One', sans-serif;
@@ -58,7 +61,6 @@ font-smoothing: antialiased;
 text-rendering: optimizeLegibility;	
 }
 #footer span {
-margin-left:20px;
 font-size: 12px;
 font-weight:normal;
 font-family: 'Arial', sans-serif;
@@ -69,4 +71,6 @@ line-height:1;
 -moz-font-smoothing: antialiased;
 font-smoothing: antialiased;
 text-rendering: optimizeLegibility;
+cursor: pointer;
+float: right;
 }

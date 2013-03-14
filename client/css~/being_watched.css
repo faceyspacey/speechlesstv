@@ -31,6 +31,8 @@ position: absolute;
 width: 100%;
 height: 100%;
 background: url(../../images/miniVidHover.png) no-repeat;
+opacity: .8;
+cursor: pointer;
 }
 .miniPlaylist .miniUser {
 background:url('../../images/userPic.png');
