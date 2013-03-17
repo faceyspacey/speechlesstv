@@ -59,7 +59,7 @@ margin-top:-40px;
 }
 
 #facebook {
-background:url('../../images/facebook.png')no-repeat;
+background:url('../../images/faceBook.png')no-repeat;
 height:23px;
 width:14px;	
 float:right;
@@ -77,7 +77,7 @@ margin-right: 10px;
 #twitter:hover {opacity:.7;}
 
 #youtube {
-background:url('../../images/youtube.png')no-repeat;
+background:url('../../images/youTube.png')no-repeat;
 height:23px;
 width:32px;	
 float:right;
@@ -103,13 +103,37 @@ opacity: .7;
 cursor: pointer;
 }
 
-#add_video {
+.admin_link {
 	color: #5BA0B8;
 	left: 4.5%;
 	top: 30px;
 	position: absolute;
 	text-decoration: underline;
 	cursor: pointer;
+}
+
+#add_marker {
+top: 5px;    
+}
+
+#marker_comment {
+position: absolute;
+top: 5px; left: 300px;
+height: 40px; width: 390px;
+   
+}
+
+#cancel_marker {
+position: absolute;
+top: 5px; left: 700px;    
+}
+
+
+#marker_submit_button {
+position: absolute;
+top: 26px; left: 700px;
+height: 15px; width: 80px;
+cursor: pointer;
 }
 
 

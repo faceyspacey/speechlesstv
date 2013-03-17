@@ -1,28 +1,61 @@
 <template name="custom_player">
-	<div id="videoContainer">
+	{{#constant}}
+	<div id="videoContainer" class="">
     
-	    <div id="video">
-	        <div id="largePlayPauseButton" class="stopped">
+			<div id="largePlayPauseButton" class="stopped">
 	        	<div class="smallPlay"></div> 
 	        </div>
-	    </div>
+	
+		    <div id="video">
+		        
+		    </div>
     
+
+			<div id="flyupContainer" style="display:none;">
+				<div id="flyupInner">
+					<div id="flyupComment">
+						<span id="flyupCommentInner" style="display:none;">Yo hello I'm boogie</span>
+					</div>
+					<img src="images/fly-up-mills.png" />
+				</div>
+			</div>
     
-	    <div id="controls">
-	        <div id="smallPlayPauseButton"></div> 
-        	<div id="groove"></div>
-	        <div id="bars">
-	            <div id="loadingBar"></div>
-	            <div id="progressBar"></div>
-	            <div id="currentTimeBall"></div>
-	        </div>
+		    <div id="controls">
+		        <div id="smallPlayPauseButton">
+		        	<div id="miniPausePlay" class="play"></div>
+		        </div> 
+	        	<div id="groove"></div>
+		        <div id="bars">
+		            <div id="barsInner">
+						<div id="loadingBar"></div>
+			            <div id="progressBar"></div>
+			            <div id="currentTimeBall"></div>
+					</div>
+		        </div>
         
-	        <div id="volume">
-	        </div>
-        	<div id="minilogo">E</div>
-			<div id="groove"></div>
-	        <div id="fullscreen"></div>
-	    </div>
+				<div id="videoTime">
+					<p><span id="videoCurrentTime">--:--</span> <span>/</span> <span id="videoDuration">--:--</span></p>
+				</div>
+				
+		        <div id="volume">
+		        	<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+		        </div>
+		
+	        	<div id="minilogo">E</div>
+				<div id="groove"></div>
+		        <div id="fullscreen">
+		        	<div id="fullscreenButton"></div>
+		        </div>
+		    </div>
     
-	</div>
+		</div>
+	{{/constant}}
 </template>
+

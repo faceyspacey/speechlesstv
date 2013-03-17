@@ -3,7 +3,7 @@ var currentVideoIndex = 0;
 Template.next_thumbs.events({
 	'click #leftThumb': function() {
 		currentVideoIndex = currentVideoIndex - 1; //currentVideoIndex--; OR currentVideoIndex -= 1;
-		currentVideoIndex = currentVideoIndex % Session.get('limit');
+		currentVideoIndex = currentVideoIndex % getActualLimit();
 		
 		console.log("CURRENT INDEX IS BITCH:", currentVideoIndex);
 		
@@ -15,7 +15,7 @@ Template.next_thumbs.events({
 	},
 	'click #rightThumb': function() {
 		currentVideoIndex = currentVideoIndex + 1; //currentVideoIndex++; OR currentVideoIndex += 1;
-		currentVideoIndex = currentVideoIndex % Session.get('limit');
+		currentVideoIndex = currentVideoIndex % getActualLimit();
 		
 		console.log("CURRENT INDEX IS BITCH:", currentVideoIndex);
 		
@@ -29,19 +29,22 @@ Template.next_thumbs.events({
 
 function setBackNextButtons(currentVideoIndex) {
 	//set back button content
-	var $prevVid = $('.vid').eq(currentVideoIndex - 1),
+	var $prevVid = $('.vid').eq((currentVideoIndex - 1) % getActualLimit()),
 		$back = $('#leftThumb');
 	extractVideoContent($prevVid, $back);
 	
-	//set next button content
-	var $nextVid = $('.vid').eq(currentVideoIndex + 1),
+	var $nextVid = $('.vid').eq((currentVideoIndex + 1) % getActualLimit()),
 		$next = $('#rightThumb');					
 	extractVideoContent($nextVid, $next);
 }
 
 function extractVideoContent($element, $button) {
-	console.log('NEXT UP', $element, $button);
 	$button.find('.iframeImg img').attr('src', $element.find('.video_image').attr('src'));
 	$button.find('.title').text($element.find('.video_main_title').text());
 	$button.find('p.time').text($element.find('.video_info_container h3').text().replace(':00', ''));
+}
+
+//we can't use Session.get('limit') cuz the actual total # of videos on the page may be less
+function getActualLimit() {
+	return $('.vid').length;
 }

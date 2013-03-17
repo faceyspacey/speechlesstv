@@ -2,10 +2,19 @@
 	<div id="header_container">
 		<div id="header">
 			{{#if isAdmin}}
-				<span id="add_video">add video</span>
+				<span id="add_marker" class="admin_link">add marker</span>
+				<span id="add_video" class="admin_link">add video</span>
 			{{/if}}
 			
 			<div class="headerInner">
+				
+				{{#if isAdmin}}
+					<div id="comment_container" style="display:none;">
+						<textarea id="marker_comment"></textarea>
+						<span id="cancel_marker" class="admin_link" class="admin_link">cancel bitch</span>
+						<input type="button" id="marker_submit_button" value="COMMENT" />
+					</div>
+				{{/if}}
 				<div id="header_left">
 					<div id="logo">E</div>
 					<div id="title">EMILIOTELEVISION</div>

@@ -3,13 +3,13 @@ Template.being_watched.videos = function() {
 };
 
 Meteor.startup(function(){		
-		$('#being_watched').on('mouseenter', '.miniVid', function() {
+		$('body').on('mouseenter', '.miniVid', function() {
 			$('<div />', {
 				class: 'miniVidHover'
 			}).prependTo(this);
 		});
 		
-		$('#being_watched').on('mouseleave', '.miniVid', function() {
+		$('body').on('mouseleave', '.miniVid', function() {
 			$(this).find('.miniVidHover').remove();
 		});
 });

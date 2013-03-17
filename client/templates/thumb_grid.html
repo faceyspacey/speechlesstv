@@ -1,4 +1,15 @@
 <template name="thumb_grid">
+	
+	{{#if current_channel}}
+		<div id="channel_info">
+			<p>videos by:</p>
+			<h1 id="home_video_channel">{{current_channel}}</h1>
+			<h1 id="back_to_all_videos">Back To All Videos</h1>
+			<div class="clearboth"></div>
+		</div>
+	{{/if}}
+	
+	
 	<div id="thumb_grid">
 	
 		{{#each videos}}

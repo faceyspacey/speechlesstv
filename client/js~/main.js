@@ -1,5 +1,6 @@
 Meteor.startup(function(){
-
+	Session.set('current_channel', null);
+	
 	Meteor.subscribe('allVideos', function() {
 		Session.set('current_video', Videos.findOne({}, {sort: {time: -1}}));
 	});
@@ -28,6 +29,7 @@ Meteor.startup(function(){
 		$('#leftThumb').animate({left: -224}, 300, 'easeInExpo');
 		$('#rightThumb').animate({right: -224}, 300, 'easeInExpo');
 	});
+
 
 });
 

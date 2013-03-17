@@ -2,7 +2,13 @@
 	<div id="top">
 		
 		<div id="home_video">
-			<iframe style="width: 100%; height: 100%;" src="http://www.youtube.com/embed/{{current_video.youtube_id}}?modestbranding=1&theme=light&color=red&rel=0&autoplay=0" frameborder="0" allowfullscreen></iframe>
+			
+			{{#if useCustomPlayer}}
+				{{>custom_player}}
+			{{else}}
+				<iframe style="width: 100%; height: 100%;" src="http://www.youtube.com/embed/{{current_video.youtube_id}}?modestbranding=1&theme=light&color=red&rel=0&autoplay=0" frameborder="0" allowfullscreen></iframe>
+				
+			{{/if}}
 			
 		</div>
 		<div class="channelName">
@@ -11,7 +17,7 @@
 		<div style="clear:both;"></div>
 		<div class="channelViews">
 			<p>{{category}}-</p>
-			<h1>{{current_video.channel}}</h1>
+			<h1 id="home_video_channel">{{current_video.channel}}</h1>
 		</div>
 		<div class="videoBio">
 			<p>{{current_video.description}}</p>

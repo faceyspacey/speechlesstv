@@ -1,25 +1,35 @@
 Template.add_video_form.events({
 	'click #submit_button': function() {
-		var title = $('#title_field').val();
-		var youtube_id = $('#youtube_id_field').val();
-		var channel = $('#channel_field').val();
-		var length = $('#length_field').val();
-		var category_id = parseInt($('#category_id_field').val());
-		var description = $('#description_field').val();
+		$('#add_video_form').animate({
+			top: -500
+		}, 300, 'easeInBack');
 		
-		console.log('wtfhgfdhgfhg', title);
+		var video_id = $('#video_id').val(),
 		
-		Videos.insert({
-			title:title,
-			youtube_id:youtube_id,
-			channel:channel,
-			length:length,
-			category_id:category_id,
-			description:description,
-		});
+			videoObject = {
+				title: $('#title_field').val(),
+				youtube_id: $('#youtube_id_field').val(),
+			 	channel: $('#channel_field').val(),
+				length: $('#length_field').val(),
+				category_id: parseInt($('#category_id_field').val()),
+				initial_comment: $('#initial_comment_field').val(),
+				description: $('#description_field').val(),
+				time: Date.now()
+			};
+				
+		console.log('VIDEO OBJECT', videoObject);
+		if(video_id.length > 0) { //if there is a video_id, it means we're updating an existing video
+			Videos.update(video_id, {$set: videoObject});
+		}
+		else { //if there is no video_id, it means we're creating a new video
+			videoObject.comments = [];
+			Videos.insert(videoObject);
+		}
 	},
 	'click #cancel_add_video': function(event) {
-              $('#add_video_form').hide(); 
-              event.preventDefault(); //prevent the link from being followed, so the page doesnt refresh
+        $('#add_video_form').animate({
+			top: -500
+		}, 300, 'easeInBack'); 
+            event.preventDefault(); //prevent the link from being followed, so the page doesnt refresh
      }
 });

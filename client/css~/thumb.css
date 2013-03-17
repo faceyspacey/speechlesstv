@@ -80,6 +80,20 @@ opacity: .5;
 opacity: 1;
 }
 
+
+.edit-button {
+position: absolute; 
+bottom: 0px; left: 0px;
+width: 32px; height: 32px;
+opacity: .7;
+cursor: pointer;
+z-index: 2;
+}
+
+.edit-button:hover {
+opacity: 1;
+}
+
 .vid .thumbHover .thumb_over_img {
 position: absolute;
 top: 0px;
@@ -187,3 +201,8 @@ text-rendering: optimizeLegibility;
 clear: both;
 text-indent: 34px;
 }
+
+.vid .thumbHover span.channel:hover {
+text-decoration: underline;   
+}
+

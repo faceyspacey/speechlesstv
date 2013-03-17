@@ -1,13 +1,52 @@
 Template.header.isAdmin = function() {
+	if(window.location.host == 'localhost:3000') return true; //development mode can edit/add/delete videos
+	
 	if(!Meteor.user()) return false;
 	if(Meteor.user().profile.facebook_id == '561636795' || Meteor.user().profile.facebook_id == '16404762') return true;
 	return false;
 }
 
 Template.header.events({
-	'click #add_video': function() {
-		$('#add_video_form').show();
-		console.log('wtf');
-		$('html,body').animate({scrollTop: 0}, 750, 'easeOutBounce');
+	'click #add_marker': function() {
+		var $button = $('#miniPausePlay');	
+		if($button.hasClass('pause')) $button.click();
+		
+		$('#comment_container').show();
+	},
+	'click #cancel_marker': function() {
+		$('#comment_container').hide();
+		
+		var $button = $('#miniPausePlay');
+		if($button.hasClass('play')) $button.click();
+	},
+	'click #marker_submit_button': function() {
+		$('#comment_container').hide();
+		
+		var comment = $('#marker_comment').val();
+		
+		Videos.update(Session.get('current_video')._id, 
+			{$push: 
+				{comments: 
+					{comment: comment, time: Math.round(ytplayer.getCurrentTime())}
+				}
+			});
+		
+		var $button = $('#miniPausePlay');
+		if($button.hasClass('play')) $button.click();
+	},
+	'click #add_video': function() {	
+		$('html,body').animate({scrollTop: 0}, 400, 'easeOutExpo', function() {
+			$('#add_video_form').animate({
+					top: 75
+				}, 500, 'easeOutBack');
+		});
+		
+		//empty the fields in case they were filled from editing a video
+		$('textarea, #add_video_form input:not("#submit_button")').each(function() {
+			$(this).val('');
+		});
+		
+		
+		$('#add_video_form input:first').focus();
 	}
 });

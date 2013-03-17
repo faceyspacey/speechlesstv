@@ -3,3 +3,46 @@ overflow: hidden;
 position: relative;
 margin: 0 0 0 2%;
 }
+
+
+#channel_info {
+    margin-left: 24px;
+	
+    margin-bottom: 5px;
+}
+
+#channel_info p {
+	float: left;
+	font-size: 25px;
+	font-weight: bold;
+	font-family: 'Fjalla One', sans-serif;
+	color: #cdcdcd;
+	text-align: left;
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+#channel_info h1 {
+	float: left;
+	font-size: 25px;
+	font-weight: bold;
+	font-family: 'Fjalla One', sans-serif;
+	color: #5BA0B8;
+	text-align: left;
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	margin-left: 7px;
+	cursor: pointer;
+}
+
+#channel_info #back_to_all_videos {
+	float:right;
+	margin-right: 27px;
+	text-decoration: underline;
+}
