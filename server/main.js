@@ -30,3 +30,55 @@ Accounts.validateNewUser(function (user) {
     return true;
   throw new Meteor.Error(403, "Username must have at least 3 characters");
 });
+
+
+
+var EmillsId = "LuoAzFyHfgDYckgf4",
+ 	JamesId = "HztCMrSSjZkC3dKwD",
+	admins = [EmillsId, JamesId];
+
+//make it so only admins can do most database-editing actions
+Videos.allow({
+	insert: function (userId, doc) {
+		if(Meteor.absoluteUrl() == 'http://localhost:3000/') return true;
+	  	return _.contains(admins, userId);
+	},
+	update: function (userId, doc, fields, modifier) {
+		if(Meteor.absoluteUrl() == 'http://localhost:3000/') return true;
+	  	return _.contains(admins, userId);
+	},
+	remove: function (userId, doc) {
+		if(Meteor.absoluteUrl() == 'http://localhost:3000/') return true;
+		return _.contains(admins, userId);
+	}
+});
+
+Categories.allow({
+	insert: function (userId, doc) {
+		if(Meteor.absoluteUrl() == 'http://localhost:3000/') return true;
+	  	return _.contains(admins, userId);
+	},
+	update: function (userId, doc, fields, modifier) {
+		if(Meteor.absoluteUrl() == 'http://localhost:3000/') return true;
+	  	return _.contains(admins, userId);
+	},
+	remove: function (userId, doc) {
+		if(Meteor.absoluteUrl() == 'http://localhost:3000/') return true;
+		return _.contains(admins, userId);
+	}
+});
+
+BeingWatched.allow({
+	insert: function (userId, doc) {
+	  	return true; //anyone can insert a new BeingWatched video
+	},
+	update: function (userId, doc, fields, modifier) {
+		if(Meteor.absoluteUrl() == 'http://localhost:3000/') return true;
+	  	return _.contains(admins, userId);
+	},
+	remove: function (userId, doc) {
+		if(Meteor.absoluteUrl() == 'http://localhost:3000/') return true;
+		return _.contains(admins, userId);
+	}
+});
+

@@ -26,12 +26,11 @@ height: 110px;
 background-color:#5BA0B8;
 color:white; 
 padding-top: 4px;
-opacity: .95;
 }
 
 #largePlayPauseButton:hover {
-opacity: 1; 
-cursor: pointer;  
+cursor: pointer;
+background-color:#73BAD1;
 }
 
 #largePlayPauseButton .smallPlay {
@@ -173,7 +172,7 @@ border-radius: 5px; /* future proofing */
 }
 
 #barsInner {
-  width: 98%;
+  width: 97.4%;
   height: 100%;
   margin: 0 1%;
 }
@@ -184,12 +183,14 @@ background-color: rgba(0, 0, 0, 0.2);
 z-index: 1; 
 width: 0%; 
 height: 50%; 
+border-radius: 2px;
 }
 #progressBar {
 background-color: rgba(91, 160, 184, 1);  
 z-index: 2; 
 width: 2.7%;
 height: 50%; 
+border-radius: 2px;
 }
 
 /** see how the current time ball is moved to the left the same width as the progress bar!! **/
@@ -242,6 +243,8 @@ border-radius: 2px;
 
 div#volume li:hover {
 cursor: pointer;
+height: 42px;
+margin-top: 3px;
 }
 
 div#volume .circle {
@@ -280,7 +283,26 @@ line-height:1.3;
 font-smoothing: antialiased;
 text-rendering: optimizeLegibility;
 margin-right: 1%;
+
+  -webkit-transition: all 0.5s ease;
+     -moz-transition: all 0.5s ease;
+       -o-transition: all 0.5s ease;
+      -ms-transition: all 0.5s ease;
+          transition: all 0.5s ease;
 }
+
+
+ 
+div#minilogo:hover {
+  -webkit-transform: rotate(360deg);
+     -moz-transform: rotate(360deg);
+       -o-transform: rotate(360deg);
+      -ms-transform: rotate(360deg);
+          transform: rotate(360deg);
+}
+
+
+
 /** you need to clear the divs in #controls so that #controls gets some height **/
 div#fullscreen {
 position:relative; 
@@ -321,4 +343,35 @@ width:  400px;
 #videoContainer object{
 	width: 100%;
 	height: 100%;
+}
+
+
+
+#deleteFlyup {
+position: absolute;
+width: 32px;
+height: 32px;
+cursor: pointer;
+top: -10px;
+right: -25px;
+z-index: 2;
+opacity: .5;
+}
+
+#deleteFlyup:hover {
+opacity: 1;
+}
+
+
+#editFlyup {
+position: absolute; 
+top: -15px; left: -20px;
+width: 32px; height: 32px;
+opacity: .7;
+cursor: pointer;
+z-index: 2;
+}
+
+#editFlyup:hover {
+opacity: 1;
 }

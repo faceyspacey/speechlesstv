@@ -5,9 +5,9 @@ Template.remove_video_form.events({
 		
 		console.log('wtfhgfdhgfhg', title);
 		
-		Videos.remove({
-			title:title
-		});
+		var x = window.confirm("Nigga r u sure u want to delete '"+this.title+"'?");
+		
+		if(x) Videos.remove({title:title});
 	},
 	'click #cancel_remove_video': function(event) {
               $('#remove_video_form').hide(); 

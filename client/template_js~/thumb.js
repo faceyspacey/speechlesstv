@@ -18,11 +18,11 @@ Template.thumb.events({
 		updateBeingWatched(this);
 		setBackNextButtons(currentVideoIndex);
 	},
-	'click .close-button': function(event) {
+	'click .deleteVideo': function(event) {
 		event.stopPropagation();
 		
 		
-		var x= window.confirm("Nigga r u sure u want to delete this?")
+		var x= window.confirm("Nigga r u sure u want to delete '"+this.title+"'?");
 		
 		if(x) Videos.remove(this._id);
 	},

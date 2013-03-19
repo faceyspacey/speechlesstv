@@ -14,7 +14,13 @@
 			<div id="flyupContainer" style="display:none;">
 				<div id="flyupInner">
 					<div id="flyupComment">
-						<span id="flyupCommentInner" style="display:none;">Yo hello I'm boogie</span>
+						<span id="flyupCommentInner" style="display:none;"></span>
+						
+						{{#if isAdmin}}
+							<img id="deleteFlyup" src="images/closebtn.png" />
+							<img id="editFlyup" src="images/pencil-icon.png" />
+						{{/if}}
+					
 					</div>
 					<img src="images/fly-up-mills.png" />
 				</div>

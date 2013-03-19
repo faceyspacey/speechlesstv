@@ -15,6 +15,7 @@ Template.header.events({
 	},
 	'click #cancel_marker': function() {
 		$('#comment_container').hide();
+		$('#marker_comment').val('');
 		
 		var $button = $('#miniPausePlay');
 		if($button.hasClass('play')) $button.click();
@@ -23,13 +24,20 @@ Template.header.events({
 		$('#comment_container').hide();
 		
 		var comment = $('#marker_comment').val();
+		$('#marker_comment').val('');
 		
-		Videos.update(Session.get('current_video')._id, 
-			{$push: 
-				{comments: 
-					{comment: comment, time: Math.round(ytplayer.getCurrentTime())}
-				}
-			});
+		//first delete any comment with the same time
+		var comments = Session.get('current_video').comments
+		_.each(comments, function(comment, index) {
+			if(comment.time == Session.get('comment_time')) {
+				comments.splice(index, 1);
+			}
+		});
+		
+		
+		//add the new comment to the comments array and replace the original comments array on the collection item
+		comments.push({comment: comment, time: Math.round(ytplayer.getCurrentTime())});			
+		Videos.update(Session.get('current_video')._id, {$set: {comments: comments}});
 		
 		var $button = $('#miniPausePlay');
 		if($button.hasClass('play')) $button.click();

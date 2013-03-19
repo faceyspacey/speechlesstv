@@ -65,7 +65,7 @@ opacity: 1;
 }
 
 
-.vid .thumbHover .close-button {
+.vid .thumbHover .deleteVideo {
 position: absolute;
 width: 32px;
 height: 32px;
@@ -76,7 +76,7 @@ z-index: 2;
 opacity: .5;
 }
 
-.vid .thumbHover .close-button:hover {
+.vid .thumbHover .deleteVideo:hover {
 opacity: 1;
 }
 

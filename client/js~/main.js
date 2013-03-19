@@ -2,7 +2,7 @@ Meteor.startup(function(){
 	Session.set('current_channel', null);
 	
 	Meteor.subscribe('allVideos', function() {
-		Session.set('current_video', Videos.findOne({}, {sort: {time: -1}}));
+		Session.set('current_video', Videos.findOne({}, {sort: {time: -1}}));	
 	});
 	
 	//display .vid hover states
