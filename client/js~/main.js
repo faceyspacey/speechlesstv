@@ -5,6 +5,11 @@ Meteor.startup(function(){
 		Session.set('current_video', Videos.findOne({}, {sort: {time: -1}}));	
 	});
 	
+	Meteor.subscribe('allCategories');
+
+	Meteor.subscribe('allBeingWatched');
+	
+	
 	//display .vid hover states
 	$('.vid .thumbHover').live('mouseenter', function() {
 		$(this).find('.transparent_stuff').addClass('hover');
@@ -14,11 +19,12 @@ Meteor.startup(function(){
 	
 	
 	//display contact form and close curtain
-	$('.contact_me').click(function() {
+	$('.contact_me').click(function() {		
 		$('.close-button').click();
-		setTimeout(function() {
+		
+		$('html,body').animate({scrollTop: 0}, 400, 'easeOutExpo', function() {
 			$('#contact').click()
-		}, 500);
+		});
 	});
 	
 	//back/next button hovers
@@ -30,7 +36,18 @@ Meteor.startup(function(){
 		$('#rightThumb').animate({right: -224}, 300, 'easeInExpo');
 	});
 
+	//!!!exclamation mark hover state for CONTACT ME in curtain
+	$('.contact_me').live('mouseenter', function() {
+		$(this).text('CONTACT ME!!!');
+	}).live('mouseleave', function() {
+		$(this).text('CONTACT ME');
+	});
 
+	$('#currentTimeBall').live('mouseenter', function() {
+		$(this).find('#innerTimeBallCircle').addClass('hover');
+	}).live('mouseleave', function() {
+		$(this).find('#innerTimeBallCircle').removeClass('hover');
+	});
 });
 
 Accounts.ui.config({

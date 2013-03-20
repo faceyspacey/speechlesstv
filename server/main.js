@@ -2,6 +2,14 @@ Meteor.publish('allVideos', function() {
 	return Videos.find();
 });
 
+Meteor.publish('allCategories', function() {
+	return Categories.find();
+});
+
+Meteor.publish('allBeingWatched', function() {
+	return BeingWatched.find();
+});
+
 
 //this code must be on the server
 Accounts.onCreateUser(function (options, user) {

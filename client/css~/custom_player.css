@@ -203,9 +203,35 @@ height: 100%;
 top: -3px;
 margin-left: -2px;
 cursor: pointer;
+position:relative;
 }
 #currentTimeBall.hover {
 background-color:green;
+}
+
+#currentTimeBall #innerTimeBallCircle {
+border-radius: 100px;
+width: 9px;
+height: 9px;    
+
+position: absolute;
+top: 5px;
+left: 5px;  
+}
+
+#currentTimeBall #innerTimeBallCircle.hover {
+border-radius: 100px;
+width: 9px;
+height: 9px;    
+background-color: #026E92;
+position: absolute;
+top: 5px;
+left: 5px;
+
+opacity: .7;
+-moz-box-shadow:inset 0px 0px 3px 1px rgba(119, 119, 119, 0.9);
+-webkit-box-shadow:inset 0px 0px 3px 1px rgba(119, 119, 119, 0.9);
+box-shadow:inset 0px 0px 3px 1px rgba(119, 119, 119, 0.9);
 }
 
 div#videoTime {

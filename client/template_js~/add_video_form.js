@@ -17,7 +17,7 @@ Template.add_video_form.events({
 				time: Date.now()
 			};
 				
-		console.log('VIDEO OBJECT', videoObject);
+
 		if(video_id.length > 0) { //if there is a video_id, it means we're updating an existing video
 			Videos.update(video_id, {$set: videoObject});
 		}

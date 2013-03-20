@@ -114,6 +114,9 @@ font-smoothing: antialiased;
 text-rendering: optimizeLegibility;
 cursor: pointer;
 }
+#top .channelViews h1:hover {
+text-decoration: underline;    
+}
 
 #top .videoBio p {
 margin-top:-40px;

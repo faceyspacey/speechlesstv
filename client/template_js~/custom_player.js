@@ -51,7 +51,8 @@ Template.custom_player.events({
 			toggleFullscreen();
 			toggleControls();
 			toggleFlyupContainer();
-			toggleControlsFade();	
+			toggleControlsFade();
+			toggleEscapeKey();	
 		}
 		else {			
 			$('#videoContainer').removeClass('is_fullScreen');
@@ -61,6 +62,7 @@ Template.custom_player.events({
 			toggleControls();		
 			toggleFlyupContainer();
 			toggleControlsFade();
+			toggleEscapeKey();
 		}		
 	},
 	'click #deleteFlyup': function() {

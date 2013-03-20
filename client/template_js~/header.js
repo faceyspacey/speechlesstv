@@ -36,7 +36,9 @@ Template.header.events({
 		
 		
 		//add the new comment to the comments array and replace the original comments array on the collection item
-		comments.push({comment: comment, time: Math.round(ytplayer.getCurrentTime())});			
+		var commentObj = {comment: comment, time: Math.round(ytplayer.getCurrentTime())};
+		console.log(commentObj);
+		comments.push(commentObj);			
 		Videos.update(Session.get('current_video')._id, {$set: {comments: comments}});
 		
 		var $button = $('#miniPausePlay');

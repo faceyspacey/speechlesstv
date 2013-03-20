@@ -3,7 +3,7 @@ width: 660px;
 background:url(../../images/shattered.png)repeat;
 padding: 20px 50px 20px 20px;
 margin: 0 auto;
-height: 400px;
+height: 415px;
 position:absolute;
 left:50%;
 margin-left:-335px;
@@ -18,12 +18,21 @@ font-weight:bold;
 font-family: 'Fjalla One', sans-serif;
 color: #5BA0B8;
 text-align:center;
-line-height:1.15;
+line-height:1.55;
 -webkit-font-smoothing: antialiased;
 -moz-font-smoothing: antialiased;
 font-smoothing: antialiased;
 text-rendering: optimizeLegibility;
+text-shadow: 1px 1px 1px white;
 }
+
+#page-wrap img#logo {
+float:left;
+border: 1px solid #5BA0B8;
+}
+
+
+
 #contact-area {
 margin-top: 25px;
 }
@@ -55,6 +64,10 @@ text-rendering: optimizeLegibility;
 float: right;
 margin-right: 20px;
 margin-top: 18px;
+}
+
+#contact-area a:hover {
+opacity: .8;   
 }
 
 #contact-area input.submit-button {

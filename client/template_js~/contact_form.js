@@ -1,10 +1,10 @@
 Meteor.startup(function(){
 	$('body').on('click', '#contact', function(){
-		console.log('hey');
-		$('#page-wrap').animate({top:'100px'}, 500,'easeOutBack');
-		$('#contact_name').focus(); //have the first field selected (with the torquoise bg) by default ;)
 		
-		scrollToTop();
+		$('html,body').animate({scrollTop: 0}, 300, 'easeOutExpo', function() {
+			$('#page-wrap').animate({top:'100px'}, 500,'easeOutBack');
+			$('#contact_name').focus(); //have the first field selected (with the torquoise bg) by default ;)
+		});
 	});
 	$('body').on('click', '#cancel_email', function(){
 		$('#page-wrap').animate({top:'-500px'}, 500);
@@ -27,6 +27,8 @@ Template.contact_form.events({
 		console.log('emailMe', info);
 		
 		$('#cancel_email').click();
+		
+		$('input, textarea', '#contact-area').not('.submit-button').val('');
 	}
 });
 
