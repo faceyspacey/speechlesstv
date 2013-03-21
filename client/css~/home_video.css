@@ -9,7 +9,9 @@ height: 100%;
 
 width:980px;
 height:468px;
-margin-bottom:20px;
+
+
+margin-bottom: 10px;
 }
 /*
 #top #home_video .video_count {
@@ -76,7 +78,7 @@ text-rendering: optimizeLegibility;
 }
 #top .channelName h1 {
 float:left;
-font-size: 40px;
+font-size: 38px;
 font-weight:bold;
 font-family: 'Fjalla One', sans-serif;
 color: #5BA0B8;
@@ -86,6 +88,10 @@ line-height:1;
 -moz-font-smoothing: antialiased;
 font-smoothing: antialiased;
 text-rendering: optimizeLegibility;
+width: 530px;
+overflow: hidden;
+height: 46px;
+padding-top: 4px;
 }
 #top .channelViews p {
 float:left;
@@ -118,10 +124,24 @@ cursor: pointer;
 text-decoration: underline;    
 }
 
+#top .videoBio p img {
+float: right;
+width: 75px;
+margin-left:5px;
+margin-right: -4px;
+margin-top: -12px
+    
+}
+
+#top .videoBio p span {
+color: #4F8286;
+
+font-style: oblique;
+}
 #top .videoBio p {
-margin-top:-40px;
+margin-top: -30px;
 float:right;
-width:450px;
+width: 440px;
 font-size: 16px;
 font-weight:normal;
 font-family: 'Fjalla One', sans-serif;
@@ -133,6 +153,7 @@ line-height:1;
 font-smoothing: antialiased;
 text-rendering: optimizeLegibility;
 text-align: right;
+margin-bottom: 5px;
 }
 #top .videoBio p a:link {
 text-decoration:none;
@@ -158,3 +179,14 @@ float: right;
 margin-left: 10px;
 }
 
+#top #votes #facebookLikeLi {
+overflow:hidden;
+height: 28px;
+}
+
+#top #votes li#facebookShare {
+
+}
+#top #votes li#facebookShare img {
+height: 20px;   
+}

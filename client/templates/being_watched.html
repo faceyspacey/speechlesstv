@@ -6,7 +6,7 @@
 		    	{{> being_watched_thumb}}
 			{{/each}}
 			
-			<img style="float:right; margin-top:12px;" src="images/bwn.png" width="60" height="71" alt="Bwn">
+			<img style="float:right; margin-top:12px;" src="/images/bwn.png" width="60" height="71" alt="Bwn">
 			</div>
 		
 		
@@ -17,7 +17,7 @@
 <template name="being_watched_thumb">
 	
 		<div class="miniVid" >
-			<img  id="imgHover" src="http://img.youtube.com/vi/{{youtube_id}}/mqdefault.jpg"/>
+			<img  id="imgHover" src="http://img.youtube.com/vi/{{youtube_id}}/mqdefault.jpg" error="this.src='/images/default-vid.jpg';"/>
 		</div>
 		
 </template>

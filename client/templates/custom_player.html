@@ -6,6 +6,22 @@
 	        	<div class="smallPlay"></div> 
 	        </div>
 	
+			<div id="postRoll" style="display:none;">
+				<div id="postRollLeft">
+					<div id="postRollCountdown">10</div>
+					<img src="/images/tvNoMe.png" id="postRollTV"/>
+					<div id="millsContainer">
+						<img src="/images/noTvMe.png" id="postRollMills"/>
+					</div>
+				</div>
+				<div id="upNext">
+					<h1>Whatsup Next Bitches:</h1>
+					<img id="upNextImage" src="" error="this.src='/images/default-vid.jpg';"/>
+					<div id="upNextTitle"><span>"The Hunger Games"</span></div>
+					<div id="watchIt">WATCH IT!<span id="postRollCounter">(starting in <span id="countdownSpan">10</span>)</span></div>
+				</div>
+			</div>
+			
 		    <div id="video">
 		        
 		    </div>
@@ -16,13 +32,28 @@
 					<div id="flyupComment">
 						<span id="flyupCommentInner" style="display:none;"></span>
 						
-						{{#if isAdmin}}
-							<img id="deleteFlyup" src="images/closebtn.png" />
-							<img id="editFlyup" src="images/pencil-icon.png" />
-						{{/if}}
-					
+						<div id="adminFlyupTools" style="display:none;">
+							<img id="deleteFlyup" src="/images/closebtn.png" style="display:none;" />
+							<img id="editFlyup" src="/images/pencil-icon.png" style="display:none;" />
+						</div>
+						
+						<div id="flyupSocialButtonsContainer">
+							<ul>
+								<li id="facebookShareFlyup">
+									<a class="facebook_link" href="https://www.facebook.com/sharer/sharer.php?u=www.emiliotelevision.com" target="_blank">
+										<img src="/images/facebook-share.png" alt="Follow Me" />
+									</a>
+								</li>
+								<li id="tweetButtonFlyup" >
+									<a class="tweet_link" href="https://twitter.com/share?via=emiliotv&url=http://www.emiliotelevision.com" target="_blank">
+										<img src="/images/tweet-rectangle.png" width="60" height="20" alt="Tweet Me" />
+									</a>
+								</li>		
+							</ul>
+						</div>
+						
 					</div>
-					<img src="images/fly-up-mills.png" />
+					<img src="/images/fly-up-mills.png" />
 				</div>
 			</div>
     

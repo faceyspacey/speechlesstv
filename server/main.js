@@ -10,6 +10,11 @@ Meteor.publish('allBeingWatched', function() {
 	return BeingWatched.find();
 });
 
+Meteor.publish('allUsers', function() {
+	return Meteor.users.find();
+});
+
+
 
 //this code must be on the server
 Accounts.onCreateUser(function (options, user) {
@@ -41,9 +46,7 @@ Accounts.validateNewUser(function (user) {
 
 
 
-var EmillsId = "LuoAzFyHfgDYckgf4",
- 	JamesId = "HztCMrSSjZkC3dKwD",
-	admins = [EmillsId, JamesId];
+
 
 //make it so only admins can do most database-editing actions
 Videos.allow({

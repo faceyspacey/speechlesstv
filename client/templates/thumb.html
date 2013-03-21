@@ -1,21 +1,21 @@
 <template  name="thumb">
 	<div class="vid">
 
-		<img class="video_image" src="http://img.youtube.com/vi/{{youtube_id}}/mqdefault.jpg">
+		<img class="video_image" src="http://img.youtube.com/vi/{{youtube_id}}/mqdefault.jpg" error="this.src='/images/default-vid.jpg';">
 		
 		<p class="video_main_title">{{title}}</p>	
 		<div class="video_info_container">	
 			<h3>{{length}}</h3>
-			<img src="images/timeIcon.png"  alt="TimeIcon" />
+			<img src="/images/timeIcon.png"  alt="TimeIcon" />
 		</div>
 		
 
 
 		<div class="thumbHover">
-			<img class="thumb_over_img" src="images/mini-play-button.png" />
+			<img class="thumb_over_img" src="/images/mini-play-button.png" />
 			{{#if isAdmin}}
-				<img class="deleteVideo" src="images/closebtn.png" />
-				<img class="edit-button" src="images/pencil-icon.png" />
+				<img class="deleteVideo" src="/images/closebtn.png" />
+				<img class="edit-button" src="/images/pencil-icon.png" />
 			{{/if}}
 			<div class="transparent_stuff">
 				<p class="video_title">{{title}} <br /><span class="channel">{{channel}}</span></p>

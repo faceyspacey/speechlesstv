@@ -20,28 +20,36 @@
 			<h1 id="home_video_channel">{{current_video.channel}}</h1>
 		</div>
 		<div class="videoBio">
-			<p>{{current_video.description}}</p>
+			<p>
+				<img src="/images/logo-icon.png" id="miniMills" />
+				<span class='spanQuotes'>"&nbsp;</span>{{current_video.description}}<span class='spanQuotes'>"</span>
+			</p>
 		</div>
 		<div style="clear:both;"></div>
 		<div id="votes">
 			<ul>
-				{{#constant}}
+		
+					<li id="facebookShare">
+						<a class="facebook_link" href="https://www.facebook.com/sharer/sharer.php?u=www.emiliotelevision.com" target="_blank">
+							<img src="/images/facebook-share.png" alt="Follow Me" />
+						</a>
+					</li>
 					<li>
-						<a href="https://twitter.com/share?via=emiliotv&url=http://www.emiliotelevision.com" target="_blank">
-							<img src="images/tweet.png" width="60" height="20" alt="Tweet Me" />
+						<a id="tweetButton" class="tweet_link" href="https://twitter.com/share?via=emiliotv&url=http://www.emiliotelevision.com" target="_blank">
+							<img src="/images/tweet.png" width="60" height="20" alt="Tweet Me" />
 						</a>
 					</li>
 				
 					<li>
 						<a href="https://twitter.com/emiliotv" target="_blank">
-							<img src="images/followme.png" width="111" height="20" alt="Follow Me" />
+							<img src="/images/followme.png" width="111" height="20" alt="Follow Me" />
 						</a>
 					</li>
 				
-					<li>
+					<li id="facebookLikeLi">
 						{{>fb_like}}
 					</li>			
-				{{/constant}}
+
 			</ul>
 		</div>
 	</div>
@@ -49,5 +57,7 @@
 
 
 <template name="fb_like">
-     <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.emiliotelevision.com&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=true&amp;font&amp;colorscheme=light&amp;action=like&amp;height=80&amp;appId=390914004314228" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:28px;" allowTransparency="true"></iframe>
+	{{#constant}}
+     <iframe id="facebookLikeIframe" src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.emiliotelevision.com&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=true&amp;font&amp;colorscheme=light&amp;action=like&amp;height=80&amp;appId=390914004314228" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:30px;" allowTransparency="true"></iframe>
+	{{/constant}}
 </template>

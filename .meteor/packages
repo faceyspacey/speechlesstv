@@ -10,3 +10,5 @@ accounts-ui
 accounts-facebook
 email
 accounts-base
+router
+spiderable

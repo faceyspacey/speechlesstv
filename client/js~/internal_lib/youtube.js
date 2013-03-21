@@ -4,7 +4,8 @@ var ytplayer,
 	x = 0, 
 	lastSeekTo = 0, 
 	isDragging = false,
-	volume;
+	volume,
+	Autoplay = false;
 
 /**
 * Core Initial Youtube Player Functions: setupPlayer(), onYouTubePlayerReady(), and updatePlayerInfo()
@@ -40,12 +41,14 @@ function onYouTubePlayerReady(playerId) {
 	console.log('onYouTubePlayerReady');
 	
 	
-	if(Session.get('current_video')) autorunReplaceVideo(Session.get('current_video'));	
-	
 	Meteor.autorun(function() {
 		var video = Session.get('current_video');
 		autorunReplaceVideo(video);				
 	});
+	
+	setTimeout(function() {
+		if(Session.get('video_seconds_from_url')) ytplayer.seekTo(Session.get('video_seconds_from_url'));
+	}, 100);
 }
 
 //this runs every time Session.get('current_video') changes because of the Meteor Autorun code above
@@ -54,23 +57,55 @@ function autorunReplaceVideo(video) {
 		console.log('autorunReplaceVideo');
 
 		ytplayer.cueVideoById(video.youtube_id);
-		ytplayer.seekTo(0, true);
+		
+		updateSocialLinks(video._id);
+		
+		if(window.secondsFromUrl) ytplayer.seekTo(window.secondsFromUrl);
+		else ytplayer.seekTo(0, true);
 		
 		$('#currentTimeBall').css('left', 0);
 		
 		
-		if(Session.get('autoplay')) {
+		if(Autoplay) {
 			ytplayer.playVideo();		
+			$('#largePlayPauseButton').hide();
 			$('#miniPausePlay').removeClass('play').addClass('pause');
 		}
 		else {
-			ytplayer.pauseVideo();		
+			ytplayer.pauseVideo();	
+			$('#largePlayPauseButton').show();	
 			$('#miniPausePlay').removeClass('pause').addClass('play');
 		}
 				
 	}
 }
 
+function updateFlyupSocialLinks(videoId, currentTime) {
+	currentTime -= 5;
+	currentTime = Math.max(currentTime, 0);
+	$('#tweetButtonFlyup a').attr('href', 'https://twitter.com/share?via=emiliotv&url=http://www.emiliotelevision.com/video/'+videoId+'/'+currentTime);
+	$('#facebookShareFlyup a').attr('href', 'https://www.facebook.com/sharer/sharer.php?u=www.emiliotelevision.com/video/'+videoId+'/'+currentTime);
+}
+
+function updateSocialLinks(videoId) {
+	Meteor.Router.to('/video/'+videoId);
+	$('#fbMetaUrl').attr('content', 'http://www.emiliotelevision.com/video/'+videoId);
+	$('#fbMetaTitle').attr('content', 'EmilioTelevision.com - ' + Session.get('current_video').title);
+	$('title').text(Session.get('current_video').title);
+	
+	$('.tweet_link').attr('href', 'https://twitter.com/share?via=emiliotv&url=http://www.emiliotelevision.com/video/'+videoId);
+	
+	/**
+	var facebookLikeSrc = '//www.facebook.com/plugins/like.php?href=';
+	facebookLikeSrc += encodeURIComponent('http://www.emiliotelevision.com/video/'+videoId);
+	facebookLikeSrc += '&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=true&amp;font&amp;';
+	facebookLikeSrc += 'colorscheme=light&amp;action=like&amp;height=80&amp;appId=390914004314228';
+
+	$('#facebookLikeLi').html('<iframe id="facebookLikeIframe" src="'+facebookLikeSrc+'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:30px;" allowTransparency="true"></iframe>')
+	**/
+	
+	$('.facebook_link').attr('href', 'https://www.facebook.com/sharer/sharer.php?u=www.emiliotelevision.com/video/'+videoId);
+}
 // Display information about the current state of the player ever 250 milliseconds
 function updatePlayerInfo() {
   // Also check that at least one function exists since when IE unloads the
@@ -90,18 +125,32 @@ function updatePlayerInfo() {
 	if(currentTime != lastCheckedTime) { 
 		lastCheckedTime = currentTime;
 		
+		if(currentTime % 15 == 0) {
+			//Meteor.Router.to('/video/'+Session.get('current_video')._id+'/'+currentTime);
+			history.pushState({'id':69}, document.title, '/video/'+Session.get('current_video')._id+'/'+currentTime);
+		}
+		
+		
 		if(currentTime == 2) {
 			//display comment at beginning of video if "initial_comment" is available
 			var initialComment = Session.get('current_video').initial_comment;
 			if(initialComment && initialComment.length > 0) displayFlyupComment(Session.get('current_video').initial_comment);
+			
+			$('#adminFlyupTools').css('opacity', 0);
+			
+			updateFlyupSocialLinks(Session.get('current_video')._id, currentTime);
 		}
 		else if (currentTime > 6) {
 			//loop through comments, looking for comment for current time
 			_.each(Session.get('current_video').comments, function(comment, index, comments) {
 				if(currentTime == comment.time) {
-					Session.set('comment_index', index); //set the comment index for editing/deleting by admins
-					Session.set('comment_time', comment.time);
+					Session.set('comment_index', index); //set the comment_index for editing/deleting by admins
+					Session.set('comment_time', comment.time); //set comment_time for editing/deleting by admins
+					
 					displayFlyupComment(comment.comment);
+					$('#adminFlyupTools').css('opacity', 1); //set this to 1, cuz the initial_comment is hidden using 0
+					
+					updateFlyupSocialLinks(Session.get('current_video')._id, currentTime);
 				}
 			});
 		}		
@@ -123,13 +172,64 @@ function updatePlayerInfo() {
 
 
 // This function is called when the player changes state
+var countDownInterval, countDownNum = 10;
 function onPlayerStateChange(newState) {
 	if(newState == 0) {//0 = ended state
-		ytplayer.seekTo(0, true);
-		$('#smallPlayPauseButton').click();
+		if($('#videoContainer').hasClass('is_fullScreen')) $('#fullscreen').click(); //get out of fullscreen to display postroll
+		
+		var $button = $('#rightThumb'),
+			imgSrc = $button.find('.iframeImg img').attr('src'),
+			vidTitle = $button.find('.title').text(),
+			vidTime = $button.find('p.time').text();
+		
+		$('#postRoll #upNextImage').attr('src', imgSrc);
+		$('#postRoll #upNextTitle span').text(vidTitle);
+		
+		//cue up next video so it's already loading
+		Autoplay = false;		
+		Session.set('autoplay', false);
+		$('#rightThumb').click();
+		
+
+		$('#postRoll').fadeIn('fast', function() {
+			//bring in postRoll elements via nice animation
+
+			$('#upNext').animate({left: 0}, 500, 'easeOutBack');
+			$('#postRollLeft').animate({top: 0}, 500, 'easeOutBack', function() {
+				$('#postRoll').css('overflow', 'visible');
+				setTimeout(function() {
+					$('#postRollMills').animate({top: 0}, 750, 'easeOutBounce');
+				}, 50);
+			});
+		});
+		
+		countDownInterval = setInterval(function() {
+			$('#countdownSpan, #postRollCountdown').text(countDownNum);
+			
+			if(countDownNum == 0) { //go to next video after countdown reaches 0
+				clearInterval(countDownInterval);
+				
+				setTimeout(function() {
+					$('#smallPlayPauseButton').click();
+					countDownNum = 10;
+					$('#countdownSpan, #postRollCountdown').text(countDownNum);
+				}, 900);
+			}
+			else countDownNum--;
+			
+		}, 1300);
 	}
 }
 
+
+function hidePostRoll() {
+	$('#postRollMills').animate({top: 500}, 500, 'easeInExpo', function() {
+		$('#postRoll').css('overflow', 'hidden');
+		$('#postRoll').fadeOut(800);
+		$('#postRollLeft').animate({top: 500}, 400, 'easeInBack');
+		$('#upNext').animate({left: 500}, 400, 'easeInBack');
+	});
+}
 
 
 
@@ -179,7 +279,10 @@ function playerMouseMove(event) {
 	var percentX = x/progressMaxWidth,
 		durationPercentage = Math.round(percentX *  ytplayer.getDuration());
 	
-	if(durationPercentage > lastSeekTo + 5 || durationPercentage < lastSeekTo - 5) {
+	//set time on time indicator
+	$('#videoCurrentTime').text(formatSeconds(Math.min(durationPercentage, ytplayer.getDuration())));
+	
+	if(durationPercentage > lastSeekTo + 4 || durationPercentage < lastSeekTo - 4) {
 		lastSeekTo = durationPercentage;
 		ytplayer.seekTo(lastSeekTo, true);
 	}

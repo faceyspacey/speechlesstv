@@ -42,7 +42,6 @@ text-rendering: optimizeLegibility;
 }
 #header #title{
 font-size: 25px;
-font-weight:bold;
 font-family: 'Fjalla One', sans-serif;
 color: #cdcdcd;
 text-align:left;
@@ -51,6 +50,8 @@ line-height:2.4;
 -moz-font-smoothing: antialiased;
 font-smoothing: antialiased;
 text-rendering: optimizeLegibility;
+text-shadow: 1px 1px 0px #9B9B9B;
+font-weight: bold;
 }
 
 #header #header_right {

@@ -1,12 +1,3 @@
-Template.custom_player.isAdmin = function() {
-	if(window.location.host == 'localhost:3000') return true; //development mode can edit/add/delete videos
-	
-	if(!Meteor.user()) return false;
-	if(Meteor.user().profile.facebook_id == '561636795' || Meteor.user().profile.facebook_id == '16404762') return true;
-	return false;
-}
-
-
 Template.custom_player.current_video = function() {	
 	return Session.get('current_video');
 }
@@ -32,30 +23,40 @@ Template.custom_player.events({
 		if($button.hasClass('pause')) { //video paused now
 			$button.removeClass('pause').addClass('play');
 			ytplayer.pauseVideo();
+			Autoplay = false;
 			Session.set('autoplay', false);
 			hideFlyup();			
 			 $('#largePlayPauseButton').show();
 		}
 		else { //video playing now
 			$button.removeClass('play').addClass('pause');
-			ytplayer.playVideo();			
+			ytplayer.playVideo();	
+			Autoplay = true;		
 			Session.set('autoplay', true);
 			$('#largePlayPauseButton').hide();
+			hidePostRoll();
+			
+			window.secondsFromUrl = null;
 		}
 	},
 	'click #fullscreen': function() {	
 		if(!$('#videoContainer').hasClass('is_fullScreen')) {
 			$('#videoContainer').addClass('is_fullScreen');	
+						
+			$('#fullscreenButton').addClass('small');
 									
 			hideNonFullscreenElements();
 			toggleFullscreen();
 			toggleControls();
 			toggleFlyupContainer();
 			toggleControlsFade();
-			toggleEscapeKey();	
+			toggleEscapeKey();				
+			hidePostRoll();
 		}
 		else {			
 			$('#videoContainer').removeClass('is_fullScreen');
+			
+			$('#fullscreenButton').removeClass('small');
 			
 			showNonFullscreenElements();
 			toggleFullscreen();

@@ -33,6 +33,16 @@ width: 160px;
 margin-bottom: 20px;
 }
 
+#imageForFacebook {
+	display:none;
+}
 
 
+h1, p, h2, h3, a, div, span {
+-webkit-font-smoothing: antialiased;
+-moz-font-smoothing: antialiased;
+font-smoothing: antialiased;
+text-rendering: optimizeLegibility;    
+font-family: 'Fjalla One', sans-serif;
+}
 
