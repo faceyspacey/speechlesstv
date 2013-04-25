@@ -1,0 +1,119 @@
+#preloader {
+height: 579px;
+
+position: absolute;
+margin-left:  115px;
+}
+
+#warningGradientOuterBarG {
+margin: 0 auto;
+position: relative;
+top: 180px;
+height:100px;
+width:800px;
+border:5px solid #5BA0B8;
+overflow:hidden;
+background-color:#F0F7F8;
+background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F0F7F8), to(#5BA0B8));
+background: -moz-linear-gradient(top, #F0F7F8, #5BA0B8);
+background: -webkit-linear-gradient(top, #F0F7F8, #5BA0B8);
+background: -ms-linear-gradient(top, #F0F7F8, #5BA0B8);
+background: -o-linear-gradient(top, #F0F7F8, #5BA0B8);
+background: linear-gradient(top, #F0F7F8, #5BA0B8);
+}
+
+.warningGradientBarLineG{
+background-color:#F0F7F8;
+float:left;
+width:70px;
+height:600px;
+margin-right:120px;
+margin-top:-140px;
+-moz-transform:rotate(45deg);
+-webkit-transform:rotate(45deg);
+-ms-transform:rotate(45deg);
+-o-transform:rotate(45deg);
+transform:rotate(45deg);
+}
+
+.warningGradientAnimationG{
+width:1180px;
+-moz-animation-name:warningGradientAnimationG;
+-moz-animation-duration:0.5s;
+-moz-animation-iteration-count:infinite;
+-moz-animation-timing-function:linear;
+-webkit-animation-name:warningGradientAnimationG;
+-webkit-animation-duration:0.5s;
+-webkit-animation-iteration-count:infinite;
+-webkit-animation-timing-function:linear;
+-ms-animation-name:warningGradientAnimationG;
+-ms-animation-duration:0.5s;
+-ms-animation-iteration-count:infinite;
+-ms-animation-timing-function:linear;
+-o-animation-name:warningGradientAnimationG;
+-o-animation-duration:0.5s;
+-o-animation-iteration-count:infinite;
+-o-animation-timing-function:linear;
+animation-name:warningGradientAnimationG;
+animation-duration:0.5s;
+animation-iteration-count:infinite;
+animation-timing-function:linear;
+}
+
+#warningGradientFrontBarG{
+}
+
+@-moz-keyframes warningGradientAnimationG{
+0%{
+margin-left:0px;
+}
+
+100%{
+margin-left:-190px;
+}
+
+}
+
+@-webkit-keyframes warningGradientAnimationG{
+0%{
+margin-left:0px;
+}
+
+100%{
+margin-left:-190px;
+}
+
+}
+
+@-ms-keyframes warningGradientAnimationG{
+0%{
+margin-left:0px;
+}
+
+100%{
+margin-left:-190px;
+}
+
+}
+
+@-o-keyframes warningGradientAnimationG{
+0%{
+margin-left:0px;
+}
+
+100%{
+margin-left:-190px;
+}
+
+}
+
+@keyframes warningGradientAnimationG{
+0%{
+margin-left:0px;
+}
+
+100%{
+margin-left:-190px;
+}
+
+}

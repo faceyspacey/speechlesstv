@@ -1,6 +1,27 @@
 <template name="home_video">
-	<div id="top">
+	
+	<div id="preloader">
+		<div id="warningGradientOuterBarG">
+		<div id="warningGradientFrontBarG" class="warningGradientAnimationG">
+		<div class="warningGradientBarLineG">
+		</div>
+		<div class="warningGradientBarLineG">
+		</div>
+		<div class="warningGradientBarLineG">
+		</div>
+		<div class="warningGradientBarLineG">
+		</div>
+		<div class="warningGradientBarLineG">
+		</div>
+		<div class="warningGradientBarLineG">
+		</div>
+		</div>
+		</div>
+	</div>
+	
+	<div id="top" style="opacity:0;">
 		
+		{{#isolate}}
 		<div id="home_video">
 			
 			{{#if useCustomPlayer}}
@@ -52,6 +73,8 @@
 
 			</ul>
 		</div>
+		{{/isolate}}
+		
 	</div>
 </template>
 

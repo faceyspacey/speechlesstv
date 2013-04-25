@@ -1,4 +1,4 @@
-function formatSeconds(originalSeconds) {
+formatSeconds = function(originalSeconds) {
 	sec_numb    = parseInt(originalSeconds);
 	
 	var hours   = Math.floor(sec_numb / 3600);
@@ -16,7 +16,7 @@ function formatSeconds(originalSeconds) {
 
 
 // This function is called when an error is thrown by the player
-function onPlayerError(errorCode) {
+onPlayerError = function(errorCode) {
   alert("An error occured of type:" + errorCode);
 }
 

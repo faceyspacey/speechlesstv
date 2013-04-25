@@ -3,7 +3,7 @@ Template.custom_player.current_video = function() {
 }
 
 //call the google youtube code to display the player
-var playerIsSetup = false;
+playerIsSetup = false;
 Template.custom_player.rendered = function() {
 	if(!playerIsSetup) {
 		console.log('custom_player SETUP');

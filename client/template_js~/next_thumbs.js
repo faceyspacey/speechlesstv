@@ -1,4 +1,4 @@
-var currentVideoIndex = 0;
+currentVideoIndex = 0;
 
 Template.next_thumbs.events({
 	'click #leftThumb': function() {
@@ -27,7 +27,7 @@ Template.next_thumbs.events({
 	}
 });
 
-function setBackNextButtons(currentVideoIndex) {
+setBackNextButtons = function(currentVideoIndex) {
 	//set back button content
 	var $prevVid = $('.vid').eq((currentVideoIndex - 1) % getActualLimit()),
 		$back = $('#leftThumb');
@@ -38,13 +38,13 @@ function setBackNextButtons(currentVideoIndex) {
 	extractVideoContent($nextVid, $next);
 }
 
-function extractVideoContent($element, $button) {
+extractVideoContent = function($element, $button) {
 	$button.find('.iframeImg img').attr('src', $element.find('.video_image').attr('src'));
 	$button.find('.title').text($element.find('.video_main_title').text());
 	$button.find('p.time').text($element.find('.video_info_container h3').text().replace(':00', ''));
 }
 
 //we can't use Session.get('limit') cuz the actual total # of videos on the page may be less
-function getActualLimit() {
+getActualLimit = function() {
 	return $('.vid').length;
 }

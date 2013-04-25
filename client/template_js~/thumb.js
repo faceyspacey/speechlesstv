@@ -20,8 +20,7 @@ Template.thumb.events({
 	},
 	'click .deleteVideo': function(event) {
 		event.stopPropagation();
-		
-		
+			
 		var x= window.confirm("Nigga r u sure u want to delete '"+this.title+"'?");
 		
 		if(x) Videos.remove(this._id);
@@ -52,18 +51,17 @@ Template.thumb.events({
 	}
 });
 
-function scrollToTop() {
+scrollToTop = function() {
 	$('html,body').animate({scrollTop: 0}, 1000, 'easeOutBounce');
 }
 
-function updateBeingWatched(originalVideo) {
+updateBeingWatched = function(originalVideo) {
 	var newVideo = {};
 	
 	for(var prop in originalVideo) {
 		if(prop != '_id') newVideo[prop] = originalVideo[prop]; //dont copy _id cuz mongo generates it
 	}
 	
-	console.log(this);
 	newVideo.time = Date.now(); 
     BeingWatched.insert(newVideo);
 }

@@ -1,5 +1,3 @@
-Session.set('home_youtube_id', '4w41ESyvHxg');
-
 Template.home_video.category = function() {
 	if(Session.get('current_video')) {
 		var categoryId = Session.get('current_video').category_id;

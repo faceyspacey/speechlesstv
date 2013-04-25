@@ -17,7 +17,7 @@ height: 54px;
 box-shadow: 0 8px 6px -8px #555;
 }
 
-#header .headerInner{
+#header .headerInner {
 max-width: 73em;
 width: 1032px;
 position: relative;
@@ -40,7 +40,7 @@ line-height:1.15;
 font-smoothing: antialiased;
 text-rendering: optimizeLegibility;	
 }
-#header #title{
+#header #title {
 font-size: 25px;
 font-family: 'Fjalla One', sans-serif;
 color: #cdcdcd;
@@ -52,6 +52,13 @@ font-smoothing: antialiased;
 text-rendering: optimizeLegibility;
 text-shadow: 1px 1px 0px #9B9B9B;
 font-weight: bold;
+}
+
+@-moz-document url-prefix() {
+   #header #title {
+        letter-spacing: 2px;
+		font-size: 26px;
+    }
 }
 
 #header #header_right {

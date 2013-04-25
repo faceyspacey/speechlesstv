@@ -1,5 +1,6 @@
 Template.being_watched.videos = function() {
-     return BeingWatched.find({}, {sort: {time: -1}, limit: 8 });
+	var fullyLoaded = Session.get('siteFullyLoaded');
+    if(fullyLoaded) return BeingWatched.find({}, {sort: {time: -1}, limit: 8 });
 };
 
 Meteor.startup(function(){		
