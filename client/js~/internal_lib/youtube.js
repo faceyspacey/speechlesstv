@@ -37,44 +37,61 @@ onYouTubePlayerReady = function(playerId) {
 	
 	console.log('onYouTubePlayerReady');
 	
-	setFirstVideo();
-	
 	// This causes the updatePlayerInfo function to be called every 250ms to get fresh data from the player
 	setInterval(updatePlayerInfo, 250); //IMPORTANT CODE LINE, MILLS!
 	updatePlayerInfo();	
 }
 
+
+
 //this runs every time Session.get('current_video') changes because of the Meteor Autorun code above
 autorunReplaceVideo = function(video) {
-	if(video && ytplayer) {
-		console.log('autorunReplaceVideo');
-
-		ytplayer.cueVideoById(video.youtube_id);
-		
-		updateSocialLinks(video._id);
-		
-		if(window.secondsFromUrl) {
-			ytplayer.seekTo(window.secondsFromUrl);
-			window.secondsFromUrl = 0;
-		}
-		else ytplayer.seekTo(0, true);
-		
-		$('#currentTimeBall').css('left', 0);
-		
-		
-		if(Autoplay) {
-			ytplayer.playVideo();		
-			$('#largePlayPauseButton').hide();
-			$('#miniPausePlay').removeClass('play').addClass('pause');
-		}
-		else {
-			ytplayer.pauseVideo();	
-			$('#largePlayPauseButton').show();	
-			$('#miniPausePlay').removeClass('pause').addClass('play');
-		}
-				
+	if(!ytplayer) {
+		setTimeout(function() {
+			console.log('timeout autorun');
+			autorunReplaceVideo(video);
+		}, 200);
+		return;
 	}
+	
+	console.log('autorunReplaceVideo (ytplayer found!)');
+
+	ytplayer.cueVideoById(video.youtube_id);
+	
+	
+	updateSocialLinks(video._id);
+	
+	if(!window.secondsFromUrl) ytplayer.seekTo(0, true);
+	else ytplayer.seekTo(window.secondsFromUrl);
+	
+	$('#currentTimeBall').css('left', 0);
+	
+	$('#title_overlay').text(video.title);
+	
+	if(Autoplay) {
+		ytplayer.playVideo();		
+		$('#largePlayPauseButton').hide();
+		$('#title_overlay').hide();
+		$('#miniPausePlay').removeClass('play').addClass('pause');
+	}
+	else {
+		ytplayer.pauseVideo();	
+		$('#largePlayPauseButton').show();	
+		$('#title_overlay').show();
+		$('#miniPausePlay').removeClass('pause').addClass('play');
+	}
+	
+	//remove preloader and show player if necessary	
+	$('#preloader').hide();
+	$('#top').css('opacity', 1);
 }
+
+//update current video reactively from here on out	
+Meteor.autorun(function() {
+	var video = Session.get('current_video');
+	console.log('current_video AUTORUN');
+	if(video) autorunReplaceVideo(video);				
+});
 
 updateFlyupSocialLinks = function(videoId, currentTime) {
 	currentTime -= 5;
@@ -84,7 +101,6 @@ updateFlyupSocialLinks = function(videoId, currentTime) {
 }
 
 updateSocialLinks = function(videoId) {
-	Meteor.Router.to('/video/'+videoId);
 	$('#fbMetaUrl').attr('content', 'http://www.emiliotelevision.com/video/'+videoId);
 	$('#fbMetaTitle').attr('content', 'EmilioTelevision.com - ' + Session.get('current_video').title);
 	$('title').text(Session.get('current_video').title);
@@ -122,7 +138,7 @@ updatePlayerInfo = function() {
 		lastCheckedTime = currentTime;
 		
 		if(currentTime % 15 == 0) {
-			//Meteor.Router.to('/video/'+Session.get('current_video')._id+'/'+currentTime);
+			//Router.go('videoAtTime', {video_id: Session.get('current_video')._id, seconds: currentTime});
 			history.pushState({'id':69}, document.title, '/video/'+Session.get('current_video')._id+'/'+currentTime);
 		}
 		
@@ -168,56 +184,51 @@ updatePlayerInfo = function() {
 
 
 // This function is called when the player changes state
-countDownInterval = undefined;
-countDownNum = 10;
 onPlayerStateChange = function(newState) {
-	if(newState == 0) {//0 = ended state
-		if($('#videoContainer').hasClass('is_fullScreen')) $('#fullscreen').click(); //get out of fullscreen to display postroll
-		
-		var $button = $('#rightThumb'),
-			imgSrc = $button.find('.iframeImg img').attr('src'),
-			vidTitle = $button.find('.title').text(),
-			vidTime = $button.find('p.time').text();
-		
-		$('#postRoll #upNextImage').attr('src', imgSrc);
-		$('#postRoll #upNextTitle span').text(vidTitle);
-		
-		//cue up next video so it's already loading
-		Autoplay = false;		
-		Session.set('autoplay', false);
-		$('#rightThumb').click();
-		
-
-		$('#postRoll').fadeIn('fast', function() {
-			//bring in postRoll elements via nice animation
-
-			$('#upNext').animate({left: 0}, 500, 'easeOutBack');
-			$('#postRollLeft').animate({top: 0}, 500, 'easeOutBack', function() {
-				$('#postRoll').css('overflow', 'visible');
-				setTimeout(function() {
-					$('#postRollMills').animate({top: 0}, 750, 'easeOutBounce');
-				}, 50);
-			});
-		});
-		
-		countDownInterval = setInterval(function() {
-			$('#countdownSpan, #postRollCountdown').text(countDownNum);
-			
-			if(countDownNum == 0) { //go to next video after countdown reaches 0
-				clearInterval(countDownInterval);
-				
-				setTimeout(function() {
-					$('#smallPlayPauseButton').click();
-					countDownNum = 10;
-					$('#countdownSpan, #postRollCountdown').text(countDownNum);
-				}, 900);
-			}
-			else countDownNum--;
-			
-		}, 1300);
-	}
+	if(newState == 0) goToPostRoll(); //0 = ended state
 }
 
+goToPostRoll = function() {
+	exitFullScreen();		
+	prepareUpNextBox();		
+	preloadNextVideo();		
+	showPostRoll();
+	startPostRollCountdown();
+};
+
+exitFullScreen = function() {
+	if($('#videoContainer').hasClass('is_fullScreen')) $('#fullscreen').click();
+};
+
+prepareUpNextBox = function() {
+	var $button = $('#rightThumb'),
+		imgSrc = $button.find('.iframeImg img').attr('src'),
+		vidTitle = $button.find('.title').text(),
+		vidTime = $button.find('p.time').text();
+	
+	$('#postRoll #upNextImage').attr('src', imgSrc);
+	$('#postRoll #upNextTitle span').text(vidTitle);
+};
+
+preloadNextVideo = function() {
+	Autoplay = false;		
+	Session.set('autoplay', false);
+	$('#rightThumb').click();
+};
+
+showPostRoll = function() {
+	$('#postRoll').fadeIn('fast', function() {
+		$('#title_overlay').hide();
+
+		$('#upNext').animate({left: 0}, 500, 'easeOutBack');
+		$('#postRollLeft').animate({top: 0}, 500, 'easeOutBack', function() {
+			$('#postRoll').css('overflow', 'visible');
+			setTimeout(function() {
+				$('#postRollMills').animate({top: -50}, 750, 'easeOutBounce');
+			}, 50);
+		});
+	});
+};
 
 hidePostRoll = function() {
 	$('#postRollMills').animate({top: 500}, 500, 'easeInExpo', function() {
@@ -227,6 +238,26 @@ hidePostRoll = function() {
 		$('#upNext').animate({left: 500}, 400, 'easeInBack');
 	});
 }
+
+countDownInterval = undefined;
+countDownNum = 10;
+startPostRollCountdown = function() {
+	countDownInterval = setInterval(function() {
+		$('#countdownSpan, #postRollCountdown').text(countDownNum);
+		
+		if(countDownNum == 0) { //go to next video after countdown reaches 0
+			clearInterval(countDownInterval);
+			
+			setTimeout(function() {
+				$('#smallPlayPauseButton').click();
+				countDownNum = 10;
+				$('#countdownSpan, #postRollCountdown').text(countDownNum);
+			}, 900);
+		}
+		else countDownNum--;
+		
+	}, 1300);
+};
 
 
 
@@ -356,7 +387,7 @@ bindPlayerVolumeControls = function() {
 		var volumeIndex = $('#volume li').index(this);
 		
 		$('#volume li:gt('+(volumeIndex)+')').css('background-color', '#fff');	
-		$('#volume li:lt('+(volumeIndex+1)+')').css('background-color', '#5BA0B8');		
+		$('#volume li:lt('+(volumeIndex+1)+')').css('background-color', '#559AFE');		
 	}).bind('mousedown', function() {
 		selectedVolumeIndex = $('#volume li').index(this);
 		volume = Math.round(selectedVolumeIndex/5 * 100);
@@ -370,14 +401,14 @@ bindPlayerVolumeControls = function() {
 	//on mouseleave with no selection, set the volume selection back to what it was
 	$('#volume').bind('mouseleave', function() {
 		$('#volume li').css('background-color', 'white');
-		$('#volume li:lt('+(selectedVolumeIndex+1)+')').css('background-color', '#5BA0B8');
+		$('#volume li:lt('+(selectedVolumeIndex+1)+')').css('background-color', '#559AFE');
 	});
 }
 
 
 setVolumeIndicator = function(selectedVolumeIndex) {
 	$('#volume li').css('background-color', 'white');
-	$('#volume li:lt('+(selectedVolumeIndex+1)+')').css('background-color', '#5BA0B8');
+	$('#volume li:lt('+(selectedVolumeIndex+1)+')').css('background-color', '#559AFE');
 }
 
 /**
@@ -509,3 +540,58 @@ toggleFlyupContainer = function() {
 		$(window).unbind('resize.flyupPlacement');
 	}
 }
+
+bindPlayerExtras = function() {
+	//display .vid hover states
+	$('.vid .thumbHover').live('mouseenter', function() {
+		$(this).find('.transparent_stuff').addClass('hover');
+	}).live('mouseleave', function() {
+		$(this).find('.transparent_stuff').removeClass('hover');
+	});
+	
+	//back/next button hovers
+	$('#leftThumb, #rightThumb').live('mouseenter', function() {
+		$('#leftThumb').animate({left: 0}, 100, 'easeOutExpo');
+		$('#rightThumb').animate({right: 0}, 100, 'easeOutExpo');
+	}).live('mouseleave', function() {
+		$('#leftThumb').animate({left: -224}, 100, 'easeInExpo');
+		$('#rightThumb').animate({right: -224}, 100, 'easeInExpo');
+	});
+
+	//current time ball torqoise hover state
+	$('#currentTimeBall').live('mouseenter', function() {
+		$(this).find('#innerTimeBallCircle').addClass('hover');
+	}).live('mouseleave', function() {
+		$(this).find('#innerTimeBallCircle').removeClass('hover');
+	});
+
+	//hide/show flyup edit/delete tools on hover only
+	$('#flyupContainer').live('mouseenter', function() {
+		$('#adminFlyupTools').fadeIn();
+	}).live('mouseleave', function() {
+		$('#adminFlyupTools').fadeOut();
+	});
+	
+	//make links in flyups open in a new window
+	$('#flyupCommentInner a').live('click', function(e) {
+		window.open($(this).attr('href'));
+		e.preventDefault();
+	});
+	
+	//make Watch IT! button link to next video
+	$('#watchIt').live('click', function() {
+		$('#smallPlayPauseButton').click();
+		clearInterval(countDownInterval);
+		
+		countDownNum = 10;
+		$('#countdownSpan, #postRollCountdown').text(countDownNum);
+	});
+};
+
+
+//hide/show edit comment flyups
+Meteor.autorun(function() {	
+	if(Roles.userIsInRole(Meteor.userId(), ['admin']) //if user is admin
+	|| (Session.get('current_video') && Session.get('current_video').user_id == Meteor.userId()) ) //if user owns video
+			$('#deleteFlyup, #editFlyup').show(); //show edit comment buttons
+});

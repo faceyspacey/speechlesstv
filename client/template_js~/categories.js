@@ -1,17 +1,21 @@
+Template.categories.categories = function() {
+	return Categories.find();
+};
+
 Template.category.events({
 	'click': function() {
-		console.log(this.category_id);
-		Session.set('current_channel', null);
-		Session.set('current_category_id', this.category_id);
+		Router.go('category', {name: this.name});
 	}
 });
 
-Template.category.upperCaseName = function() {
-	return this.name.toUpperCase();
-}
+
+Template.category.helpers({
+	upperCaseName: function() {
+		return this.name.toUpperCase();
+	},
+	class: function() {
+		return Session.equals('current_category_name', this.name) ? 'selected' : '';
+	}
+});
 
 
-
-Template.category.class = function() {
-	return Session.equals('current_category_id', this.category_id) ? 'selected' : '';
-}

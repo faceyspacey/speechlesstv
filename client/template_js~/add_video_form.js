@@ -9,7 +9,9 @@ Template.add_video_form.events({
 			videoObject = {
 				title: $('#title_field').val(),
 				youtube_id: $('#youtube_id_field').val(),
-			 	channel: $('#channel_field').val(),
+			 	channel: Meteor.user().profile.username, //$('#channel_field').val(),
+				user_id: Meteor.userId(),
+				user_facebook_id: Meteor.user().profile.facebook_id,
 				length: $('#length_field').val(),
 				category_id: parseInt($('#category_id_field').val()),
 				initial_comment: $('#initial_comment_field').val(),

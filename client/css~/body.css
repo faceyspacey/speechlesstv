@@ -13,15 +13,16 @@ blockquote:before, blockquote:after, q:before, q:after { content: ""; }
 blockquote, q {    quotes: "" ""; }
 .clearBoth { clear:both; }
 body{
-background:url('../../images/creampaper.png');
+background: url('../../images/creampaper.png');
 overflow-x: hidden;
 overflow-y: scroll;	
 }
 #container {
 background-repeat: repeat-x;
-background-color: #F7F7F7;
+background-color: rgb(248, 251, 253);
 width: 1032px;
 margin: 0 auto;
+box-shadow: 0px 3px 30px -4px #2a6efd;
 }
 
 #login-buttons {

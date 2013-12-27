@@ -6,7 +6,7 @@
  * Created by Hakim El Hattab, http://hakim.se
  */
 
-Meteor.startup(function(){
+ForkIt = function(){
 
 	var STATE_CLOSED = 0,
 		STATE_DETACHED = 1,
@@ -358,5 +358,5 @@ Meteor.startup(function(){
 	
 	
 
-});
+};
 

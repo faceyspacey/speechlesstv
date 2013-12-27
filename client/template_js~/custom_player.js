@@ -15,6 +15,7 @@ Template.custom_player.rendered = function() {
 Template.custom_player.events({
 	'click #largePlayPauseButton': function(event) {
 		$(event.currentTarget).hide();
+		$('#title_overlay').hide();
 		$('#smallPlayPauseButton').click();
 	},
 	'click #smallPlayPauseButton': function(event) {
@@ -27,6 +28,7 @@ Template.custom_player.events({
 			Session.set('autoplay', false);
 			hideFlyup();			
 			 $('#largePlayPauseButton').show();
+			$('#title_overlay').show();
 		}
 		else { //video playing now
 			$button.removeClass('play').addClass('pause');
@@ -34,6 +36,7 @@ Template.custom_player.events({
 			Autoplay = true;		
 			Session.set('autoplay', true);
 			$('#largePlayPauseButton').hide();
+			$('#title_overlay').hide();
 			hidePostRoll();
 			
 			window.secondsFromUrl = null;

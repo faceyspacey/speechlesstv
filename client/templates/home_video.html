@@ -22,6 +22,7 @@
 	<div id="top" style="opacity:0;">
 		
 		{{#isolate}}
+		
 		<div id="home_video">
 			
 			{{#if useCustomPlayer}}
@@ -42,7 +43,7 @@
 		</div>
 		<div class="videoBio">
 			<p>
-				<img src="/images/logo-icon.png" id="miniMills" />
+				<img src="{{user_pic}}" id="miniMills" />
 				<span class='spanQuotes'>"&nbsp;</span>{{current_video.description}}<span class='spanQuotes'>"</span>
 			</p>
 		</div>
@@ -68,7 +69,7 @@
 					</li>
 				
 					<li id="facebookLikeLi">
-						{{>fb_like}}
+						
 					</li>			
 
 			</ul>

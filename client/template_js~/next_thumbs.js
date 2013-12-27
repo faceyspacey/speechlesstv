@@ -27,13 +27,14 @@ Template.next_thumbs.events({
 	}
 });
 
-setBackNextButtons = function(currentVideoIndex) {
+setBackNextButtons = function(videoIndex) {
+	console.log('setBackNextButtons', videoIndex, currentVideoIndex);
 	//set back button content
-	var $prevVid = $('.vid').eq((currentVideoIndex - 1) % getActualLimit()),
+	var $prevVid = $('.vid').eq((videoIndex - 1) % getActualLimit()),
 		$back = $('#leftThumb');
 	extractVideoContent($prevVid, $back);
 	
-	var $nextVid = $('.vid').eq((currentVideoIndex + 1) % getActualLimit()),
+	var $nextVid = $('.vid').eq((videoIndex + 1) % getActualLimit()),
 		$next = $('#rightThumb');					
 	extractVideoContent($nextVid, $next);
 }

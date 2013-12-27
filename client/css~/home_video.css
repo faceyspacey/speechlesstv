@@ -12,6 +12,10 @@ height:468px;
 
 
 margin-bottom: 10px;
+
+
+border: 6px solid #559afe;
+position:relative;
 }
 /*
 #top #home_video .video_count {
@@ -81,7 +85,7 @@ float:left;
 font-size: 38px;
 font-weight:bold;
 font-family: 'Fjalla One', sans-serif;
-color: #5BA0B8;
+color: rgb(42, 110, 253);
 text-align:left;
 line-height:1;
 -webkit-font-smoothing: antialiased;
@@ -98,7 +102,7 @@ float:left;
 font-size: 25px;
 font-weight:bold;
 font-family: 'Fjalla One', sans-serif;
-color: #cdcdcd;
+color: #559AFE;
 text-align:left;
 line-height:1.5;
 -webkit-font-smoothing: antialiased;
@@ -111,7 +115,7 @@ float:left;
 font-size: 25px;
 font-weight:bold;
 font-family: 'Fjalla One', sans-serif;
-color:#5BA0B8;
+color: rgb(42, 110, 253);
 text-align:left;
 line-height:1.5;
 -webkit-font-smoothing: antialiased;
@@ -145,7 +149,7 @@ width: 440px;
 font-size: 16px;
 font-weight:normal;
 font-family: 'Fjalla One', sans-serif;
-color:#606060;
+color: #0F4899;
 text-align:left;
 line-height:1;
 -webkit-font-smoothing: antialiased;
@@ -189,4 +193,18 @@ height: 28px;
 }
 #top #votes li#facebookShare img {
 height: 20px;   
+}
+
+#title_overlay {
+	position: absolute;
+	top: 34px;
+	left: 3px;
+	background: #559afe;
+	color: white;
+	margin-left: -31px;
+	line-height: 60px;
+	font-size: 46px;
+	padding: 5px 10px;
+	max-width: 920px;
+	border: none;
 }

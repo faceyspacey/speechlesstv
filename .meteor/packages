@@ -10,5 +10,8 @@ accounts-ui
 accounts-facebook
 email
 accounts-base
-router
 spiderable
+iron-router
+roles
+headly
+standard-app-packages

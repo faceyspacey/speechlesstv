@@ -1,5 +1,5 @@
 #show_more {
-background-color:#cdcdcd;
+background-color:rgb(42, 110, 253);
 height:35px;
 width: 96%;
 margin: 10px 20px;
@@ -12,8 +12,11 @@ line-height:1.8;
 -moz-font-smoothing: antialiased;
 font-smoothing: antialiased;
 text-rendering: optimizeLegibility;
+box-shadow: 1px 1px 10px 1px gray;
 }
 #show_more:hover {
-background-color:#B0AEAE;
+background-color:#559afe;
+color: rgb(10, 54, 109);
 cursor: pointer;
+box-shadow: none;
 }

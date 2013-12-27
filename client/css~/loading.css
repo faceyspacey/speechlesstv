@@ -11,15 +11,15 @@ position: relative;
 top: 180px;
 height:100px;
 width:800px;
-border:5px solid #5BA0B8;
+border: 5px solid #559afe;
 overflow:hidden;
 background-color:#F0F7F8;
-background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F0F7F8), to(#5BA0B8));
+background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#559afe), to(#2a6efd));
 background: -moz-linear-gradient(top, #F0F7F8, #5BA0B8);
-background: -webkit-linear-gradient(top, #F0F7F8, #5BA0B8);
+background: -webkit-linear-gradient(top, #559afe, #2a6efd);
 background: -ms-linear-gradient(top, #F0F7F8, #5BA0B8);
 background: -o-linear-gradient(top, #F0F7F8, #5BA0B8);
-background: linear-gradient(top, #F0F7F8, #5BA0B8);
+background: linear-gradient(top, #559afe, #2a6efd);
 }
 
 .warningGradientBarLineG{

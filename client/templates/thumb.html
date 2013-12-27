@@ -12,8 +12,8 @@
 
 
 		<div class="thumbHover">
-			<img class="thumb_over_img" src="/images/mini-play-button.png" />
-			{{#if isAdmin}}
+			<div class="thumb_over_img"></div>
+			{{#if isInRole 'admin'}}
 				<img class="deleteVideo" src="/images/closebtn.png" />
 				<img class="edit-button" src="/images/pencil-icon.png" />
 			{{/if}}

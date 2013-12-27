@@ -1,12 +1,9 @@
-Template.header.isAdmin = function() {
-	if(window.location.host == 'localhost:3000') return true; //development mode can edit/add/delete videos
-	
-	if(!Meteor.user()) return false;
-	if(Meteor.user().profile.facebook_id == '561636795' || Meteor.user().profile.facebook_id == '16404762') return true;
-	return false;
-}
-
 Template.header.events({
+	'click #facebook_connect': function() {
+		Meteor.loginWithFacebook(['email', 'publish_actions', 'user_about_me'], function(error) {
+			if(!error) Router.go('channel', {name: Meteor.user().profile.username});
+		});
+	},
 	'click #add_marker': function() {
 		var $button = $('#miniPausePlay');	
 		if($button.hasClass('pause')) $button.click();

@@ -8,15 +8,18 @@ Template.home_video.category = function() {
 	}	
 }
 
+Template.home_video.user_pic = function() {
+	var facebookId = '16404762'; //Session.get('current_video').user_facebook_id;
+	return 'https://graph.facebook.com/'+facebookId+'/picture?width=75&height=75'
+};
+
 Template.home_video.current_video = function() {	
 	return Session.get('current_video');
 }
 
 Template.home_video.events({
 	'click h1#home_video_channel': function(e) {
-		Session.set('current_category_id', 0);
-		Session.set('current_channel', Session.get('current_video').channel);
-		$('html,body').animate({scrollTop: $('#thumb_grid').offset().top - 150}, 400, 'easeOutExpo');
+		Router.go('channel', {name: Session.get('current_video').channel});
 	}
 });
 

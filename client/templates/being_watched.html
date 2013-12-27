@@ -1,4 +1,5 @@
 <template name="being_watched">
+	{{#if is_videos}}
 	<div id="being_watched">
 		<div class="groove"></div>
 			<div class="miniPlaylist">
@@ -12,6 +13,7 @@
 		
 		<div class="groove" style="margin-bottom: 25px"></div>
 	</div>
+	{{/if}}
 </template>
 
 <template name="being_watched_thumb">

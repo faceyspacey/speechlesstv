@@ -1,6 +1,9 @@
 Template.being_watched.videos = function() {
-	var fullyLoaded = Session.get('siteFullyLoaded');
-    if(fullyLoaded) return BeingWatched.find({}, {sort: {time: -1}, limit: 8 });
+	return Videos.find({}, {sort: {last_watched: -1}, limit: 8});
+};
+
+Template.being_watched.is_videos = function() {
+	return Videos.find().count() ? true : false;
 };
 
 Meteor.startup(function(){		
@@ -20,6 +23,7 @@ Template.being_watched_thumb.events({
 	'click': function() {
 		Session.set('current_video', this);
 		scrollToTop();
+		Videos.update(this._id, {$set: {last_watched: Date.now()}});
 	}
 	
 });

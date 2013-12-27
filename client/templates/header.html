@@ -1,14 +1,14 @@
 <template name="header">
 	<div id="header_container">
 		<div id="header">
-			{{#if isAdmin}}
+			{{#if isInRole 'admin'}}
 				<span id="add_marker" class="admin_link">add marker</span>
 				<span id="add_video" class="admin_link">add video</span>
 			{{/if}}
 			
 			<div class="headerInner">
 				
-				{{#if isAdmin}}
+				{{#if isInRole 'admin'}}
 					<div id="comment_container" style="display:none;">
 						<textarea id="marker_comment"></textarea>
 						<span id="cancel_marker" class="admin_link" class="admin_link">cancel bitch</span>
@@ -16,15 +16,19 @@
 					</div>
 				{{/if}}
 				<a id="header_left" href="/" style="text-decoration:none;">
-					<div id="logo">E</div>
-					<div id="title">EMILIOTELEVISION</div>
+					<img src="/images/speechless-logo.png" style="height: 48px; margin-top:2px;" />
 				</a>
 
 				<div id="header_right">
-					<a id="facebook" href="http://www.facebook.com/emiliotelevision" target="_blank"></a>
-					<a id="twitter" href="http://www.twitter.com/emiliotv" target="_blank"></a>
-					<a id="youtube" href="http://www.youtube.com/emiliotelevision" target="_blank"></a>
-					<a id="contact">CONTACT</a>
+					{{#unless currentUser}}
+						<img id="facebook_connect" src="/images/fb-button.png" />
+					{{/unless}}
+					
+					<div id="upload_video_button">
+						<div id="upload_video_button_inner">
+							Add Video
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

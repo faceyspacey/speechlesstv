@@ -1,46 +1,36 @@
 <head>
+	<title>EmilioTelevision.com -- Every Video You Should Be Watching</title>
+	
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
+	
   	<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
   	<link href='http://fonts.googleapis.com/css?family=Archivo+Black' rel='stylesheet' type='text/css'>
 
 	<script src="http://www.google.com/jsapi" type="text/javascript"></script>
 	<script type="text/javascript">google.load("swfobject", "2.1");</script>
 	
-	
-	<title>EmilioTelevision.com -- Every Video You Should Be Watching</title>
-	
-	<meta id="fbMetaTitle" property="og:title" content="EmilioTelevision.com -- Every Video You Should Be Watching"/>
-	<meta property="og:type" content="video"/>
-	<meta id="fbMetaUrl" property="og:url" content="http://www.emiliotelevision.com/video/"/>
-	<meta property="og:image" content="http://www.emiliotelevision.com/images/emills-logo-large.png"/>
-	<meta property="og:site_name" content="EmilioTelevision.com"/>
-	<meta property="fb:admins" content="561636795"/>
-	<meta property="og:description" content="Emilio Calls all the Shots for your Television Viewing Experience so you can Shutup and Relax."/>
-
-	
 	<!--[if gte IE 9]>
 	  <style type="text/css">
 	    .gradient {
 	       filter: none;
 	    }
-	  </style>
+	  </stle>
 	<![endif]-->
-	
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-	<link rel="icon" href="favicon.ico" type="image/x-icon">
-	
-	
 </head>
 
 <body>
-  	{{renderPage}}
+  	{{>main_layout}}
 </body>
+
+<template name="main_layout">
+	{{yield}}
+</template>
 
 <template name="home">
 	{{>header}}
 	
 	 <div id="container"> <!-- make this center ur shit in the fixed width instead of #main-->
-		{{>forkit_curtain}}
-		{{>ribbon}}
 		{{>contact_form}}
 		{{>add_video_form}}
 		{{>remove_video_form}}
