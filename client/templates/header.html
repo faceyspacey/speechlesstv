@@ -11,7 +11,7 @@
 				{{#if isInRole 'admin'}}
 					<div id="comment_container" style="display:none;">
 						<textarea id="marker_comment"></textarea>
-						<span id="cancel_marker" class="admin_link" class="admin_link">cancel bitch</span>
+						<span id="cancel_marker" class="admin_link" class="admin_link">cancel</span>
 						<input type="button" id="marker_submit_button" value="COMMENT" />
 					</div>
 				{{/if}}
@@ -20,17 +20,44 @@
 				</a>
 
 				<div id="header_right">
-					{{#unless currentUser}}
+					{{#if currentUser}}	
+						{{#if is_update_video}}
+							{{>back_button}}
+						{{else}}
+							{{>my_account_button}}	
+							{{>upload_video_button}}
+						{{/if}}
+					{{else}}
 						<img id="facebook_connect" src="/images/fb-button.png" />
-					{{/unless}}
+						{{>upload_video_button}}
+					{{/if}}
 					
-					<div id="upload_video_button">
-						<div id="upload_video_button_inner">
-							Add Video
-						</div>
-					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+</template>
+
+<template name="back_button">
+	<div class="custom_button" id="back_buton">
+		<div class="custom_button_inner">
+			BACK
+		</div>
+	</div>
+</template>
+
+<template name="upload_video_button">
+	<div class="custom_button" id="upload_video_button">
+		<div class="custom_button_inner">
+			Add Video
+		</div>
+	</div>
+</template>
+
+<template name="my_account_button">
+	<div class="custom_button" id="my_account">
+		<div class="custom_button_inner">
+			My Account
 		</div>
 	</div>
 </template>

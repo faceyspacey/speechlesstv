@@ -5,7 +5,7 @@ Template.next_thumbs.events({
 		currentVideoIndex = currentVideoIndex - 1; //currentVideoIndex--; OR currentVideoIndex -= 1;
 		currentVideoIndex = currentVideoIndex % getActualLimit();
 		
-		console.log("CURRENT INDEX IS BITCH:", currentVideoIndex);
+		console.log("CURRENT INDEX IS:", currentVideoIndex);
 		
 		//fake click the video in the grid to trigger making it play in the featured spot
 		$('.vid').eq(currentVideoIndex).click();
@@ -17,7 +17,7 @@ Template.next_thumbs.events({
 		currentVideoIndex = currentVideoIndex + 1; //currentVideoIndex++; OR currentVideoIndex += 1;
 		currentVideoIndex = currentVideoIndex % getActualLimit();
 		
-		console.log("CURRENT INDEX IS BITCH:", currentVideoIndex);
+		console.log("CURRENT INDEX IS:", currentVideoIndex);
 		
 		//fake click the video in the grid to trigger making it play in the featured spot
 		$('.vid').eq(currentVideoIndex).click();
@@ -41,8 +41,10 @@ setBackNextButtons = function(videoIndex) {
 
 extractVideoContent = function($element, $button) {
 	$button.find('.iframeImg img').attr('src', $element.find('.video_image').attr('src'));
-	$button.find('.title').text($element.find('.video_main_title').text());
 	$button.find('p.time').text($element.find('.video_info_container h3').text().replace(':00', ''));
+	
+	var title = $element.find('.video_main_title').text();
+	$button.find('.title').text(shortenText(title, 28));
 }
 
 //we can't use Session.get('limit') cuz the actual total # of videos on the page may be less

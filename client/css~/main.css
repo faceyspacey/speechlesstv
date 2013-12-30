@@ -16,14 +16,31 @@ body{
 background: url('../../images/creampaper.png');
 overflow-x: hidden;
 overflow-y: scroll;	
+padding-top: 75px;
 }
-#container {
+.page {
 background-repeat: repeat-x;
 background-color: rgb(248, 251, 253);
 width: 1032px;
-margin: 0 auto;
-box-shadow: 0px 3px 30px -4px #2a6efd;
+box-shadow: 0px 12px 30px -4px #2a6efd;
+margin: 0px auto 0px;
+padding-bottom: 10px;
+position: relative;
 }
+
+#container {
+	z-index: 1;
+}
+
+#other_pages {
+	z-index: 2;
+}
+
+#video_area {
+height: 718px;
+position: relative;	
+}
+
 
 #login-buttons {
 display: block;

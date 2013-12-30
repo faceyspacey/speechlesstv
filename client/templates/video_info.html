@@ -1,0 +1,121 @@
+<template name="video_info">
+	{{#unless is_fullscreen}}
+		<div id="video_info">
+			<div class="channelName">
+				<h1>{{shorten current_video.title 26}}</h1>
+			</div>
+			<div style="clear:both;"></div>
+
+
+			<div class="channelViews">
+				{{>category_dropdown}}
+				<h1 id="home_video_channel">{{current_video.channel}}</h1>
+			</div>
+
+			<div class="videoBio">
+				<p>
+					<img src="{{currentVideoUserPic}}" id="miniMills" />
+					{{>description_box}}
+				</p>
+			</div>
+			<div style="clear:both;"></div>
+
+
+			{{>social_buttons}}
+		</div>
+	{{/unless}}
+</template>
+
+
+
+<template name="title_box">
+	{{#if is_update_video}}
+		<textarea id="title_texarea" class="title_box" style="margin-left: 300px; opacity:0;">{{current_video.title}}</textarea>
+	{{else}}
+		{{#if canDisplayOverlays}}
+			<div id="title_overlay" class="title_box" style="margin-left: 300px; opacity:0;">{{current_video.title}}</div>
+		{{/if}}
+	{{/if}}
+</template>
+
+
+
+<template name="description_box">
+	{{#if is_update_video}}
+		<textarea id="description_textarea" placeholder="Write a witty description/comment ;)">{{current_video.description}}</textarea>
+	{{else}}
+		<span class='spanQuotes'>"&nbsp;</span>{{current_video.description}}<span class='spanQuotes'>"</span>
+	{{/if}}
+</template>
+
+
+
+<template name="category_dropdown">
+	{{#if is_update_video}}
+		<select id="category_dropdown">
+			{{#each categories true}}
+				<option value="{{category_id}}" {{selectedCategory}}>{{name}}</option>
+			{{/each}}
+		</select>
+	{{else}}
+		<p>{{category}}-</p>
+	{{/if}}
+</template>
+
+
+
+<template name="submit_video">
+	{{#if is_update_video}}
+		<div id="submit_video_box">
+				<div id="update_video_bullets">
+					{{#isolate}}
+						<li>&#10003 Add Title</li>	
+						<li>{{{bulletCheckmarkCategory}}} Provide Category</li>
+						<li>{{{bulletCheckmarkDescription}}} Write Witty Description</li>
+					{{/isolate}}
+				</div>
+			<div id="submit_video_button">Submit Video</div>
+		</div>
+		{{>submit_video_rendered_first}}
+	{{/if}}
+</template>
+
+
+
+<template name="submit_video_rendered_first">
+</template>
+
+
+
+<template name="social_buttons">
+	<div id="votes">
+		<ul>
+			<li id="facebookShare">
+				<a class="facebook_link" href="https://www.facebook.com/sharer/sharer.php?u=http://www.speechless.tv/video/{{current_video._id}}" target="_blank">
+					<img src="/images/facebook-share.png" alt="Follow Me" />
+				</a>
+			</li>
+			<li>
+				<a id="tweetButton" class="tweet_link" href="https://twitter.com/share?via=emiliotv&url=http://www.speechless.tv/video/{{current_video._id}}" target="_blank">
+					<img src="/images/tweet.png" width="60" height="20" alt="Tweet Me" />
+				</a>
+			</li>
+	
+			<li>
+				<a href="https://twitter.com/speechlesstv" target="_blank">
+					<img src="/images/followme.png" width="111" height="20" alt="Follow Me" />
+				</a>
+			</li>
+	
+			<li id="facebookLikeLi">
+				{{>fb_like}}
+			</li>			
+		</ul>
+	</div>
+</template>
+
+<template name="fb_like">
+
+     <iframe id="facebookLikeIframe" src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.speechless.tv/video/{{current_video._id}}&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=true&amp;font&amp;colorscheme=light&amp;action=like&amp;height=80&amp;appId=390914004314228" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:30px;" allowTransparency="true"></iframe>
+
+</template>

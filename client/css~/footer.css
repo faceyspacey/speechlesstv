@@ -1,18 +1,15 @@
-#footer {
-
+.footer {
+width: 1032px;
+margin: 0 auto;
 }
 
-.footerInner {
-
-
-}
-#footer .groove {
-margin-left:20px;
+.footer .groove {
 border: 1px solid #EEE;
 border-top: 1px solid #E8E8E8;
 border-bottom: 1px solid white;
 }
-#footer h4 {
+
+.footer h4 {
 margin: 20px 0 0 0px;
 font-size: 12px;
 font-weight:normal;
@@ -27,50 +24,7 @@ font-smoothing: antialiased;
 text-rendering: optimizeLegibility;	
 }
 
-#footer_logo_container {
+.footer img {
 float:right;
-}
-#footer #logo2 {
-background-color: #5BA0B8;
-float:right;
-width:60px;
-height:60px;
-font-size: 50px;
-font-weight:bold;
-font-family: 'Fjalla One', sans-serif;
-color: white;
-text-align:center;
-line-height:1.28;
--webkit-font-smoothing: antialiased;
--moz-font-smoothing: antialiased;
-font-smoothing: antialiased;
-text-rendering: optimizeLegibility;	
-}
-#footer p {
-float:right;
-margin-right:10px;
-font-size: 25px;
-font-weight:bold;
-font-family: 'Fjalla One', sans-serif;
-color: #cdcdcd;
-text-align:left;
-line-height:2.8;
--webkit-font-smoothing: antialiased;
--moz-font-smoothing: antialiased;
-font-smoothing: antialiased;
-text-rendering: optimizeLegibility;	
-}
-#footer span {
-font-size: 12px;
-font-weight:normal;
-font-family: 'Arial', sans-serif;
-color: #5BA0B8;
-text-align:left;
-line-height:1;
--webkit-font-smoothing: antialiased;
--moz-font-smoothing: antialiased;
-font-smoothing: antialiased;
-text-rendering: optimizeLegibility;
-cursor: pointer;
-float: right;
+height:48px;
 }

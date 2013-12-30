@@ -1,0 +1,136 @@
+<template name="youtube_player">
+	<div id="youtube_player" style="opacity:0;">
+		<div id="youtube_player_inner">
+			{{>play_pause}}
+			{{>post_roll}}
+
+			{{>temp_img}}
+			{{>flash_video}}
+
+			{{>comment_flyup}}
+		    {{>controls}}
+		</div>
+	</div>
+</template>
+
+<template name="temp_img">
+	{{#if canDisplayOverlays}}
+		<img src="http://img.youtube.com/vi/{{current_video.youtube_id}}/sddefault.jpg" id="temp_img" />
+	{{/if}}
+</template>
+
+<template name="flash_video">
+	{{#constant}}
+		<div id="video"></div>
+	{{/constant}}
+</template>
+
+<template name="post_roll">
+	<div id="postRoll" style="display:none;">
+		<div id="postRollLeft">
+			<div id="postRollCountdown">10</div>
+			<img src="/images/tvNoMe.png" id="postRollTV"/>
+			<div id="millsContainer">
+				<img src="/images/noTvMe.png" id="postRollMills"/>
+			</div>
+		</div>
+		
+		<div id="upNext">
+			<h1>Whatsup Next People:</h1>
+			<img id="upNextImage" src="" error="this.src='/images/default-vid.jpg';"/>
+			<div id="upNextTitle"><span>"The Hunger Games"</span></div>
+			<div id="watchIt">WATCH IT!<span id="postRollCounter">(starting in <span id="countdownSpan">10</span>)</span></div>
+		</div>
+	</div>
+</template>
+
+
+
+<template name="play_pause">
+	<div id="largePlayPauseButton" class="stopped">
+    	<div class="smallPlay"></div> 
+    </div>
+</template>
+
+
+
+<template name="comment_flyup">
+	<div id="flyupContainer" style="opacity:0;">
+		<div id="flyupInner">
+			<div id="flyupComment">
+				<span id="flyupCommentInner" style="display:none;"></span>
+				
+				<div id="adminFlyupTools" style="display:none;">
+					<img id="deleteFlyup" src="/images/closebtn.png" style="display:none;" />
+					<img id="editFlyup" src="/images/pencil-icon.png" style="display:none;" />
+				</div>
+				
+				<div id="flyupSocialButtonsContainer">
+					<ul>
+						<li id="facebookShareFlyup">
+							<a class="facebook_link" href="https://www.facebook.com/sharer/sharer.php?u=www.emiliotelevision.com" target="_blank">
+								<img src="/images/facebook-share.png" alt="Follow Me" />
+							</a>
+						</li>
+						<li id="tweetButtonFlyup" >
+							<a class="tweet_link" href="https://twitter.com/share?via=emiliotv&url=http://www.emiliotelevision.com" target="_blank">
+								<img src="/images/tweet-rectangle.png" width="60" height="20" alt="Tweet Me" />
+							</a>
+						</li>		
+					</ul>
+				</div>
+				
+			</div>
+			
+			<img src="/images/speech-bubble.png" class="speech_bubble" />
+			<img src="{{currentVideoUserPic}}" class="flyup_user_pic" />
+		</div>
+	</div>
+</template>
+
+
+
+<template name="controls">
+	<div id="controls">
+        <div id="smallPlayPauseButton">
+        	<div id="miniPausePlay" class="play"></div>
+        </div> 
+
+    	<div id="groove"></div>
+
+        <div id="bars">
+            <div id="barsInner">
+				<div id="loadingBar"></div>
+	            <div id="progressBar"></div>
+	            <div id="currentTimeBall">
+					<div id="innerTimeBallCircle"></div>
+				</div>
+			</div>
+        </div>
+
+		<div id="videoTime">
+			<p><span id="videoCurrentTime">--:--</span> <span>/</span> <span id="videoDuration">--:--</span></p>
+		</div>
+		
+        <div id="volume">
+        	<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+        </div>
+
+    	<div id="minilogo">
+			<img src="/images/speechlesstv-icon.png" style="width: 78%;margin-top: 6px"/>
+		</div>
+		
+		<div id="groove"></div>
+		
+        <div id="fullscreen">
+        	<div id="fullscreenButton"></div>
+        </div>
+    </div>
+</template>

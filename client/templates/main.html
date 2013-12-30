@@ -19,29 +19,52 @@
 	<![endif]-->
 </head>
 
-<body>
-  	{{>main_layout}}
-</body>
+
 
 <template name="main_layout">
-	{{yield}}
-</template>
-
-<template name="home">
 	{{>header}}
 	
-	 <div id="container"> <!-- make this center ur shit in the fixed width instead of #main-->
-		{{>contact_form}}
-		{{>add_video_form}}
-		{{>remove_video_form}}
-		{{>next_thumbs}}
-		{{>body}}
-		{{>footer}}
-	 </div><!---END OF CONTAINER-->
+	 <div id="container" class="page"> 		
+		{{yield}}
+	 </div>
+	
+	{{>footer}}
 	
 	{{>google_analytics}}
 </template>
 
+<template name="browse_video">
+	{{>video}}
+	{{>video_grid}}
+</template>
 
+<template name="video">
+	<div id="video_area">
+		{{>youtube_player}}
+		{{>overlays}}
+	</div>
+</template>
+
+<template name="overlays">
+	{{#if player_ready}}
+		{{>title_box}}
+		{{>submit_video}}
+		{{>video_info}}
+	{{else}}
+		{{>preloader}}
+	{{/if}}
+</template>
+
+<template name="video_grid">
+	<div id="video_grid">
+		{{>next_thumbs}}
+		{{>being_watched}}
+		{{>categories}}
+		{{>thumb_grid}}
+		{{>show_more}}
+	</div>
+</template>
+
+
+<template name="none"></template>
 <template name="google_analytics"></template>
-

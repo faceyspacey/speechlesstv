@@ -1,8 +1,6 @@
 #preloader {
-height: 579px;
-
-position: absolute;
-margin-left:  115px;
+height: 590px;
+paddding: 115px 0;
 }
 
 #warningGradientOuterBarG {
@@ -11,7 +9,7 @@ position: relative;
 top: 180px;
 height:100px;
 width:800px;
-border: 5px solid #559afe;
+border: 6px solid #559AFD;
 overflow:hidden;
 background-color:#F0F7F8;
 background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#559afe), to(#2a6efd));

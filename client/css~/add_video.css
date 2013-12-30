@@ -1,0 +1,65 @@
+#youtube_url_box { 
+	width: 82%;
+	z-index: 1200;
+	height: 400px;
+	margin: 0px auto 150px;
+	position: relative;
+	top: 180px;
+}
+
+#youtube_url_box img {
+	float:left;
+	width: 4.4%;
+	margin-right: 5px;
+}
+
+#youtube_url_box h1 {
+	color: #559AFD;
+	font-size: 28px;
+	font-weight:bold;
+}
+
+
+#youtube_url_box input {
+	margin-top: 12px;
+	
+	height: 70px; 
+	width: 100%; 
+	
+	border: 6px solid #559AFD; 
+	color: #559AFD;
+
+	background-color:#fff;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#DAE9FF), to(#F8F8F8));
+	background: -moz-linear-gradient(top, #DAE9FF, #F8F8F8);
+	background: -webkit-linear-gradient(top, #DAE9FF, #F8F8F8);
+	background: -ms-linear-gradient(top, #DAE9FF, #F8F8F8);
+	background: -o-linear-gradient(top, #DAE9FF, #F8F8F8);
+	background: linear-gradient(top, #DAE9FF, #F8F8F8);
+	font-size: 24px;
+}
+
+#add_video_button {
+	height: 54px;
+	border: 2px solid rgb(49, 51, 63);
+	background: #559AFE;
+	width: 25%;;
+	margin-left: 75%;
+	margin-top: 6px;
+	cursor:pointer;
+}
+#add_video_button:hover {
+	background: rgb(42, 110, 253);
+}
+
+#add_video_button_inner {
+	border-top: 1px solid rgb(186, 212, 219);
+	line-height: 50px;
+	text-align: center;
+	font-size: 36px;
+	text-shadow: 1px 1px 1px rgb(250, 247, 247);
+}
+#add_video_button_inner:hover {
+	color: white;
+	text-shadow: 1px 1px 1px black;
+}

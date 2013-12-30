@@ -147,7 +147,7 @@ cursor: pointer;
 }
 
 
-#upload_video_button {
+.custom_button {
 	float: right;
 	height: 40px;
 	border: 2px solid rgb(49, 51, 63);
@@ -155,19 +155,19 @@ cursor: pointer;
 	width: 150px;
 	margin-right: 1px;
 }
-#upload_video_button:hover {
+.custom_button:hover {
 	background: rgb(42, 110, 253);
 	cursor:pointer;
 }
 
-#upload_video_button_inner {
+.custom_button_inner {
 	border-top: 1px solid rgb(186, 212, 219);
 	line-height: 37px;
 	text-align: center;
 	font-size: 24px;
 	text-shadow: 1px 1px 1px rgb(250, 247, 247);
 }
-#upload_video_button_inner:hover {
+.custom_button_inner:hover {
 	color: white;
 	text-shadow: 1px 1px 1px black;
 }

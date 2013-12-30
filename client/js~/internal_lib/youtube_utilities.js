@@ -9,9 +9,7 @@ formatSeconds = function(originalSeconds) {
 	if (minutes < 10) {minutes = "0"+minutes;}
 	if (seconds < 10) {seconds = "0"+seconds;}
 	
-	var time    = hours+':'+minutes+':'+seconds;
-	
-	return time.substr(3);
+	return minutes+':'+seconds; //leave hours out since none of our videos will be hours. 
 }
 
 

@@ -1,14 +1,10 @@
 HomeController = RouteController.extend({
 	layoutTemplate: 'main_layout',
-  	template: 'home',
-	after: function () {
-		if(!Session.get('current_video')) { //this will insure it only runs once at the right time. 
-			var video = Videos.findOne(this.params.video_id || {}) || Videos.findOne();
-			Session.set('current_video', video);
-
-			setBackNextButtons(0);
-			console.log('setFirstVideo SUCCESSFULLY set');
-		}
+  	template: 'browse_video',
+	action: function () {
+		if(Session.get('current_video')) Meteor.subscribe('video', Session.get('current_video')._id); //keep past video playing while browsing
+		updateCurrentVideo(this.params.video_id);
+		this.render();
 	}
 });
 
@@ -17,7 +13,33 @@ Router.map(function () {
 	this.route('home', {
     	path: '/',
 		waitOn: function () {
+			Session.set('current_channel_name', null);
+			Session.set('current_category_name', 'all');
 			return Meteor.subscribe('allVideos', Session.get('limit'));
+		},
+		controller: HomeController
+  	});
+
+	this.route('add_video', {
+    	path: '/add-video',
+		template: 'add_video',
+		action: function() {	
+			this.render();
+		},
+		after: function() {
+			scrollToTop();
+		},
+		controller: HomeController
+  	});
+
+	this.route('update_video', {
+    	path: '/update-video/:video_id',
+		template: 'update_video',
+		waitOn: function() {
+			Session.set('category_added', false);	
+			Session.set('description_added', false);
+				
+			return [Meteor.subscribe('video', this.params.video_id), Meteor.subscribe('allVideos', Session.get('limit'))];
 		},
 		controller: HomeController
   	});
@@ -25,7 +47,7 @@ Router.map(function () {
 	this.route('video', {
     	path: '/video/:video_id',
 		waitOn: function () {
-			return Meteor.subscribe('allVideos', Session.get('limit'));
+			return [Meteor.subscribe('video', this.params.video_id), Meteor.subscribe('allVideos', Session.get('limit'))];
 		},
 		controller: HomeController
   	});
@@ -36,7 +58,7 @@ Router.map(function () {
 			window.secondsFromUrl = this.params.seconds;
 		},
 		waitOn: function () {
-			return Meteor.subscribe('allVideos', Session.get('limit'));
+			return [Meteor.subscribe('video', this.params.video_id), Meteor.subscribe('allVideos', Session.get('limit'))];
 		},
 		controller: HomeController
   	});
@@ -59,6 +81,9 @@ Router.map(function () {
 			Session.set('current_channel_name', this.params.name); 
 			return Meteor.subscribe('allVideos', Session.get('limit'), this.params.name, null);
 		},
+		after: function() {
+			if(Videos.find().count() === 0) Router.go('add_video');
+		},
 		controller: HomeController
   	});
 });
@@ -76,5 +101,5 @@ Meteor.startup(function() {
 	
 	Meteor.subscribe('allCategories');
 	
-	bindPlayerExtras();
+	bindMiscInteractions();
 });

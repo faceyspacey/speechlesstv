@@ -1,0 +1,112 @@
+#title_overlay, #title_texarea {
+	position: absolute;
+	top: 40px;
+	left: -55px;
+	background: #559afe;
+	color: white;
+	line-height: 60px;
+	font-size: 46px;
+	padding: 5px 10px;
+	max-width: 940px;
+	border: none;
+	z-index: 2;
+}
+
+#title_texarea {
+	width: 940px;
+	height: 100px;
+	
+	border: 6px solid #559AFD; 
+	color: #559AFD;
+
+	background-color:#fff;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#DAE9FF), to(#F8F8F8));
+	background: -moz-linear-gradient(top, #DAE9FF, #F8F8F8);
+	background: -webkit-linear-gradient(top, #DAE9FF, #F8F8F8);
+	background: -ms-linear-gradient(top, #DAE9FF, #F8F8F8);
+	background: -o-linear-gradient(top, #DAE9FF, #F8F8F8);
+	background: linear-gradient(top, #DAE9FF, #F8F8F8);
+}
+
+#category_dropdown {
+	float: left;
+	margin-top: 10px;
+	margin-right: 5px;
+}
+
+#description_textarea {
+	width: 350px;
+	height: 76px;
+	
+	font-size: 16px;
+	font-weight: normal;
+	font-family: 'Fjalla One', sans-serif;
+	line-height: 1;
+	
+	border: 2px solid #0F4899; 
+	color: #0F4899;
+
+	background-color:#fff;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#DAE9FF), to(#F8F8F8));
+	background: -moz-linear-gradient(top, #DAE9FF, #F8F8F8);
+	background: -webkit-linear-gradient(top, #DAE9FF, #F8F8F8);
+	background: -ms-linear-gradient(top, #DAE9FF, #F8F8F8);
+	background: -o-linear-gradient(top, #DAE9FF, #F8F8F8);
+	background: linear-gradient(top, #DAE9FF, #F8F8F8);
+	margin-top: -12px;
+	padding: 5px;
+	letter-spacing: .4px;
+}
+
+#video_container .channelViews select {
+float:left;
+
+font-size: 32px;
+margin-top: 9px;
+margin-right: 10px;
+}
+
+#submit_video_box {
+	position: absolute;
+	top: 189px;
+	right: -27px;
+	height: 205px;
+	
+	width: 270px;
+	
+	z-index: 2;
+	overflow:hidden;
+}
+
+#update_video_bullets {
+	position: relative;
+	top: 205px;
+	
+	height: 130px;
+	
+	padding: 5px 10px;
+	
+	background: #559AFD;
+	
+	color: white;
+	line-height: 39px;
+	font-size: 24px;
+	
+	list-style-type: none;
+	
+	z-index: -2;
+}
+#submit_video_button {
+	padding: 5px 10px;
+	
+	background: rgb(42, 110, 253);
+	
+	color: white;
+	line-height: 60px;
+	font-size: 46px;
+	margin-top: 5px;
+}
+#submit_video_button:hover {
+	background: #559AFD;
+	cursor: pointer;
+}

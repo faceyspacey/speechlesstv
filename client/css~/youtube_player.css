@@ -1,23 +1,47 @@
-/** position the video player as a whole in the natural "flow" of the page. Relative positioning allows u to move it away from where it would appear in the flow, but that's not why we are using relative positioning--we are using relative positioning so that absolute positioning of elements nested within #videoContainer works in a way that they are positioned relative to the boundaries of #videoContainer **/
-#videoContainer {
-position: relative; 
+/** position the video player as a whole in the natural "flow" of the page. Relative positioning allows u to move it away from where it would appear in the flow, but that's not why we are using relative positioning--we are using relative positioning so that absolute positioning of elements nested within #youtube_player works in a way that they are positioned relative to the boundaries of #youtube_player **/
+#youtube_player {
+position: absolute; 
 width:980px;
-height:468px; 
+height: 598px; 
 background-color:black;
-margin:0 auto;
+margin-left: 50%;
+left: -490px;
+border: 6px solid #559afe;
 }
 
+#youtube_player_inner { 
+top: 0px; 
+left: 0px;
 
-/** position all sub-divs essentially relative to the boundaries of the #videoContainer element. i say "relatively" even though you're absolutely positioning them because the idea is that when positioned absolutely, they are in fact positioned "relatively" to the first parent element that is either relative or absolute positioned. **/
-#videoContainer div {
+width: 980px;
+height: 598px;
+overflow: hidden;
+}
+
+/** position all sub-divs essentially relative to the boundaries of the #youtube_player element. i say "relatively" even though you're absolutely positioning them because the idea is that when positioned absolutely, they are in fact positioned "relatively" to the first parent element that is either relative or absolute positioned. **/
+#youtube_player div {
 position:absolute;
 }
 
 #video {
-width: 100%; 
-height: 90%; 
+width: 20%;
+height: 15%; 
 background-color:black;
 }
+
+#youtube_player object {
+width: 100%;
+height: 800px;
+margin-top: -124px;
+}
+
+#youtube_player img#temp_img {
+	position:absolute;
+	width:100%;
+	z-index: 0;
+	margin-top: -92px;
+}
+
 #largePlayPauseButton {
 position:absolute; top: 39%; left: 50%;
 margin-left: -60px;
@@ -26,6 +50,7 @@ height: 110px;
 background-color: #3372F5;
 color:white; 
 padding-top: 4px;
+z-index: 1;
 }
 
 #largePlayPauseButton:hover {
@@ -80,6 +105,23 @@ right: 0px;
 #flyupContainer #flyupInner img {
     
 }
+
+img.speech_bubble {
+	margin-right: 70px;
+	margin-bottom: 70px;
+	z-index: 2;
+	position: relative;
+}
+
+img.flyup_user_pic {
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	bottom: 0px;
+	right: 8px;
+	border: 2px solid #2a6efd;
+}
+
 #flyupContainer #flyupInner #flyupComment {   
 left: 22px; 
 top: 2px;
@@ -88,6 +130,7 @@ height: 110px;
  
 position: absolute;
 display: table;
+z-index: 3;
 }
 
 
@@ -125,7 +168,7 @@ opacity: .7;
 background-color: rgb(157, 183, 218); 
 width: 100%; 
 bottom: 0px; 
-height: 10%;
+height: 48px;
 }
     
 div#smallPlayPauseButton {
@@ -377,7 +420,7 @@ margin-left: -200px;
 width:  400px;
 }
 
-#videoContainer #postRoll {
+#youtube_player #postRoll {
 width: 100%;
 height: 100%;
 position: absolute;   
@@ -405,7 +448,7 @@ position: relative;
 top: 500px; 
 }
 
-#videoContainer #postRoll img#postRollTV {
+#youtube_player #postRoll img#postRollTV {
 width: 460px;
 margin-top: 16px;
 }
@@ -417,7 +460,7 @@ overflow:hidden;
 height: 352px;
 }
 
-#videoContainer #postRoll img#postRollMills {
+#youtube_player #postRoll img#postRollMills {
 width: 450px;
 position: relative;
 top: 500px;
@@ -442,7 +485,7 @@ border: 3px solid #559afe;
 float:right;
 width: 350px;
 height: 355px;
-margin: 20px 40px 10px 0px;
+margin: 100px 40px 10px 0px;
 border-radius: 2px;
 opacity: .82;
 box-shadow: -3px 5px 25px 1px black;
@@ -522,10 +565,6 @@ text-shadow: 1px 1px 1px black;
 }
 
 
-#videoContainer object{
-width: 100%;
-height: 100%;
-}
 
 #flyupSocialButtonsContainer {
 position: absolute; 
