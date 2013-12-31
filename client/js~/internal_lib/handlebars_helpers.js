@@ -66,3 +66,27 @@ Handlebars.registerHelper('currentVideoUserPic', function() {
 });
 
 
+Handlebars.registerHelper('is_editing_flyup_comment', function(a, b) {
+	console.log('HELPER', a, b, this);
+    return Session.get('is_editing_flyup_comment');
+});
+
+Handlebars.registerHelper('is_displaying_comment', function() {
+	return Session.get('is_displaying_comment');
+});
+
+
+Handlebars.registerHelper('currentVideoTime', function() {
+	if(!Session.get('current_video_time')) return '--:--';
+	return Session.get('current_video_time')
+});
+
+Handlebars.registerHelper('currentVideoDuration', function() {
+	if(!Session.get('current_video_duration')) return '--:--';
+	return Session.get('current_video_duration');
+});
+
+
+Handlebars.registerHelper('ownsCurrentVideo', function() {
+	return ownsCurrentVideo();
+});

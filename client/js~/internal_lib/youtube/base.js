@@ -93,5 +93,15 @@ replaceVideo = function(video) {
 	else pauseVideo();
 	
 	showPlayer();
+	
+	if(Session.get('just_added_video')) {
+		playVideo();
+		Session.set('just_added_video', false);
+		showFlyup(600);
+	}
 };
+
+getCurrentTime = function() {
+	return Math.round(ytplayer.getCurrentTime());
+}
 

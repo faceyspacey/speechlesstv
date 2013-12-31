@@ -133,8 +133,39 @@ display: table;
 z-index: 3;
 }
 
+#flyup_comment_button {
+	position: absolute;
+	top: 30px;
+ 	left: 55px;
+	width: 160px;
+}
 
-#flyupCommentInner {
+#flyup_comment_button > div {
+	text-align: center;
+	width: 100%;
+}
+
+#flyup_current_video_time {
+	position: absolute;
+	top: 75px;
+	color: gray;
+	font-style: italic;
+	text-align: center;
+	width: 100%;
+	font-size: 14px;
+}
+
+#flyup_comment_textarea {
+position: absolute;
+top: 10px;
+left: 10px;
+height: 80px;
+width: 240px;
+background-color: transparent;
+border: 1px solid transparent;
+}
+
+#flyupCommentInner, #flyup_comment_textarea {
 display: table-cell;
 vertical-align: middle;
 font-size: 20px;
@@ -579,6 +610,19 @@ width: 102px;
 overflow:hidden;
 }
 
+#flyup_comment_submit {
+text-align: center;
+border: none;
+color: white;
+background: #559afe;
+padding-top:3px;
+width: 100%;
+}
+
+#flyup_comment_submit:hover{
+	opacity: .8;
+}
+
 #flyupSocialButtonsContainer #facebookShareFlyup img {
 height: 20px;
 z-index: 2;
@@ -617,7 +661,7 @@ cursor: pointer;
 top: -10px;
 right: -25px;
 z-index: 2;
-opacity: .5;
+opacity: .8;
 }
 
 #deleteFlyup:hover {
@@ -629,7 +673,7 @@ opacity: 1;
 position: absolute; 
 top: -15px; left: -20px;
 width: 32px; height: 32px;
-opacity: .7;
+opacity: .9;
 cursor: pointer;
 z-index: 2;
 }

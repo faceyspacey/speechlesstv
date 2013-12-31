@@ -55,39 +55,81 @@
 
 
 <template name="comment_flyup">
-	<div id="flyupContainer" style="opacity:0;">
-		<div id="flyupInner">
-			<div id="flyupComment">
-				<span id="flyupCommentInner" style="display:none;"></span>
+	{{#unless is_update_video}}
+		<div id="flyupContainer" style="opacity:0;">
+			<div id="flyupInner">
+				<div id="flyupComment">
 				
-				<div id="adminFlyupTools" style="display:none;">
-					<img id="deleteFlyup" src="/images/closebtn.png" style="display:none;" />
-					<img id="editFlyup" src="/images/pencil-icon.png" style="display:none;" />
+					{{>flyup_textarea}}
+					{{>flyup_edit_buttons}}
+					{{>flyup_social_buttons}}
+				
 				</div>
-				
-				<div id="flyupSocialButtonsContainer">
-					<ul>
-						<li id="facebookShareFlyup">
-							<a class="facebook_link" href="https://www.facebook.com/sharer/sharer.php?u=www.emiliotelevision.com" target="_blank">
-								<img src="/images/facebook-share.png" alt="Follow Me" />
-							</a>
-						</li>
-						<li id="tweetButtonFlyup" >
-							<a class="tweet_link" href="https://twitter.com/share?via=emiliotv&url=http://www.emiliotelevision.com" target="_blank">
-								<img src="/images/tweet-rectangle.png" width="60" height="20" alt="Tweet Me" />
-							</a>
-						</li>		
-					</ul>
-				</div>
-				
-			</div>
 			
-			<img src="/images/speech-bubble.png" class="speech_bubble" />
-			<img src="{{currentVideoUserPic}}" class="flyup_user_pic" />
+				<img src="/images/speech-bubble.png" class="speech_bubble" />
+				<img src="{{currentVideoUserPic}}" class="flyup_user_pic" />
+			</div>
 		</div>
-	</div>
+	{{/unless}}
 </template>
 
+
+<template name="flyup_textarea">
+	{{#if is_displaying_comment}}
+		<span id="flyupCommentInner"></span>
+	{{else}}
+		{{#if is_editing_flyup_comment}}
+			<textarea id="flyup_comment_textarea" maxlength="80" placeholder="Click to start typing your message"></textarea>
+		{{else}}
+			<div id="flyup_comment_button" class="custom_button">
+				<div class="custom_button_inner">
+					COMMENT HERE
+				</div>
+			</div>
+			{{#isolate}}
+				<div id="flyup_current_video_time">Comment Time: {{currentVideoTime}}</div>
+			{{/isolate}}
+		{{/if}}
+	{{/if}}
+</template>
+
+<template name="flyup_edit_buttons">
+	{{#if is_displaying_comment}}
+		{{#if ownsCurrentVideo}}
+			<div id="adminFlyupTools" style="display:none;">
+				<img id="deleteFlyup" src="/images/closebtn.png" />
+				<img id="editFlyup" src="/images/pencil-icon.png" />
+			</div>
+		{{/if}}
+	{{/if}}
+</template>
+
+<template name="flyup_social_buttons">
+		{{#if is_displaying_comment}}
+			<div id="flyupSocialButtonsContainer">
+				<ul>
+					<li id="facebookShareFlyup">
+						<a class="facebook_link" href="https://www.facebook.com/sharer/sharer.php?u=www.emiliotelevision.com" target="_blank">
+							<img src="/images/facebook-share.png" alt="Follow Me" />
+						</a>
+					</li>
+					<li id="tweetButtonFlyup" >
+						<a class="tweet_link" href="https://twitter.com/share?via=emiliotv&url=http://www.emiliotelevision.com" target="_blank">
+							<img src="/images/tweet-rectangle.png" width="60" height="20" alt="Tweet Me" />
+						</a>
+					</li>		
+				</ul>
+			</div>
+		{{else}}
+			{{#if is_editing_flyup_comment}}
+				<div id="flyupSocialButtonsContainer">
+					<div id="flyup_comment_submit" class="custom_button">
+						SUBMIT
+					</div>
+				</div>
+			{{/if}}
+		{{/if}}
+</template>
 
 
 <template name="controls">
@@ -108,9 +150,13 @@
 			</div>
         </div>
 
-		<div id="videoTime">
-			<p><span id="videoCurrentTime">--:--</span> <span>/</span> <span id="videoDuration">--:--</span></p>
-		</div>
+		{{#isolate}}
+			<div id="videoTime">
+				<p>
+					<span id="videoCurrentTime">{{currentVideoTime}}</span> <span>/</span> <span id="videoDuration">{{currentVideoDuration}}</span>
+				</p>
+			</div>
+		{{/isolate}}
 		
         <div id="volume">
         	<ul>

@@ -34,8 +34,6 @@ pauseVideo = function() {
 	if(!Session.get('dont_show_temp_img')) $('#temp_img').fadeIn('fast');
 	else $('#temp_img').hide();
 	$('#temp_img').hide();
-	
-	hideFlyup();
 };
 
 replayVideo = function() {

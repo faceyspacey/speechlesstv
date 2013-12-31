@@ -29,6 +29,16 @@ Template.youtube_player.events({
 		if(!isFullScreen()) makeFullscreen();
 		else removeFullscreen();	
 	},
+	'click #flyup_comment_button': function() {
+		pauseVideo();
+		Session.set('comment_time', Math.floor(ytplayer.getCurrentTime()));
+		Session.set('is_editing_flyup_comment', true);
+	},
+	'click #flyup_comment_submit': function() {
+		var comment = $('#flyup_comment_textarea').val();
+		if(comment != '') addFlyupComment(comment);
+		playVideo();
+	},
 	'click #deleteFlyup': function() {
 		var commentIndex = Session.get('comment_index'),
 			currentVideo = Session.get('current_video'),
@@ -39,18 +49,21 @@ Template.youtube_player.events({
 		hideFlyup();
 	},
 	'click #editFlyup': function() {
-		console.log('clicked to edit flyup');
 		var commentIndex = Session.get('comment_index'),
 			currentVideo = Session.get('current_video'),
-			comments = currentVideo.comments;
+			comments = currentVideo.comments,
+			comment = comments[commentIndex].comment,
+			commentTime = comments[commentIndex].time;
 			
-		$('#add_marker').click();
-		$('#marker_comment').val(comments[commentIndex].comment);
+		Session.set('comment_time', commentTime);
+		Session.set('is_editing_flyup_comment', true);
+		Session.set('is_displaying_comment', false);
+		
+		Deps.afterFlush(function() {
+			$('#flyup_comment_textarea').val(comment);
+		});
 	}
 });
-
-
-
 
 
 

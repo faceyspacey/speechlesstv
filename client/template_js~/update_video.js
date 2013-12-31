@@ -80,6 +80,7 @@ Template.submit_video.events({
 			}}, function(error) {
 				Deps.afterFlush(function() {
 					scrollToTop();
+					Session.set('just_added_video', true);
 					Router.go('video', {video_id: vid});
 				});
 			});

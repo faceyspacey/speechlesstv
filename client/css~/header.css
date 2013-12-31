@@ -166,6 +166,8 @@ cursor: pointer;
 	text-align: center;
 	font-size: 24px;
 	text-shadow: 1px 1px 1px rgb(250, 247, 247);
+	text-laign: cen;
+	text-align: center;
 }
 .custom_button_inner:hover {
 	color: white;
