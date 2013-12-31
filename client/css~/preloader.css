@@ -11,12 +11,12 @@ height:100px;
 width:800px;
 border: 6px solid #559AFD;
 overflow:hidden;
-background-color:#F0F7F8;
+background-color:#559afe;
 background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#559afe), to(#2a6efd));
-background: -moz-linear-gradient(top, #F0F7F8, #5BA0B8);
+background: -moz-linear-gradient(top, #559afe, #5BA0B8);
 background: -webkit-linear-gradient(top, #559afe, #2a6efd);
-background: -ms-linear-gradient(top, #F0F7F8, #5BA0B8);
-background: -o-linear-gradient(top, #F0F7F8, #5BA0B8);
+background: -ms-linear-gradient(top, #559afe, #2a6efd);
+background: -o-linear-gradient(top, #559afe, #2a6efd);
 background: linear-gradient(top, #559afe, #2a6efd);
 }
 
