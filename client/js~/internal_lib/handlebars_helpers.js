@@ -2,6 +2,10 @@ Handlebars.registerHelper('current_video', function() {
     return Session.get('current_video');
 });
 
+Handlebars.registerHelper('current_url', function() {
+	return 'http://www.speechless.tv' + window.location.pathname;
+});
+
 Handlebars.registerHelper('current_channel', function() {
     return Session.get('current_channel_name');
 });
@@ -75,6 +79,10 @@ Handlebars.registerHelper('is_displaying_comment', function() {
 	return Session.get('is_displaying_comment');
 });
 
+Handlebars.registerHelper('current_seconds', function() {
+	if(!Session.get('current_seconds')) return;
+	return Math.max(parseInt(Session.get('current_seconds')) - 8, 0);
+});
 
 Handlebars.registerHelper('currentVideoTime', function() {
 	if(!Session.get('current_video_time')) return '--:--';
@@ -104,3 +112,9 @@ Handlebars.registerHelper('canShowFlyup', function() {
 	if(Router.current().route.name == 'add_video') return false;
 	return true;
 });
+
+
+Handlebars.registerHelper('upperCase', function(word) {
+	if(!word) return;
+	return word.toUpperCase();
+})

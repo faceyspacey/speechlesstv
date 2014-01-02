@@ -16,7 +16,7 @@ playseMouseUp = function(event) {
 	isDragging = false;
 	
 	var percentX = x/progressMaxWidth, //expressed from 0 to 1, e.g: .76
-		lastSeekTo = percentX *  ytplayer.getDuration();
+		lastSeekTo = Math.floor(percentX *  ytplayer.getDuration());
 		
 	ytplayer.seekTo(lastSeekTo, true);
 
@@ -38,7 +38,7 @@ playerMouseMove = function(event) {
 	//make it so we only update the frame shown on the screen if the 5 seconds changes
 	//cuz if we did it for fractions of a second, it's jittery
 	var percentX = x/progressMaxWidth,
-		durationPercentage = Math.round(percentX *  ytplayer.getDuration());
+		durationPercentage = Math.floor(percentX *  ytplayer.getDuration());
 	
 	//set time on time indicator
 	$('#videoCurrentTime').text(formatSeconds(Math.min(durationPercentage, ytplayer.getDuration())));

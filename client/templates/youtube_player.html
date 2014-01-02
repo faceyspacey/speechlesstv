@@ -15,7 +15,7 @@
 
 <template name="temp_img">
 	{{#if canDisplayOverlays}}
-		<img src="http://img.youtube.com/vi/{{current_video.youtube_id}}/sddefault.jpg" id="temp_img" />
+		<img src="http://img.youtube.com/vi/{{current_video.youtube_id}}/sddefault.jpg" id="temp_img" style="opacity:0;"/>
 	{{/if}}
 </template>
 
@@ -109,12 +109,12 @@
 			<div id="flyupSocialButtonsContainer">
 				<ul>
 					<li id="facebookShareFlyup">
-						<a class="facebook_link" href="https://www.facebook.com/sharer/sharer.php?u=www.speechless.tv" target="_blank">
+						<a class="facebook_link" href="https://www.facebook.com/sharer/sharer.php?u=www.speechless.tv/video/{{current_video._id}}/{{current_seconds}}" target="_blank" onclick="pauseVideo()">
 							<img src="/images/facebook-share.png" alt="Follow Me" />
 						</a>
 					</li>
 					<li id="tweetButtonFlyup" >
-						<a class="tweet_link" href="https://twitter.com/share?via=speechlesstv&url=http://www.speechless.tv" target="_blank">
+						<a class="tweet_link" href="https://twitter.com/share?via=speechlesstv&url=http://www.speechless.tv/video/{{current_video._id}}/{{current_seconds}}" target="_blank" onclick="pauseVideo()">
 							<img src="/images/tweet-rectangle.png" width="60" height="20" alt="Tweet Me" />
 						</a>
 					</li>		

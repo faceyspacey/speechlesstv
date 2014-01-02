@@ -22,6 +22,9 @@ makeFullscreen = function() {
 
 removeFullscreen = function() {
 	Session.set('is_fullscreen', false);
+	Deps.afterFlush(function() {
+		if(Session.get('autoplay')) $('#temp_img').hide();
+	});
 	
 	$('#fullscreenButton').removeClass('small');
 	$('#being_watched, #categories').show();	

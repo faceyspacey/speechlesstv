@@ -27,6 +27,9 @@ opacity:.7;
 #categories .button{
 background-color:#1a1a1a;
 cursor: pointer;
+text-decoration: none;
+display: block;
+color: white;
 }
 #categories .button.selected{
 background-color: rgb(42, 110, 253);

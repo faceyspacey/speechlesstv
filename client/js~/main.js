@@ -1,8 +1,11 @@
 HomeController = RouteController.extend({
 	layoutTemplate: 'main_layout',
   	template: 'browse_video',
+	waitOn: function() {
+		return [Meteor.subscribe('allCategories')]
+	},
 	action: function () {
-		if(Session.get('current_video')) Meteor.subscribe('video', Session.get('current_video')._id); //keep past video playing while browsing
+		if(Session.get('current_video')) Meteor.subscribe('video', Session.get('current_video')._id); //keep previous video playing while browsing
 		updateCurrentVideo(this.params.video_id);
 		this.render();
 	}
@@ -82,7 +85,7 @@ Router.map(function () {
 			return Meteor.subscribe('allVideos', Session.get('limit'), this.params.name, null);
 		},
 		after: function() {
-			if(Videos.find().count() === 0) Router.go('add_video');
+			if(this.ready() && Videos.find().count() === 0) Router.go('add_video');
 		},
 		controller: HomeController
   	});
@@ -102,4 +105,18 @@ Meteor.startup(function() {
 	Meteor.subscribe('allCategories');
 	
 	bindMiscInteractions();
+});
+
+updateHead = function(currentVideo) {
+	if(!currentVideo) return;
+	document.title = 'Speechless.TV - ' + currentVideo.title;
+	$('meta[property="og:title"]').attr('content', 'Speechless.TV - ' + currentVideo.title);
+	$('meta[property="og:url"]').attr('content', 'http://www.speechless.tv' + window.location.pathname);
+	$('meta[property="og:image"]').attr('content', 'http://img.youtube.com/vi/' + currentVideo.youtube_id + '/sddefault.jpg');
+	$('meta[property="og:description"]').attr('content', currentVideo.description);
+};
+
+Deps.autorun(function() {
+	var currentVideo = Session.get('current_video');
+	updateHead(currentVideo);
 });

@@ -9,7 +9,7 @@
 
 			<div class="channelViews">
 				{{>category_dropdown}}
-				<h1 id="home_video_channel">{{current_video.channel}}</h1>
+				<a class="info_channel" id="home_video_channel" href="/channel/{{current_video.channel}}">{{current_video.channel}}</a>
 			</div>
 
 			<div class="videoBio">
@@ -58,7 +58,7 @@
 			{{/each}}
 		</select>
 	{{else}}
-		<p>{{category}}-</p>
+		<a class="info_cat" href="/category/{{category}}">{{upperCase category}}-</a>
 	{{/if}}
 </template>
 

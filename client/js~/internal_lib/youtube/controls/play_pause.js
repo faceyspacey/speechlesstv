@@ -14,14 +14,17 @@ videoIsPlaying = function() {
 
 playVideo = function() {
 	ytplayer.playVideo();
-	Session.set('autoplay', true);
 	$('#largePlayPauseButton').hide();
-	$('#temp_img').fadeOut('fast');
 	$('#title_overlay').hide();
 	$('#miniPausePlay').removeClass('play').addClass('pause');
 	
+	$('#temp_img').animate({opacity: 0}, function() {
+		Session.set('autoplay', true);
+	});
+	
 	window.secondsFromUrl = null;
 	hidePostRoll();
+	resetCountdown();
 };
 
 pauseVideo = function() {
@@ -31,9 +34,7 @@ pauseVideo = function() {
 	$('#title_overlay').show();
 	$('#miniPausePlay').removeClass('pause').addClass('play');
 	
-	if(!Session.get('dont_show_temp_img')) $('#temp_img').fadeIn('fast');
-	else $('#temp_img').hide();
-	$('#temp_img').hide();
+	if(Session.get('dont_show_temp_img')) $('#temp_img').hide();
 };
 
 replayVideo = function() {

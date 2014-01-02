@@ -49,6 +49,8 @@ Template.youtube_player.events({
 		hideFlyup();
 	},
 	'click #editFlyup': function() {
+		pauseVideo();
+		
 		var commentIndex = Session.get('comment_index'),
 			currentVideo = Session.get('current_video'),
 			comments = currentVideo.comments,
@@ -64,6 +66,11 @@ Template.youtube_player.events({
 		});
 	}
 });
+
+Template.temp_img.rendered = function() {
+	$('#temp_img').animate({opacity: 1});
+};
+
 
 
 

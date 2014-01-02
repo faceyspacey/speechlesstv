@@ -58,27 +58,24 @@ startPostRollCountdown = function() {
 	countDownInterval = setInterval(function() {
 		$('#countdownSpan, #postRollCountdown').text(countDownNum);
 		
-		if(countDownNum == 0) { //go to next video after countdown reaches 0
-			clearInterval(countDownInterval);
-			
-			setTimeout(function() {
-				$('#smallPlayPauseButton').click();
-				countDownNum = 10;
-				$('#countdownSpan, #postRollCountdown').text(countDownNum);
-			}, 900);
-		}
+		if(countDownNum == 0) setTimeout(playNextAndResetCountdown, 900);
 		else countDownNum--;
 		
 	}, 1300);
 };
 
+playNextAndResetCountdown = function() {
+	playVideo();
+	resetCountdown();
+};
+
+resetCountdown = function() {
+	clearInterval(countDownInterval);
+	countDownNum = 10;
+	$('#countdownSpan, #postRollCountdown').text(countDownNum);
+};
 
 bindWatchIt = function() {
-	$('#watchIt').live('click', function() {
-		$('#smallPlayPauseButton').click();
-		clearInterval(countDownInterval);
-		
-		countDownNum = 10;
-		$('#countdownSpan, #postRollCountdown').text(countDownNum);
-	});
+	$('#watchIt').live('click', playNextAndResetCountdown);
 };
+

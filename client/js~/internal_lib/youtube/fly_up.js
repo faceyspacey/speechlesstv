@@ -17,15 +17,12 @@ showFlyup = function(animationDuration) {
 	$('#flyupInner').animate({
 		top: top,
 		opacity: 1
-	}, animationDuration || 400, 'easeOutBack', function() {
-		//$('#flyupCommentInner').fadeIn(50);
-	});
+	}, animationDuration || 400, 'easeOutBack');
 };
 
 hideFlyup = function(animationDuration) {
 	var top = 300;
 
-	//$('#flyupCommentInner').fadeOut(50);
 	$('#flyupInner').animate({
 		top: top,
 		opacity: 0
@@ -48,23 +45,13 @@ addFlyupComment = function(comment) {
 	
 	//add the new comment to the comments array and replace the original comments array on the collection item
 	var commentObj = {comment: comment, time: Session.get('comment_time')};
-	comments.push(commentObj);			
-	Videos.update(Session.get('current_video')._id, {$set: {comments: comments}}, function() {
+	comments.push(commentObj);		
+	hideFlyup(250);	
+	setTimeout(function() {
+		Videos.update(Session.get('current_video')._id, {$set: {comments: comments}});
 		Session.set('current_video', Videos.findOne(Session.get('current_video')._id));
-		
-		Deps.afterFlush(function() {
-			hideFlyup(250);
-		});
-	});
+	}, 350);
 };
-
-updateFlyupSocialLinks = function(videoId, currentTime) {
-	currentTime -= 5;
-	currentTime = Math.max(currentTime, 0);
-	$('#tweetButtonFlyup a').attr('href', 'https://twitter.com/share?via=speechlesstv&url=http://www.speechless.tv./video/'+videoId+'/'+currentTime);
-	$('#facebookShareFlyup a').attr('href', 'https://www.facebook.com/sharer/sharer.php?u=www.speechless.tv/video/'+videoId+'/'+currentTime);
-};
-
 
 
 bindFlyupTools = function() {
@@ -78,6 +65,7 @@ bindFlyupTools = function() {
 	
 bindFlyupLink = function() {
 	$('#flyupCommentInner a').live('click', function(e) {
+		pauseVideo();
 		window.open($(this).attr('href'));
 		e.preventDefault();
 	});
@@ -105,14 +93,14 @@ ownsCurrentVideo = function() {
 	return false;
 }
 
-var mouseEnterFlyup = false;
+var mouseAlreadyHere = false;
 $(function() {
 	$('#flyupContainer').live('mouseenter', function() {
 		clearTimeout(hideFlyupTimer);
-		if(ownsCurrentVideo() && !mouseEnterFlyup) showFlyup(200);
-		mouseEnterFlyup = true;
+		if(ownsCurrentVideo() && !mouseAlreadyHere) showFlyup(200);
+		mouseAlreadyHere = true;
 	}).live('mouseleave', function() {
-		if(ownsCurrentVideo()) hideFlyup(150);
-		mouseEnterFlyup = false;
+		if(ownsCurrentVideo() && !Session.get('just_added_video')) hideFlyup(150);
+		mouseAlreadyHere = false;
 	});
 });

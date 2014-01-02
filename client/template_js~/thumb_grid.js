@@ -7,7 +7,7 @@ Template.thumb_grid.helpers({
 		if(channel) return Videos.find({channel: channel, complete: true}, {sort: {time: -1}, limit: limit});
 
 		if(category && category != 'all') {
-			var category_id = Categories.findOne({name: category}).category_id;
+			var category_id = allCategories.indexOf(category);
 			return Videos.find({category_id: category_id, complete: true}, {sort: {time: -1}, limit: limit});
 		}
 

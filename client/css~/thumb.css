@@ -152,6 +152,11 @@ width: 204px;
 margin-top: 6px;
 margin-left: 38px;
 }
+.vid .thumbHover p.video_title a {
+text-decoration:none;
+color: black;
+opacity: .7;
+}
 .vid .thumbHover p#length {
 line-height:.3;
 position:relative;

@@ -47,10 +47,12 @@ onYouTubePlayerReady = function(playerId) {
 // This function is called when the player changes state
 onPlayerStateChange = function(newState) {
 	if(Router.current().route.name == 'update_video' && newState == 0) replayVideo();
-	else if(newState == 0) {
-		Session.set('dont_show_temp_img', true);
-		goToPostRoll(); //0 = ended state
-	}
+	else if(newState == 0) endVideo();
+};
+
+endVideo = function() {
+	Session.set('dont_show_temp_img', true);
+	goToPostRoll();
 };
 
 //this kicks it all off--called from the router
@@ -81,7 +83,6 @@ replaceVideo = function(video) {
 	
 	Session.set('ytplayer_ready', true);
 	ytplayer.cueVideoById(video.youtube_id);
-	updateSocialLinks(video._id);
 	
 	$('#currentTimeBall').css('left', 0);
 	$('#title_overlay').text(video.title);
@@ -96,8 +97,12 @@ replaceVideo = function(video) {
 	
 	if(Session.get('just_added_video')) {
 		playVideo();
-		Session.set('just_added_video', false);
-		showFlyup(600);
+		setTimeout(function() {
+			showFlyup(600);
+			setTimeout(function() {
+				Session.set('just_added_video', false);
+			}, 10000);
+		}, 3000);
 	}
 };
 
