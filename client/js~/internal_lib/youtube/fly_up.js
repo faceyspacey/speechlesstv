@@ -49,8 +49,13 @@ addFlyupComment = function(comment) {
 	//add the new comment to the comments array and replace the original comments array on the collection item
 	var commentObj = {comment: comment, time: Session.get('comment_time')};
 	comments.push(commentObj);			
-	Videos.update(Session.get('current_video')._id, {$set: {comments: comments}});
-	hideFlyup(250);
+	Videos.update(Session.get('current_video')._id, {$set: {comments: comments}}, function() {
+		Session.set('current_video', Videos.findOne(Session.get('current_video')._id));
+		
+		Deps.afterFlush(function() {
+			hideFlyup(250);
+		});
+	});
 };
 
 updateFlyupSocialLinks = function(videoId, currentTime) {
@@ -100,11 +105,14 @@ ownsCurrentVideo = function() {
 	return false;
 }
 
+var mouseEnterFlyup = false;
 $(function() {
 	$('#flyupContainer').live('mouseenter', function() {
 		clearTimeout(hideFlyupTimer);
-		if(ownsCurrentVideo) showFlyup(200);
+		if(ownsCurrentVideo && !mouseEnterFlyup) showFlyup(200);
+		mouseEnterFlyup = true;
 	}).live('mouseleave', function() {
 		if(ownsCurrentVideo) hideFlyup(150);
+		mouseEnterFlyup = false;
 	});
 });

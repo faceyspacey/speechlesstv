@@ -90,3 +90,17 @@ Handlebars.registerHelper('currentVideoDuration', function() {
 Handlebars.registerHelper('ownsCurrentVideo', function() {
 	return ownsCurrentVideo();
 });
+
+
+Handlebars.registerHelper('post_roll_showing', function() {
+	return Session.get('post_roll_showing');
+});
+
+
+Handlebars.registerHelper('canShowFlyup', function() {
+	if(Session.get('post_roll_showing'))  return false;
+	
+	if(Router.current().route.name == 'update_video') return false;
+	if(Router.current().route.name == 'add_video') return false;
+	return true;
+});

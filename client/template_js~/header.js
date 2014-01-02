@@ -21,3 +21,8 @@ Template.header.events({
 		Router.go('channel', {name: Meteor.user().profile.username});
 	}
 });
+
+
+Template.header.rendered = function() {
+	if(isFullScreen()) $('#header_container').hide();
+}

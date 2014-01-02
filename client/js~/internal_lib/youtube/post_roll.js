@@ -25,6 +25,7 @@ preloadNextVideo = function() {
 };
 
 showPostRoll = function() {
+	Session.set('post_roll_showing', true);
 	$('#postRoll').fadeIn('fast', function() {
 		$('#title_overlay').hide();
 		$('#largePlayPauseButton').hide();
@@ -45,7 +46,9 @@ hidePostRoll = function() {
 		$('#postRoll').css('overflow', 'hidden');
 		$('#postRoll').fadeOut(800);
 		$('#postRollLeft').animate({top: 600}, 400, 'easeInBack');
-		$('#upNext').animate({left: 500}, 400, 'easeInBack');
+		$('#upNext').animate({left: 500}, 400, 'easeInBack', function() {
+			Session.set('post_roll_showing', false);
+		});
 	});
 }
 

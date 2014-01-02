@@ -1,3 +1,11 @@
+Template.thumb.helpers({
+	ownsVideo: function() {
+		if(Meteor.userId() == this.user_id) return true;
+		if(Roles.userIsInRole(Meteor.userId(), ['admin'])) return true;
+		return false;
+	}
+});
+
 Template.thumb.events({
 	'click .vid': function(event) {
 		Videos.update(this._id, {$set: {last_watched: Date.now()}}); //update being watched

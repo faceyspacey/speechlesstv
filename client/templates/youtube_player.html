@@ -55,7 +55,7 @@
 
 
 <template name="comment_flyup">
-	{{#unless is_update_video}}
+	{{#if canShowFlyup}}
 		<div id="flyupContainer" style="opacity:0;">
 			<div id="flyupInner">
 				<div id="flyupComment">
@@ -70,7 +70,7 @@
 				<img src="{{currentVideoUserPic}}" class="flyup_user_pic" />
 			</div>
 		</div>
-	{{/unless}}
+	{{/if}}
 </template>
 
 
@@ -109,12 +109,12 @@
 			<div id="flyupSocialButtonsContainer">
 				<ul>
 					<li id="facebookShareFlyup">
-						<a class="facebook_link" href="https://www.facebook.com/sharer/sharer.php?u=www.emiliotelevision.com" target="_blank">
+						<a class="facebook_link" href="https://www.facebook.com/sharer/sharer.php?u=www.speechless.tv" target="_blank">
 							<img src="/images/facebook-share.png" alt="Follow Me" />
 						</a>
 					</li>
 					<li id="tweetButtonFlyup" >
-						<a class="tweet_link" href="https://twitter.com/share?via=emiliotv&url=http://www.emiliotelevision.com" target="_blank">
+						<a class="tweet_link" href="https://twitter.com/share?via=speechlesstv&url=http://www.speechless.tv" target="_blank">
 							<img src="/images/tweet-rectangle.png" width="60" height="20" alt="Tweet Me" />
 						</a>
 					</li>		
