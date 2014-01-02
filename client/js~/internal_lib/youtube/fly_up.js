@@ -109,10 +109,10 @@ var mouseEnterFlyup = false;
 $(function() {
 	$('#flyupContainer').live('mouseenter', function() {
 		clearTimeout(hideFlyupTimer);
-		if(ownsCurrentVideo && !mouseEnterFlyup) showFlyup(200);
+		if(ownsCurrentVideo() && !mouseEnterFlyup) showFlyup(200);
 		mouseEnterFlyup = true;
 	}).live('mouseleave', function() {
-		if(ownsCurrentVideo) hideFlyup(150);
+		if(ownsCurrentVideo()) hideFlyup(150);
 		mouseEnterFlyup = false;
 	});
 });
