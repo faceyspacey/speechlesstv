@@ -39,7 +39,21 @@ margin-top: -124px;
 	position:absolute;
 	width:100%;
 	z-index: 0;
-	margin-top: -92px;
+}
+
+#youtube_player img.maxresdefault {
+margin-top: 0px;	
+}
+
+#youtube_player img.sddefault {
+margin-top: -92px;	
+}
+#youtube_player img.hqdefault {
+margin-top: 0px; 
+}
+
+#youtube_player img.mqdefault {
+margin-top: 0px; 
 }
 
 #largePlayPauseButton {

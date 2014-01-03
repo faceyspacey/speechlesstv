@@ -117,4 +117,4 @@ Handlebars.registerHelper('canShowFlyup', function() {
 Handlebars.registerHelper('upperCase', function(word) {
 	if(!word) return;
 	return word.toUpperCase();
-})
+});

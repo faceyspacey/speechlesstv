@@ -86,6 +86,7 @@ Router.map(function () {
 		},
 		after: function() {
 			if(this.ready() && Videos.find().count() === 0) Router.go('add_video');
+			if(this.ready()) $('html,body').animate({scrollTop: 930}, 1000, 'easeOutBounce');
 		},
 		controller: HomeController
   	});
@@ -112,7 +113,7 @@ updateHead = function(currentVideo) {
 	document.title = 'Speechless.TV - ' + currentVideo.title;
 	$('meta[property="og:title"]').attr('content', 'Speechless.TV - ' + currentVideo.title);
 	$('meta[property="og:url"]').attr('content', 'http://www.speechless.tv' + window.location.pathname);
-	$('meta[property="og:image"]').attr('content', 'http://img.youtube.com/vi/' + currentVideo.youtube_id + '/sddefault.jpg');
+	$('meta[property="og:image"]').attr('content', 'http://img.youtube.com/vi/' + currentVideo.youtube_id + '/mqdefault.jpg');
 	$('meta[property="og:description"]').attr('content', currentVideo.description);
 };
 

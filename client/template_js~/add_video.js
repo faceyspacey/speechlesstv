@@ -23,20 +23,57 @@ Template.add_video.events({
 					category_id: 0, //temporary until actually entered by user on next step
 					time: Date.now(),
 					complete: false,
+					photo: 'mqdefault',
 					comments: []
 				}, function(error, id) {
 					Deps.afterFlush(function() {
-						Router.go('update_video', {video_id: id});
+						findBestPhotoMax(id, youtubeId);
 					});
 				});		
 		    }
-			else alert('Please try again. You entered an incorrect Youtube Video URL.')
+			else alert('Please try again. You entered an incorrect Youtube Video URL.');
 		});
 		
 	}
 });
 
 
+findBestPhotoMax = function(_id, youtube_id) {
+	var new_img = new Image();
+	new_img.onload = function() {
+	    if(this.height != 90) {
+			Videos.update(_id, {$set: {photo: 'maxresdefault'}}, function() {
+				Router.go('update_video', {video_id: _id});
+			});
+		}
+		else findBestPhotoSd(_id, youtube_id);
+	}
+	new_img.src = 'http://img.youtube.com/vi/'+youtube_id+'/maxresdefault.jpg';
+};
 
+findBestPhotoSd = function(_id, youtube_id) {
+	var new_img = new Image();
+	new_img.onload = function() {
+	   if(this.height != 90) {
+			Videos.update(_id, {$set: {photo: 'sddefault'}}, function() {
+				Router.go('update_video', {video_id: _id});
+			});
+		}
+		else findBestPhotoHq(_id, youtube_id);
+	}
+	new_img.src = 'http://img.youtube.com/vi/'+youtube_id+'/sddefault.jpg';
+};
+
+findBestPhotoHq = function(_id, youtube_id) {
+	var new_img = new Image();
+	new_img.onload = function() {
+	   if(this.height != 90) {
+			Videos.update(_id, {$set: {photo: 'hqdefault'}}, function() {
+				Router.go('update_video', {video_id: _id});
+			});
+		}
+	}
+	new_img.src = 'http://img.youtube.com/vi/'+youtube_id+'/hqdefault.jpg';
+};
 
 

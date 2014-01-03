@@ -15,7 +15,7 @@
 
 <template name="temp_img">
 	{{#if canDisplayOverlays}}
-		<img src="http://img.youtube.com/vi/{{current_video.youtube_id}}/sddefault.jpg" id="temp_img" style="opacity:0;"/>
+		<img src="http://img.youtube.com/vi/{{current_video.youtube_id}}/{{current_video.photo}}.jpg" id="temp_img" style="opacity:0;" class="{{current_video.photo}}" />
 	{{/if}}
 </template>
 

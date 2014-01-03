@@ -183,15 +183,11 @@ text-rendering: optimizeLegibility;
 
 .vid .thumbHover div.description_container {
 position: relative;
-display:table;
+top: 10px;
+display: block;
 width: 242px;
-height: 100px;    
+height: 100px;
 padding: 6px;
-}
-
-.vid .thumbHover p.description {
-display: table-cell; 
-vertical-align: middle; 
 text-align: justify; 
   
 font-size: 14px;
@@ -202,7 +198,6 @@ color: white;
 font-smoothing: antialiased;
 text-rendering: optimizeLegibility;
 opacity:.7;
-clear: both;
 text-shadow: 1px 1px 1px rgb(17, 61, 175);
 }
 .vid .thumbHover span.channel {

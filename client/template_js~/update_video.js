@@ -76,6 +76,7 @@ Template.submit_video.events({
 				title: $('#title_texarea').val(),
 				category_id: parseInt($('#category_dropdown').val()),
 				description:$('#description_textarea').val(),
+				time: Date.now(),
 				complete: true
 			}}, function(error) {
 				Deps.afterFlush(function() {
