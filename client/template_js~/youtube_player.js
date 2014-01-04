@@ -47,6 +47,7 @@ Template.youtube_player.events({
 			
 		comments.splice(commentIndex, 1); //remove the comment by index off the array. 		
 		Videos.update(currentVideo._id, {$set: {comments: comments}});
+		Session.set('current_video', Videos.findOne(Session.get('current_video')._id));
 		hideFlyup(100);
 	},
 	'click #editFlyup': function() {
@@ -77,6 +78,13 @@ Template.markers.helpers({
 	markerLeft: function(time) {
 		var duration = Session.get('current_video_duration_seconds');
 		return (time/duration) * 582;
+	}
+});
+
+Template.markers.events({
+	'click .comment_marker': function(e) {
+		ytplayer.seekTo(Math.max(this.time - 1, 0));
+		e.stopPropagation();
 	}
 });
 

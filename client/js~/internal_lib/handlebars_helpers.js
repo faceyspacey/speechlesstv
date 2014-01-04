@@ -2,6 +2,11 @@ Handlebars.registerHelper('current_video', function() {
     return Session.get('current_video');
 });
 
+Handlebars.registerHelper('comment_time', function() {
+    return Session.get('comment_time') - 1;
+});
+
+
 Handlebars.registerHelper('current_url', function() {
 	return 'http://www.speechless.tv' + window.location.pathname;
 });
