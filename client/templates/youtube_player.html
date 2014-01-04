@@ -115,7 +115,7 @@
 					</li>
 					<li id="tweetButtonFlyup" >
 						<a class="tweet_link" href="https://twitter.com/share?via=speechlesstv&url=http://www.speechless.tv/video/{{current_video._id}}/{{current_seconds}}" target="_blank" onclick="pauseVideo()">
-							<img src="/images/tweet-rectangle.png" width="60" height="20" alt="Tweet Me" />
+							<img src="/images/tweet-rectangle.png" alt="Tweet Me" />
 						</a>
 					</li>		
 				</ul>
@@ -144,6 +144,7 @@
             <div id="barsInner">
 				<div id="loadingBar"></div>
 	            <div id="progressBar"></div>
+				{{>markers}}
 	            <div id="currentTimeBall">
 					<div id="innerTimeBallCircle"></div>
 				</div>
@@ -179,4 +180,10 @@
         	<div id="fullscreenButton"></div>
         </div>
     </div>
+</template>
+
+<template name="markers">
+	{{#each current_video.comments}}
+		<div class="comment_marker" style="left:{{markerLeft time}}px;"></div>
+	{{/each}}
 </template>

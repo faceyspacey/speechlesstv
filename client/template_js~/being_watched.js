@@ -10,12 +10,6 @@ Template.being_watched.helpers({
 
 
 
-Template.being_watched_thumb.helpers({
-	hide_show: function() {
-		return Session.get(this._id+'_show') ? 'block' : 'none';
-	}
-});
-
 Template.being_watched_thumb.events({
 	'click': function() {
 		Router.go('video', {video_id: this._id});
@@ -24,10 +18,14 @@ Template.being_watched_thumb.events({
 	},
 	'mouseenter .miniVid': function() {
 		Session.set(this._id+'_show', true);
-	},
-	'mouseleave .miniVid': function() {
-		Session.set(this._id+'_show', false);
-	},
-	
+	}	
 });
 
+
+$(function() {
+	$('.miniVid').live('mouseenter', function() {
+		$(this).find('.miniVidHover').show();
+	}).live('mouseleave', function() {
+		$(this).find('.miniVidHover').hide();
+	});
+});

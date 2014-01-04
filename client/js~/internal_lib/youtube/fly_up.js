@@ -33,18 +33,18 @@ hideFlyup = function(animationDuration) {
 	});
 };
 
-addFlyupComment = function(comment) {
+addFlyupComment = function(comment, time) {
 	//first delete any comment with the same time
 	var comments = Session.get('current_video').comments;
 	_.each(comments, function(comment, index) {
-		if(comment.time == Session.get('comment_time')) {
+		if(comment.time == time) {
 			comments.splice(index, 1);
 		}
 	});
 	  
 	
 	//add the new comment to the comments array and replace the original comments array on the collection item
-	var commentObj = {comment: comment, time: Session.get('comment_time')};
+	var commentObj = {comment: comment, time: time};
 	comments.push(commentObj);		
 	hideFlyup(250);	
 	setTimeout(function() {

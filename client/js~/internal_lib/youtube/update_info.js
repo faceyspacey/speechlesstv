@@ -19,9 +19,11 @@ updatePlayerInfo = function() {
 
 
 updateTimes = function() {
-	Session.set('current_seconds', Math.floor(ytplayer.getCurrentTime()));
-	Session.set('current_video_time', formatSeconds(ytplayer.getCurrentTime()));
-	Session.set('current_video_duration', formatSeconds(ytplayer.getDuration()));
+	Session.set('current_seconds', getCurrentTime());
+	Session.set('current_video_duration_seconds', getCurrentDuration());
+	
+	Session.set('current_video_time', formatSeconds(getCurrentTime()));
+	Session.set('current_video_duration', formatSeconds(getCurrentDuration()));
 };
 
 addTimeToUrl = function(currentTime) {

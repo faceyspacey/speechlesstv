@@ -107,6 +107,12 @@ replaceVideo = function(video) {
 };
 
 getCurrentTime = function() {
-	return Math.round(ytplayer.getCurrentTime());
+	if(!ytplayer) return 0;
+	return Math.floor(ytplayer.getCurrentTime());
+}
+
+getCurrentDuration = function() {
+	if(!ytplayer) return 0;
+	return Math.floor(ytplayer.getDuration());
 }
 

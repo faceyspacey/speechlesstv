@@ -49,7 +49,7 @@ margin-top: 0px;
 margin-top: -92px;	
 }
 #youtube_player img.hqdefault {
-margin-top: 0px; 
+margin-top: -92px;	 
 }
 
 #youtube_player img.mqdefault {
@@ -293,9 +293,22 @@ height: 50%;
 border-radius: 2px;
 }
 
+.comment_marker {
+position: absolute;
+z-index: 3;
+top: 0px;
+
+height: 12px;
+width: 7px;
+border-radius: 3px;
+
+cursor:pointer;
+background-color: rgb(238, 158, 39);
+}
+
 /** see how the current time ball is moved to the left the same width as the progress bar!! **/
 #currentTimeBall {
-z-index: 3;
+z-index: 4;
 background:url('../../images/progress_ball.png') no-repeat;
 left: 0; 
 width: 3%; 
@@ -646,8 +659,9 @@ position: relative;
 #flyupSocialButtonsContainer #tweetButtonFlyup img {
 margin-top: -1px;
 margin-left: -1px;
-height: 21px;
-z-index: 1;
+width: 59px;
+height: 20px;
+z-index: 2;
 position: relative;
 }
 

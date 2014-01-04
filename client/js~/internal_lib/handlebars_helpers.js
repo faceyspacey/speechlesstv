@@ -71,7 +71,6 @@ Handlebars.registerHelper('currentVideoUserPic', function() {
 
 
 Handlebars.registerHelper('is_editing_flyup_comment', function(a, b) {
-	console.log('HELPER', a, b, this);
     return Session.get('is_editing_flyup_comment');
 });
 

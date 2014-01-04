@@ -31,13 +31,14 @@ Template.youtube_player.events({
 	},
 	'click #flyup_comment_button': function() {
 		pauseVideo();
-		Session.set('comment_time', Math.floor(ytplayer.getCurrentTime()));
 		Session.set('is_editing_flyup_comment', true);
+		Session.set('comment_time', getCurrentTime());
 	},
 	'click #flyup_comment_submit': function() {
 		var comment = $('#flyup_comment_textarea').val();
-		if(comment != '') addFlyupComment(comment);
+		if(comment != '') addFlyupComment(comment, Session.get('comment_time'));
 		playVideo();
+		Session.set('is_editing_flyup_comment', false);
 	},
 	'click #deleteFlyup': function() {
 		var commentIndex = Session.get('comment_index'),
@@ -46,7 +47,7 @@ Template.youtube_player.events({
 			
 		comments.splice(commentIndex, 1); //remove the comment by index off the array. 		
 		Videos.update(currentVideo._id, {$set: {comments: comments}});
-		hideFlyup();
+		hideFlyup(100);
 	},
 	'click #editFlyup': function() {
 		pauseVideo();
@@ -72,7 +73,12 @@ Template.temp_img.rendered = function() {
 };
 
 
-
+Template.markers.helpers({
+	markerLeft: function(time) {
+		var duration = Session.get('current_video_duration_seconds');
+		return (time/duration) * 582;
+	}
+});
 
 
 
