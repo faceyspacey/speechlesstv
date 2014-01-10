@@ -64,7 +64,8 @@ Router.map(function () {
 			
 			return [
 				Meteor.subscribe('video', this.params.video_id), 
-				Meteor.subscribe('allVideos', limit)
+				Meteor.subscribe('allVideos', limit),
+				Meteor.subscribe('allCategories')
 			];
 		},
 		fastRender: true,
@@ -81,7 +82,8 @@ Router.map(function () {
 			
 			return [
 				Meteor.subscribe('video', this.params.video_id), 
-				Meteor.subscribe('allVideos', limit)
+				Meteor.subscribe('allVideos', limit),
+				Meteor.subscribe('allCategories')
 			];
 		},
 		fastRender: true,
