@@ -9,7 +9,8 @@
       "router": {},
       "iron-router": {},
       "roles": {},
-      "headly": {}
+      "headly": {},
+      "fast-render": {}
     },
     "packages": {
       "router": {
@@ -19,8 +20,8 @@
       },
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",
-        "tag": "v0.6.1",
-        "commit": "4e1ee0581d68bff422a915dacb0bd30eae10fe08"
+        "tag": "v0.6.2",
+        "commit": "ce56e58b45624dce992490f3a1c10f10d3948bae"
       },
       "roles": {
         "git": "https://github.com/alanning/meteor-roles.git",
@@ -31,6 +32,11 @@
         "git": "https://github.com/ayal/headly",
         "tag": "v0.0.514",
         "commit": "a200e5d37c12ad15fa3d690bb645c5fc9477993d"
+      },
+      "fast-render": {
+        "git": "https://github.com/arunoda/meteor-fast-render.git",
+        "tag": "v0.1.1",
+        "commit": "f87db99e82a355a29d3d649f890af617b582f5db"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

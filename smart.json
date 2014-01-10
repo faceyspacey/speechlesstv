@@ -3,6 +3,7 @@
     "router": {},
     "iron-router": {},
     "roles": {},
-    "headly": {}
+    "headly": {},
+    "fast-render": {}
   }
 }
