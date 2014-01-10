@@ -20,6 +20,7 @@ updateHead = function(currentVideo) {
 	$('meta[property="og:url"]').attr('content', 'http://www.speechless.tv' + window.location.pathname);
 	$('meta[property="og:image"]').attr('content', 'http://img.youtube.com/vi/' + currentVideo.youtube_id + '/mqdefault.jpg');
 	$('meta[property="og:description"]').attr('content', currentVideo.description);
+	$('meta[name="description"]').attr('content', currentVideo.description);
 };
 
 Deps.autorun(function() {
