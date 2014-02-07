@@ -15,8 +15,18 @@
   	<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
   	<link href='http://fonts.googleapis.com/css?family=Archivo+Black' rel='stylesheet' type='text/css'>
 
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	
 	<script src="http://www.google.com/jsapi" type="text/javascript"></script>
 	<script type="text/javascript">google.load("swfobject", "2.1");</script>
+	
+	<script>
+		function loadGoogleApis() {
+			gapi.client.setApiKey('AIzaSyCUUiKH2qwEiFgTyJd6_GG2GBEarmkY2Eg');
+			gapi.client.load('youtube', 'v3');
+		}
+	</script>
+	<script src="https://apis.google.com/js/client.js?onload=loadGoogleApis"></script>
 	
 	<!--[if gte IE 9]>
 	  <style type="text/css">
@@ -26,6 +36,13 @@
 	  </stle>
 	<![endif]-->
 </head>
+
+
+<template name="blank_layout">
+	<div class="liquid_container" style="background: white;">
+		{{yield}}
+	</div>
+</template>
 
 
 

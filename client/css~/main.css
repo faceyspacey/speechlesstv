@@ -16,14 +16,13 @@ body{
 background: url('../../images/creampaper.png');
 overflow-x: hidden;
 overflow-y: scroll;	
-padding-top: 75px;
 }
 .page {
 background-repeat: repeat-x;
 background-color: rgb(248, 251, 253);
 width: 1032px;
 box-shadow: 0px 12px 30px -4px #2a6efd;
-margin: 0px auto 0px;
+margin: 75px auto 0px;
 padding-bottom: 10px;
 position: relative;
 }

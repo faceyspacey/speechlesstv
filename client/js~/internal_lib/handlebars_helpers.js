@@ -122,3 +122,9 @@ Handlebars.registerHelper('upperCase', function(word) {
 	if(!word) return;
 	return word.toUpperCase();
 });
+
+
+
+Handlebars.registerHelper('current_search_video', function() {
+    return VideoModel.currentSearchVideo();
+});

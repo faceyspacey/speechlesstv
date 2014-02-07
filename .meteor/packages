@@ -13,7 +13,7 @@ accounts-base
 spiderable
 iron-router
 roles
-headly
 standard-app-packages
 http
 fast-render
+moment

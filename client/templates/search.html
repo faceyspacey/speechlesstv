@@ -1,0 +1,76 @@
+<template name="search">
+	<div class="cube_container">
+		<div class="cube">
+			{{>search_page}}
+		</div>
+	</div>
+</template>
+
+<template name="search_page">
+	<div class="backface">
+		{{>search_field}}
+		{{>search_results}}
+	</div>
+</template>
+
+<template name="search_field">
+	<div id="search_field">
+		<input type="text" value="EDM 2014" />					
+	</div>
+</template>
+
+<template name="search_results">
+	<div id="search_results_container">
+		<div id="search_results_wrapper">
+			<div id="search_results_scroller">
+				{{>search_columns}}
+				<div style="clear:both;"></div>
+			</div>
+		</div>
+
+		{{>back_next_buttons}}
+		{{>search_video_info}}
+	</div>
+</template>
+
+<template name="back_next_buttons">
+	<div id="search_results_back" class="search_back_next" style="display:{{showBack}};"><i class="fa fa-arrow-left"></i></div>
+	<div id="search_results_next" class="search_back_next" style="display:{{showNext}};"><i class="fa fa-arrow-right"></i></div>
+</template>
+
+<template name="search_columns">
+	{{#each columns}}
+		{{>search_column}}
+	{{/each}}
+</template>
+
+<template name="search_column">
+	<div class="search_result_column" index="{{index}}" style="display:none;">
+		{{#each videos}}
+			{{>search_result}}
+		{{/each}}
+		
+		<div class="delete_column" style="display:none;">x</div>
+	</div>
+</template>
+
+<template name="search_result">
+	<div class="search_result">
+		<div class="check_video" style="{{show}}">
+			<i class="fa fa-check"></i>
+		</div>
+		
+		<img class="video_image" src="{{src}}" />
+	</div>
+</template>
+
+<template name="search_video_info">
+	<div id="search_video_info" style="display:none;">
+		{{#isolate}}
+			{{#with current_search_video}}
+				<div id="search_video_title">{{title}}</div>
+				<div id="search_video_description">{{description}}</div>
+			{{/with}}
+		{{/isolate}}
+	</div>
+</template>

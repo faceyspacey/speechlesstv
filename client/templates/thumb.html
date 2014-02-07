@@ -1,7 +1,7 @@
 <template  name="thumb">
 	<div class="vid" id="{{_id}}">
 
-		<img class="video_image" src="http://img.youtube.com/vi/{{youtube_id}}/mqdefault.jpg" error="this.src='/images/default-vid.jpg'; console.log('vid image error');">
+		<img class="video_image" src="http://img.youtube.com/vi/{{youtube_id}}/mqdefault.jpg" onerror="this.src='/images/default-vid.jpg'; console.log('vid image error');">
 		
 		<p class="video_main_title">{{shorten title 55}}</p>	
 		<div class="video_info_container">	

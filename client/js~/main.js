@@ -11,6 +11,8 @@ Meteor.startup(function() {
 	Meteor.subscribe('allCategories');
 	
 	bindMiscInteractions();
+	
+	Resizeable.init();
 });
 
 updateHead = function(currentVideo) {

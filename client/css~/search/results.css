@@ -1,0 +1,49 @@
+#search_results_container {
+	position: relative;
+	width: 99%;
+	margin: 10px auto 0px;
+}
+
+#search_results_wrapper {
+	position: relative;
+	
+	width: 100%;
+	
+	overflow: hidden;
+}
+
+#search_results_scroller {
+	width: 10000px;
+}
+
+
+.search_back_next {
+	position: absolute;
+	
+	top: 3px;
+	
+	width: 30px;
+	
+	font-size: 20px;
+	font-weight: bold;
+	color:white;
+	text-shadow: 1px 1px 1px navy;
+	
+	opacity: 0;
+	background: #559afe;
+	
+	cursor: pointer;
+}
+#search_results_back {
+	left:0px;
+	padding-left: 4px;
+}
+
+#search_results_next {
+	right: 0px;
+	padding-left: 8px;
+}
+
+.search_back_next:hover {
+	opacity: .9;
+}

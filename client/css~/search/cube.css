@@ -1,0 +1,34 @@
+.cube_container {
+position: relative;
+width: 100%;
+overflow:hidden;
+	
+-webkit-perspective-origin: 50% 50%;
+
+-webkit-perspective: 1000px;
+   -moz-perspective: 1000px;
+     -o-perspective: 1000px;
+        perspective: 1000px;
+}
+
+
+.cube {
+width: 100%;
+height: 100%;
+position: absolute;
+
+-webkit-transform-style: preserve-3d;
+   -moz-transform-style: preserve-3d;
+     -o-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+}
+
+.cube > div.backface {
+width: 100%;
+height: 100%;
+position: absolute;
+-webkit-backface-visibility: hidden;
+   -moz-backface-visibility: hidden;
+     -o-backface-visibility: hidden;
+        backface-visibility: hidden;
+}

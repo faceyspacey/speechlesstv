@@ -9,6 +9,11 @@ HomeController = FastRender.RouteController.extend({
 });
 
 
+BlankController = FastRender.RouteController.extend({
+	layoutTemplate: 'blank_layout',
+  	template: 'browse_video'
+});
+
 Router.map(function () {
 	this.route('home', {
     	path: '/',
@@ -26,6 +31,17 @@ Router.map(function () {
 		controller: HomeController
   	});
 
+	this.route('search', {
+    	path: '/search',
+		template: 'search',
+		action: function() {	
+			this.render();
+		},
+		fastRender: true,
+		controller: BlankController
+  	});
+	
+	
 	this.route('add_video', {
     	path: '/add-video',
 		template: 'add_video',
