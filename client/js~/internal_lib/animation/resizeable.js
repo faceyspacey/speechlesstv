@@ -9,45 +9,128 @@ Resizeable = {
 	},
 	resizeAllElements: function() {
 		var width = $(window).width(), 
-			height = $(window).height(),
-			header = 76,
-			resultsHeight = height - header;
-		
+			height = $(window).height();
+
 		for (var resizeFunc in this.elements) {
-			this.elements[resizeFunc](width, height, resultsHeight);
+			this.elements[resizeFunc](width, height);
 		}
 	},
 	elements: {
 		searchCube: function(width, height) {
 		    $('.cube_container').css('height', height);
 		},
-		search: function(width, height) {
-			$('#search_results_container, #search_field').css('width', width - 10);
+		searchContainer: function(width, height) {
+			$('#search_results_container').css('width', width - SearchSizes.pagePadding);
 		},
-		searchResults: function(width, height, resultsHeight) {
-			//search result thumb heights
-			var margins = 6 * 4,
-				columnBorder = 6,
-				thumbHeight = (resultsHeight - margins - columnBorder) / 5;
-				
-			injectCSS('.search_result', 'height: '+thumbHeight+'px');
-				
-			//search column widths through margin-right
-			var columnWidth = Math.ceil(1.7619047619047619 * thumbHeight) + 6,
-				pageWidth = $('#search_results_wrapper').width(),
-				columnCount = Math.floor(pageWidth / columnWidth),
-				totalColumnWidth = columnCount * columnWidth,
-				columnMarginRight = (pageWidth - totalColumnWidth) / (columnCount - 1);
+		searchBar: function(width, height) {
+			var padding = SearchSizes.pagePadding,
+				searchBarWidth = width - padding;
 			
-			injectCSS('.search_result_column', 'margin-right: '+Math.ceil(columnMarginRight - 2)+'px');
-			
-			Session.set('total_column_capacity', columnCount);			
+			$('#search_bar').css('width', searchBarWidth);
+			$('#search_bar input#search_query').css('width', searchBarWidth - SearchSizes.toolbarWidth - SearchSizes.toolbarSpacing);
 		},
-		searchResultsBackNext: function(width, height, resultsHeight) {
-			var height = resultsHeight - 7,
-				paddingTop = resultsHeight/2 - 8;
-			
-			injectCSS('.search_back_next', 'height: '+height+'px;' + ' padding-top: '+paddingTop+'px;');
+		searchResults: function(width, height) {	
+			setSearchColumnWidths(); 				
+		},
+		searchResultsBackNext: function(width, height) {
+			injectCSS('.search_back_next', 'height: '+SearchSizes.backNextHeight()+'px;');
+			injectCSS('.search_back_next', 'padding-top: '+SearchSizes.backNextPaddingTop()+'px;');
 		}
 	}
 };
+
+
+
+setSearchColumnWidths = function() {	
+	if($('#image_dimensions_tester').length > 0) {
+		var testImage = $('#image_dimensions_tester');
+		testImage.css('height', SearchSizes.thumbHeight());
+		configureSearchSizes(testImage.width(), SearchSizes.thumbHeight());
+	}
+	else {
+		var new_img = new Image(); 
+		new_img.onload = function() {
+			$(this).css('height', SearchSizes.thumbHeight());
+			$(this).hide().appendTo('body');
+			configureSearchSizes($(this).width(), SearchSizes.thumbHeight());
+		};
+		new_img.id = 'image_dimensions_tester';
+		new_img.src = 'http://img.youtube.com/vi/4mInhfiDyTA/mqdefault.jpg';
+	}	
+};
+
+configureSearchSizes = function(width, height) {
+	console.log('width!', width, height);
+	var width = Math.round(width); //now we have the actual photo width supported based on the height
+	SearchSizes.columnWidth = width + SearchSizes.bothColumnBorders();
+	
+	injectCSS('.search_result_column', 'width: '+SearchSizes.columnWidth+'px');
+	injectCSS('.video_image', 'height: '+height+'px');
+	injectCSS('.search_result', 'height: '+height+'px');
+	
+	injectCSS('.search_result_column', 'margin-right: '+SearchSizes.columnMarginRight()+'px');	
+	Session.set('total_column_capacity', SearchSizes.columnsCapacityCount());
+};
+
+
+SearchSizes = {
+	header: 76,
+	columnBorderWidth: 3,
+	thumbMarginTop: 6,
+	thumbsPerColumn: 5,
+	pagePadding: 10,
+	toolbarWidth: 440,
+	toolbarSpacing: 3,
+	
+	columnWidth: 0, //this gets set when the width of a real image is detected above
+	
+	
+	thumbHeight: function() {
+		return this.columnHeightForThumbs() / this.thumbsPerColumn;	
+	},
+	
+	columnHeightForThumbs: function() {
+		return this.resultsContainerHeight() - this.thumbTotalMarginTop() - this.bothColumnBorders();
+	},
+	resultsContainerHeight: function() {
+		return $(window).height() - this.header;		
+	},
+	thumbTotalMarginTop: function() {
+		return (this.thumbsPerColumn - 1) * this.thumbMarginTop;
+	},
+	bothColumnBorders: function() {
+		return this.columnBorderWidth * 2;
+	},
+	
+
+	columnAndMarginWidth: function() {
+		return this.columnWidth + this.columnMarginRight();
+	},
+	
+	columnMarginRight: function() {
+		return (this.pageWidth() - this.totalColumnWidth()) / (this.columnsCapacityCount() - 1);
+	},
+	totalColumnWidth: function() {
+		return this.columnsCapacityCount() * this.columnWidth;
+	},
+	columnsCapacityCount: function() {
+		return Math.floor(this.pageWidth() / this.columnWidth)
+	},
+	
+	
+	pageWidth: function() {
+		return $('#search_results_wrapper').width();
+	},
+	
+	backNextPaddingTop: function() {
+		return SearchSizes.resultsContainerHeight()/2 - 8;
+	},
+	
+	videoInfoBoxWidth: function() {
+		return this.columnAndMarginWidth() + this.columnWidth - this.bothColumnBorders();
+	},
+	
+	backNextHeight: function() {
+		return this.resultsContainerHeight() - this.bothColumnBorders();
+	}
+}

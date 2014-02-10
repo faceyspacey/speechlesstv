@@ -1,21 +1,81 @@
 <template name="search">
 	<div class="cube_container">
-		<div class="cube">
+		<div class="cube" id="search_cube">
 			{{>search_page}}
+			{{>add_videos}}
 		</div>
 	</div>
 </template>
 
 <template name="search_page">
-	<div class="backface">
-		{{>search_field}}
+	<div class="backface" id="search_results_side">
+		{{>search_bar}}
 		{{>search_results}}
 	</div>
 </template>
 
-<template name="search_field">
-	<div id="search_field">
-		<input type="text" value="EDM 2014" />					
+<template name="add_videos">
+	<div class="backface" id="add_videos_side" style="display:none;" >
+		<div id="add_videos_back">BACK</div>
+		
+		<div id="add_videos_wrapper">
+			<div id="add_videos_scroller">
+				{{#isolate}}
+					{{#each videos}}
+						{{>add_video_row}}
+					{{/each}}
+				{{/isolate}}
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="add_video_row">
+	<div class="add_video_row">
+		<img class="add_video_row_video_image" src="{{src}}" />
+		
+		<div class="add_video_row_info">
+			<input value="{{title}}">
+			<textarea>{{description}}</textarea>
+		</div>
+	</div>
+</template>
+
+<template name="search_bar">
+	<div id="search_bar">
+		{{#isolate}}
+			<input type="text" id="search_query" value="Tech Trends 2014" />		
+		{{/isolate}}
+		
+		{{#isolate}}
+			<div id="search_check">
+				<div id="search_check_all" class="search_check {{checkallChecked}}">CHECK ALL</div>
+				<div id="search_uncheck_all" class="search_check {{uncheckallChecked}}">UNCHECK ALL</div>
+			</div>
+		{{/isolate}}
+		
+		{{#isolate}}
+			<div id="search_category_dropdown">
+				
+				{{#isolate}}
+					<span>{{categoryName}}</span>
+				{{/isolate}}
+				
+				{{#isolate}}
+					<div id="search_category_options" style="display:none">
+						{{#isolate}}
+							{{#each categories}}
+								<div class="search_category_option">{{name}}</div>
+							{{/each}}
+						{{/isolate}}
+					</div>
+				{{/isolate}}
+			</div>			
+		{{/isolate}}
+		
+		{{#isolate}}
+			<div id="search_next_button">NEXT</div>
+		{{/isolate}}
 	</div>
 </template>
 
@@ -69,7 +129,7 @@
 		{{#isolate}}
 			{{#with current_search_video}}
 				<div id="search_video_title">{{title}}</div>
-				<div id="search_video_description">{{description}}</div>
+				<div id="search_video_duration">00:31/5:07</div>
 			{{/with}}
 		{{/isolate}}
 	</div>

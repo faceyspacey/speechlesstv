@@ -102,9 +102,11 @@ jQuery.fn.hardwareCss = function(translateScaleRotate) {
 
 jQuery.fn.hardwareAnimateCollection = function(options, duration, easing, latency, callback) {	
 	var itemCount = this.length,
-		complete = itemCount * latency + duration;
-	
-	console.log('options.opacity', options);
+		duration = duration || 500,
+		easing = easing || 'easeInOutBack', 
+		latency = latency || 50,
+		completeWait = itemCount * latency + duration,
+		callback = callback || function() {};
 	
 	if(options.opacity || options.opacity === 0) {
 		var opacity = options.opacity;
@@ -123,9 +125,64 @@ jQuery.fn.hardwareAnimateCollection = function(options, duration, easing, latenc
 		
 		if(opacity || opacity === 0) $el.animate({opacity: opacity}, duration);
 		
-		setTimeout(callback, complete);		
+		setTimeout(callback, completeWait);		
 	});
 };
+
+
+jQuery.fn.reverse = [].reverse;
+
+jQuery.fn.slideDownCollection = function(duration, easing, latency, callback) {	
+	var itemCount = this.length,
+		duration = duration || 500,
+		easing = easing || 'easeInOutBack', 
+		latency = latency || 50,
+		completeWait = itemCount * latency + duration,
+		callback = callback || function() {};
+	
+	setTimeout(callback, completeWait);	
+	return this.each(function(index, el) {
+		var $el = $(el),
+			top = $el.offset().top + $el.height(),
+			itemNumber = index + 1
+			wait = itemNumber * latency;
+			
+		$el.hardwareAnimate({translateY: top * -1}, 0, 'linear', function() {
+			setTimeout(function() {
+				$el.hardwareAnimate({translateY: 0}, duration, easing);
+				$el.animate({opacity: 1}, duration);
+			}, wait);
+		});			
+	});
+};
+
+
+
+jQuery.fn.slideUpCollection = function(duration, easing, latency, callback) {	
+	var itemCount = this.length,
+		duration = duration || 500,
+		easing = easing || 'easeInOutBack', 
+		latency = latency || 50,
+		completeWait = itemCount * latency + duration,
+		callback = callback || function() {};
+	
+	setTimeout(callback, completeWait);	
+	return this.each(function(index, el) {
+		var $el = $(el),
+			top = $el.offset().top + $el.height(),
+			itemNumber = index + 1
+			wait = itemNumber * latency;
+			
+		setTimeout(function() {
+			$el.hardwareAnimate({translateY: top * -1}, duration, easing);
+			$el.animate({opacity: 0}, duration);
+		}, wait);	
+	});
+};
+
+
+
+
 
 
 injectCSS = function(selector, rules, index) {

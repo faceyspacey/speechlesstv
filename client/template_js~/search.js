@@ -9,18 +9,97 @@ Template.search.created = function() {
 };
 
 
+/** ADD_VIDEOS **/
+
+Template.add_videos.rendered = function() {
+	Deps.afterFlush(function() {
+		Meteor.setTimeout(function() {
+			vScroll('add_videos_wrapper');
+		}, 0);
+	});
+};
+
+Template.add_videos.helpers({
+	videos: function() {
+		return Videos.find({_local: true, checked: true});
+	}
+});
+
+Template.add_videos.events({
+	'click #add_videos_back': function() {
+		$('.cube').cube().prevSideHorizontal();
+	}
+});
+
+
 /** SEARCH_FIELD **/
 
-Template.search_field.events({
-	'keyup #search_field input': function(e) {
+Template.search_bar.helpers({
+	checkallChecked: function() {
+		var checkedCount = Videos.find({_local: true, checked: null}).count();
+		
+		return Session.get('search_check_all') && checkedCount === 0 ? 'checked' : '';
+	},
+	uncheckallChecked: function() {
+		var checkedCount = Videos.find({_local: true, checked: true}).count();
+		
+		return Session.get('search_uncheck_all') && checkedCount === 0 ? 'checked' : '';
+	},
+	categories: function() {
+		return Categories.find({name: {$not: 'all'}});
+	},
+	categoryName: function() {
+		if(Session.equals('mouse_over_category_dropdown', true)) return 'Select a Category';
+		
+		var catId = Session.get('selected_search_category_id');
+		return catId ? Categories.findOne(catId).name : 'Select a Category';
+	}
+});
+
+Template.search_bar.events({
+	'keyup #search_bar input': function(e) {
 		console.log('keyup');
 		
 		if(e.keyCode == 13) {
-			var value = $('#search_field input').val();			
+			var value = $('#search_bar input').val();			
 			YoutubeSearcher.query(value);
 		}
+	},
+	'click #search_check_all': function() {
+		Session.set('search_check_all', true);
+		Session.set('search_uncheck_all', false);
+		Videos._collection.update({_local: true}, {$set: {checked: true}}, {multi: true});
+	},
+	'click #search_uncheck_all': function() {
+		Session.set('search_check_all', false);
+		Session.set('search_uncheck_all', true);
+		Videos._collection.update({_local: true}, {$set: {checked: null}}, {multi: true});
+	},
+	'mouseenter #search_category_dropdown': function(e) {
+		Session.set('mouse_over_category_dropdown', true);
+		$('#search_category_options').show();
+		$('.search_category_option').slideDownCollection(400, 'easeOutBack', 50);
+	},
+	'mouseleave #search_category_dropdown': function(e) {
+		Session.set('mouse_over_category_dropdown', false);
+		$('.search_category_option').slideUpCollection(300, 'easeInBack', 50, function() {
+			if(Session.equals('mouse_over_category_dropdown', false)) $('#search_category_options').hide();
+		});
+	},
+	'click .search_category_option': function() {
+		Session.set('selected_search_category_id', this._id);
+		Session.set('mouse_over_category_dropdown', false);
+		
+		$('.search_category_option').slideUpCollection(300, 'easeInBack', 50, function() {
+			if(Session.equals('mouse_over_category_dropdown', false)) $('#search_category_options').hide();
+		});
+	},
+	'click #search_next_button': function() {
+		$('.cube').cube().nextSideHorizontal($('#add_videos_side'));
 	}
 });
+
+Session.set('mouse_over_category_dropdown', false);
 
 
 /** BACK_NEXT_BUTTONS **/
@@ -137,31 +216,29 @@ Template.search_result.events({
 		Session.set('current_search_video_id', this._id);
 		
 		var resultOffsetLeft = $result.offset().left,
-			pageWidth = $(window).width(),
-			resultOffsetRight = pageWidth - resultOffsetLeft,
-			percentAcrossPage = resultOffsetLeft / pageWidth,
-			$column = $('.search_result_column').first(),
-			columnWidth = $column.outerWidth(),
-			marginRight = parseInt($column.css('margin-right')),
-			columnAndMargin = columnWidth + marginRight,
+			percentAcrossPage = resultOffsetLeft / SearchSizes.pageWidth(),
+			containerOffsetLeft = $('#search_video_info').parent().offset().left,
 			left;
 			
-		
-		if(percentAcrossPage < .5) left = resultOffsetLeft + columnWidth + marginRight - 6;
-		else left = resultOffsetLeft - (columnAndMargin * 2) - 6;
-		
-		console.log('left', left);
-		
-		$('#search_video_info').css({left: left, width: columnWidth * 2 + marginRight - 3, height: $column.height() + 3}).fadeIn('fast');
+	
+		if(percentAcrossPage < .35) left = resultOffsetLeft + SearchSizes.columnAndMarginWidth();
+		else left = resultOffsetLeft - (SearchSizes.columnAndMarginWidth() * 2);
+
+		$('#search_video_info').css({
+			left: left - containerOffsetLeft - 1, 
+			top: $result.offset().top - SearchSizes.header - 1, 
+			width: SearchSizes.videoInfoBoxWidth() + 1,
+			height: $result.height() + 4
+		}).show();
 	},
 	'mouseleave .search_result': function(e) {
 		$(e.currentTarget).removeClass('selected_result');
 		
-		$('#search_video_info').fadeOut('fast');
+		$('#search_video_info').hide();
 	},
 	'click .check_video': function(e) {
 		console.log(this);
-		this.checked = this.checked ? false : true;
+		this.checked = this.checked ? null : true;
 		this.store();
 		e.stopPropagation();
 	}

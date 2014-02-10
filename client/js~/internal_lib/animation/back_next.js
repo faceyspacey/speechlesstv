@@ -15,6 +15,12 @@ BackNext = {
 	decrementRight: function() {
 		Session.set('right_column_count', --this.rightColumns);
 	},
+	setLeft: function(value) {
+		Session.set('left_column_count', this.leftColumns = value);
+	},
+	setRight: function(value) {
+		Session.set('right_column_count', this.rightColumns = value);
+	},
 	
 	back: function() {
 		this.incrementRight();
@@ -32,7 +38,9 @@ BackNext = {
 		this.totalColumns++;
 		
 		if(this.isTooManyColumns()) {
-			this.incrementLeft();
+			this.setRight(0);
+			
+			this.setLeft(this.surplusColumns());
 			this.slideToEnd();
 		}
 	},
@@ -50,14 +58,17 @@ BackNext = {
 	isTooManyColumns: function() {
 		return this.totalColumns > Session.get('total_column_capacity');
 	},
+	surplusColumns: function() {
+		return this.isTooManyColumns() ? this.totalColumns - Session.get('total_column_capacity') : 0;
+	},
 	columnWidth: function() {
-		return  $('.search_result_column').first().width() + parseInt($('.search_result_column').first().css('margin-right')) + 6;
+		return SearchSizes.columnAndMarginWidth();
 	},
 	
 	
 	slideToEnd: function() {
 		console.log(this);
-		var distance = (this.totalColumns - Session.get('total_column_capacity')) * this.columnWidth() * -1;
+		var distance = this.surplusColumns() * this.columnWidth() * -1;
 		$('#search_results_scroller').hardwareAnimate({translateX: distance});
 	},
 	slideLeft: function() {

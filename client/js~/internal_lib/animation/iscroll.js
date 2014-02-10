@@ -1147,48 +1147,38 @@ newScroll = function(id, options) {
 	return new iScroll(id, defaults);
 }
 
-allScrolls = [];
-
-destroyAllScrolls = function() {
-	_.each(allScrolls, function(scroll) {
-		scroll.destroy();
-	});
-}
+allScrolls = {};
 
 vScroll = function(id) {
+	if(allScrolls[id]) return allScrolls[id].refresh();
+	
 	var scroll = newScroll(id, {vScroll: true});
-	allScrolls.push(scroll);
+	allScrolls[id] = scroll;
 	return scroll;
 }
 
 hScroll = function(id) {
+	if(allScrolls[id]) return allScrolls[id].refresh();
+	
 	var scroll = newScroll(id, {hScroll: true});
-	allScrolls.push(scroll);
+	allScrolls[id] = scroll;
 	return scroll;
 }
 
 
 hvScroll = function(id) {
+	if(allScrolls[id]) return allScrolls[id].refresh();
+	
 	var scroll = newScroll(id, {hScroll: true, vScroll: true});
-	allScrolls.push(scroll);
+	allScrolls[id] = scroll;
 	return scroll;
 }
 
 
-iScrollElements = {};
-setupIscroll = function(templateInstance) {
-	var page = templateInstance.find('.mobile_pages, #mobile_sidebar'),
-		id = $(page).attr('id');
-	
-	if(iScrollElements[id] == undefined) iScrollElements[id] = vScroll(id);
-	
-	return iScrollElements[id].refresh();
-};
-
 clearScrolls = function() {
-	for(id in iScrollElements) {
-		iScrollElements[id].destroy();
-		delete iScrollElements[id];
+	for(id in allScrolls) {
+		allScrolls[id].destroy();
+		delete allScrolls[id];
 	}
 };
 

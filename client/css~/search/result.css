@@ -2,6 +2,7 @@
 	margin-top: 6px;
 	opacity: 1;
 	position:relative;
+	width: 100%;
 }
 .search_result:first-child{
 	margin-top: 0px;
@@ -13,7 +14,7 @@
 }
 
 .search_result img.video_image {
-	height: 100%;
+	width: 100%;
 }
 
 .search_result .check_video {
@@ -58,44 +59,36 @@
 
 #search_video_info {
 	position: absolute;
-	z-index: 99999;
 	top: 0;
 	left: 0;
 	
-	border: 2px solid #3476D6;
-	
+	z-index: 99999;
 	overflow: hidden;
-}
-
-#search_video_title {
-	width: 100%;
-	
-	padding: 4px;
 	
 	background: #559afe;
+	border: 2px solid #3476D6;
 	
 	color: white;
 	font-size: 14px;
 	font-weight: bold;
 	text-shadow: 1px 1px 1px #3476D6;
 	line-height: 1.35;
+	
 }
 
-
-#search_video_description {
+#search_video_title {
 	width: 100%;
-	
-	padding: 4px;
-	
-	background: #559afe;
-	opacity: .9;
-	
-	color:  black;
-	font-size: 14px;
-	font-weight: bold;
-	text-shadow: 1px 1px 1px #3476D6;
-	line-height: 1.35;
-	overflow: hidden;
+	padding: 4px;		
 }
+
+#search_video_duration {
+	position: absolute;
+	bottom: 4px;
+	right: 4px;
+	
+	font-size: 12px;
+}
+
+
 
 

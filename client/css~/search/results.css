@@ -2,6 +2,7 @@
 	position: relative;
 	width: 99%;
 	margin: 10px auto 0px;
+	z-index: 1;
 }
 
 #search_results_wrapper {
