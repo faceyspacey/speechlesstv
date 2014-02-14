@@ -1,21 +1,129 @@
 #add_videos_side {
-	background: #559afe;
+	background: white;
 }
 
 #add_videos_wrapper {
-	height: 100%;
+	margin-top: 5px;
 }
+
+
+
+#add_videos_bar {
+	width: 99%; 
+	height: 65px;
+	
+	margin: 0 auto; 
+	padding-top: 5px;
+	
+	z-index: 3;
+}
+
+#add_videos_bar > div {
+	float:left;
+	height: 60px;
+	margin-right: 1px;
+	
+	background: #559afe;
+	border: none;
+	
+	padding-top: 14px;
+	
+	color: white;
+	font-size: 32px;
+	text-align: center;
+	cursor: pointer;
+}
+
+#add_videos_bar > div:hover {
+	background-color: rgb(42, 103, 160);
+	text-shadow: 1px 1px 1px rgb(33, 67, 78);
+}
+
+#add_videos_bar > div:active {
+	background-color: black;
+	text-shadow: gray;
+}
+
+#add_videos_back {
+	width: 100px;		
+}
+
+#add_videos_spacer {
+	width: 150px;		
+}
+#add_videos_bar > #add_videos_spacer:hover {
+	background: #559afe;
+	text-shadow: none;	
+	cursor: default;
+}
+#add_videos_bar > #add_videos_spacer:active {
+	background: #559afe;
+	text-shadow: none;	
+	cursor: default;
+}
+
+#add_videos_clear {
+	width: 280px;		
+}
+
+#add_videos_bar > #add_videos_next {
+	width: 100px;
+	margin-right: 0px;		
+}
+
+
+
 
 .add_video_row {
-	margin-top: 25px;
+	margin: 0px auto 25px;
 	height: 250px;
+	background: #559afe;
+	padding-top: 24px;
 }
 
+.add_video_row:hover {
+	background: #2A67A0;
+}
 
-.add_video_row_video_image {
-	float:left;
+.add_video_row_left {
+	float: left;
 	margin-left: 20px;
-	height: 125px;
+	width: 290px;
+}
+
+.add_video_image_container {
+	width: 100%;
+	border: 4px solid white;
+	position: relative;
+}
+
+.add_video_row_image {
+	width: 100%;
+}
+
+.add_video_row_image_hover {
+	position: absolute;
+	top: 40px;
+	left: 110px;
+	z-index: 2;
+	
+	width: 50%;
+	height: 50%;
+	
+	opacity: 0;
+	color: white;
+	
+	cursor: pointer;
+	text-shadow: 2px 2px 15px black;
+}
+.add_video_row_image_hover:hover {
+	opacity: 1;
+}
+
+.add_video_row_dropdown {
+	width: 100%;
+	margin-top: 10px;
+	font-size: 20px;
 }
 
 
@@ -29,11 +137,39 @@
 .add_video_row_info input {
 	width: 100%;
 	height: 40px;
+	border: 0px solid white;
+	padding: 10px;
+	font-size: 18px;
+	
 }
 
 .add_video_row_info textarea {
 	margin-top: 10px;
 	width: 100%;
 	height: 150px;
+	border: 0px solid white;
+	padding: 10px;
+	font-size: 16px;
 }
 
+.add_button {
+	display: block;
+	text-decoration: none;
+	width: 100%;
+	height: 80px;
+	background: #559AFD;
+	color: white;
+	text-align: center;
+	font-size: 44px;
+	padding-top: 19px;
+}
+
+.add_button:hover {
+	background-color: rgb(42, 103, 160);
+	text-shadow: 1px 1px 1px rgb(33, 67, 78);	
+}
+
+.add_button:active {
+	background-color: black;
+	text-shadow: gray;
+}

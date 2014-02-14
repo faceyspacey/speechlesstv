@@ -5,17 +5,16 @@ Template.search.created = function() {
 
 	Deps.afterFlush(function() {
 		Resizeable.resizeAllElements();
+		$('.cube').cube().prevSide('#search_results_side');
 	});
 };
 
 
 /** ADD_VIDEOS **/
 
-Template.add_videos.rendered = function() {
+Template.add_videos.created = function() {
 	Deps.afterFlush(function() {
-		Meteor.setTimeout(function() {
-			vScroll('add_videos_wrapper');
-		}, 0);
+		Resizeable.resizeAllElements();
 	});
 };
 
@@ -27,7 +26,35 @@ Template.add_videos.helpers({
 
 Template.add_videos.events({
 	'click #add_videos_back': function() {
-		$('.cube').cube().prevSideHorizontal();
+		$('.cube').cube().prevSideHorizontal('#search_results_side');
+	},
+	'click #add_videos_clear': function() {
+		Videos._collection.update({_local: true}, {$set: {description: ''}}, {multi: true});
+	}
+});
+
+
+/** ADD_VIDEO_ROW **/
+Template.add_video_row.helpers({
+	categories: function() {
+		return Categories.find({name: {$not: 'all'}});
+	},
+	categorySelected: function(categoryId) {
+		return this.category_id == categoryId ? 'selected="selected"' : '';
+	}
+});
+
+Template.add_video_row.events({
+	'change select.add_video_row_dropdown': function(e) {
+		var categoryId = $(e.currentTarget).val();
+		Videos._collection.update(this._id, {$set: {category_id: categoryId}});
+	},
+	'click .add_video_image_container': function(e) {
+		$('.cube').cube().nextSideVertical('#search_fullscreen_side');
+		SearchFullscreenPlayer = YoutubePlayer.newPlayerWithInterface('search_fullscreen_player');
+		SearchFullscreenPlayer.setVideo(this.youtube_id, true);
+		
+		e.stopPropagation();
 	}
 });
 
@@ -52,7 +79,7 @@ Template.search_bar.helpers({
 		if(Session.equals('mouse_over_category_dropdown', true)) return 'Select a Category';
 		
 		var catId = Session.get('selected_search_category_id');
-		return catId ? Categories.findOne(catId).name : 'Select a Category';
+		return catId ? Categories.findOne({category_id: catId}).name : 'Select a Category';
 	}
 });
 
@@ -87,15 +114,20 @@ Template.search_bar.events({
 		});
 	},
 	'click .search_category_option': function() {
-		Session.set('selected_search_category_id', this._id);
+		Session.set('selected_search_category_id', this.category_id);
 		Session.set('mouse_over_category_dropdown', false);
 		
 		$('.search_category_option').slideUpCollection(300, 'easeInBack', 50, function() {
 			if(Session.equals('mouse_over_category_dropdown', false)) $('#search_category_options').hide();
 		});
 	},
-	'click #search_next_button': function() {
-		$('.cube').cube().nextSideHorizontal($('#add_videos_side'));
+	'click #search_next_button': function() {	
+		var categoryId = Session.get('selected_search_category_id');
+		Videos._collection.update({_local: true}, {$set: {category_id: categoryId}}, {multi: true});
+		
+		$('.cube').cube().nextSideHorizontal('#add_videos_side', null, null, function() {
+			vScroll('add_videos_wrapper');
+		});
 	}
 });
 
@@ -203,43 +235,111 @@ Template.search_result.helpers({
 });
 
 Template.search_result.events({
-	'click .search_result': function() {
+	'click .search_result': function(e) {
+		var $result = $(e.currentTarget);
+		$result.removeClass('selected_result');
+		$result.find('img.video_image').css('opacity', 1);
+		
+		$('#search_video_info').hide();
+		$('#hover_player_container').css('opacity', 0);
+		
+		SearchPlayer.pause();
 		YoutubeSearcher.related(this.youtube_id);
 	},
 	'mouseenter .search_result': function(e) {
-		var $result = $(e.currentTarget);
-		
-		$result.addClass('selected_result');
+		Session.set('current_search_video_id', this._id); //display video info box
 		
 		
-		//display video info box
-		Session.set('current_search_video_id', this._id);
-		
-		var resultOffsetLeft = $result.offset().left,
+		var $result = $(e.currentTarget),
+			resultOffsetLeft = $result.offset().left,
 			percentAcrossPage = resultOffsetLeft / SearchSizes.pageWidth(),
 			containerOffsetLeft = $('#search_video_info').parent().offset().left,
 			left;
 			
-	
 		if(percentAcrossPage < .35) left = resultOffsetLeft + SearchSizes.columnAndMarginWidth();
 		else left = resultOffsetLeft - (SearchSizes.columnAndMarginWidth() * 2);
 
 		$('#search_video_info').css({
 			left: left - containerOffsetLeft - 1, 
 			top: $result.offset().top - SearchSizes.header - 1, 
-			width: SearchSizes.videoInfoBoxWidth() + 1,
+			width: SearchSizes.videoInfoBoxWidth() + 2,
 			height: $result.height() + 4
 		}).show();
+		
+		
+		SearchPlayer.setVideo(this.youtube_id, true);
+		
+		$('#hover_player_container').css({
+			left: resultOffsetLeft - containerOffsetLeft,
+			top: $result.offset().top - SearchSizes.header + 1,
+			opacity: 1
+		});
+
+		$result.find('img.video_image').css('opacity', 0);
+		
+		$result.addClass('selected_result');
 	},
 	'mouseleave .search_result': function(e) {
-		$(e.currentTarget).removeClass('selected_result');
+		var $result = $(e.currentTarget);
+		$result.removeClass('selected_result');
 		
 		$('#search_video_info').hide();
+		
+		SearchPlayer.pause();
+		$('#hover_player_container').css('opacity', 0);
+		$result.find('img.video_image').css('opacity', 1);
 	},
 	'click .check_video': function(e) {
-		console.log(this);
 		this.checked = this.checked ? null : true;
 		this.store();
 		e.stopPropagation();
+	},
+	'click .fast_forward': function(e) {
+		SearchPlayer.skip();
+		e.stopPropagation();
+	},
+	'click .search_fullscreen': function(e) {
+		SearchPlayer.pause();
+		
+		$('.cube').cube().nextSideVertical('#search_fullscreen_side');
+		SearchFullscreenPlayer = YoutubePlayer.newPlayerWithInterface('search_fullscreen_player');
+		SearchFullscreenPlayer.setVideo(this.youtube_id, true);
+		
+		e.stopPropagation();
 	}
 });
+
+
+/** HOVER_PLAYER **/
+
+SearchPlayer = null;
+Template.hover_player.afterCreated = function() {
+	console.log('hover player created');
+	SearchPlayer = new YoutubePlayer('hover_player');
+};
+
+Template.hover_player.destroyed = function() {
+	console.log('hover player created');
+	SearchPlayer.destroy();
+};
+
+
+/** SEARCH_VIDEO_INFO **/
+Template.search_video_info.helpers({
+	time: function() {
+		return SearchPlayer.timeFormatted();
+	},
+	duration: function() {
+		return SearchPlayer.durationFormatted();
+	}
+});
+
+
+/** SEARCH_FULLSCREEN **/
+
+SearchFullscreenPlayer = null;
+Template.search_fullscreen.afterCreated = function() {
+
+};
+
+

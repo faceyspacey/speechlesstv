@@ -5,7 +5,7 @@ isFullScreen = function() {
 makeFullscreen = function() {
 	Session.set('is_fullscreen', true);
 				
-	$('#fullscreenButton').addClass('small');
+	$('#fullscreen').addClass('shrink').removeClass('enlarge');
 	$('#being_watched, #categories').hide();	
 	$('#thumb_grid, #show_more, .footer').hide();
 	$('#header_container, #title_textarea, #title_overlay, #video_info').hide();
@@ -26,7 +26,7 @@ removeFullscreen = function() {
 		if(Session.get('autoplay')) $('#temp_img').hide();
 	});
 	
-	$('#fullscreenButton').removeClass('small');
+	$('#fullscreen').addClass('enlarge').removeClass('shrink');
 	$('#being_watched, #categories').show();	
 	$('#thumb_grid, #show_more, .footer').show();
 	$('#header_container, #title_textarea, #title_overlay, #video_info').show();

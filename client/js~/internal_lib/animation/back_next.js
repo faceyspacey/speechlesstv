@@ -56,10 +56,10 @@ BackNext = {
 	
 	
 	isTooManyColumns: function() {
-		return this.totalColumns > Session.get('total_column_capacity');
+		return this.totalColumns > SearchSizes.columnsCapacityCount();
 	},
 	surplusColumns: function() {
-		return this.isTooManyColumns() ? this.totalColumns - Session.get('total_column_capacity') : 0;
+		return this.isTooManyColumns() ? this.totalColumns - SearchSizes.columnsCapacityCount() : 0;
 	},
 	columnWidth: function() {
 		return SearchSizes.columnAndMarginWidth();

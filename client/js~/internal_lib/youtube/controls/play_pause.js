@@ -15,7 +15,7 @@ videoIsPlaying = function() {
 playVideo = function() {
 	ytplayer.playVideo();
 	$('#largePlayPauseButton').hide();
-	$('#miniPausePlay').removeClass('play').addClass('pause');
+	$('#smallPlayPauseButton').removeClass('play').addClass('pause');
 	
 	$('#title_overlay').animate({marginLeft: 300, opacity: 0}, 400, 'easeInBack');
 	$('#temp_img').animate({opacity: 0}, function() {
@@ -31,7 +31,7 @@ pauseVideo = function() {
 	ytplayer.pauseVideo();
 	Session.set('autoplay', false);
 	$('#largePlayPauseButton').show();
-	$('#miniPausePlay').removeClass('pause').addClass('play');
+	$('#smallPlayPauseButton').removeClass('pause').addClass('play');
 	
 	if(Session.get('dont_show_temp_img')) $('#temp_img').hide();
 };

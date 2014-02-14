@@ -24,10 +24,15 @@ Resizeable = {
 		},
 		searchBar: function(width, height) {
 			var padding = SearchSizes.pagePadding,
-				searchBarWidth = width - padding;
+				barWidth = width - padding;
 			
-			$('#search_bar').css('width', searchBarWidth);
-			$('#search_bar input#search_query').css('width', searchBarWidth - SearchSizes.toolbarWidth - SearchSizes.toolbarSpacing);
+			$('#search_bar').css('width', barWidth);
+			$('#search_bar input#search_query').css('width', barWidth - SearchSizes.toolbarWidth - SearchSizes.toolbarSpacing);
+			
+			$('#add_videos_wrapper').css('height', height - SearchSizes.header);
+			$('#add_videos_bar').css('width', barWidth);
+			$('#add_videos_bar #add_videos_spacer').css('width', barWidth - SearchSizes.toolbarWidth - 40 - SearchSizes.toolbarSpacing);
+			injectCSS('.add_video_row', 'width: '+barWidth+'px;');
 		},
 		searchResults: function(width, height) {	
 			setSearchColumnWidths(); 				
@@ -67,9 +72,10 @@ configureSearchSizes = function(width, height) {
 	injectCSS('.search_result_column', 'width: '+SearchSizes.columnWidth+'px');
 	injectCSS('.video_image', 'height: '+height+'px');
 	injectCSS('.search_result', 'height: '+height+'px');
+	$('#hover_player_container').css({width: width+1, height: height});
 	
 	injectCSS('.search_result_column', 'margin-right: '+SearchSizes.columnMarginRight()+'px');	
-	Session.set('total_column_capacity', SearchSizes.columnsCapacityCount());
+	//Session.set('total_column_capacity', SearchSizes.columnsCapacityCount());
 };
 
 

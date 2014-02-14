@@ -12,7 +12,7 @@ Template.header.events({
 				else alert('Something went wrong with logging in to FacebooK!');
 			});
 		}
-		else Router.go('add_video');
+		else Router.go('add');
 	},
 	'click #back_buton': function() {
 		history.back();

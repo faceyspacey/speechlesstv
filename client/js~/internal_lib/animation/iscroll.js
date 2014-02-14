@@ -1151,28 +1151,19 @@ allScrolls = {};
 
 vScroll = function(id) {
 	if(allScrolls[id]) return allScrolls[id].refresh();
-	
-	var scroll = newScroll(id, {vScroll: true});
-	allScrolls[id] = scroll;
-	return scroll;
-}
+	else return allScrolls[id] = newScroll(id, {vScroll: true});
+};
 
 hScroll = function(id) {
 	if(allScrolls[id]) return allScrolls[id].refresh();
-	
-	var scroll = newScroll(id, {hScroll: true});
-	allScrolls[id] = scroll;
-	return scroll;
-}
+	else return allScrolls[id] = newScroll(id, {hScroll: true});
+};
 
 
 hvScroll = function(id) {
 	if(allScrolls[id]) return allScrolls[id].refresh();
-	
-	var scroll = newScroll(id, {hScroll: true, vScroll: true});
-	allScrolls[id] = scroll;
-	return scroll;
-}
+	else return allScrolls[id] = newScroll(id, {hScroll: true, vScroll: true});
+};
 
 
 clearScrolls = function() {

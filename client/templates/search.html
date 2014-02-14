@@ -1,22 +1,49 @@
 <template name="search">
 	<div class="cube_container">
 		<div class="cube" id="search_cube">
+			{{>dummy_side}}
 			{{>search_page}}
 			{{>add_videos}}
+			{{>search_fullscreen}}
 		</div>
 	</div>
 </template>
 
+<template name="dummy_side">
+	<div class="backface" id="dummy_side" style="background: white;border: 25px solid #559afe;"></div>
+</template>
+
 <template name="search_page">
-	<div class="backface" id="search_results_side">
+	<div class="backface" id="search_results_side" style="display:none;">
 		{{>search_bar}}
 		{{>search_results}}
 	</div>
 </template>
 
+<template name="search_fullscreen">
+	<div class="backface" id="search_fullscreen_side" style="display:none; background-color: red;">
+		{{>search_fullscreen_player}}
+		
+		<div style="position:absolute; bottom: 60px; width: 980px; left:50%; margin-left: -490px;">
+			{{>control_bar}}
+		</div>
+	</div>
+</template>
+
+<template name="search_fullscreen_player">
+	<div id="search_fullscreen_player_container">
+		<div id="search_fullscreen_player"></div>
+	</div>
+</template>
+
 <template name="add_videos">
 	<div class="backface" id="add_videos_side" style="display:none;" >
-		<div id="add_videos_back">BACK</div>
+		<div id="add_videos_bar">
+			<div id="add_videos_back">BACK</div>
+			<div id="add_videos_spacer"></div>
+			<div id="add_videos_clear">CLEAR DESCRIPTIONS</div>
+			<div id="add_videos_next">DONE</div>
+		</div>
 		
 		<div id="add_videos_wrapper">
 			<div id="add_videos_scroller">
@@ -32,7 +59,22 @@
 
 <template name="add_video_row">
 	<div class="add_video_row">
-		<img class="add_video_row_video_image" src="{{src}}" />
+		<div class="add_video_row_left">
+			<div class="add_video_image_container">
+				<img class="add_video_row_image" src="{{src}}" />
+				<div class="add_video_row_image_hover">
+					<i class="fa fa-play fa-5x"></i>
+				</div>
+			</div>
+			
+			<select class="add_video_row_dropdown">
+				{{#isolate}}
+					{{#each categories}}
+						<option value="{{category_id}}" {{categorySelected ../category_id}}>{{name}}</option>
+					{{/each}}
+				{{/isolate}}
+			</select>
+		</div>
 		
 		<div class="add_video_row_info">
 			<input value="{{title}}">
@@ -44,7 +86,7 @@
 <template name="search_bar">
 	<div id="search_bar">
 		{{#isolate}}
-			<input type="text" id="search_query" value="Tech Trends 2014" />		
+			<input type="text" id="search_query" value="Wolfgang Gartner Deadmau5" />		
 		{{/isolate}}
 		
 		{{#isolate}}
@@ -90,6 +132,7 @@
 
 		{{>back_next_buttons}}
 		{{>search_video_info}}
+		{{>hover_player}}
 	</div>
 </template>
 
@@ -120,6 +163,14 @@
 			<i class="fa fa-check"></i>
 		</div>
 		
+		<div class="fast_forward">
+			<i class="fa fa-forward"></i>
+		</div>
+		
+		<div class="search_fullscreen">
+			<i class="fa fa-arrows-alt"></i>
+		</div>
+		
 		<img class="video_image" src="{{src}}" />
 	</div>
 </template>
@@ -129,8 +180,14 @@
 		{{#isolate}}
 			{{#with current_search_video}}
 				<div id="search_video_title">{{title}}</div>
-				<div id="search_video_duration">00:31/5:07</div>
+				<div id="search_video_duration">{{time}}/{{duration}}</div>
 			{{/with}}
 		{{/isolate}}
+	</div>
+</template>
+
+<template name="hover_player">
+	<div id="hover_player_container">
+		<div id="hover_player"></div>
 	</div>
 </template>

@@ -23,12 +23,21 @@ setupPlayer = function() {
 destroyPlayer = function() {
 	ytplayer = undefined;
 	clearInterval(updatePlayerInfoTimer);
-	swfobject.removeSWF('video');
+	swfobject.removeSWF('ytPlayer');
 };
 
 // This function is automatically called by the player once it loads
 updatePlayerInfoTimer = undefined;
 onYouTubePlayerReady = function(playerId) {
+	var found;
+	_.each(YoutubePlayers, function(player, id) {
+		if(playerId == id) {
+			found = true;
+			return player.onYouTubePlayerReady(playerId);
+		}
+	});
+	if(found) return;
+	
 	ytplayer = document.getElementById("ytPlayer");
 
 	ytplayer.addEventListener("onStateChange", "onPlayerStateChange");

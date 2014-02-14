@@ -45,3 +45,4 @@ VideoModel.prototype = {
 VideoModel.currentSearchVideo = function() {
 	return Videos.findOne(Session.get('current_search_video_id'));
 };
+

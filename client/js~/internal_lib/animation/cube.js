@@ -8,16 +8,22 @@ Cube = function(element) {
 
 Cube.prototype = {
 	rotate: function(params, newSide, duration, easing, callback) {
-		var newSide = newSide || this._findSide(),
+		var newSide = newSide || (this.previousSide || this._findSide()),
 			duration = duration || 1500,
 			easing = easing || 'easeInOutBack';
 			callback = callback || function() {};
 			
+		if(_.isString(newSide)) newSide = $(newSide);
+			
 		if(params.rotateX) this._prepareRotateX(params, newSide);
 		else this._prepareRotateY(params, newSide);
 		
-		this.element.hardwareAnimate(params, duration, easing, callback);
-		this.currentSide = newSide;
+		this.element.hardwareAnimate(params, duration, easing, function() {
+			this.currentSide.hide();
+			this.previousSide = this.currentSide;
+			this.currentSide = newSide;
+			callback();
+		}.bind(this));
 	},
 	
 	_prepareRotateX: function(params, newSide) {
@@ -118,26 +124,37 @@ jQuery.fn.getCube = function(){
 };
 
 jQuery.fn.nextSide = function(newSide, duration, easing, callback) {
-	this.nextSideHorizontal(newSide, duration, easing, callback);
+	if(this.getCube().axis == 'vertical') this.nextSideVertical(newSide, duration, easing, callback);
+	else this.nextSideHorizontal(newSide, duration, easing, callback);
+	return this;
+};
+
+jQuery.fn.prevSide = function(newSide, duration, easing, callback) {	
+	if(this.getCube().axis == 'vertical') this.prevSideVertical(newSide, duration, easing, callback);
+	else this.prevSideHorizontal(newSide, duration, easing, callback);
 	return this;
 };
 
 jQuery.fn.nextSideHorizontal = function(newSide, duration, easing, callback) {	
+	this.getCube().axis = 'horizontal';
 	this.getCube().rotate({rotateY: '-=90'}, newSide, duration, easing, callback);
 	return this;
 };
 
 jQuery.fn.prevSideHorizontal = function(newSide, duration, easing, callback) {
+	this.getCube().axis = 'horizontal';
 	this.getCube().rotate({rotateY: '+=90'}, newSide, duration, easing, callback);
 	return this;
 };
 
 jQuery.fn.nextSideVertical = function(newSide, duration, easing, callback) {
+	this.getCube().axis = 'vertical';
 	this.getCube().rotate({rotateX: '-=90'}, newSide, duration, easing, callback);
 	return this;
 };
 
 jQuery.fn.prevSideVertical = function(newSide, duration, easing, callback) {
+	this.getCube().axis = 'vertical';
 	this.getCube().rotate({rotateX: '+=90'}, newSide, duration, easing, callback);
 	return this;
 };

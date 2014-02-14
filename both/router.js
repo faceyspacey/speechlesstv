@@ -1,3 +1,12 @@
+var App = {};
+App.whenReady = function(testFunc, callback) {
+	if(testFunc()) return callback();
+
+	Meteor.setTimeout(function() {
+		App.whenReady(testFunc, callback);
+	}, 100);
+};
+
 HomeController = FastRender.RouteController.extend({
 	layoutTemplate: 'main_layout',
   	template: 'browse_video',
@@ -34,17 +43,51 @@ Router.map(function () {
 	this.route('search', {
     	path: '/search',
 		template: 'search',
-		action: function() {	
-			this.render();
+		fastRender: true,
+		controller: BlankController
+  	});
+
+	this.route('fullscreen', {
+    	path: '/fullscreen/:v',
+		template: 'search',
+		unload: function() {
+			console.log('unload called')
+			SearchFullscreenPlayer.destroy();
 		},
 		fastRender: true,
 		controller: BlankController
   	});
 	
+	this.route('add_videos', {
+		path: '/add-videos',
+		template: 'search',
+		after: function() {
+			App.whenReady(function() {
+				return $('#add_videos_wrapper').length;
+			}, function() {
+				vScroll('add_videos_wrapper');
+			});
+		},
+		fastRender: true,
+		controller: BlankController
+	});
 	
 	this.route('add_video', {
     	path: '/add-video',
 		template: 'add_video',
+		action: function() {	
+			this.render();
+		},
+		after: function() {
+			scrollToTop();
+		},
+		fastRender: true,
+		controller: HomeController
+  	});
+
+	this.route('add', {
+    	path: '/add',
+		template: 'add',
 		action: function() {	
 			this.render();
 		},
@@ -139,7 +182,7 @@ Router.map(function () {
 			];
 		},
 		after: function() {
-			if(this.ready() && Videos.find().count() === 0) Router.go('add_video');
+			if(this.ready() && Videos.find().count() === 0) Router.go('add');
 			if(this.ready()) $('html,body').animate({scrollTop: 930}, 1000, 'easeOutBounce');
 		},
 		fastRender: true,

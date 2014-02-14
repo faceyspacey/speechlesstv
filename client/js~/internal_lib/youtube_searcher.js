@@ -16,7 +16,8 @@ YoutubeSearcher = {
 	_execute: function(params) {
 		Deps.afterFlush(BackNext.addColumn.bind(BackNext));
 		
-		params.videoEmbeddable = 'true';
+		params.videoEmbeddable = true;
+		params.maxResults = SearchSizes.thumbsPerColumn;
 		gapi.client.youtube.search.list(params).execute(this._store.bind(this));
 	},
 	_store: function(response) {

@@ -47,7 +47,7 @@ Handlebars.registerHelper('canDisplayOverlays', function() {
 
 Handlebars.registerHelper('categories', function(isDropdown) {
     var cats = Categories.find({}, {sort: {category_id: 1}}).fetch();
-	if(isDropdown === true) cats[0] = {category_id: 0, name: 'select a category'};
+	if(isDropdown === true) cats[0] = {category_id: 0, name: 'select a Category'};
 	return cats;
 });
 
@@ -127,4 +127,16 @@ Handlebars.registerHelper('upperCase', function(word) {
 
 Handlebars.registerHelper('current_search_video', function() {
     return VideoModel.currentSearchVideo();
+});
+
+
+
+
+Handlebars.registerHelper('playerReady', function() {
+    var playerId = Session.get('current_player_id');		
+	return Session.get('player_ready_'+playerId);
+});
+
+Handlebars.registerHelper('player', function() {
+    return YoutubePlayer.current;
 });

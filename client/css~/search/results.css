@@ -1,3 +1,7 @@
+#search_results_side {
+	background: white;
+}
+
 #search_results_container {
 	position: relative;
 	width: 99%;

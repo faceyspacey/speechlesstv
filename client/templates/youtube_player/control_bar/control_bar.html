@@ -1,0 +1,55 @@
+<template name="control_bar">
+	<div id="controls">
+		{{#if playerReady}}
+			{{#with player}}
+	        	<div id="smallPlayPauseButton" class="{{playPauseClass}}">
+		        	{{#isolate}}<div id="miniPausePlay"></div>{{/isolate}}
+		        </div> 
+
+		    	<div id="groove"></div>
+
+		        <div id="bars">
+		            <div id="barsInner">
+						{{#isolate}}<div id="loadingBar" style="width:{{loadedPercent}}%"></div>{{/isolate}}
+		            	{{#isolate}}<div id="progressBar" style="width:{{playedPercent}}%"></div>{{/isolate}}
+		            	{{#isolate}}<div id="currentTimeBall" style="left:{{playedPercent}}%"><div id="innerTimeBallCircle"></div></div>{{/isolate}}
+					</div>
+		        </div>
+
+				{{#isolate}}
+					<div id="videoTime">
+						<p>
+							<span id="videoCurrentTime">{{timeFormatted}}</span> <span>/</span> <span id="videoDuration">{{durationFormatted}}</span>
+						</p>
+					</div>
+				{{/isolate}}
+
+
+				{{#isolate}}
+			        <div id="volume">
+			        	<ul>
+							<li></li>
+							<li></li>
+							<li></li>
+							<li></li>
+							<li></li>
+							<li></li>
+						</ul>
+			        </div>
+				{{/isolate}}
+
+		    	<div id="minilogo">
+					<img src="/images/speechlesstv-icon.png" style="width: 78%;margin-top: 6px"/>
+				</div>
+
+				<div id="groove"></div>
+
+		        {{#isolate}}
+					<div id="fullscreen" class="{{fullScreenClass}}">
+			        	<div id="fullscreenButton"></div>
+			        </div>
+				{{/isolate}}
+			{{/with}}
+		{{/if}}
+    </div>
+</template>
