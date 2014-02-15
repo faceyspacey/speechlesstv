@@ -6,20 +6,46 @@ YoutubePlayer = function(playerId, callback) {
 
 YoutubePlayer.current = null;
 
-YoutubePlayer.newPlayerWithInterface = function(playerId, callback) {
-	var player = new YoutubePlayer(playerId, callback);
+YoutubePlayer.get = function(playerId) {
+	return YoutubePlayers[playerId];
+};
+
+YoutubePlayer.mini = function(playerId, callback) {
+	var player;
 	
-	player.addComponent(new PlayerComponentVolume, 'volume');
-	player.addComponent(new PlayerComponentPlayhead, 'playhead');
-	player.addComponent({
-		onLeaveFullscreen: function() {
-			$('.cube').cube().prevSide();
-			this.player.pause();
-		}
-	}, 'fullscreen_only');
+	if(YoutubePlayers[playerId]) player = YoutubePlayers[playerId];
+	else {
+		player = new YoutubePlayer(playerId, callback);
+		YoutubePlayers[playerId] = player
+	}
+	
+	player.makeCurrent();
+	
+	return player;
+};
+
+
+YoutubePlayer.fullscreenOnly = function(playerId, callback) {
+	var player;
+	
+	if(YoutubePlayers[playerId]) player = YoutubePlayers[playerId];
+	else {
+		player = new YoutubePlayer(playerId, callback);
+		YoutubePlayers[playerId] = player;
+
+		player.addComponent(new PlayerComponentVolume, 'volume');
+		player.addComponent(new PlayerComponentPlayhead, 'playhead');
+		player.addComponent(new PlayerComponentFullscreen, 'fullscreen');
+		player.addComponent({
+			onLeaveFullscreen: function() {
+				$('.cube').cube().prevSideVertical();
+				this.player.pause();
+			}
+		}, 'fullscreen_only');
+	}
 	
 	player.enterFullscreen();
-	
+	player.makeCurrent();
 	
 	return player;
 };
@@ -32,19 +58,15 @@ YoutubePlayer.prototype = {
 	
 	
 	setup: function(playerId, callback) {
-		//this.destroyOtherPlayers();
-		YoutubePlayers[playerId] = YoutubePlayer.current = this;
-		
-		this.playerId = playerId;
-		Session.set('current_player_id', playerId);
-		
+		this.playerId = playerId;	
 		this.setupCallback = callback;
 		
 		var params = {allowScriptAccess: "always"},
 			atts = {id: this.playerId},
 			url = 'http://www.youtube.com/apiplayer?version=3&enablejsapi=1&playerapiid='+this.playerId; 
 
-		swfobject.embedSWF(url, playerId, '480', '395', '9', null, null, params, atts);
+		this.placeholder = $('#'+playerId);
+		swfobject.embedSWF(url, playerId, $(window).width()+'', $(window).height()+'', '9', null, null, params, atts);
 	},
 	destroy: function() {
 		try {
@@ -56,14 +78,24 @@ YoutubePlayer.prototype = {
 		
 		clearInterval(this.updateTimer);
 		
+		/**
 		var placeholder = $('<div />');
 		$('#'+this.playerId).after(placeholder);
 		swfobject.removeSWF(this.playerId);
 		placeholder.attr('id', this.playerId);
+		**/
+		
+		this.placeholder.css('visibility', 'visible');
+		$('#'+this.playerId).after(this.placeholder);
+		swfobject.removeSWF(this.playerId);
+		delete YoutubePlayers[this.playerId];
 		
 		this._call('onDestroyed');
 	},
-	
+	makeCurrent: function() {
+		Session.set('current_player_id', this.playerId);
+		YoutubePlayer.current = this;
+	},
 	
 	onYouTubePlayerReady: function(playerId) {
 		console.log('playerId', playerId);
@@ -129,7 +161,8 @@ YoutubePlayer.prototype = {
 		Session.set('youtube_id_'+this.playerId, youtubeId);
 		
 		this.player.cueVideoById(youtubeId);
-		this.player.seekTo(0, true);
+		
+		this.newVideoSeek(youtubeId);
 		
 		this._isAutoplay() ? this.play() : this.pause();
 
@@ -243,23 +276,39 @@ YoutubePlayer.prototype = {
 	},
 	setYoutubeId: function(youtubeId) {
 		Session.set('current_youtube_id_'+this.playerId, youtubeId);
+		Session.set('current_youtube_id', youtubeId);
+	},
+	
+	
+	lastPlayed: function() {
+		var last = Session.get('last_video_time_'+this.getYoutubeId());
+		return last ? Math.floor(parseInt(last)) : 0;
+	},
+	newVideoSeek: function(youtubeId) {
+		this.player.seekTo(this.lastPlayed(), true);
 	},
 	
 	
 	update: function() {
 		if(!this._isReady()) return;
 		
-		if(this.player.getCurrentTime() != this._lastCheckedTime) { 
-			Session.set('player_time_'+this.playerId, this.player.getCurrentTime());
-			Session.set('player_duration_'+this.playerId, this.player.getDuration())
+		var currentTime = Math.floor(this.player.getCurrentTime());
+		
+		if(currentTime != this._lastCheckedTime) { 
+			if(currentTime > 0) Session.set('last_video_time_'+this.getYoutubeId(), currentTime);
+			
+			Session.set('player_time_'+this.playerId, currentTime);
+			Session.set('player_duration_'+this.playerId, Math.floor(this.player.getDuration()))
 			Session.set('player_loaded_fraction_'+this.playerId, this.player.getVideoLoadedFraction());
 			
-			this._lastCheckedTime = this.time();	
+			this._lastCheckedTime = currentTime;	
 			this._call('onSecondChange');
 		}
 
 		this._call('onUpdate');
 	},
+		
+		
 		
 	
 	_addTimeToUrl: function() {
@@ -458,5 +507,55 @@ PlayerComponentPlayhead.prototype = {
 	_normalizeX: function(x) {
 		return x > this._barWidth() ? this._barWidth() : (x < 0 ? 0 : x);
 	}
+};
+
+
+
+
+
+PlayerComponentFullscreen = function() {
+	
+};
+
+PlayerComponentFullscreen.prototype = {
+	lastMoved: 0,
+	controlsFadeInterval: null,
+	
+	onEnterFullscreen: function() {
+		this.bindEscapeKey();
+		this.bindControlsFade();
+	},
+	onLeaveFullscreen: function() {
+		this.unbindAll();
+	},
+	
+	bindEscapeKey: function() {
+		$(document).unbind('keyup.escapeKey');
+		$(document).bind('keyup.escapeKey', function(e) {
+		  	if (e.keyCode == 27) {
+				$('#fullscreen').click();   //e.keyCode == 27 is the escape key
+				$(document).unbind('keyup.escapeKey');
+			}
+		});
+	},		
+	bindControlsFade: function() {
+		this.controlsFadeInterval = setInterval(function() {
+			if(Date.now() - this.lastMoved > 3000) {
+				$('#controls').fadeOut();
+			}
+		}.bind(this), 1000);
+
+		$('body').bind('mousemove.hideControls', function() {
+			$('#controls').fadeIn();
+			this.lastMoved = Date.now();
+		}.bind(this));
+	},
+	
+	unbindAll: function() {
+		$(document).unbind('keyup.escapeKey');
+		
+		$('body').unbind('.hideControls');
+		clearInterval(this.controlsFadeInterval);
+	},
 };
 

@@ -22,6 +22,7 @@ Handlebars.registerHelper('current_category', function() {
 Handlebars.registerHelper('is_update_video', function() {
 	if(Router.current().route.name == 'update_video') return true;
 	if(Router.current().route.name == 'add_video') return true;
+	if(Router.current().route.name == 'add') return true;
 	return false;
 });
 
@@ -133,10 +134,14 @@ Handlebars.registerHelper('current_search_video', function() {
 
 
 Handlebars.registerHelper('playerReady', function() {
+	//var playerId = Session.get('current_player_id');		
+	//return playerId == 'search_fullscreen_player' && Session.get('player_ready_'+playerId);
+	
     var playerId = Session.get('current_player_id');		
 	return Session.get('player_ready_'+playerId);
 });
 
 Handlebars.registerHelper('player', function() {
-    return YoutubePlayer.current;
+	var playerId = Session.get('current_player_id');
+    return YoutubePlayers[playerId];
 });

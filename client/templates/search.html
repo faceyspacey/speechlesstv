@@ -5,6 +5,7 @@
 			{{>search_page}}
 			{{>add_videos}}
 			{{>search_fullscreen}}
+			{{>search_fullscreen_alt_side}}
 		</div>
 	</div>
 </template>
@@ -20,21 +21,8 @@
 	</div>
 </template>
 
-<template name="search_fullscreen">
-	<div class="backface" id="search_fullscreen_side" style="display:none; background-color: red;">
-		{{>search_fullscreen_player}}
-		
-		<div style="position:absolute; bottom: 60px; width: 980px; left:50%; margin-left: -490px;">
-			{{>control_bar}}
-		</div>
-	</div>
-</template>
 
-<template name="search_fullscreen_player">
-	<div id="search_fullscreen_player_container">
-		<div id="search_fullscreen_player"></div>
-	</div>
-</template>
+
 
 <template name="add_videos">
 	<div class="backface" id="add_videos_side" style="display:none;" >
@@ -61,9 +49,15 @@
 	<div class="add_video_row">
 		<div class="add_video_row_left">
 			<div class="add_video_image_container">
-				<img class="add_video_row_image" src="{{src}}" />
-				<div class="add_video_row_image_hover">
-					<i class="fa fa-play fa-5x"></i>
+				<img id="{{youtube_id}}" class="add_video_row_image" src="{{src}}" />
+				
+				<div class="search_fullscreen">
+					<i class="fa fa-arrows-alt"></i>
+				</div>
+
+				<div class="fast_forward">
+					{{#isolate}} {{timeFormatted}} {{/isolate}}
+					<i class="fa fa-forward"></i>
 				</div>
 			</div>
 			
@@ -86,7 +80,7 @@
 <template name="search_bar">
 	<div id="search_bar">
 		{{#isolate}}
-			<input type="text" id="search_query" value="Wolfgang Gartner Deadmau5" />		
+			<input type="text" id="search_query" value="Wolfgang Gartner in concert" />		
 		{{/isolate}}
 		
 		{{#isolate}}
@@ -163,12 +157,12 @@
 			<i class="fa fa-check"></i>
 		</div>
 		
-		<div class="fast_forward">
-			<i class="fa fa-forward"></i>
-		</div>
-		
 		<div class="search_fullscreen">
 			<i class="fa fa-arrows-alt"></i>
+		</div>
+		
+		<div class="fast_forward">
+			<i class="fa fa-forward"></i>
 		</div>
 		
 		<img class="video_image" src="{{src}}" />

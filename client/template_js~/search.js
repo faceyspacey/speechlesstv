@@ -30,6 +30,14 @@ Template.add_videos.events({
 	},
 	'click #add_videos_clear': function() {
 		Videos._collection.update({_local: true}, {$set: {description: ''}}, {multi: true});
+	},
+	'click #add_videos_next': function() {
+		$('.cube').cube().nextSide('#dummy_side', null, null, function() {
+			Router.go('home');
+		});
+		Videos.find({_local: true, checked: true}).forEach(function(video) {
+			video.persist();
+		});
 	}
 });
 
@@ -41,6 +49,12 @@ Template.add_video_row.helpers({
 	},
 	categorySelected: function(categoryId) {
 		return this.category_id == categoryId ? 'selected="selected"' : '';
+	},
+	timeFormatted: function() {
+		var playerId = Session.get('current_player_id'),
+			time = Session.get('player_time_'+playerId);
+
+		return YoutubePlayer.get(playerId) ? YoutubePlayer.get(playerId).timeFormatted() : '00:00';
 	}
 });
 
@@ -49,12 +63,27 @@ Template.add_video_row.events({
 		var categoryId = $(e.currentTarget).val();
 		Videos._collection.update(this._id, {$set: {category_id: categoryId}});
 	},
-	'click .add_video_image_container': function(e) {
+	'click .search_fullscreen': function(e) {
 		$('.cube').cube().nextSideVertical('#search_fullscreen_side');
-		SearchFullscreenPlayer = YoutubePlayer.newPlayerWithInterface('search_fullscreen_player');
-		SearchFullscreenPlayer.setVideo(this.youtube_id, true);
+		YoutubePlayer.fullscreenOnly('search_fullscreen_player').setVideo(this.youtube_id, true);
 		
 		e.stopPropagation();
+	},
+	'click .fast_forward': function(e) {
+		YoutubePlayer.current.skip();
+		e.stopPropagation();
+	},
+	'mouseenter .add_video_row': function(e) {
+		var playerId = $(e.currentTarget).find('.add_video_row_image').attr('id'),
+			youtubeId = playerId; 
+
+		YoutubePlayer.mini(playerId).setVideo(youtubeId, true);
+	},
+	'mouseleave .add_video_row': function(e) {
+		var playerId = $(e.currentTarget).find('object').attr('id'),
+			youtubeId = playerId; 
+
+		YoutubePlayer.get(playerId).destroy();
 	}
 });
 
@@ -185,7 +214,6 @@ Template.search_column.afterCreated = function() {
 
 Template.search_column.helpers({
 	videos: function() {
-		console.log(this, this.index);
 		return Videos.find({_local: true, column_index: this.index});
 	}
 });
@@ -243,7 +271,7 @@ Template.search_result.events({
 		$('#search_video_info').hide();
 		$('#hover_player_container').css('opacity', 0);
 		
-		SearchPlayer.pause();
+		YoutubePlayer.get('hover_player').pause();
 		YoutubeSearcher.related(this.youtube_id);
 	},
 	'mouseenter .search_result': function(e) {
@@ -267,7 +295,7 @@ Template.search_result.events({
 		}).show();
 		
 		
-		SearchPlayer.setVideo(this.youtube_id, true);
+		YoutubePlayer.mini('hover_player').setVideo(this.youtube_id, true);
 		
 		$('#hover_player_container').css({
 			left: resultOffsetLeft - containerOffsetLeft,
@@ -285,7 +313,8 @@ Template.search_result.events({
 		
 		$('#search_video_info').hide();
 		
-		SearchPlayer.pause();
+		if(YoutubePlayer.get('hover_player').isPlaying()) YoutubePlayer.get('hover_player').pause();
+		
 		$('#hover_player_container').css('opacity', 0);
 		$result.find('img.video_image').css('opacity', 1);
 	},
@@ -295,15 +324,15 @@ Template.search_result.events({
 		e.stopPropagation();
 	},
 	'click .fast_forward': function(e) {
-		SearchPlayer.skip();
+		YoutubePlayer.get('hover_player').skip();
 		e.stopPropagation();
 	},
 	'click .search_fullscreen': function(e) {
-		SearchPlayer.pause();
+		$('#search_video_info').hide();
+		YoutubePlayer.get('hover_player').pause();
 		
 		$('.cube').cube().nextSideVertical('#search_fullscreen_side');
-		SearchFullscreenPlayer = YoutubePlayer.newPlayerWithInterface('search_fullscreen_player');
-		SearchFullscreenPlayer.setVideo(this.youtube_id, true);
+		YoutubePlayer.fullscreenOnly('search_fullscreen_player').setVideo(this.youtube_id, true);
 		
 		e.stopPropagation();
 	}
@@ -312,34 +341,24 @@ Template.search_result.events({
 
 /** HOVER_PLAYER **/
 
-SearchPlayer = null;
 Template.hover_player.afterCreated = function() {
-	console.log('hover player created');
-	SearchPlayer = new YoutubePlayer('hover_player');
+	YoutubePlayer.mini('hover_player');
 };
 
 Template.hover_player.destroyed = function() {
-	console.log('hover player created');
-	SearchPlayer.destroy();
+	YoutubePlayer.mini('hover_player').destroy();
 };
 
 
 /** SEARCH_VIDEO_INFO **/
 Template.search_video_info.helpers({
 	time: function() {
-		return SearchPlayer.timeFormatted();
+		return YoutubePlayer.get('hover_player').timeFormatted();
 	},
 	duration: function() {
-		return SearchPlayer.durationFormatted();
+		return YoutubePlayer.get('hover_player').durationFormatted();
 	}
 });
 
-
-/** SEARCH_FULLSCREEN **/
-
-SearchFullscreenPlayer = null;
-Template.search_fullscreen.afterCreated = function() {
-
-};
 
 

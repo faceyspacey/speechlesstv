@@ -7,8 +7,10 @@ Cube = function(element) {
 
 
 Cube.prototype = {
+	previousSide: {},
+	
 	rotate: function(params, newSide, duration, easing, callback) {
-		var newSide = newSide || (this.previousSide || this._findSide()),
+		var newSide = newSide || this._findSide(params),
 			duration = duration || 1500,
 			easing = easing || 'easeInOutBack';
 			callback = callback || function() {};
@@ -20,7 +22,7 @@ Cube.prototype = {
 		
 		this.element.hardwareAnimate(params, duration, easing, function() {
 			this.currentSide.hide();
-			this.previousSide = this.currentSide;
+			this._setPreviousSide(params);
 			this.currentSide = newSide;
 			callback();
 		}.bind(this));
@@ -106,7 +108,15 @@ Cube.prototype = {
 		}
 		else this.rotateXY < 0 ? -1 : 1;
 	},	
-	_findSide: function() {
+	
+	_setPreviousSide: function(params) {
+		if(params.rotateX) this.previousSide['rotateX'] = this.currentSide;
+		else this.previousSide['rotateY'] = this.currentSide;
+	},
+	_findSide: function(params) {
+		if(params.rotateX && this.previousSide['rotateX']) return this.previousSide['rotateX'];
+		else if(params.rotateY && this.previousSide['rotateY']) return this.previousSide['rotateY'];
+		
 		return this.currentSide.next().length > 0 ? this.currentSide.next() : this.element.find('.backface').first();
 	}
 };

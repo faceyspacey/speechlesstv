@@ -23,13 +23,14 @@ YoutubeSearcher = {
 	_store: function(response) {
 		var c = this._newColumn();
 		
-		_.each(response.items, function(video) {
+		_.each(response.items, function(video, index) {
 			var v = new VideoModel;
 			v.youtube_id = video.id.videoId;
 			v.title = video.snippet.title;
 			v.published_at = moment(video.snippet.publishedAt).toDate();
 			v.description = video.snippet.description;
 			v.column_index = c.index;
+			v.index = index;
 			v.created_at = moment().toDate();
 			v.store();
 		}.bind(this));

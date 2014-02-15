@@ -149,30 +149,32 @@ cursor: pointer;
 
 .custom_button {
 	float: right;
+	
 	height: 40px;
-	border: 2px solid rgb(49, 51, 63);
-	background: #559AFE;
 	width: 150px;
+	
 	margin-right: 1px;
-}
-.custom_button:hover {
-	background: rgb(42, 110, 253);
+	padding-top: 8px;
+	
+	background: #559AFD;
+	
+	font-size: 26px;
+	color: white;
+	text-align: center;
+
 	cursor:pointer;
 }
+.custom_button:hover {
+	background-color: rgb(42, 103, 160);
+	text-shadow: 1px 1px 1px rgb(33, 67, 78);
+}
 
-.custom_button_inner {
-	border-top: 1px solid rgb(186, 212, 219);
-	line-height: 37px;
-	text-align: center;
-	font-size: 24px;
-	text-shadow: 1px 1px 1px rgb(250, 247, 247);
-	text-laign: cen;
-	text-align: center;
-}
-.custom_button_inner:hover {
-	color: white;
-	text-shadow: 1px 1px 1px black;
-}
+
+
+
+
+
+
 
 #facebook_connect {
 	height:40px;

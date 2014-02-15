@@ -41,25 +41,29 @@
 
 #add_video_button {
 	height: 54px;
-	border: 2px solid rgb(49, 51, 63);
-	background: #559AFE;
-	width: 25%;;
+	width: 25%;
+	
 	margin-left: 75%;
 	margin-top: 6px;
+	
+	background: #559AFE;
+	
+	font-size: 36px;
+	padding-top: 11px;
+	color: white;
+	text-align:center;
+	
 	cursor:pointer;
 }
 #add_video_button:hover {
-	background: rgb(42, 110, 253);
+	background-color: rgb(42, 103, 160);
+	text-shadow: 1px 1px 1px rgb(33, 67, 78);
 }
 
+
 #add_video_button_inner {
-	border-top: 1px solid rgb(186, 212, 219);
-	line-height: 50px;
-	text-align: center;
-	font-size: 36px;
-	text-shadow: 1px 1px 1px rgb(250, 247, 247);
+
 }
 #add_video_button_inner:hover {
-	color: white;
-	text-shadow: 1px 1px 1px black;
+
 }

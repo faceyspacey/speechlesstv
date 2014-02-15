@@ -47,22 +47,26 @@
 	bottom: 0px;
 	right: 0px;
 	display:none;
+	opacity: .8;
 }
 
 .search_result .search_fullscreen {
 	bottom: 0px;
 	left: 0px;
 	display:none;
+	opacity: .8;
 }
 
 .search_result .check_video:hover, .search_result .fast_forward:hover, .search_result .search_fullscreen:hover {
 	color: rgb(31, 65, 170);
 	text-shadow: 1px 1px 1px white;
+	opacity: 1;
 }
 
 .search_result .check_video:active, .search_result .fast_forward:active, .search_result .search_fullscreen:active {
 	color:black;
 	text-shadow: 1px 1px 1px white;
+	opacity: 1;
 }
 
 .selected_result .check_video, .selected_result .fast_forward, .selected_result .search_fullscreen {
