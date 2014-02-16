@@ -64,10 +64,9 @@ Template.add_video_row.events({
 		Videos._collection.update(this._id, {$set: {category_id: categoryId}});
 	},
 	'click .search_fullscreen': function(e) {
-		$('.cube').cube().nextSideVertical('#search_fullscreen_side');
-		YoutubePlayer.fullscreenOnly('search_fullscreen_player').setVideo(this.youtube_id, true);
-		
 		e.stopPropagation();
+		
+		CubePlayer.start(this.youtube_id);
 	},
 	'click .fast_forward': function(e) {
 		YoutubePlayer.current.skip();
@@ -272,6 +271,7 @@ Template.search_result.events({
 		$('#hover_player_container').css('opacity', 0);
 		
 		YoutubePlayer.get('hover_player').pause();
+		
 		YoutubeSearcher.related(this.youtube_id);
 	},
 	'mouseenter .search_result': function(e) {
@@ -314,7 +314,7 @@ Template.search_result.events({
 		$('#search_video_info').hide();
 		
 		if(YoutubePlayer.get('hover_player').isPlaying()) YoutubePlayer.get('hover_player').pause();
-		
+
 		$('#hover_player_container').css('opacity', 0);
 		$result.find('img.video_image').css('opacity', 1);
 	},
@@ -324,17 +324,17 @@ Template.search_result.events({
 		e.stopPropagation();
 	},
 	'click .fast_forward': function(e) {
-		YoutubePlayer.get('hover_player').skip();
 		e.stopPropagation();
+		
+		YoutubePlayer.get('hover_player').skip();
 	},
 	'click .search_fullscreen': function(e) {
+		e.stopPropagation();
+		
 		$('#search_video_info').hide();
 		YoutubePlayer.get('hover_player').pause();
-		
-		$('.cube').cube().nextSideVertical('#search_fullscreen_side');
-		YoutubePlayer.fullscreenOnly('search_fullscreen_player').setVideo(this.youtube_id, true);
-		
-		e.stopPropagation();
+				
+		CubePlayer.start(this.youtube_id);
 	}
 });
 
@@ -352,7 +352,12 @@ Template.hover_player.destroyed = function() {
 
 /** SEARCH_VIDEO_INFO **/
 Template.search_video_info.helpers({
+	title: function() {
+		if(!Session.get('current_search_video_id')) return '';
+		return Videos.findOne(Session.get('current_search_video_id')).title;
+	},
 	time: function() {
+		if(!Session.get('current_player_id')) return '00:00';
 		return YoutubePlayer.get('hover_player').timeFormatted();
 	},
 	duration: function() {

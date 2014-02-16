@@ -133,33 +133,33 @@
 
 
 <template name="controls">
-	<div id="controls">
-        <div id="smallPlayPauseButton" class="play">
-        	<div id="miniPausePlay"></div>
+	<div class="controls">
+        <div class="smallPlayPauseButton play">
+        	<div class="miniPausePlay"></div>
         </div> 
 
-    	<div id="groove"></div>
+    	<div class="groove"></div>
 
-        <div id="bars">
-            <div id="barsInner">
-				<div id="loadingBar"></div>
-	            <div id="progressBar"></div>
+        <div class="bars">
+            <div class="barsInner">
+				<div class="loadingBar"></div>
+	            <div class="progressBar"></div>
 				{{>markers}}
-	            <div id="currentTimeBall">
-					<div id="innerTimeBallCircle"></div>
+	            <div class="currentTimeBall">
+					<div class="innerTimeBallCircle"></div>
 				</div>
 			</div>
         </div>
 
 		{{#isolate}}
-			<div id="videoTime">
+			<div class="videoTime">
 				<p>
-					<span id="videoCurrentTime">{{currentVideoTime}}</span> <span>/</span> <span id="videoDuration">{{currentVideoDuration}}</span>
+					<span class="videoCurrentTime">{{currentVideoTime}}</span> <span>/</span> <span class="videoDuration">{{currentVideoDuration}}</span>
 				</p>
 			</div>
 		{{/isolate}}
 		
-        <div id="volume">
+        <div class="volume">
         	<ul>
 				<li></li>
 				<li></li>
@@ -170,14 +170,14 @@
 			</ul>
         </div>
 
-    	<div id="minilogo">
+    	<div class="minilogo">
 			<img src="/images/speechlesstv-icon.png" style="width: 78%;margin-top: 6px"/>
 		</div>
 		
-		<div id="groove"></div>
+		<div class="groove"></div>
 		
-        <div id="fullscreen" class="enlarge">
-        	<div id="fullscreenButton"></div>
+        <div class="fullscreen enlarge">
+        	<div class="fullscreenButton"></div>
         </div>
     </div>
 </template>

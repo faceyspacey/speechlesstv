@@ -16,6 +16,10 @@ Resizeable = {
 		}
 	},
 	elements: {
+		scrablamSide: function(width, height) {
+			var top = height/2 - 400;
+			injectCSS('.scrablam_side', 'top: '+top+'px;');
+		},
 		searchCube: function(width, height) {
 		    $('.cube_container').css('height', height);
 		},

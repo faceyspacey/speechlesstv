@@ -10,13 +10,13 @@ bindPlayerVolumeControls = function() {
 	
 	
 	//bind hover states for volume controls and ultimately setting the actual volume on mousedown
-	$('#volume li').bind('mouseenter', function() {
-		var volumeIndex = $('#volume li').index(this);
+	$('.volume li').bind('mouseenter', function() {
+		var volumeIndex = $('.volume li').index(this);
 		
-		$('#volume li:gt('+(volumeIndex)+')').css('background-color', '#fff');	
-		$('#volume li:lt('+(volumeIndex+1)+')').css('background-color', '#559AFE');		
+		$('.volume li:gt('+(volumeIndex)+')').css('background-color', '#fff');	
+		$('.volume li:lt('+(volumeIndex+1)+')').css('background-color', '#559AFE');		
 	}).bind('mousedown', function() {
-		selectedVolumeIndex = $('#volume li').index(this);
+		selectedVolumeIndex = $('.volume li').index(this);
 		volume = Math.round(selectedVolumeIndex/5 * 100);
 		
 		setVolumeIndicator(selectedVolumeIndex);
@@ -27,13 +27,13 @@ bindPlayerVolumeControls = function() {
 	
 	//on mouseleave with no selection, set the volume selection back to what it was
 	$('#volume').bind('mouseleave', function() {
-		$('#volume li').css('background-color', 'white');
-		$('#volume li:lt('+(selectedVolumeIndex+1)+')').css('background-color', '#559AFE');
+		$('.volume li').css('background-color', 'white');
+		$('.volume li:lt('+(selectedVolumeIndex+1)+')').css('background-color', '#559AFE');
 	});
 };
 
 
 setVolumeIndicator = function(selectedVolumeIndex) {
-	$('#volume li').css('background-color', 'white');
-	$('#volume li:lt('+(selectedVolumeIndex+1)+')').css('background-color', '#559AFE');
+	$('.volume li').css('background-color', 'white');
+	$('.volume li:lt('+(selectedVolumeIndex+1)+')').css('background-color', '#559AFE');
 };

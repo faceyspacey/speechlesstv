@@ -13,9 +13,16 @@
 	cursor: alias;
 }
 
-.search_result img.video_image {
+.search_result .video_image {
 	width: 100%;
 }
+
+.search_result object {
+	width: 100%;
+	height: 160%;
+	margin-top: -17%;
+}
+
 
 .search_result .check_video, .search_result .fast_forward, .search_result .search_fullscreen {
 	position: absolute;

@@ -27,7 +27,21 @@ overflow:hidden;
 }
 
 
-.cube {
+
+.c_container {
+position: relative;
+width: 100%;
+overflow:hidden;
+
+-webkit-perspective-origin: 50% 50%;
+
+-webkit-perspective: 1000px;
+   -moz-perspective: 1000px;
+     -o-perspective: 1000px;
+        perspective: 1000px;
+}
+
+.cube, .c {
 width: 100%;
 height: 100%;
 position: absolute;
@@ -38,7 +52,7 @@ position: absolute;
         transform-style: preserve-3d;
 }
 
-.cube > div.backface {
+.cube > div.backface, .c > div.backface {
 width: 100%;
 height: 100%;
 position: absolute;
@@ -47,4 +61,11 @@ overflow:hidden;
    -moz-backface-visibility: hidden;
      -o-backface-visibility: hidden;
         backface-visibility: hidden;
+}
+
+.scrablam_side {
+	width: 1000px; 
+	margin: 0 auto; 
+	display:block;
+	position: relative;
 }

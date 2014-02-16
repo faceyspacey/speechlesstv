@@ -45,10 +45,10 @@
 	text-shadow: 1px 1px 1px rgb(33, 67, 78);
 }
 
-#fullscreen_back {
+.fullscreen_back {
 	left: 20px;
 }
 
-#fullscreen_next {
+.fullscreen_next {
 	right: 20px;
 }

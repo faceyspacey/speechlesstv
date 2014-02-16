@@ -209,14 +209,14 @@ opacity: 1;
 opacity: .7;    
 }
 
-#controls {
+.controls {
 background-color: rgb(157, 183, 218); 
 width: 100%; 
 bottom: 0px; 
 height: 48px;
 }
     
-div#smallPlayPauseButton {
+div.smallPlayPauseButton {
 position: relative;
   
 width: 60px; 
@@ -225,12 +225,12 @@ float:left;
 cursor: pointer;
 }
 
-div#smallPlayPauseButton:hover {
+div.smallPlayPauseButton:hover {
 background-color: #2a6efd;
 }
 
 
-div#smallPlayPauseButton.play > div {
+div.smallPlayPauseButton.play > div {
 position: absolute;
 width: 100%;
 height: 97%;
@@ -244,7 +244,7 @@ border-left: 20px solid white;
 border-bottom: 10px solid transparent;
 }
 
-div#smallPlayPauseButton.pause > div {
+div.smallPlayPauseButton.pause > div {
 position: absolute;
 background: url('../../images/pause.png') no-repeat; 
 width: 100%;
@@ -253,7 +253,7 @@ left: 22px;
 top: 15px;
 }
 
-div#groove {
+div.groove {
 position: relative;
 float:left; 
 width:1px;
@@ -261,7 +261,7 @@ height:100%;
 border-left: 1px solid rgb(206, 223, 238);
 border-right: 1px solid rgb(155,155,155);
 }
-div#bars {
+div.bars {
 position:relative; 
 float:left; 
 width: 62%; 
@@ -277,7 +277,7 @@ border-radius: 5px; /* future proofing */
 -khtml-border-radius: 5px;
 }
 
-#barsInner {
+.barsInner {
   width: 96%;
   height: 100%;
   margin: 0 1%;
@@ -285,7 +285,7 @@ border-radius: 5px; /* future proofing */
 }
 
 
-#loadingBar {
+.loadingBar {
 background-color: #559AFE; 
 z-index: 1; 
 width: 0%; 
@@ -294,7 +294,7 @@ border-radius: 2px;
 position: absolute;
 top: 1px
 }
-#progressBar {
+.progressBar {
 background-color: rgb(42, 110, 253);  
 z-index: 2; 
 width: 2.7%;
@@ -325,7 +325,7 @@ border-left: 1px solid rgb(247, 138, 53);
 }
 
 /** see how the current time ball is moved to the left the same width as the progress bar!! **/
-#currentTimeBall {
+.currentTimeBall {
 z-index: 4;
 background:url('../../images/progress_ball.png') no-repeat;
 left: 0; 
@@ -337,11 +337,11 @@ cursor: pointer;
 
 position: absolute;
 }
-#currentTimeBall.hover {
+.currentTimeBall.hover {
 background-color:green;
 }
 
-#currentTimeBall #innerTimeBallCircle {
+.currentTimeBall .innerTimeBallCircle {
 border-radius: 100px;
 width: 9px;
 height: 9px;    
@@ -351,7 +351,7 @@ top: 5px;
 left: 5px;  
 }
 
-#currentTimeBall #innerTimeBallCircle.hover {
+.currentTimeBall .innerTimeBallCircle.hover {
 border-radius: 100px;
 width: 9px;
 height: 9px;    
@@ -366,7 +366,7 @@ opacity: .7;
 box-shadow:inset 0px 0px 3px 1px rgba(119, 119, 119, 0.9);
 }
 
-div#videoTime {
+div.videoTime {
 position:relative; 
 float:left; 
 width: 7.5%; 
@@ -374,14 +374,14 @@ height: 100%;
 padding-top: 14px;
 }
 
-div#videoTime span {
+div.videoTime span {
 color: white;
 text-shadow: 1px 1px 1px gray;
 font-size: 12px;   
 }
 
 /** the idea i have in mind is that the #volume background will change widths depending on how hi/lo the user drags the volume; and on top of it will be a transparent .png that overlays a steps cookie-cutter like this: http://snapplr.com/xrsh **/
-div#volume {	
+div.volume {	
 position:relative; 
 float:left; 
 width: 8.5%; 
@@ -389,7 +389,7 @@ height: 100%;
 }
 
 
-div#volume li {	
+div.volume li {	
 float: left;
 margin-left: 4px;
 width: 8px;
@@ -399,13 +399,13 @@ background-color: rgb(85, 154, 254);
 border-radius: 2px;
 }
 
-div#volume li:hover {
+div.volume li:hover {
 cursor: pointer;
 height: 42px;
 margin-top: 3px;
 }
 
-div#volume .circle {
+div.volume .circle {
 width: 6%;
 height: 51%;
 margin-right:5px;
@@ -414,17 +414,17 @@ background: black;
 -webkit-border-radius: 5px / 8px;
 border-radius: 5px / 8px;
 }
-div#volume #background {
+div.volume .background {
 background-color:#5BA0B8; 
 width: 70%; 
 height: 100%;
 }
-div#volume #foreground {
+div.volume .foreground {
 background-color:black; 
 width:100%; 
 height: 80%;
 }
-div#minilogo{ 
+div.minilogo{ 
 position:relative; 
 float:left;
 height:100%;
@@ -450,7 +450,7 @@ margin-right: 1%;
 
 
  
-div#minilogo:hover {
+div.minilogo:hover {
   -webkit-transform: rotate(720deg);
      -moz-transform: rotate(720deg);
        -o-transform: rotate(720deg);
@@ -461,7 +461,7 @@ div#minilogo:hover {
 
 
 /** you need to clear the divs in #controls so that #controls gets some height **/
-div#fullscreen {
+div.fullscreen {
 position:relative; 
 float:left;  
 width: 72px;
@@ -469,12 +469,12 @@ height: 100%;
 }
 
 
-div#fullscreen:hover {
+div.fullscreen:hover {
 background-color: #559afe;
 cursor: pointer;   
 }
 
-#fullscreenButton {
+.fullscreenButton {
 position: absolute;
 
 width: 100%;
@@ -484,11 +484,11 @@ left: 22px;
 }
 
 
-div#fullscreen.enlarge  #fullscreenButton {
+div.fullscreen.enlarge  .fullscreenButton {
 background:url('../../images/fullscreen.png') no-repeat;
 }
 
-div#fullscreen.shrink  #fullscreenButton {
+div.fullscreen.shrink  .fullscreenButton {
 background:url('../../images/smallscreen.png') no-repeat;
 }
 

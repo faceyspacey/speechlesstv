@@ -4,14 +4,16 @@
 			{{>dummy_side}}
 			{{>search_page}}
 			{{>add_videos}}
-			{{>search_fullscreen}}
-			{{>search_fullscreen_alt_side}}
+			{{>search_fullscreen_side}}
+			{{>search_fullscreen_side_alt}}
 		</div>
 	</div>
 </template>
 
 <template name="dummy_side">
-	<div class="backface" id="dummy_side" style="background: white;border: 25px solid #559afe;"></div>
+	<div class="backface" id="dummy_side" style="background: white;border: 25px solid #559afe;">
+		<img class="scrablam_side" src="/images/scrablam.png" />
+	</div>
 </template>
 
 <template name="search_page">
@@ -80,7 +82,7 @@
 <template name="search_bar">
 	<div id="search_bar">
 		{{#isolate}}
-			<input type="text" id="search_query" value="Wolfgang Gartner in concert" />		
+			<input type="text" id="search_query" value="Ultra Music 2014" />		
 		{{/isolate}}
 		
 		{{#isolate}}
@@ -153,6 +155,8 @@
 
 <template name="search_result">
 	<div class="search_result">
+		<img class="video_image" src="{{src}}" />
+		
 		<div class="check_video" style="{{show}}">
 			<i class="fa fa-check"></i>
 		</div>
@@ -160,12 +164,10 @@
 		<div class="search_fullscreen">
 			<i class="fa fa-arrows-alt"></i>
 		</div>
-		
+
 		<div class="fast_forward">
 			<i class="fa fa-forward"></i>
 		</div>
-		
-		<img class="video_image" src="{{src}}" />
 	</div>
 </template>
 

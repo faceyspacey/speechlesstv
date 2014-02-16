@@ -1,5 +1,5 @@
 bindPlayerMouseDown = function() {
-	$('#currentTimeBall').bind('mousedown.timeBall', function() {
+	$('.currentTimeBall').bind('mousedown.timeBall', function() {
 		isDragging = true;
 		
 		console.log('mouse down'); 
@@ -24,15 +24,15 @@ playseMouseUp = function(event) {
 };
 
 playerMouseMove = function(event) {
-	x = event.pageX - $('#barsInner').offset().left;
+	x = event.pageX - $('.barsInner').offset().left;
 
-	console.log('#currentTimeBall x coordinate', x);
+	console.log('.currentTimeBall x coordinate', x);
 	
     //make it so ball cant leave the left and right bounds of the containing bar
     if(x < 0) x = 0;
     if(x > progressMaxWidth) x = progressMaxWidth;
     
-	$('#currentTimeBall').css('left', x);
+	$('.currentTimeBall').css('left', x);
 	
 	
 	//make it so we only update the frame shown on the screen if the 5 seconds changes
@@ -41,7 +41,7 @@ playerMouseMove = function(event) {
 		durationPercentage = Math.floor(percentX *  ytplayer.getDuration());
 	
 	//set time on time indicator
-	$('#videoCurrentTime').text(formatSeconds(Math.min(durationPercentage, ytplayer.getDuration())));
+	$('.videoCurrentTime').text(formatSeconds(Math.min(durationPercentage, ytplayer.getDuration())));
 	
 	if(durationPercentage > lastSeekTo + 4 || durationPercentage < lastSeekTo - 4) {
 		lastSeekTo = durationPercentage;
@@ -52,8 +52,8 @@ playerMouseMove = function(event) {
 
 //click anywhere on the progress bar to change the playhead of the video
 bindPlayHeadChange = function() {
-	$('#barsInner').bind('click', function(event) {
-		x = event.pageX - $('#barsInner').offset().left;
+	$('.barsInner').bind('click', function(event) {
+		x = event.pageX - $('.barsInner').offset().left;
 		
 		var percentX = x/progressMaxWidth; //expressed from 0 to 1, e.g: .76
 		
@@ -65,9 +65,9 @@ bindPlayHeadChange = function() {
 
 
 bindTimeBallHover = function() {
-	$('#currentTimeBall').live('mouseenter', function() {
-		$(this).find('#innerTimeBallCircle').addClass('hover');
+	$('.currentTimeBall').live('mouseenter', function() {
+		$(this).find('.innerTimeBallCircle').addClass('hover');
 	}).live('mouseleave', function() {
-		$(this).find('#innerTimeBallCircle').removeClass('hover');
+		$(this).find('.innerTimeBallCircle').removeClass('hover');
 	});
 };

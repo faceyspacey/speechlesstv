@@ -44,13 +44,13 @@ findAndDisplayComment = function(currentTime) {
 };
 
 updateLoadedPercentage = function() {
-	$('#loadingBar').css('width', (ytplayer.getVideoLoadedFraction() * 100) + '%');
+	$('.loadingBar').css('width', (ytplayer.getVideoLoadedFraction() * 100) + '%');
 };
 
 updateProgress = function() {
 	if(!isDragging) {
 		var percentagePlayed = (ytplayer.getCurrentTime() / ytplayer.getDuration() * 100);
-		$('#progressBar').css('width', percentagePlayed + '%');
-		$('#currentTimeBall').css('left', percentagePlayed/100 * progressMaxWidth); //percentage of the width of the progressBar
+		$('.progressBar').css('width', percentagePlayed + '%');
+		$('.currentTimeBall').css('left', percentagePlayed/100 * progressMaxWidth); //percentage of the width of the progressBar
 	}
 };

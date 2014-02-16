@@ -5,7 +5,7 @@ isFullScreen = function() {
 makeFullscreen = function() {
 	Session.set('is_fullscreen', true);
 				
-	$('#fullscreen').addClass('shrink').removeClass('enlarge');
+	$('.fullscreen').addClass('shrink').removeClass('enlarge');
 	$('#being_watched, #categories').hide();	
 	$('#thumb_grid, #show_more, .footer').hide();
 	$('#header_container, #title_textarea, #title_overlay, #video_info').hide();
@@ -26,7 +26,7 @@ removeFullscreen = function() {
 		if(Session.get('autoplay')) $('#temp_img').hide();
 	});
 	
-	$('#fullscreen').addClass('enlarge').removeClass('shrink');
+	$('.fullscreen').addClass('enlarge').removeClass('shrink');
 	$('#being_watched, #categories').show();	
 	$('#thumb_grid, #show_more, .footer').show();
 	$('#header_container, #title_textarea, #title_overlay, #video_info').show();
@@ -76,7 +76,7 @@ shrinkVideo = function() {
 toggleEscapeKey = function() {
 	if(isFullScreen()) {
 		$(document).bind('keyup.escapeKey', function(e) {
-		  if (e.keyCode == 27) $('#fullscreen').click();   //e.keyCode == 27 is the escape key
+		  if (e.keyCode == 27) $('.fullscreen').click();   //e.keyCode == 27 is the escape key
 		});
 	}
 	else {
@@ -86,14 +86,14 @@ toggleEscapeKey = function() {
 
 toggleControls = function() {
 	if(isFullScreen()) {
-		$('#controls').css('top', $(window).height() - 150).css('opacity', .9);
+		$('.controls').css('top', $(window).height() - 150).css('opacity', .9);
 		
 		$(window).bind('resize.fullscreenControlls', function() {
-			$('#controls').css('top', $(window).height() - 150).css('opacity', .9);
+			$('.controls').css('top', $(window).height() - 150).css('opacity', .9);
 		});
 	}
 	else {
-		$('#controls').show().css('top', '').css('opacity', 1);
+		$('.controls').show().css('top', '').css('opacity', 1);
 		$(window).unbind('resize.fullscreenControlls');
 	}
 };
@@ -101,11 +101,11 @@ toggleControls = function() {
 toggleControlsFade = function() {
 	if(isFullScreen()) {
 		$('body').bind('mouseleave.controls', function() {
-			$('#controls').fadeOut();
+			$('.controls').fadeOut();
 		});
 		
 		$('body').bind('mouseenter.controls', function() {
-			$('#controls').fadeIn();
+			$('.controls').fadeIn();
 		});
 		
 		bindNoMouseMove(); 
@@ -122,12 +122,12 @@ controlsFadeInterval = undefined;
 bindNoMouseMove = function() {
 	controlsFadeInterval = setInterval(function() {
 		if(Date.now() - lastMoved > 3000) {
-			$('#controls').fadeOut();
+			$('.controls').fadeOut();
 		}
 	}, 1000);
 	
 	$('body').bind('mousemove.hideControls', function() {
-		$('#controls').fadeIn();
+		$('.controls').fadeIn();
 		lastMoved = Date.now();
 	});
 }

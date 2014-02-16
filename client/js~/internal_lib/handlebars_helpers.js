@@ -132,16 +132,14 @@ Handlebars.registerHelper('current_search_video', function() {
 
 
 
+Handlebars.registerHelper('control_bar', function(playerId) {
+	return Template.control_bar({playerId: playerId});
+});
 
-Handlebars.registerHelper('playerReady', function() {
-	//var playerId = Session.get('current_player_id');		
-	//return playerId == 'search_fullscreen_player' && Session.get('player_ready_'+playerId);
-	
-    var playerId = Session.get('current_player_id');		
+Handlebars.registerHelper('playerReady', function(playerId) {		
 	return Session.get('player_ready_'+playerId);
 });
 
-Handlebars.registerHelper('player', function() {
-	var playerId = Session.get('current_player_id');
+Handlebars.registerHelper('player', function(playerId) {
     return YoutubePlayers[playerId];
 });
