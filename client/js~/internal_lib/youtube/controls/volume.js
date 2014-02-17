@@ -26,7 +26,7 @@ bindPlayerVolumeControls = function() {
 	});
 	
 	//on mouseleave with no selection, set the volume selection back to what it was
-	$('#volume').bind('mouseleave', function() {
+	$('.volume').bind('mouseleave', function() {
 		$('.volume li').css('background-color', 'white');
 		$('.volume li:lt('+(selectedVolumeIndex+1)+')').css('background-color', '#559AFE');
 	});

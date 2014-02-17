@@ -2,7 +2,7 @@
 	<div class="backface" id="search_fullscreen_side"  style="display:none;">
 		{{>search_fullscreen_player}}
 		
-		<div style="position:absolute; bottom: 60px; width: 980px; left:50%; margin-left: -490px;">
+		<div style="position:absolute; z-index: 99; bottom: 60px; width: 980px; left:50%; margin-left: -490px;">
 			{{{control_bar 'search_fullscreen_player'}}}
 		</div>
 		
@@ -12,6 +12,11 @@
 
 <template name="search_fullscreen_player">
 	<div class="search_fullscreen_player_container">
+		<div class="video_cover">
+			<div class="bar">
+		    	<span></span>
+			</div>
+		</div>
 		<div id="search_fullscreen_player"></div>
 	</div>
 </template>
@@ -23,7 +28,7 @@
 	<div class="backface" id="search_fullscreen_side_alt" style="display:none;">
 		{{>search_fullscreen_player_alt}}
 		
-		<div style="position:absolute; bottom: 60px; width: 980px; left:50%; margin-left: -490px;">
+		<div style="position:absolute; z-index: 99; bottom: 60px; width: 980px; left:50%; margin-left: -490px;">
 			{{{control_bar 'search_fullscreen_player_alt'}}}
 		</div>
 		
@@ -33,6 +38,11 @@
 
 <template name="search_fullscreen_player_alt">
 	<div class="search_fullscreen_player_container">
+		<div class="video_cover">
+			<div class="bar">
+			    <span></span>
+			</div>
+		</div>
 		<div id="search_fullscreen_player_alt"></div>
 	</div>
 </template>
@@ -41,6 +51,6 @@
 
 
 <template name="fullscreen_backnext">
-	<div class="fullscreen_back_next fullscreen_back" style="display:{{showBack}};"><i class="fa fa-arrow-left"></i></div>
-	<div class="fullscreen_back_next fullscreen_next" style="display:{{showNext}};"><i class="fa fa-arrow-right"></i></div>
+	<div class="fullscreen_back_next fullscreen_back" style="visibility:{{showBack}};"><i class="fa fa-arrow-left"></i></div>
+	<div class="fullscreen_back_next fullscreen_next" style="visibility:{{showNext}};"><i class="fa fa-arrow-right"></i></div>
 </template>

@@ -44,7 +44,7 @@
 	{{#if is_update_video}}
 		<textarea id="description_textarea" placeholder="Write a witty description/comment ;)">{{current_video.description}}</textarea>
 	{{else}}
-		<span class='spanQuotes'>"&nbsp;</span>{{current_video.description}}<span class='spanQuotes'>"</span>
+		<span class='spanQuotes'>"&nbsp;</span>{{shorten current_video.description 160}}<span class='spanQuotes'>"</span>
 	{{/if}}
 </template>
 

@@ -10,8 +10,8 @@ ComponentParent = {
 	_player: function() {
 		return this.player.player;
 	},
-	_call: function(eventName) {
-		return this.player._call(eventName);
+	_call: function() {
+		return this.player._call.apply(this.player, arguments);
 	},
 	
 	_backface: function() {

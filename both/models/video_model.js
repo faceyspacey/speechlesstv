@@ -38,7 +38,49 @@ VideoModel.prototype = {
 		return Meteor.users.findOne({_id: this.user_id});
 	},
 	src: function() {
+		this.setBestPhoto();
 		return 'http://img.youtube.com/vi/'+this.youtube_id+'/mqdefault.jpg'
+	},
+	storeDuration: function() {
+		if(!this.length || this.length == '00:00') this.update({length:  $('.videoDuration').text()});
+	},
+	setBestPhoto: function() {
+		if(this.photo || this._local) return;
+		this.photo = 'mqdefault';
+		this.save();
+		this._findBestPhotoMax();
+	},
+	_findBestPhotoMax: function() {
+		var self = this,
+			new_img = new Image();
+		new_img.onload = function() {
+		    if(this.height != 90) self._updatePhoto('maxresdefault');
+			else self._findBestPhotoSd();
+		};
+		new_img.src = 'http://img.youtube.com/vi/'+this.youtube_id+'/maxresdefault.jpg';
+	},
+
+	_findBestPhotoSd: function(_id, youtube_id) {
+		var self = this,
+			new_img = new Image();
+		new_img.onload = function() {
+		   if(this.height != 90) self._updatePhoto('sddefault');
+			else self._findBestPhotoHq();
+		};
+		new_img.src = 'http://img.youtube.com/vi/'+this.youtube_id+'/sddefault.jpg';
+	},
+
+	_findBestPhotoHq: function() {
+		var self = this,
+			new_img = new Image();
+		new_img.onload = function() {
+		   if(this.height != 90) self._updatePhoto('hqdefault');
+		};
+		new_img.src = 'http://img.youtube.com/vi/'+this.youtube_id+'/hqdefault.jpg';
+	},
+	_updatePhoto: function(name) {
+		this.update({photo: name});
+		Session.set('current_video', this);
 	}
 };
 

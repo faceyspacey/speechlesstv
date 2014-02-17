@@ -1,9 +1,9 @@
 Template.fullscreen_backnext.helpers({
 	showBack: function() {
-		return SearchVideos.prev() ? 'block' : 'none';
+		return SearchVideos.prev() ? 'visible' : 'hidden';
 	},
 	showNext: function() {
-		return SearchVideos.next() ? 'block' : 'none';
+		return SearchVideos.next() ? 'visible' : 'hidden';
 	}
 });
 

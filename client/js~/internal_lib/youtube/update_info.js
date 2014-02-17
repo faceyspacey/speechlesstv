@@ -6,6 +6,9 @@ updatePlayerInfo = function() {
 	
 		var currentTime = getCurrentTime(); //in seconds
 	
+		//store the duration for videos that need it assigned
+		if(currentTime == 3) Videos.findOne(Session.get('current_video')._id).storeDuration();
+		
 		if(currentTime != lastCheckedTime) { 
 			lastCheckedTime = currentTime;	
 			addTimeToUrl(currentTime);

@@ -82,7 +82,7 @@
 <template name="search_bar">
 	<div id="search_bar">
 		{{#isolate}}
-			<input type="text" id="search_query" value="Ultra Music 2014" />		
+			<input type="text" id="search_query" placeholder="Search Away" />		
 		{{/isolate}}
 		
 		{{#isolate}}
@@ -129,7 +129,18 @@
 		{{>back_next_buttons}}
 		{{>search_video_info}}
 		{{>hover_player}}
+		
+		{{>search_help_graphic}}
 	</div>
+</template>
+
+<template name="search_help_graphic">
+	{{#if show}}
+		<div class="search_help_box">
+			<img src="/images/search_help.png" class="search_help_graphic"/>
+			<div class="search_help_text">Search & Click Enter. Click Videos to Find Related.</div>
+		</div>
+	{{/if}}
 </template>
 
 <template name="back_next_buttons">

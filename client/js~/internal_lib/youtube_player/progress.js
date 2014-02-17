@@ -23,10 +23,8 @@ PlayerComponentProgress.prototype = {
 			Session.set('player_loaded_fraction_'+this.playerId, this._player().getVideoLoadedFraction());
 
 			this._lastCheckedTime = currentTime;	
-			this._call('onSecondChange');
+			this._call('onUpdate', currentTime);
 		}
-
-		this._call('onUpdate');
 	},
 
 	_addTimeToUrl: function() {

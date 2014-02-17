@@ -27,8 +27,6 @@ YoutubePlayer.prototype = {
 		catch(e) {console.log('newer swf already on page');}
 		if(!YoutubePlayers[this.playerId]) return;
 		
-		console.log(this.playerId, 'destroyed');
-		
 		this._call('onDestroyed');
 		
 		//for(var key in this.components) delete this.components[key];
@@ -115,6 +113,8 @@ YoutubePlayer.prototype = {
 		this._onReady(function() {
 			this._replaceVideo(youtubeId);
 		}.bind(this));
+		
+		return this;
 	},
 	_replaceVideo: function(youtubeId) {
 		Session.set('youtube_id_'+this.playerId, youtubeId);
@@ -220,10 +220,15 @@ YoutubePlayer.prototype = {
 	getComponent: function(name) {
 		return this.components[name];
 	},
-	_call: function(method) {
+	_call: function() {
+		var args = Array.prototype.slice.call(arguments, 0),
+			method = args.shift();
+
 		_.each(this.components, function(component, id) {
-			if(_.isFunction(component[method])) component[method].call(component);
+			if(_.isFunction(component[method])) component[method].apply(component, args);
 		});
+		
+		return this;
 	},
 
 
@@ -231,5 +236,15 @@ YoutubePlayer.prototype = {
 	
 	getPlayerId: function() {
 		return Session.get('current_player_id');
-	}	
+	},
+	
+	
+	/** MISC **/
+	
+	_backface: function() {
+		return $('#'+this.playerId).parents('.backface');
+	},
+	video: function() {
+		return Videos.findOne({youtube_id: this.getYoutubeId()});
+	}
 };

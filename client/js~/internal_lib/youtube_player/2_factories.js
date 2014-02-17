@@ -16,8 +16,7 @@ YoutubePlayer.mini = function(playerId, callback) {
 		player.addComponent(new PlayerComponentProgress, 'progress');	
 		player.addComponent({
 			onPlay: function() {
-				console.log('cookie volume set', this.player.player.setVolume);
-				if($.cookie('volume') && this.player.player.setVolume) this.player.player.setVolume($.cookie('volume'));
+				if($.cookie('volume') && this.player.player && this.player.player.setVolume) this.player.player.setVolume($.cookie('volume'));
 			}
 		}, 'cookie_volume');
 	}
@@ -39,11 +38,16 @@ YoutubePlayer.fullscreenOnly = function(playerId, callback) {
 	player.addComponent(new PlayerComponentFullscreen, 'fullscreen');
 	player.addComponent({
 		onLeaveFullscreen: function() {
-			$('.cube').cube().prevSideVertical();
-			this.player.destroy();
-		}
+			$('.cube').cube().prevSideVertical('#dummy_side', 1000, 'easeInBack', function() {
+				$('.cube').cube().prevSideVertical(Session.get('search_side'), 1000, 'easeOutBack', function() {
+					Resizeable.resizeAllElements();
+					$('#search_bar input').focus();
+					$('.video_cover, .bar').show();
+					this.player.destroy();
+				}.bind(this));
+			}.bind(this));
+		},
 	}, 'fullscreen_only');
-	
 	
 	player.enterFullscreen();
 	player.makeCurrent();

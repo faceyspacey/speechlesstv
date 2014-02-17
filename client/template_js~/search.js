@@ -1,11 +1,13 @@
 /** SEARCH **/
 
 Template.search.created = function() {
-	console.log('search created');
-
+	Session.set('search_side', '#search_results_side');
+	
 	Deps.afterFlush(function() {
 		Resizeable.resizeAllElements();
 		$('.cube').cube().prevSide('#search_results_side');
+		
+		$('#search_bar input').focus();
 	});
 };
 
@@ -26,17 +28,38 @@ Template.add_videos.helpers({
 
 Template.add_videos.events({
 	'click #add_videos_back': function() {
-		$('.cube').cube().prevSideHorizontal('#search_results_side');
+		Session.set('search_side', '#search_results_side');
+		
+		$('.cube').cube().prevSideHorizontal('#dummy_side', 1000, 'easeInBack', function() {
+			$('.cube').cube().prevSideHorizontal('#search_results_side', 1000, 'easeOutBack');
+		});
 	},
 	'click #add_videos_clear': function() {
 		Videos._collection.update({_local: true}, {$set: {description: ''}}, {multi: true});
 	},
 	'click #add_videos_next': function() {
+		Session.set('search_side', '#search_results_side');
+		
+		var videos = Videos.find({_local: true, checked: true}).fetch();
+		if(videos[0]) videos[0]._findBestPhotoMax();
+		
 		$('.cube').cube().nextSide('#dummy_side', null, null, function() {
-			Router.go('home');
-		});
-		Videos.find({_local: true, checked: true}).forEach(function(video) {
-			video.persist();
+			_.each(videos, function(video) {
+				video.user_id = Meteor.userId();
+				video.user_facebook_id = Meteor.user().profile.facebook_id;
+				video.channel = Meteor.user().profile.username;
+				video.comments = [];
+				video.time = Date.now();
+				video.complete = true;	
+				if(!video.category_id) video.category_id = 1;
+
+				video.persist();
+			});
+			
+			$('#dummy_side').animate({opacity: 0}, 500, 'easeOutExpo');
+			Meteor.setTimeout(function() {
+				Router.go('home');
+			}, 300);
 		});
 	}
 });
@@ -150,11 +173,16 @@ Template.search_bar.events({
 		});
 	},
 	'click #search_next_button': function() {	
+		Session.set('search_side', '#add_videos_side');
+		
 		var categoryId = Session.get('selected_search_category_id');
 		Videos._collection.update({_local: true}, {$set: {category_id: categoryId}}, {multi: true});
 		
-		$('.cube').cube().nextSideHorizontal('#add_videos_side', null, null, function() {
-			vScroll('add_videos_wrapper');
+		
+		$('.cube').cube().nextSideHorizontal('#dummy_side', 1000, 'easeInBack', function() {
+			$('.cube').cube().nextSideHorizontal('#add_videos_side', 1000, 'easeOutBack', function() {
+				vScroll('add_videos_wrapper');
+			});
 		});
 	}
 });
@@ -182,6 +210,13 @@ Template.back_next_buttons.events({
 	}
 });
 
+/** SEARCH_HELP_GRAPHIC **/
+
+Template.search_help_graphic.helpers({
+	show: function() {
+		return Videos.find({_local: true}).count() === 0;
+	}
+});
 
 /** SEARCH_COLUMNS **/
 

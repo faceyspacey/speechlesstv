@@ -21,11 +21,11 @@ Template.youtube_player.events({
 	'click #largePlayPauseButton': function(event) {
 		playVideo();
 	},
-	'click #smallPlayPauseButton': function(event) {
+	'click .smallPlayPauseButton': function(event) {
 		if(videoIsPlaying()) pauseVideo();
 		else playVideo();
 	},
-	'click #fullscreen': function() {	
+	'click .fullscreen': function() {	
 		if(!isFullScreen()) makeFullscreen();
 		else removeFullscreen();	
 	},
@@ -70,6 +70,7 @@ Template.youtube_player.events({
 });
 
 Template.temp_img.rendered = function() {
+	if(Session.get('current_video') && (video = Videos.findOne(Session.get('current_video')._id))) video.setBestPhoto();
 	$('#temp_img').animate({opacity: 1});
 };
 

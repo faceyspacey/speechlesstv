@@ -138,6 +138,35 @@
 	text-shadow: gray;
 }
 
-#search_field input::-webkit-input-placeholder {
+
+
+#search_bar input::-webkit-input-placeholder {
 	color: white !important;
+	font-size: 32px !important;
+	
+}
+
+
+#search_bar ::-webkit-input-placeholder {
+   	color: white !important;
+	font-size: 32px !important;
+	
+}
+
+#search_bar :-moz-placeholder { /* Firefox 18- */
+   	color: white !important;
+	font-size: 32px !important;
+	
+}
+
+#search_bar ::-moz-placeholder {  /* Firefox 19+ */
+   	color: white !important;
+	font-size: 32px !important;
+	
+}
+
+#search_bar :-ms-input-placeholder {  
+   	color: white !important;
+	font-size: 32px !important;
+	
 }

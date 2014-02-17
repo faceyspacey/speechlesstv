@@ -9,6 +9,31 @@
 	z-index: 1;
 }
 
+.search_help_box {
+	position: absolute;
+	top: 180px;
+	left: 50%;
+	margin-left: -450px;
+}
+
+.search_help_box img {
+	float:left;
+	width: 500px;
+	border-radius: 2px;
+	box-shadow: 0px 0px 200px 20px #559afe;
+}
+
+.search_help_box .search_help_text {
+	float: left;
+	margin-left: 15px;
+	margin-top: 132px;
+	color: white;
+	font-size: 20px;
+	background-color: rgb(42, 103, 160);
+	text-shadow: 1px 1px 1px rgb(33, 67, 78);
+	padding: 15px;
+}
+
 #search_results_wrapper {
 	position: relative;
 	
