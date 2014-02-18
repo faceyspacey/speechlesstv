@@ -141,5 +141,6 @@ Handlebars.registerHelper('playerReady', function(playerId) {
 });
 
 Handlebars.registerHelper('player', function(playerId) {
+	if(!Session.get('player_ready_'+playerId)) return {playPauseClass: 'pause', fullScreenClass: 'shrink'};
     return YoutubePlayers[playerId];
 });

@@ -42,6 +42,7 @@ PlayerComponentFullscreen.prototype = {
 	},		
 	bindControlsFade: function() {
 		clearInterval(YoutubePlayer.mousemoveInterval);
+		this.lastMoved = Date.now();
 		YoutubePlayer.mousemoveInterval = setInterval(function() {
 			if(Date.now() - this.lastMoved > 3000) this._backface().find('.controls, .fullscreen_back_next').fadeOut();
 		}.bind(this), 1000);

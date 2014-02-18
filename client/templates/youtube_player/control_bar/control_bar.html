@@ -1,6 +1,6 @@
 <template name="control_bar">
 	<div class="controls">
-		{{#if playerReady playerId}}
+	
 			{{#with player playerId}}
 	        	{{#isolate}}
 	 				<div class="smallPlayPauseButton {{playPauseClass}}">
@@ -56,6 +56,6 @@
 			        </div>
 				{{/isolate}}
 			{{/with}}
-		{{/if}}
+
     </div>
 </template>
