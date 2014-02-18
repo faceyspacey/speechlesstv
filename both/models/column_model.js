@@ -38,4 +38,8 @@ ColumnModel.nextIndex = function() {
 
 
 
-
+ColumnModel.deleteAll = function() {
+	Columns.find().forEach(function(column) { 
+		column.delete(true); 
+	});
+};

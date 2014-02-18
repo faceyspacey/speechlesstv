@@ -42,6 +42,8 @@ Template.add_videos.events({
 		
 		
 		$('.cube').cube().nextSide('#dummy_side', null, null, function() {
+			ColumnModel.deleteAll();
+						
 			Videos.find({_local: true, checked: undefined}).forEach(function(video) {
 				video.delete();
 			});

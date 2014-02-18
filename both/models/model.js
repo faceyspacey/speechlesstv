@@ -77,10 +77,10 @@ Model = {
 	
 	
 	/** new features **/
-	delete: function() {
+	delete: function(noAfterDelete) {
 		console.log('deleting', this.collectionName);
 		
 		this.db().remove(this._id);
-		if(this.afterDelete) this.afterDelete();
+		if(this.afterDelete && !noAfterDelete) this.afterDelete();
 	}
 };
