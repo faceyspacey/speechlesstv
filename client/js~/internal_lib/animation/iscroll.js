@@ -1124,9 +1124,12 @@ newScroll = function(id, options) {
 			var target = e.target;
 			while (target.nodeType != 1) target = target.parentNode;
 
-			if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA' && !$(target).hasClass('toolbar-button')) e.preventDefault();
+			console.log(target.tagName);
+			if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA' && !$(target).hasClass('toolbar-button')) {
+				e.preventDefault();
+			} 
 		},
-		onBeforeScrollMove: function() {
+		onBeforeScrollMove: function(e) {
 			mobileScrolling = true;
 		},
 		onBeforeScrollEnd: function() {
@@ -1147,20 +1150,33 @@ newScroll = function(id, options) {
 	return new iScroll(id, defaults);
 }
 
+
+stopPropOnInputs = function() {
+	[].slice.call(document.querySelectorAll('input, select, textarea, button')).forEach(function(el) {
+	    	el.addEventListener( ('ontouchstart' in window) ? 'touchstart' : 'mousedown', function(e) {
+	      		console.log('Preventing event from bubbling up to iScroll, as it would then remove it.');
+	      		e.stopPropagation();
+	    	});
+	});
+}
+
 allScrolls = {};
 
 vScroll = function(id) {
+	stopPropOnInputs();
 	if(allScrolls[id]) return allScrolls[id].refresh();
 	else return allScrolls[id] = newScroll(id, {vScroll: true});
 };
 
 hScroll = function(id) {
+	stopPropOnInputs();
 	if(allScrolls[id]) return allScrolls[id].refresh();
 	else return allScrolls[id] = newScroll(id, {hScroll: true});
 };
 
 
 hvScroll = function(id) {
+	stopPropOnInputs();
 	if(allScrolls[id]) return allScrolls[id].refresh();
 	else return allScrolls[id] = newScroll(id, {hScroll: true, vScroll: true});
 };

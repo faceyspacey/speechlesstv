@@ -4,14 +4,14 @@ Meteor.publish('allCategories', function() {
 
 
 Meteor.publish('allVideos', function(limit, channel, category) {
-	if(channel) return Videos.find({channel: channel, complete: true}, {sort: {created_at: -1}, limit: limit});
+	if(channel) return Videos.find({channel: channel, complete: true, _local: {$ne: true}}, {sort: {created_at: -1}, limit: limit});
 	
 	if(category) {
 		var category_id = allCategories.indexOf(category);
-		return Videos.find({category_id: category_id, complete: true}, {sort: {created_at: -1}, limit: limit});
+		return Videos.find({category_id: category_id, complete: true, _local: {$ne: true}}, {sort: {created_at: -1}, limit: limit});
 	}
 	
-	return Videos.find({complete: true}, {sort: {created_at: -1}, limit: limit});
+	return Videos.find({complete: true, _local: {$ne: true}}, {sort: {created_at: -1}, limit: limit});
 });
 
 Meteor.publish('video', function(videoId) {

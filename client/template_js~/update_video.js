@@ -2,7 +2,7 @@ Template.category_dropdown.helpers({
 	category: function() {
 		if(Session.get('current_video')) {
 			var categoryId = Session.get('current_video').category_id;
-			return Categories.findOne({category_id: categoryId}).name;
+			return Categories.findOne({category_id: categoryId}) ? Categories.findOne({category_id: categoryId}).name : '';
 		}	
 	},
 	selectedCategory: function(categoryId) {

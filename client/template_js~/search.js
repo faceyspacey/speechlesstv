@@ -40,20 +40,27 @@ Template.add_videos.events({
 	'click #add_videos_next': function() {
 		Session.set('search_side', '#search_results_side');
 		
-		var videos = Videos.find({_local: true, checked: true}).fetch();
-		if(videos[0]) videos[0]._findBestPhotoMax();
 		
 		$('.cube').cube().nextSide('#dummy_side', null, null, function() {
-			_.each(videos, function(video) {
+			Videos.find({_local: true, checked: undefined}).forEach(function(video) {
+				video.delete();
+			});
+			
+			var first = false;
+			Videos.find({_local: true, checked: true}).forEach(function(video) {
 				video.user_id = Meteor.userId();
 				video.user_facebook_id = Meteor.user().profile.facebook_id;
 				video.channel = Meteor.user().profile.username;
 				video.comments = [];
-				video.time = Date.now();
+				video.category_id = parseInt(Session.get('category_id_'+video.youtube_id));
 				video.complete = true;	
-				if(!video.category_id) video.category_id = 1;
 
 				video.persist();
+				
+				if(!first) {
+					video._findBestPhotoMax();
+					first = true;
+				}
 			});
 			
 			$('#dummy_side').animate({opacity: 0}, 500, 'easeOutExpo');
@@ -66,6 +73,11 @@ Template.add_videos.events({
 
 
 /** ADD_VIDEO_ROW **/
+
+Template.add_video_row.rendered = function() {
+	Session.set('category_id_'+this.data.youtube_id, $('select', this.firstNode).val());
+};
+
 Template.add_video_row.helpers({
 	categories: function() {
 		return Categories.find({name: {$not: 'all'}});
@@ -83,8 +95,7 @@ Template.add_video_row.helpers({
 
 Template.add_video_row.events({
 	'change select.add_video_row_dropdown': function(e) {
-		var categoryId = $(e.currentTarget).val();
-		Videos._collection.update(this._id, {$set: {category_id: categoryId}});
+		Session.set('category_id_'+this.youtube_id, $(e.currentTarget).val());
 	},
 	'click .search_fullscreen': function(e) {
 		e.stopPropagation();
@@ -105,7 +116,7 @@ Template.add_video_row.events({
 		var playerId = $(e.currentTarget).find('object').attr('id'),
 			youtubeId = playerId; 
 
-		YoutubePlayer.get(playerId).destroy();
+		if(YoutubePlayer.get(playerId)) YoutubePlayer.get(playerId).destroy();
 	}
 });
 
