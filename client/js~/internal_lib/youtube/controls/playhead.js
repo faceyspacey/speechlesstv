@@ -65,9 +65,9 @@ bindPlayHeadChange = function() {
 
 
 bindTimeBallHover = function() {
-	$('.currentTimeBall').live('mouseenter', function() {
+	$('.body').on('mouseenter', 'currentTimeBall', function() {
 		$(this).find('.innerTimeBallCircle').addClass('hover');
-	}).live('mouseleave', function() {
+	}).on('mouseleave', 'currentTimeBall', function() {
 		$(this).find('.innerTimeBallCircle').removeClass('hover');
 	});
 };

@@ -76,6 +76,6 @@ resetCountdown = function() {
 };
 
 bindWatchIt = function() {
-	$('#watchIt').live('click', playNextAndResetCountdown);
+	$('body').on('click', '#watchIt', playNextAndResetCountdown);
 };
 

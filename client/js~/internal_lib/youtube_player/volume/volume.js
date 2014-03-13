@@ -45,9 +45,6 @@ PlayerComponentVolume.prototype = {
 		this.setVolume(volume);
 	},
 	mouseleave: function(el) {
-		var index = this.getVolumeIndex() + 1;
-			
-		this._$volume().find('li').css('background-color', 'white');
-		this._$volume().find('li:lt('+index+')').css('background-color', '#559AFE');
+		this.setVolumeIndicator();
 	}
 };

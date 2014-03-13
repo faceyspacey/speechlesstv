@@ -1,0 +1,37 @@
+<template name="add_video_row">
+	<div class="add_video_row">
+		{{#isolate}}
+			<div class="add_video_row_left">
+				<div class="add_video_image_container">
+					{{#isolate}}
+						<img id="{{youtube_id}}" class="add_video_row_image" src="{{src}}" />
+					{{/isolate}}
+
+					<div class="search_fullscreen">
+						<i class="fa fa-arrows-alt"></i>
+					</div>
+
+					<div class="fast_forward">
+						{{#isolate}} {{timeFormatted}} {{/isolate}}
+						<i class="fa fa-forward"></i>
+					</div>
+				</div>
+
+				<select class="add_video_row_dropdown">
+					{{#isolate}}
+						{{#each categories}}
+							<option value="{{category_id}}" {{categorySelected ../category_id}}>{{name}}</option>
+						{{/each}}
+					{{/isolate}}
+				</select>
+			</div>
+		{{/isolate}}
+		
+		{{#isolate}}
+			<div class="add_video_row_info">
+				<input value="{{title}}">
+				<textarea>{{description}}</textarea>
+			</div>
+		{{/isolate}}
+	</div>
+</template>

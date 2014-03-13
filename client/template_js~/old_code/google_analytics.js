@@ -1,4 +1,5 @@
 Template.google_analytics.rendered = function() {
+	return;
 	if (!(window._gaq != null)) {
 		window._gaq = [];
 		

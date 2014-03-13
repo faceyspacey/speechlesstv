@@ -1,0 +1,37 @@
+<template name="search_bar">
+	<div id="search_bar">
+		{{#isolate}}
+			<input type="text" id="search_query" placeholder="Search Away" />		
+		{{/isolate}}
+		
+		{{#isolate}}
+			<div id="search_check">
+				<div id="search_check_all" class="search_check {{checkallChecked}}">CHECK ALL</div>
+				<div id="search_uncheck_all" class="search_check {{uncheckallChecked}}">UNCHECK ALL</div>
+			</div>
+		{{/isolate}}
+		
+		{{#isolate}}
+			<div id="search_category_dropdown">
+				
+				{{#isolate}}
+					<span>{{categoryName}}</span>
+				{{/isolate}}
+				
+				{{#isolate}}
+					<div id="search_category_options" style="display:none">
+						{{#isolate}}
+							{{#each categories}}
+								<div class="search_category_option">{{name}}</div>
+							{{/each}}
+						{{/isolate}}
+					</div>
+				{{/isolate}}
+			</div>			
+		{{/isolate}}
+		
+		{{#isolate}}
+			<div id="search_next_button">NEXT</div>
+		{{/isolate}}
+	</div>
+</template>

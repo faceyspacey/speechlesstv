@@ -4,7 +4,7 @@
     "iron-router": {},
     "roles": {},
     "headly": {},
-    "fast-render": {},
-    "moment": {}
+    "moment": {},
+    "jquery-rateit": {}
   }
 }

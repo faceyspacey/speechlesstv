@@ -1,0 +1,15 @@
+<template name="search_columns">
+	{{#each columns}}
+		{{>search_column}}
+	{{/each}}
+</template>
+
+<template name="search_column">
+	<div class="search_result_column" index="{{index}}" style="display:none;">
+		{{#each videos}}
+			{{>search_result}}
+		{{/each}}
+		
+		<div class="delete_column" style="display:none;">x</div>
+	</div>
+</template>

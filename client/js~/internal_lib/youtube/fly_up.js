@@ -55,16 +55,16 @@ addFlyupComment = function(comment, time) {
 
 
 bindFlyupTools = function() {
-	$('#flyupContainer').live('mouseenter', function() {
+	$('body').on('mouseenter', '#flyupContainer', function() {
 		$('#adminFlyupTools').fadeIn();
-	}).live('mouseleave', function() {
+	}).on('mouseleave', '#flyupContainer', function() {
 		$('#adminFlyupTools').fadeOut();
 	});
 };
 	
 	
 bindFlyupLink = function() {
-	$('#flyupCommentInner a').live('click', function(e) {
+	$('body').on('click', '#flyupCommentInner a', function(e) {
 		pauseVideo();
 		window.open($(this).attr('href'));
 		e.preventDefault();
@@ -95,11 +95,11 @@ ownsCurrentVideo = function() {
 
 var mouseAlreadyHere = false;
 $(function() {
-	$('#flyupContainer').live('mouseenter', function() {
+	$('body').on('mouseenter', '#flyupContainer', function() {
 		clearTimeout(hideFlyupTimer);
 		if(ownsCurrentVideo() && !mouseAlreadyHere) showFlyup(200);
 		mouseAlreadyHere = true;
-	}).live('mouseleave', function() {
+	}).on('mouseleave', '#flyupContainer', function() {
 		if(ownsCurrentVideo() && !Session.get('just_added_video')) hideFlyup(150);
 		mouseAlreadyHere = false;
 	});

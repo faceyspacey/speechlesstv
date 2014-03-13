@@ -23,9 +23,9 @@ Template.being_watched_thumb.events({
 
 
 $(function() {
-	$('.miniVid').live('mouseenter', function() {
+	$('body').on('mouseenter', '.miniVid', function() {
 		$(this).find('.miniVidHover').show();
-	}).live('mouseleave', function() {
+	}).on('mouseleave', '.miniVid', function() {
 		$(this).find('.miniVidHover').hide();
 	});
 });

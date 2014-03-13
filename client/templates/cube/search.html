@@ -1,0 +1,61 @@
+<template name="search">
+	<div class="cube_container">
+		<div class="cube" id="search_cube">
+			{{>dummy_side}}
+			{{>search_page}}
+			{{>add_videos}}
+			{{>search_fullscreen_side}}
+			{{>search_fullscreen_side_alt}}
+		</div>
+	</div>
+</template>
+
+<template name="dummy_side">
+	<div class="backface" id="dummy_side" style="background: white;border: 25px solid #559afe;">
+		<img class="scrablam_side" src="/images/scrablam.png" />
+	</div>
+</template>
+
+<template name="search_page">
+	<div class="backface" id="search_results_side" style="display:none;">
+		{{>search_bar}}
+		{{>search_results}}
+	</div>
+</template>
+
+
+<template name="search_results">
+	<div id="search_results_container">
+		<div id="search_results_wrapper">
+			<div id="search_results_scroller">
+				{{>search_columns}}
+				<div style="clear:both;"></div>
+			</div>
+		</div>
+
+		{{>back_next_buttons}}
+		{{>search_video_info}}
+		{{>hover_player}}
+		
+		{{>search_help_graphic}}
+	</div>
+</template>
+
+<template name="search_help_graphic">
+	{{#if show}}
+		<div class="search_help_box">
+			<img src="/images/search_help.png" class="search_help_graphic"/>
+			<div class="search_help_text">Search & Click Enter. Click Videos to Find Related.</div>
+		</div>
+	{{/if}}
+</template>
+
+<template name="back_next_buttons">
+	<div id="search_results_back" class="search_back_next" style="display:{{showBack}};"><i class="fa fa-arrow-left"></i></div>
+	<div id="search_results_next" class="search_back_next" style="display:{{showNext}};"><i class="fa fa-arrow-right"></i></div>
+</template>
+
+
+
+
+

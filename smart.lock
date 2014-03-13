@@ -2,7 +2,7 @@
   "meteor": {
     "git": "https://github.com/meteor/meteor.git",
     "branch": "master",
-    "commit": "cbde5bd4875524f3ade7f3baef417a43ec1b9474"
+    "commit": "4555d2c8e4f7389d9d5fadd39d381fdb080ed742"
   },
   "dependencies": {
     "basePackages": {
@@ -10,8 +10,8 @@
       "iron-router": {},
       "roles": {},
       "headly": {},
-      "fast-render": {},
-      "moment": {}
+      "moment": {},
+      "jquery-rateit": {}
     },
     "packages": {
       "router": {
@@ -21,8 +21,8 @@
       },
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",
-        "tag": "v0.6.2",
-        "commit": "ce56e58b45624dce992490f3a1c10f10d3948bae"
+        "tag": "v0.6.4",
+        "commit": "927bbaed1b87894fb6fb70807f74ff3a5bd89f29"
       },
       "roles": {
         "git": "https://github.com/alanning/meteor-roles.git",
@@ -34,15 +34,15 @@
         "tag": "v0.0.514",
         "commit": "a200e5d37c12ad15fa3d690bb645c5fc9477993d"
       },
-      "fast-render": {
-        "git": "https://github.com/arunoda/meteor-fast-render.git",
-        "tag": "v0.1.12",
-        "commit": "b190f1592401f4084ce54b8f713b134e35a4e0db"
-      },
       "moment": {
         "git": "https://github.com/acreeger/meteor-moment.git",
         "tag": "v2.5.1",
         "commit": "8c9bc5d3fc96705057737cb9743d555417f6e551"
+      },
+      "jquery-rateit": {
+        "git": "https://github.com/dandv/meteor-jquery-rateit.git",
+        "tag": "v1.0.20-2",
+        "commit": "c83897aabbddf990430c3515a69336853cf175c5"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

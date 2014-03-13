@@ -1,0 +1,16 @@
+<template name="search_video_info">
+	<div id="search_video_info" style="display:none;">
+		{{#isolate}}
+			{{#with current_search_video}}
+				<div id="search_video_title">{{title}}</div>
+				<div id="search_video_duration">{{time}}/{{duration}}</div>
+			{{/with}}
+		{{/isolate}}
+	</div>
+</template>
+
+<template name="hover_player">
+	<div id="hover_player_container">
+		<div id="hover_player"></div>
+	</div>
+</template>

@@ -7,7 +7,7 @@ App.whenReady = function(testFunc, callback) {
 	}, 100);
 };
 
-HomeController = FastRender.RouteController.extend({
+HomeController = RouteController.extend({
 	layoutTemplate: 'main_layout',
   	template: 'browse_video',
 	action: function () {
@@ -18,7 +18,7 @@ HomeController = FastRender.RouteController.extend({
 });
 
 
-BlankController = FastRender.RouteController.extend({
+BlankController = RouteController.extend({
 	layoutTemplate: 'blank_layout',
   	template: 'browse_video'
 });
@@ -184,6 +184,19 @@ Router.map(function () {
 		after: function() {
 			if(this.ready() && Videos.find().count() === 0) Router.go('add');
 			if(this.ready()) $('html,body').animate({scrollTop: 930}, 1000, 'easeOutBounce');
+		},
+		fastRender: true,
+		controller: HomeController
+  	});
+
+	this.route('settings', {
+    	path: '/settings',
+		template: 'settings',
+		action: function() {	
+			this.render();
+		},
+		after: function() {
+			scrollToTop();
 		},
 		fastRender: true,
 		controller: HomeController

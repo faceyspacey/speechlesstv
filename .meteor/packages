@@ -15,5 +15,5 @@ iron-router
 roles
 standard-app-packages
 http
-fast-render
 moment
+jquery-rateit

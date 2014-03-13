@@ -1,0 +1,19 @@
+{
+  "meteor": {
+    "git": "https://github.com/meteor/meteor.git",
+    "branch": "master",
+    "commit": "4555d2c8e4f7389d9d5fadd39d381fdb080ed742"
+  },
+  "dependencies": {
+    "basePackages": {
+      "fast-render": {}
+    },
+    "packages": {
+      "fast-render": {
+        "git": "https://github.com/arunoda/meteor-fast-render.git",
+        "tag": "v0.1.16",
+        "commit": "e08aa22d76f25bb43e9d0f8bee3880c686f62b2b"
+      }
+    }
+  }
+}

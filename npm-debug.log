@@ -1,0 +1,57 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'node-fibers' ]
+2 info using npm@1.1.59
+3 info using node@v0.8.8
+4 verbose read json /Users/jamesgillmore/package.json
+5 verbose read json /Users/jamesgillmore/node_modules/fibers/package.json
+6 verbose read json /Users/jamesgillmore/node_modules/mongojs/package.json
+7 verbose read json /Users/jamesgillmore/node_modules/nvm/package.json
+8 verbose read json /Users/jamesgillmore/node_modules/phantomjs/package.json
+9 verbose read json /Users/jamesgillmore/node_modules/scraper/package.json
+10 verbose read json /Users/jamesgillmore/package.json
+11 verbose cache add [ 'node-fibers', null ]
+12 silly cache add name=undefined spec="node-fibers" args=["node-fibers",null]
+13 verbose parsed url { pathname: 'node-fibers',
+13 verbose parsed url   path: 'node-fibers',
+13 verbose parsed url   href: 'node-fibers' }
+14 silly lockFile 9004463f-node-fibers node-fibers
+15 verbose lock node-fibers /Users/jamesgillmore/.npm/9004463f-node-fibers.lock
+16 silly lockFile 9004463f-node-fibers node-fibers
+17 verbose addNamed [ 'node-fibers', '' ]
+18 verbose addNamed [ null, '' ]
+19 silly lockFile 2b9e1c32-node-fibers node-fibers@
+20 verbose lock node-fibers@ /Users/jamesgillmore/.npm/2b9e1c32-node-fibers.lock
+21 silly addNameRange { name: 'node-fibers', range: '', hasData: false }
+22 verbose url raw node-fibers
+23 verbose url resolving [ 'https://registry.npmjs.org/', './node-fibers' ]
+24 verbose url resolved https://registry.npmjs.org/node-fibers
+25 info retry registry request attempt 1 at 20:02:41
+26 http GET https://registry.npmjs.org/node-fibers
+27 info retry will retry, error on last attempt: Error: SSL Error: CERT_UNTRUSTED
+28 info retry registry request attempt 2 at 20:02:52
+29 http GET https://registry.npmjs.org/node-fibers
+30 info retry will retry, error on last attempt: Error: SSL Error: CERT_UNTRUSTED
+31 info retry registry request attempt 3 at 20:03:52
+32 http GET https://registry.npmjs.org/node-fibers
+33 silly lockFile 2b9e1c32-node-fibers node-fibers@
+34 error Error: SSL Error: CERT_UNTRUSTED
+34 error     at ClientRequest.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/main.js:525:26)
+34 error     at ClientRequest.g (events.js:185:14)
+34 error     at ClientRequest.EventEmitter.emit (events.js:88:17)
+34 error     at HTTPParser.parserOnIncomingClient (http.js:1455:7)
+34 error     at HTTPParser.parserOnHeadersComplete [as onHeadersComplete] (http.js:111:23)
+34 error     at CleartextStream.socketOnData (http.js:1366:20)
+34 error     at CleartextStream.CryptoStream._push (tls.js:495:27)
+34 error     at SecurePair.cycle (tls.js:849:20)
+34 error     at EncryptedStream.CryptoStream.write (tls.js:230:13)
+34 error     at Socket.ondata (stream.js:38:26)
+35 error If you need help, you may report this log at:
+35 error     <http://github.com/isaacs/npm/issues>
+35 error or email it to:
+35 error     <npm-@googlegroups.com>
+36 error System Darwin 12.2.0
+37 error command "node" "/usr/local/bin/npm" "install" "node-fibers"
+38 error cwd /Users/jamesgillmore/Meteor/speechless
+39 error node -v v0.8.8
+40 error npm -v 1.1.59
+41 verbose exit [ 1, true ]

@@ -18,7 +18,8 @@ Template.header.events({
 		history.back();
 	},
 	'click #my_account': function() {
-		Router.go('channel', {name: Meteor.user().profile.username});
+		Router.go('settings');
+		//Router.go('channel', {name: Meteor.user().profile.username});
 	}
 });
 
