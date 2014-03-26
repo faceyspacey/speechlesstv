@@ -1,21 +1,3 @@
-<template name="search">
-	<div class="cube_container">
-		<div class="cube" id="search_cube">
-			{{>dummy_side}}
-			{{>search_page}}
-			{{>add_videos}}
-			{{>search_fullscreen_side}}
-			{{>search_fullscreen_side_alt}}
-		</div>
-	</div>
-</template>
-
-<template name="dummy_side">
-	<div class="backface" id="dummy_side" style="background: white;border: 25px solid #559afe;">
-		<img class="scrablam_side" src="/images/scrablam.png" />
-	</div>
-</template>
-
 <template name="search_page">
 	<div class="backface" id="search_results_side" style="display:none;">
 		{{>search_bar}}
@@ -54,8 +36,3 @@
 	<div id="search_results_back" class="search_back_next" style="display:{{showBack}};"><i class="fa fa-arrow-left"></i></div>
 	<div id="search_results_next" class="search_back_next" style="display:{{showNext}};"><i class="fa fa-arrow-right"></i></div>
 </template>
-
-
-
-
-

@@ -6,8 +6,6 @@ Template.search.created = function() {
 	Deps.afterFlush(function() {
 		Resizeable.resizeAllElements();
 		$('.cube').cube().prevSide('#search_results_side');
-		
-		$('#search_bar input').focus();
 	});
 };
 

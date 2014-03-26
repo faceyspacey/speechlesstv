@@ -27,3 +27,7 @@ UserModel.prototype = {
 		return Roles.userIsInRole(this._id, ['admin']);
 	}
 };
+
+Meteor.users._transform = function(doc) {
+	return new UserModel(doc);
+};

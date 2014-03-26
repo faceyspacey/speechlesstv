@@ -5,6 +5,7 @@ Cube = function(element) {
 	this._notRotatedYetX = this._notRotatedYetY = true;
 };
 
+thirtyDegreesLeftPX = null;
 
 Cube.prototype = {
 	previousSide: {},
@@ -21,18 +22,42 @@ Cube.prototype = {
 		else this._prepareRotateY(params, newSide);
 		
 		this.element.hardwareAnimate(params, duration, easing, function() {
-			this.currentSide.hide();
+			if(this._getDegrees() != 30) this.currentSide.hide();
+			
+			this._applyCover();
+			
 			this._setPreviousSide(params);
+			
+			this.currentSide.removeClass('active_side');
 			this.currentSide = newSide;
+			this.currentSide.addClass('active_side');
+			
 			callback();
 		}.bind(this));
+	},
+	
+	_applyCover: function() {
+		if(this._getDegrees() == 30) {
+			console.log('apply cover');
+			
+			$('<div />', {
+				class: 'cover_sheet'
+			}).click(function() {
+				$('.cube').getCube().toggleBuddyList();
+			}).bind('mouseenter', function() {
+				$(this).css('opacity', .3);
+			}).bind('mouseleave', function() {
+				$(this).css('opacity', .1);
+			}).appendTo(this.currentSide);
+		}
+		else if(this._getDegrees() == -30) $('.cover_sheet').remove();
 	},
 	
 	_prepareRotateX: function(params, newSide) {
 		this.rotateXY = params.rotateX;
 		
 		this._prepareCurrentSideX();
-		this._insertNextSideX(newSide);
+		this._insertNextSideX(newSide, params);
 		
 		params.translateZ = this._halfHeight() * -1;
 		
@@ -43,7 +68,7 @@ Cube.prototype = {
 		this.rotateXY = params.rotateY;
 		
 		this._prepareCurrentSideY();
-		this._insertNextSideY(newSide);
+		this._insertNextSideY(newSide, params);
 		
 		params.translateZ = this._halfWidth() * -1;
 		
@@ -60,54 +85,73 @@ Cube.prototype = {
 	
 	_prepareCurrentSideX: function() {
 		if(this._notRotatedYetX) {
-			this.element.hardwareCss('translateZ(-'+this._halfHeight()+'px) rotateX(0deg)');
-			this.currentSide.hardwareCss('rotateX(0deg) translateZ('+this._halfHeight()+'px)');
-			if(!this._notRotatedYet()) this.element[0].startProperties.rotateX = 0;
+			this.element.hardwareAnimate({translateZ: -1*this._halfHeight(), rotateX: 0}, 0);
+			this.currentSide.hardwareAnimate({rotateX: 0, translateZ: this._halfHeight(), translateZlast: true}, 0);
 		}
 	},
 	_prepareCurrentSideY: function() {
 		if(this._notRotatedYetY) {
-			this.element.hardwareCss('translateZ(-'+this._halfWidth()+'px) rotateY(0deg)');
-			this.currentSide.hardwareCss('rotateY(0deg) translateZ('+this._halfWidth()+'px)');
-			if(!this._notRotatedYet()) this.element[0].startProperties.rotateY = 0;
+			this.element.hardwareAnimate({translateZ: -1*this._halfWidth(), rotateY: 0}, 0);
+			this.currentSide.hardwareAnimate({rotateY: 0, translateZ: this._halfWidth(), translateZlast: true}, 0);
 		}
 	},
 	
-	_insertNextSideX: function(newSide, direction) {
-		newSide.hardwareCss('rotateX('+this._nextSideDegreesX()+'deg) translateZ('+this._halfHeight()+'px)').show();
+	_insertNextSideX: function(newSide, params) {
+		var rotateX = this._nextSideDegrees('rotateX'),
+			half = this._halfHeight();
+			
+		newSide.hardwareAnimate({rotateX: rotateX, translateZ: half, translateZlast: true}, 0).show();
 	},
-	_insertNextSideY: function(newSide, direction) {
-		newSide.hardwareCss('rotateY('+this._nextSideDegreesY()+'deg) translateZ('+this._halfWidth()+'px)').show();
+	_insertNextSideY: function(newSide, params) {
+		var rotateY = this._nextSideDegrees('rotateY'),
+			half = this._halfWidth(),
+			transX = this._translateX();
+			
+		newSide.hardwareAnimate({rotateY: rotateY, translateX: transX, translateZ: half, translateZlast: true}, 0).show();
 	},
 	
-	_nextSideDegreesX: function() {
-		var currentCubeDegrees = this.element[0].startProperties ? this.element[0].startProperties.rotateX : 0,
-			currentSide = currentCubeDegrees/90 % 4
-			nextSide = (currentSide + this._getDirection()) % 4,
-			nextSideActual = (4 - nextSide) % 4;
+	_nextSideDegrees: function(xy) {
+		var currentCubeDegrees = (this._notRotatedYet() ? 0 : this.element[0].startProperties[xy]) % 360,
+			upcomingCubeDegrees = currentCubeDegrees + this._getDegrees();
 		
-		return nextSideActual * 90;
+		return 360 - upcomingCubeDegrees;
 	},
-	_nextSideDegreesY: function() {
-		var currentCubeDegrees = this._notRotatedYet() ? 0 : this.element[0].startProperties.rotateY,
-			currentSide = currentCubeDegrees/90 % 4,
-			nextSide = (currentSide + this._getDirection()) % 4,
-			nextSideActual = (4 - nextSide) % 4;
-		
-		return nextSideActual * 90;
+	_translateX: function() {
+		var degrees = this._getDegrees();
+		if(degrees != 30) {
+			return 0;
+		}
+		else {
+			if(thirtyDegreesLeftPX) return thirtyDegreesLeftPX;
+			
+			setTimeout(function() {
+				thirtyDegreesLeftPX = $('.backface:visible').last().offset().left;
+				thirtyDegreesLeftPX = ($(window).width() - thirtyDegreesLeftPX) * this._getDirection() * -1;
+				
+				var params = {rotateY: '+=0', translateX: thirtyDegreesLeftPX, translateZlast: true};
+				$('#buddy_list').hardwareAnimate(params, 250, 'easeOutCirc');	
+			}.bind(this), 500);
+			
+			var percentAcross = Math.pow(parseFloat(Math.cos(this._getDegrees() * Math.PI/180).toFixed(20)), 2);
+			return percentAcross * $(window).width() * this._getDirection() * -1;
+		}
 	},
 	
 	_notRotatedYet: function() {
 		return this.element[0].startProperties ? false : true;
 	},
 	_getDirection: function() {
-		if(this.rotateXY.indexOf) {
-			if(this.rotateXY.indexOf('-=') === 0) return -1;
-			else if(this.rotateXY.indexOf('+=') === 0) return 1;
-			else return parseInt(this.rotateXY) < 0 ? -1 : 1;
-		}
-		else this.rotateXY < 0 ? -1 : 1;
+		return this._getDegrees() < 0 ? -1 : 1;
 	},	
+	_getDegrees: function() {
+		if(this.rotateXY.indexOf) {
+			console.log('GET DEGREES', parseInt(this.rotateXY.substr(2,2)));
+			if(this.rotateXY.indexOf('-=') === 0) return -1 * parseInt(this.rotateXY.substr(2,2));
+			else if(this.rotateXY.indexOf('+=') === 0) return 1 * parseInt(this.rotateXY.substr(2,2));
+			else return parseInt(this.rotateXY);
+		}
+		else return this.rotateXY;
+	},
 	
 	_setPreviousSide: function(params) {
 		if(params.rotateX) this.previousSide['rotateX'] = this.currentSide;
@@ -118,6 +162,20 @@ Cube.prototype = {
 		else if(params.rotateY && this.previousSide['rotateY']) return this.previousSide['rotateY'];
 		
 		return this.currentSide.next().length > 0 ? this.currentSide.next() : this.element.find('.backface').first();
+	},
+	
+	
+	showBuddyList: function() {
+		this.rotate({rotateY: '+=30'}, '#buddy_list', 500, 'easeOutExpo');
+		this._buddyListShown = true;
+	},
+	hideBuddyList: function() {
+		$('.cube').rotate({rotateY: '-=30'}, null, 500, 'easeOutExpo');
+		this._buddyListShown = false;
+	},
+	toggleBuddyList: function() {
+		if(this._buddyListShown) this.hideBuddyList();
+		else this.showBuddyList();
 	}
 };
 
@@ -168,3 +226,14 @@ jQuery.fn.prevSideVertical = function(newSide, duration, easing, callback) {
 	this.getCube().rotate({rotateX: '+=90'}, newSide, duration, easing, callback);
 	return this;
 };
+
+jQuery.fn.rotate = function(rotateParams, newSide, duration, easing, callback) {	
+	this[0].cube = this[0].cube || new Cube(this); 
+	
+	if(rotateParams.rotateY) this.getCube().axis = 'horizontal';
+	else this.getCube().axis = 'vertical';
+	
+	this.getCube().rotate(rotateParams, newSide, duration, easing, callback);
+	return this;
+};
+

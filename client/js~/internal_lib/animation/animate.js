@@ -28,30 +28,34 @@ jQuery.fn.hardwareAnimate = function(endProperties, duration, easing, callback, 
 			rotateZ: 0
 	};
 	
-	endProperties.translateZ = endProperties.translateZ || 0;
+	endProperties.translateZ = endProperties.translateZ || element.startProperties.translateZ || 0;
 	
 	var transformString = function(percentComplete, isComplete) {
 		var transform='';
 		
-		transform = 'translateZ('+endProperties.translateZ+'px)';
+		if(!endProperties.translateZlast) transform = 'translateZ('+endProperties.translateZ+'px)';
 		for(prop in endProperties) {
-			 if(prop != 'translateZ') {
-				var change, 
-					value, 
-					start = element.startProperties[prop],
-					end = endProperties[prop];
+			 if(prop != 'translateZ' && prop != 'translateZlast') {
 				
-				if(end.indexOf) {
-					if(end.indexOf('-=') === 0) change = parseInt(end.substring(2)) * -1;
-					else if (end.indexOf('+=') === 0) change = parseInt(end.substring(2));
-					else change = parseInt(end); //fuck it, a string is interpreted as '+='
-					
-					value = start + (percentComplete*change);
-				}
+				if(endProperties[prop] == 'keep') value = element.startProperties[prop];
 				else {
-				 	change = Math.abs(end - start);
-				 	if(end > start) value = start + (percentComplete*change);
-					else value = start - (percentComplete*change);
+					var change, 
+						value, 
+						start = element.startProperties[prop],
+						end = endProperties[prop];
+
+					if(end.indexOf) {
+						if(end.indexOf('-=') === 0) change = parseInt(end.substring(2)) * -1;
+						else if (end.indexOf('+=') === 0) change = parseInt(end.substring(2));
+						else change = parseInt(end); //fuck it, a string is interpreted as '+='
+
+						value = start + (percentComplete*change);
+					}
+					else {
+					 	change = Math.abs(end - start);
+					 	if(end > start) value = start + (percentComplete*change);
+						else value = start - (percentComplete*change);
+					}
 				}
 				
 				transform += prop+'('+value;
@@ -62,8 +66,9 @@ jQuery.fn.hardwareAnimate = function(endProperties, duration, easing, callback, 
 				
 				if(isComplete) element.startProperties[prop] = value;
 			}
+			else if(isComplete) element.startProperties['translateZ'] = endProperties.translateZ
 		}
-
+		if(endProperties.translateZlast) transform += ' translateZ('+endProperties.translateZ+'px)';
 		return transform;
 	}
 	
@@ -99,6 +104,7 @@ jQuery.fn.hardwareCss = function(translateScaleRotate) {
 	this[0].style[transform] = translateScaleRotate;
 	return this;
 };
+
 
 jQuery.fn.hardwareAnimateCollection = function(options, duration, easing, latency, callback) {	
 	var itemCount = this.length,

@@ -28,10 +28,12 @@ Resizeable = {
 		},
 		searchBar: function(width, height) {
 			var padding = SearchSizes.pagePadding,
-				barWidth = width - padding;
+				barWidth = width - padding,
+				searchFieldWidth = barWidth - SearchSizes.toolbarWidth - SearchSizes.toolbarSpacing - SearchSizes.buddyListButton;
 			
-			$('#search_bar').css('width', barWidth);
-			$('#search_bar input#search_query').css('width', barWidth - SearchSizes.toolbarWidth - SearchSizes.toolbarSpacing);
+			$('#search_bar, #bar_cube, #message_bar_side').css('width', barWidth);
+			$('#search_bar input#search_query').css('width', searchFieldWidth);
+			$('#search_bar .enter_button ').css('left', searchFieldWidth - 30);
 			
 			$('#add_videos_wrapper').css('height', height - SearchSizes.header);
 			$('#add_videos_bar').css('width', barWidth);

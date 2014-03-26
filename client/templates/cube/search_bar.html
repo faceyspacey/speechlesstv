@@ -1,18 +1,31 @@
 <template name="search_bar">
-	<div id="search_bar">
+	<div class="c_container" style="position:absolute; overflow:visible; height: 60px; margin-top:5px; z-index:5;">
+		<div class="c" id="bar_cube" style="overflow-y:visible; margin-left: 5px; height:100%;">
+			{{>search_bar_side}}
+			{{>message_bar_side}}
+		</div>
+	</div>
+</template>
+
+<template name="search_bar_side">
+	<div class="backface" id="search_bar" style="">
+			<div class="buddy_list_button bar_tab">
+				<i class="fa fa-users" style="font-size:42px;"></i>
+			</div>
 		{{#isolate}}
-			<input type="text" id="search_query" placeholder="Search Away" />		
+			<input type="text" id="search_query" class="bar_tab" placeholder="Search Away" />
+			<div class="enter_button bar_tab">PRESS ENTER</div>		
 		{{/isolate}}
 		
 		{{#isolate}}
-			<div id="search_check">
-				<div id="search_check_all" class="search_check {{checkallChecked}}">CHECK ALL</div>
-				<div id="search_uncheck_all" class="search_check {{uncheckallChecked}}">UNCHECK ALL</div>
+			<div id="popular_vs_friends" class="bar_tab">
+				<div id="popular" class="popular_vs_friends {{popularChecked}}">POPULAR</div>
+				<div id="from_friends" class="popular_vs_friends {{fromFriendsChecked}}">FROM FRIENDS</div>
 			</div>
 		{{/isolate}}
 		
 		{{#isolate}}
-			<div id="search_category_dropdown">
+			<div id="search_category_dropdown" class="bar_tab">
 				
 				{{#isolate}}
 					<span>{{categoryName}}</span>
@@ -31,7 +44,26 @@
 		{{/isolate}}
 		
 		{{#isolate}}
-			<div id="search_next_button">NEXT</div>
+			<div id="search_next_button" class="bar_tab">NEXT</div>
 		{{/isolate}}
+		
+	
+		{{>autocompletion}}
 	</div>
 </template>
+
+
+<template name="message_bar_side">
+	<div class="backface" id="message_bar_side" style="display:none;">
+		<div id="message_bar"></div>
+	</div>
+</template>
+
+<template name="autocompletion">
+	<div class="autocompletion">
+		{{#each predictiveResults}}
+			<div class="autocompletion_row">{{this}}</div>
+		{{/each}}
+	</div>
+</template>
+

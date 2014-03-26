@@ -1,17 +1,4 @@
 .cube_container {
-position: relative;
-width: 100%;
-overflow:hidden;
-
--webkit-perspective-origin: 50% 50%;
-
--webkit-perspective: 1000px;
-   -moz-perspective: 1000px;
-     -o-perspective: 1000px;
-        perspective: 1000px;
-
-
-
 		/* IE9 SVG, needs conditional override of 'filter' to 'none' */
 		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFlNTc5OSIgc3RvcC1vcGFjaXR5PSIwLjkiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzI5ODlkOCIgc3RvcC1vcGFjaXR5PSIwLjgiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
 		background: -moz-linear-gradient(top,  rgba(30,87,153,0.9) 0%, rgba(41,137,216,0.8) 100%); /* FF3.6+ */
@@ -21,47 +8,8 @@ overflow:hidden;
 		background: -ms-linear-gradient(top,  rgba(30,87,153,0.9) 0%,rgba(41,137,216,0.8) 100%); /* IE10+ */
 		background: linear-gradient(to bottom,  rgba(30,87,153,0.9) 0%,rgba(41,137,216,0.8) 100%); /* W3C */
 		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e61e5799', endColorstr='#cc2989d8',GradientType=0 ); /* IE6-8 */
-		
-		
-
 }
 
-
-
-.c_container {
-position: relative;
-width: 100%;
-overflow:hidden;
-
--webkit-perspective-origin: 50% 50%;
-
--webkit-perspective: 1000px;
-   -moz-perspective: 1000px;
-     -o-perspective: 1000px;
-        perspective: 1000px;
-}
-
-.cube, .c {
-width: 100%;
-height: 100%;
-position: absolute;
-
--webkit-transform-style: preserve-3d;
-   -moz-transform-style: preserve-3d;
-     -o-transform-style: preserve-3d;
-        transform-style: preserve-3d;
-}
-
-.cube > div.backface, .c > div.backface {
-width: 100%;
-height: 100%;
-position: absolute;
-overflow:hidden;
--webkit-backface-visibility: hidden;
-   -moz-backface-visibility: hidden;
-     -o-backface-visibility: hidden;
-        backface-visibility: hidden;
-}
 
 .scrablam_side {
 	width: 1000px; 
@@ -69,3 +17,19 @@ overflow:hidden;
 	display:block;
 	position: relative;
 }
+
+.cover_sheet {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	
+	width: 100%;
+	height: 100%;
+	
+	background: #1e5799;
+	
+	opacity: .01;
+	z-index: 100;
+	cursor: pointer;
+}
+

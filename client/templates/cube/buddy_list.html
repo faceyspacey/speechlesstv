@@ -1,0 +1,79 @@
+<template name="buddy_list">
+	<div class="backface" id="buddy_list">
+		<div id="buddy_list_scroller">
+			<div id="buddy_list_toolbar">
+				<div class="right">
+					<span style="float:left;">WATCHING (17)</span> 
+					<img src="http://img.youtube.com/vi/Oh_qdGlVN1c/mqdefault.jpg"/>
+				</div>
+				<div class="left">
+					<span>ONLINE (33)</span>
+					<img class="bulb" src="/images/bulbs/green.png" />
+				</div>
+			</div>
+			{{>online_now}}
+			{{>following}}
+			{{>followers}}
+			{{>popular}}
+		</div>
+	</div>
+</template>
+
+<template name="online_now">
+	{{>buddy_row}}
+	{{>buddy_row}}
+	{{>buddy_row}}
+	{{>buddy_row}}
+	{{>buddy_row}}
+	{{>buddy_row}}
+</template>
+
+<template name="following">
+	<div class="title_bar">FOLLOWING (133)</div>
+	{{>buddy_row}}
+	{{>buddy_row}}
+	{{>buddy_row}}
+	{{>buddy_row}}
+	{{>buddy_row}}
+	{{>buddy_row}}
+</template>
+
+<template name="followers">
+	<div class="title_bar">FOLLOWERS (133)</div>
+	{{>buddy_row}}
+	{{>buddy_row}}
+	{{>buddy_row}}
+	{{>buddy_row}}
+	{{>buddy_row}}
+	{{>buddy_row}}
+</template>
+
+<template name="popular">
+	<div class="title_bar">POPULAR USERS</div>
+	{{>buddy_row}}
+	{{>buddy_row}}
+	{{>buddy_row}}
+	{{>buddy_row}}
+	{{>buddy_row}}
+	{{>buddy_row}}
+</template>
+
+<template name="buddy_row">
+	<div class="buddy_row">
+		<div class="profile_pic_container">
+			<img class="profile_pic" src="https://graph.facebook.com/16404762/picture?width=75&height=75">
+			<img class="online_bulb" src="/images/bulbs/green.png" />
+		</div>
+		
+		<div class="profile_left">
+			<h1 class="profile_name">James Gillmore</h1>
+			<div class="profile_videos">
+				<img class="profile_vid" src="http://img.youtube.com/vi/Oh_qdGlVN1c/mqdefault.jpg" />
+				<img class="profile_vid" src="http://img.youtube.com/vi/Oh_qdGlVN1c/mqdefault.jpg" />
+				<img class="profile_vid" src="http://img.youtube.com/vi/Oh_qdGlVN1c/mqdefault.jpg" />
+				<img class="profile_vid" src="http://img.youtube.com/vi/Oh_qdGlVN1c/mqdefault.jpg" />
+				<img class="profile_vid" src="http://img.youtube.com/vi/Oh_qdGlVN1c/mqdefault.jpg" />
+			</div>
+		</div>
+	</div>
+</template>

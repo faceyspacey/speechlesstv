@@ -1,8 +1,24 @@
 YoutubeSearcher = {
+	lastKeyup: null,
 	maxThumbs: SearchSizes.thumbsPerColumn,
 	queries: {},
 	related: {},
 	
+	predictiveResults: function(query) {
+		gapi.client.youtube.search.list({
+			part: 'snippet', 
+			type: 'video',
+			videoEmbeddable: true,
+			maxResults: 7,
+			q: query
+		}).execute(function(response) {
+			var predictiveResults = [];
+			_.each(response.items, function(video) {
+				predictiveResults.push(video.snippet.title);		
+			});
+			Session.set('predictive_results', predictiveResults);
+		});
+	},
 	query: function(query) {
 		Deps.afterFlush(BackNext.addColumn.bind(BackNext));
 		

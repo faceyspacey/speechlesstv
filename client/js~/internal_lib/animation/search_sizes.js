@@ -5,7 +5,8 @@ SearchSizes = {
 	thumbsPerColumn: 6,
 	pagePadding: 10,
 	toolbarWidth: 440,
-	toolbarSpacing: 3,
+	buddyListButton: 70,
+	toolbarSpacing: 4,
 	
 	columnWidth: 0, //this gets set when the width of a real image is detected above
 	

@@ -1,13 +1,11 @@
-Template.search_bar.helpers({
-	checkallChecked: function() {
-		var checkedCount = Videos.find({_local: true, checked: null}).count();
-		
-		return Session.get('search_check_all') && checkedCount === 0 ? 'checked' : '';
+Session.set('filter', 'popular');
+
+Template.search_bar_side.helpers({
+	popularChecked: function() {
+		return Session.equals('filter', 'popular');
 	},
-	uncheckallChecked: function() {
-		var checkedCount = Videos.find({_local: true, checked: true}).count();
-		
-		return Session.get('search_uncheck_all') && checkedCount === 0 ? 'checked' : '';
+	fromFriendsChecked: function() {
+		return Session.equals('filter', 'from_friends');
 	},
 	categories: function() {
 		return Categories.find({name: {$not: 'all'}});
@@ -20,33 +18,87 @@ Template.search_bar.helpers({
 	}
 });
 
-Template.search_bar.events({
-	'keyup #search_bar input': function(e) {
-		console.log('keyup');
+Template.autocompletion.helpers({
+	predictiveResults: function() {
+		Deps.afterFlush(function() {
+			$('.autocompletion_row').slideDownCollection(150, 'easeOutBack', 25);
+		})
+		return Session.get('predictive_results');
 		
-		if(e.keyCode == 13) {
-			var value = $('#search_bar input').val();			
+	}
+});
+
+Template.autocompletion.events({
+	'mousedown .autocompletion_row': function() {
+		console.log('query', this);
+		YoutubeSearcher.query(this);
+	}
+});
+
+
+
+var predictiveTimer;
+Template.search_bar_side.events({
+	'click .buddy_list_button': function() {
+		$('.cube').getCube().toggleBuddyList();
+	},
+	'keyup #search_bar input': function(e) {
+		var value = $('#search_bar input').val();
+		
+		clearTimeout(predictiveTimer);
+		
+		if(e.keyCode == 27) { //escape key
+			$('#search_bar input').blur();
+		}
+		else if(e.keyCode == 13) { //enter key		
 			YoutubeSearcher.query(value);
+			$('#search_bar input').blur();
+		}
+		else if(value.length == 0) {
+			$('.autocompletion_row').fadeOut('fast').slideUpCollection(150, 'easeOutBack', 25, function() {
+				Session.set('predictive_results', []);
+			});
+		}
+		else {
+			predictiveTimer = setTimeout(function() {
+				YoutubeSearcher.predictiveResults(value);
+			}, 300);
 		}
 	},
-	'click #search_check_all': function() {
-		Session.set('search_check_all', true);
-		Session.set('search_uncheck_all', false);
-		Videos._collection.update({_local: true}, {$set: {checked: true}}, {multi: true});
+	'focus #search_bar input': function(e) {
+		$('#search_query').animate({paddingTop: 20});
+		$('#search_bar .enter_button').show();
+		var params = {rotateY: 'keep', rotateX: '+=2.5', translateZlast: true};
+		$('.cube').getCube().currentSide.hardwareAnimate(params, 300, 'easeOutBack');
 	},
-	'click #search_uncheck_all': function() {
-		Session.set('search_check_all', false);
-		Session.set('search_uncheck_all', true);
-		Videos._collection.update({_local: true}, {$set: {checked: null}}, {multi: true});
+	'blur #search_bar input': function(e) {
+		$('#search_query').animate({paddingTop: 10});
+		
+		$('.autocompletion_row').fadeOut('fast').slideUpCollection(150, 'easeOutBack', 25, function() {
+			Session.set('predictive_results', []);
+		});
+		
+		$('#search_bar .enter_button').hide();
+		
+		var params = {rotateY: 'keep', rotateX: '-=2.5', translateZlast: true};
+		$('.cube').getCube().currentSide.hardwareAnimate(params, 300, 'easeOutBack');
 	},
+
+	'click #popular': function() {
+		Session.set('filter', 'popular');
+	},
+	'click #from_friends': function() {
+		Session.set('filter', 'from_friends');
+	},
+	
 	'mouseenter #search_category_dropdown': function(e) {
 		Session.set('mouse_over_category_dropdown', true);
 		$('#search_category_options').show();
-		$('.search_category_option').slideDownCollection(400, 'easeOutBack', 50);
+		$('.search_category_option').slideDownCollection(150, 'easeOutBack', 25);
 	},
 	'mouseleave #search_category_dropdown': function(e) {
 		Session.set('mouse_over_category_dropdown', false);
-		$('.search_category_option').slideUpCollection(300, 'easeInBack', 50, function() {
+		$('.search_category_option').slideUpCollection(150, 'easeInBack', 25, function() {
 			if(Session.equals('mouse_over_category_dropdown', false)) $('#search_category_options').hide();
 		});
 	},
@@ -54,7 +106,7 @@ Template.search_bar.events({
 		Session.set('selected_search_category_id', this.category_id);
 		Session.set('mouse_over_category_dropdown', false);
 		
-		$('.search_category_option').slideUpCollection(300, 'easeInBack', 50, function() {
+		$('.search_category_option').slideUpCollection(150, 'easeInBack', 25, function() {
 			if(Session.equals('mouse_over_category_dropdown', false)) $('#search_category_options').hide();
 		});
 	},

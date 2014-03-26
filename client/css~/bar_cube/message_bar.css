@@ -1,0 +1,15 @@
+#bar_cube .backface {
+	overflow: visible;
+}
+
+#message_bar_side {
+	width: 99%;
+	height: 60px;
+	margin: 0 auto;
+	z-index: 3;
+}
+
+#message_bar {
+	background-color: rgb(42, 103, 160);
+	height: 65px;
+}
