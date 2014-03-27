@@ -1,21 +1,29 @@
 <template name="buddy_list">
-	<div class="backface" id="buddy_list">
+	<div class="backface" id="buddy_list" style="display:none;">
 		<div id="buddy_list_scroller">
 			<div id="buddy_list_toolbar">
-				<div class="right">
-					<span style="float:left;">WATCHING (17)</span> 
-					<img src="http://img.youtube.com/vi/Oh_qdGlVN1c/mqdefault.jpg"/>
-				</div>
-				<div class="left">
-					<span>ONLINE (33)</span>
-					<img class="bulb" src="/images/bulbs/green.png" />
-				</div>
+				{{#if isSuggest}}
+					<input class="suggest_search" placeholder="Search Friends"/>
+				{{else}}
+					<div class="right">
+						<span style="float:left;">WATCHING (17)</span> 
+						<img src="http://img.youtube.com/vi/Oh_qdGlVN1c/mqdefault.jpg"/>
+					</div>
+					<div class="left">
+						<span>ONLINE (33)</span>
+						<img class="bulb" src="/images/bulbs/green.png" />
+					</div>
+				{{/if}}
 			</div>
 			{{>online_now}}
 			{{>following}}
 			{{>followers}}
 			{{>popular}}
 		</div>
+		
+		{{#if isSuggest}}
+			<div class="submit_suggestion">SUGGEST TO SElECTED</div>
+		{{/if}}
 	</div>
 </template>
 

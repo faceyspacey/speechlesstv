@@ -2,14 +2,108 @@
 	overflow: visible;
 }
 
-#message_bar_side {
-	width: 99%;
+.message_bar_side {
 	height: 60px;
 	margin: 0 auto;
 	z-index: 3;
 }
 
-#message_bar {
+
+
+
+.message_bar_side > .bar_tab {
+	float:left;
+	height: 100%;
+	margin-right: 1px;
+	
 	background-color: rgb(42, 103, 160);
-	height: 65px;
+	border: none;
+	
+	padding: 14px;
+	
+	color: white;
+	font-size: 32px;
+	text-align: center;
+	
+	cursor: pointer;
+	position: relative;
+	z-index: 2;
+}
+
+.message_bar_side > .bar_tab:hover {
+	background-color: #559afe;
+	text-shadow: 1px 1px 1px rgb(33, 67, 78);
+	cursor: pointer;
+}
+
+.message_bar_side .message_form {
+	padding: 0px;
+}
+
+.message_bar_side .watch {
+	width: 65px;
+	text-align: center;
+	padding-top: 0px;
+	padding-left: 5px;
+}
+
+.message_bar_side .post_to_twitter {
+	width: 65px;
+	text-align: center;
+	padding-top: 0px;
+	padding-left: 5px;
+}
+
+
+.message_bar_side .post_to_twitter.selected {
+	background: rgb(46, 75, 102);
+}
+
+.message_bar_side .post_to_twitter.selected:hover {
+	opacity: .8;
+}
+
+
+.message_bar_side .respond {
+	width: 150px;
+}
+
+.message_bar_side .dismiss {
+	width: 150px;
+}
+
+
+
+.message_bar_side input.message_field {
+	text-indent: 5px;
+	border: none;
+	background-color: rgb(42, 103, 160);
+	width: 100%;
+	height: 100%;
+	color: white !important;
+	font-size: 32px !important;
+}
+
+.message_bar_side ::-webkit-input-placeholder {
+   	color: white !important;
+	font-size: 32px !important;
+	
+}
+
+.message_bar_side :-moz-placeholder { /* Firefox 18- */
+   	color: white !important;
+	font-size: 32px !important;
+	
+}
+
+.message_bar_side ::-moz-placeholder {  /* Firefox 19+ */
+   	color: white !important;
+	font-size: 32px !important;
+	
+}
+
+.message_bar_side :-ms-input-placeholder{  
+   	color: white !important;
+	font-size: 32px !important;
+	
 }

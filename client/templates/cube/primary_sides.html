@@ -1,10 +1,16 @@
-<template name="search_page">
-	<div class="backface" id="search_results_side" style="display:none;">
+<template name="popular_side">
+	<div class="backface primary_side" id="popular_side" style="display:none;">
 		{{>search_bar}}
 		{{>search_results}}
 	</div>
 </template>
 
+<template name="from_friends_side">
+	<div class="backface primary_side" id="from_friends_side" style="display:none;">
+		{{>search_bar}}
+		{{>search_results}}
+	</div>
+</template>
 
 <template name="search_results">
 	<div id="search_results_container">

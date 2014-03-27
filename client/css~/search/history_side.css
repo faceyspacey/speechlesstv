@@ -1,7 +1,3 @@
-#add_videos_side {
-	background: white;
-}
-
 #add_videos_wrapper {
 	margin-top: 5px;
 }
@@ -44,31 +40,30 @@
 	text-shadow: gray;
 }
 
-#add_videos_back {
+#history_back {
 	width: 100px;		
 }
 
-#add_videos_spacer {
+#history_spacer {
 	width: 150px;		
 }
-#add_videos_bar > #add_videos_spacer:hover {
+#add_videos_bar > #history_spacer:hover {
 	background: #559afe;
 	text-shadow: none;	
 	cursor: default;
 }
-#add_videos_bar > #add_videos_spacer:active {
+#add_videos_bar > #history_spacer:active {
 	background: #559afe;
 	text-shadow: none;	
 	cursor: default;
 }
 
-#add_videos_clear {
-	width: 280px;		
+.history_filter_tab {
+	width: 200px;
 }
-
-#add_videos_bar > #add_videos_next {
-	width: 100px;
-	margin-right: 0px;		
+.history_filter_tab.selected {
+	background-color: black !important;
+	text-shadow: gray !important; 
 }
 
 

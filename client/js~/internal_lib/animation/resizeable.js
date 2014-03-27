@@ -31,9 +31,26 @@ Resizeable = {
 				barWidth = width - padding,
 				searchFieldWidth = barWidth - SearchSizes.toolbarWidth - SearchSizes.toolbarSpacing - SearchSizes.buddyListButton;
 			
-			$('#search_bar, #bar_cube, #message_bar_side').css('width', barWidth);
+			$('#bar_cube_container').css('width', barWidth);
 			$('#search_bar input#search_query').css('width', searchFieldWidth);
 			$('#search_bar .enter_button ').css('left', searchFieldWidth - 30);
+			
+			var messageFormWidth = barWidth;
+			messageFormWidth -= $('.message_bar_side .watch').first().outerWidth();
+			messageFormWidth -= $('.message_bar_side .post_to_twitter').first().outerWidth();
+			messageFormWidth -= $('.message_bar_side .respond').first().outerWidth();
+			messageFormWidth -= $('.message_bar_side .dismiss').first().outerWidth();
+			$('#bar_cube_container .message_form ').css('width', messageFormWidth - 5); 
+			
+			var messageFormWidth = $('#controls_cube_container').outerWidth();
+			messageFormWidth -= $('.message_bar_side .watch').first().outerWidth();
+			messageFormWidth -= $('.message_bar_side .post_to_twitter').first().outerWidth();
+			messageFormWidth -= $('.message_bar_side .respond').first().outerWidth();
+			messageFormWidth -= $('.message_bar_side .dismiss').first().outerWidth();
+			$('#controls_cube_container_a .message_form ').css('width', messageFormWidth - 5);
+			$('#controls_cube_container_b .message_form ').css('width', messageFormWidth - 5);
+			
+			$('#history_spacer').css('width', barWidth - 906);
 			
 			$('#add_videos_wrapper').css('height', height - SearchSizes.header);
 			$('#add_videos_bar').css('width', barWidth);

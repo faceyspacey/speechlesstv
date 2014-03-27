@@ -1,11 +1,11 @@
 /** SEARCH **/
 
 Template.search.created = function() {
-	Session.set('search_side', '#search_results_side');
+	Session.set('search_side', '#popular_side');
 	
 	Deps.afterFlush(function() {
 		Resizeable.resizeAllElements();
-		$('.cube').cube().prevSide('#search_results_side');
+		$('.cube').cube().prevSide('#popular_side');
 	});
 };
 

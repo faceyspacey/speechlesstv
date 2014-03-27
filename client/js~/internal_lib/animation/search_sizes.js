@@ -4,7 +4,7 @@ SearchSizes = {
 	thumbMarginTop: 6,
 	thumbsPerColumn: 6,
 	pagePadding: 10,
-	toolbarWidth: 440,
+	toolbarWidth: 460,
 	buddyListButton: 70,
 	toolbarSpacing: 4,
 	

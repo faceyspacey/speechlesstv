@@ -1,6 +1,6 @@
 <template name="search_bar">
-	<div class="c_container" style="position:absolute; overflow:visible; height: 60px; margin-top:5px; z-index:5;">
-		<div class="c" id="bar_cube" style="overflow-y:visible; margin-left: 5px; height:100%;">
+	<div id="bar_cube_container" class="c_container" style="position:absolute; top:5px; left: 5px; overflow:visible; height: 60px; z-index:5;">
+		<div class="c" id="bar_cube" style="overflow-y:visible; ">
 			{{>search_bar_side}}
 			{{>message_bar_side}}
 		</div>
@@ -44,7 +44,7 @@
 		{{/isolate}}
 		
 		{{#isolate}}
-			<div id="search_next_button" class="bar_tab">NEXT</div>
+			<div id="history_button" class="bar_tab">HISTORY</div>
 		{{/isolate}}
 		
 	
@@ -53,11 +53,6 @@
 </template>
 
 
-<template name="message_bar_side">
-	<div class="backface" id="message_bar_side" style="display:none;">
-		<div id="message_bar"></div>
-	</div>
-</template>
 
 <template name="autocompletion">
 	<div class="autocompletion">

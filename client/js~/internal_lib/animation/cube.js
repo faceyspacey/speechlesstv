@@ -130,6 +130,10 @@ Cube.prototype = {
 				
 				var params = {rotateY: '+=0', translateX: thirtyDegreesLeftPX, translateZlast: true};
 				$('#buddy_list').hardwareAnimate(params, 250, 'easeOutCirc');	
+				
+				var sideBarWidth = $(window).width() + thirtyDegreesLeftPX;
+				$('#buddy_list_scroller').css('width', sideBarWidth);
+				$('#buddy_list_toolbar .left').css('width', sideBarWidth - $('#buddy_list_toolbar .right').outerWidth() - 1);
 			}.bind(this), 500);
 			
 			var percentAcross = Math.pow(parseFloat(Math.cos(this._getDegrees() * Math.PI/180).toFixed(20)), 2);
@@ -161,6 +165,7 @@ Cube.prototype = {
 		if(params.rotateX && this.previousSide['rotateX']) return this.previousSide['rotateX'];
 		else if(params.rotateY && this.previousSide['rotateY']) return this.previousSide['rotateY'];
 		
+		console.log('SIDE', this.currentSide.next().length, this.currentSide.next(), this.element.find('.backface').first());
 		return this.currentSide.next().length > 0 ? this.currentSide.next() : this.element.find('.backface').first();
 	},
 	

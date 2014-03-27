@@ -2,8 +2,13 @@
 	<div class="backface" id="search_fullscreen_side"  style="display:none;">
 		{{>search_fullscreen_player}}
 		
-		<div style="position:absolute; z-index: 99; bottom: 60px; width: 980px; left:50%; margin-left: -490px;">
-			{{{control_bar 'search_fullscreen_player'}}}
+		<div style="position:absolute; z-index: 99; bottom: 60px; width: 980px; height:60px; left:50%; margin-left: -490px;">
+			<div id="controls_cube_container_a" class="c_container" style="width: 100%; height: 100%;">
+				<div class="c" id="controls_cube_a">
+					{{{control_bar 'search_fullscreen_player'}}}
+					{{>message_bar_side}}
+				</div>
+			</div>
 		</div>
 		
 		{{>fullscreen_backnext}}
@@ -28,8 +33,13 @@
 	<div class="backface" id="search_fullscreen_side_alt" style="display:none;">
 		{{>search_fullscreen_player_alt}}
 		
-		<div style="position:absolute; z-index: 99; bottom: 60px; width: 980px; left:50%; margin-left: -490px;">
-			{{{control_bar 'search_fullscreen_player_alt'}}}
+		<div style="position:absolute; z-index: 99; bottom: 60px; width: 980px; height:60px; left:50%; margin-left: -490px;">
+			<div id="controls_cube_container_b" class="c_container" style="width: 100%; height: 100%;">
+				<div class="c" id="controls_cube_b">
+					{{{control_bar 'search_fullscreen_player_alt'}}}
+					{{>message_bar_side}}
+				</div>
+			</div>
 		</div>
 		
 		{{>fullscreen_backnext}}

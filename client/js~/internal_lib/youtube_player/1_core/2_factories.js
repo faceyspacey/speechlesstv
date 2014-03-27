@@ -41,7 +41,6 @@ YoutubePlayer.fullscreenOnly = function(playerId, callback) {
 			$('.cube').cube().prevSideVertical('#dummy_side', 1000, 'easeInBack', function() {
 				$('.cube').cube().prevSideVertical(Session.get('search_side'), 1000, 'easeOutBack', function() {
 					Resizeable.resizeAllElements();
-					$('#search_bar input').focus();
 					$('.video_cover, .bar').show();
 					this.player.destroy();
 				}.bind(this));

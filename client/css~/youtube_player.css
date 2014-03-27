@@ -213,7 +213,7 @@ opacity: .7;
 background-color: rgb(157, 183, 218); 
 width: 100%; 
 bottom: 0px; 
-height: 48px;
+height: 60px;
 }
     
 .controls > div {
@@ -239,7 +239,7 @@ position: absolute;
 width: 100%;
 height: 97%;
 left: 24px;
-top: 15px;
+top: 21px;
 
 width: 0; height: 0; 
 margin-left: 0px; margin-top: 0px; 
@@ -254,7 +254,7 @@ background: url('../../images/pause.png') no-repeat;
 width: 100%;
 height: 100%;
 left: 22px;
-top: 15px;
+top: 21px;
 }
 
 div.groove {
@@ -279,6 +279,7 @@ background-color: #265BA8;
 -webkit-border-radius: 5px;
 border-radius: 5px; /* future proofing */
 -khtml-border-radius: 5px;
+top: 4px;
 }
 
 .barsInner {
@@ -286,6 +287,7 @@ border-radius: 5px; /* future proofing */
   height: 100%;
   margin: 0 1%;
   position: relative;
+top: 2px;
 }
 
 
@@ -376,6 +378,7 @@ float:left;
 width: 7.5%; 
 height: 100%;
 padding-top: 14px;
+top: 8px;
 }
 
 div.videoTime span {
@@ -390,6 +393,7 @@ position:relative;
 float:left; 
 width: 8.5%; 
 height: 100%;
+top: 6px;
 }
 
 
@@ -428,7 +432,7 @@ background-color:black;
 width:100%; 
 height: 80%;
 }
-div.minilogo{ 
+div.minilogo { 
 position:relative; 
 float:left;
 height:100%;
@@ -450,6 +454,7 @@ margin-right: 1%;
        -o-transition: all 0.5s ease;
       -ms-transition: all 0.5s ease;
           transition: all 0.5s ease;
+top: 6px;
 }
 
 
@@ -483,7 +488,7 @@ position: absolute;
 
 width: 100%;
 height: 100%;  
-top: 10px;
+top: 16px;
 left: 22px;  
 }
 

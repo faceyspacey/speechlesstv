@@ -1,0 +1,25 @@
+<template name="history_side">
+	<div class="backface primary_side" id="history_side" style="display:none;" >
+
+			<div id="add_videos_bar">
+				<div id="history_back">BACK</div>
+				<div id="history_spacer"></div>
+				{{#isolate}}
+					<div id="history_watched" class="history_filter_tab {{tabSelected 'WATCHED'}}">WATCHED</div>
+					<div id="history_starred" class="history_filter_tab {{tabSelected 'STARRED'}}">STARRED</div>
+					<div id="history_commented" class="history_filter_tab {{tabSelected 'COMMENTED'}}">COMMENTED</div>
+					<div id="history_suggested" class="history_filter_tab {{tabSelected 'SUGGESTED'}}">SUGGESTED</div>
+				{{/isolate}}
+			</div>
+		
+		<div id="add_videos_wrapper">
+			<div id="add_videos_scroller">
+				{{#isolate}}
+					{{#each videos}}
+						{{>add_video_row}}
+					{{/each}}
+				{{/isolate}}
+			</div>
+		</div>
+	</div>
+</template>

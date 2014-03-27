@@ -33,11 +33,9 @@ Template.search_column.helpers({
 Template.search_column.events({
 	'mouseenter .search_result_column': function(e) {
 		$(e.currentTarget).addClass('selected_column');
-		$(e.currentTarget).find('.delete_column').show();
 	},
 	'mouseleave .search_result_column': function(e) {
 		$(e.currentTarget).removeClass('selected_column');
-		$(e.currentTarget).find('.delete_column').hide();
 	},
 	'click .delete_column': function(e) {
 		var column = this,

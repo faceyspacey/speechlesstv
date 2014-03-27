@@ -1,11 +1,5 @@
 #search_bar {
-	width: 99%; 
-	height: 60px;
-	
-	margin: 0 auto; 
-	
 	z-index: 3;
-	position: relative;
 }
 
 #search_bar > .bar_tab {
@@ -62,7 +56,7 @@
 
 
 #search_bar > #popular_vs_friends {
-	width: 90px;
+	width: 100px;
 	background: none;
 	
 	padding: 0px;
@@ -149,8 +143,8 @@
 }
 
 
-#search_bar > #search_next_button {
-	width: 100px;
+#search_bar > #history_button {
+	width: 110px;
 	margin-right: 0px;
 	
 	text-align: center;
@@ -159,12 +153,12 @@
 	padding-top: 16px;
 }
 
-#search_bar > #search_next_button:hover {
+#search_bar > #history_button:hover {
 	background-color: rgb(42, 103, 160);
 	text-shadow: 1px 1px 1px rgb(33, 67, 78);	
 }
 
-#search_bar > #search_next_button:active {
+#search_bar > #history_button:active {
 	background-color: black;
 	text-shadow: gray;
 }
@@ -196,7 +190,7 @@
 	
 }
 
-#search_bar :-ms-input-placeholder {  
+#search_bar :-ms-input-placeholder{  
    	color: white !important;
 	font-size: 32px !important;
 	

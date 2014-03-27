@@ -60,10 +60,22 @@ Template.search_result.events({
 
 		$('#hover_player_container').css('opacity', 0);
 		$result.find('img.video_image').css('opacity', 1);
+		
+		$(e.currentTarget).find('.suggest_video').animate({left: 0}, 150, 'easeOutExpo');
+	},
+	'mouseenter .check_video': function(e) {
+		var suggestButton = $(e.currentTarget).parent().find('.suggest_video');
+		console.log('suggestButton', suggestButton.css('left'));
+		if(suggestButton.css('left') != '23px') suggestButton.animate({left: '+=23'}, 150, 'easeOutExpo');
 	},
 	'click .check_video': function(e) {
 		this.checked = this.checked ? null : true;
 		this.store();
+		e.stopPropagation();
+	},
+	'click .suggest_video': function(e) {
+		Session.set('buddy_list_suggest', true);
+		$('.cube').getCube().toggleBuddyList();
 		e.stopPropagation();
 	},
 	'click .fast_forward': function(e) {
