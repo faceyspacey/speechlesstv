@@ -138,13 +138,14 @@ jQuery.fn.hardwareAnimateCollection = function(options, duration, easing, latenc
 
 jQuery.fn.reverse = [].reverse;
 
-jQuery.fn.slideDownCollection = function(duration, easing, latency, callback) {	
+jQuery.fn.slideDownCollection = function(duration, easing, latency, callback, opacity) {	
 	var itemCount = this.length,
 		duration = duration || 500,
 		easing = easing || 'easeInOutBack', 
 		latency = latency || 50,
 		completeWait = itemCount * latency + duration,
-		callback = callback || function() {};
+		callback = callback || function() {},
+		opacity = opacity || 1;
 	
 	setTimeout(callback, completeWait);	
 	return this.each(function(index, el) {
@@ -156,7 +157,7 @@ jQuery.fn.slideDownCollection = function(duration, easing, latency, callback) {
 		$el.hardwareAnimate({translateY: top * -1}, 0, 'linear', function() {
 			setTimeout(function() {
 				$el.hardwareAnimate({translateY: 0}, duration, easing);
-				$el.animate({opacity: 1}, duration);
+				$el.animate({opacity: opacity}, duration);
 			}, wait);
 		});			
 	});

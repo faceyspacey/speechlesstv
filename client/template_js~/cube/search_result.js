@@ -15,7 +15,7 @@ Template.search_result.events({
 		
 		YoutubePlayer.get('hover_player').pause();
 		
-		YoutubeSearcher.related(this.youtube_id);
+		YoutubeSearcher.related(this.youtube_id, this.title);
 	},
 	'mouseenter .search_result': function(e) {
 		Session.set('current_search_video_id', this._id); //display video info box
@@ -49,9 +49,11 @@ Template.search_result.events({
 		$result.find('img.video_image').css('opacity', 0);
 		
 		$result.addClass('selected_result');
+		$result.css('background', 'none');
 	},
 	'mouseleave .search_result': function(e) {
 		var $result = $(e.currentTarget);
+		$result.css('background', 'rgb(42, 103, 160)');
 		$result.removeClass('selected_result');
 		
 		$('#search_video_info').hide();
@@ -69,6 +71,8 @@ Template.search_result.events({
 		if(suggestButton.css('left') != '23px') suggestButton.animate({left: '+=23'}, 150, 'easeOutExpo');
 	},
 	'click .check_video': function(e) {
+		Meteor.user().favorite(this.youtube_id);
+		
 		this.checked = this.checked ? null : true;
 		this.store();
 		e.stopPropagation();
@@ -88,7 +92,8 @@ Template.search_result.events({
 		
 		$('#search_video_info').hide();
 		YoutubePlayer.get('hover_player').pause();
-				
+			
+		Meteor.user().watch(this);	
 		CubePlayer.start(this.youtube_id);
 	}
 });

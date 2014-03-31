@@ -55,7 +55,7 @@ Handlebars.registerHelper('categories', function(isDropdown) {
 
 shortenText = function(text, maxChars) {
 	if(text.length <= maxChars) return text;
-    else return text.substr(0, maxChars) + '...';
+    else return text.substr(0, maxChars) + '..';
 }
 
 Handlebars.registerHelper('shorten', function(text, maxChars) {
@@ -134,6 +134,11 @@ Handlebars.registerHelper('current_search_video', function() {
 
 Handlebars.registerHelper('control_bar', function(playerId) {
 	return Template.control_bar({playerId: playerId});
+});
+
+Handlebars.registerHelper('message_bar_side', function(id) {
+	if(id == 'message_side_a' || id == 'message_side_b') return Template.message_bar_side({id: id, fullscreen: true});
+	else return Template.message_bar_side({id: id, fullscreen: false});
 });
 
 Handlebars.registerHelper('playerReady', function(playerId) {		

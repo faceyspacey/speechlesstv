@@ -1,8 +1,8 @@
 <template name="search_bar">
 	<div id="bar_cube_container" class="c_container" style="position:absolute; top:5px; left: 5px; overflow:visible; height: 60px; z-index:5;">
-		<div class="c" id="bar_cube" style="overflow-y:visible; ">
+		<div class="c message_cube" id="bar_cube" style="overflow-y:visible; ">
 			{{>search_bar_side}}
-			{{>message_bar_side}}
+			{{{message_bar_side 'controls_cube_a_side'}}}
 		</div>
 	</div>
 </template>
@@ -35,7 +35,7 @@
 					<div id="search_category_options" style="display:none">
 						{{#isolate}}
 							{{#each categories}}
-								<div class="search_category_option">{{name}}</div>
+								<div class="search_category_option" style="background-color:{{color}};">{{name}}</div>
 							{{/each}}
 						{{/isolate}}
 					</div>

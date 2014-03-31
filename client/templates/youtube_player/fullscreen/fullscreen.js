@@ -16,3 +16,16 @@ Template.search.events({
 		CubePlayer.next();
 	}
 });
+
+
+Template.search_fullscreen_side.events({
+	'click .live_button': function(e) {
+		$(e.currentTarget).toggleClass('selected');
+	}
+});
+
+Template.search_fullscreen_side_alt.events({
+	'click .live_button': function(e) {
+		$(e.currentTarget).toggleClass('selected');
+	}
+});

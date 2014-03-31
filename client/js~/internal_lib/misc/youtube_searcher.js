@@ -19,37 +19,62 @@ YoutubeSearcher = {
 			Session.set('predictive_results', predictiveResults);
 		});
 	},
+	popular: function(category) {
+		if(!gapi.client.youtube) {
+			setTimeout(function() {
+				this.popular(category);
+			}.bind(this), 200);
+			return;
+		}
+		
+		Deps.afterFlush(BackNext.addColumn.bind(BackNext));
+		
+		gapi.client.youtube.videos.list({
+			part: 'snippet', 
+			chart: 'mostPopular',
+			maxResults: SearchSizes.thumbsPerColumn,
+			regionCode: 'US',
+			videoCategoryId: category.id,
+		}).execute(function(response) {
+			console.log(response);
+			this._store(response.items, null, null, category.name, category.color);
+		}.bind(this));
+	},
 	query: function(query) {
 		Deps.afterFlush(BackNext.addColumn.bind(BackNext));
 		
 		if(this.queries[query]) return this._store(this.queries[query]);
 		
+		var label = shortenText(query, 12);
+		
 		this._execute({
 			part: 'snippet', 
 			type: 'video',
 			q: query
-		});
+		}, label, '#559afe');
 	},
-	related: function(relatedToVideoId) {
+	related: function(relatedToVideoId, title) {
 		Deps.afterFlush(BackNext.addColumn.bind(BackNext));
 		
 		if(this.related[relatedToVideoId]) return this._store(this.related[relatedToVideoId]);
+		
+		var label = shortenText(title, 12);
 		
 		this._execute({
 			part: 'snippet', 
 			type: 'video',
 			relatedToVideoId: relatedToVideoId
-		});
+		}, label, 'rgb(42, 103, 160)');
 	},
-	_execute: function(params) {	
+	_execute: function(params, label, color) {	
 		params.videoEmbeddable = true;
 		params.maxResults = 30; 
 		gapi.client.youtube.search.list(params).execute(function(response) {
-			this._store(response.items, params.q, params.relatedToVideoId);
+			this._store(response.items, params.q, params.relatedToVideoId, label, color);
 		}.bind(this));
 	},
-	_store: function(newVideos, q, relatedToVideoId) {	
-		var column = this._newColumn(),
+	_store: function(newVideos, q, relatedToVideoId, label, color) {	
+		var column = this._newColumn(label, color),
 			videosAdded = [],
 			currentVideos = Videos.find({_local: true}).map(function(video) { return video.youtube_id; });
 		
@@ -76,7 +101,7 @@ YoutubeSearcher = {
 	},
 	_addVideo: function(video, column, index, videosAdded) {
 		var v = new VideoModel;
-		v.youtube_id = video.id.videoId;
+		v.youtube_id = video.id.videoId || video.id;
 		v.title = video.snippet.title;
 		v.published_at = moment(video.snippet.publishedAt).toDate();
 		v.description = video.snippet.description;
@@ -88,10 +113,12 @@ YoutubeSearcher = {
 		
 		videosAdded.push(v.youtube_id);
 	},
-	_newColumn: function() {
+	_newColumn: function(label, color) {
 		var c = new ColumnModel;
 		c.index = ColumnModel.nextIndex();
 		c.created_at = moment().toDate();
+		c.label = label;
+		c.color = color;
 		c.store();
 		return c;
 	}

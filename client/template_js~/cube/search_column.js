@@ -22,6 +22,10 @@ Template.search_column.afterCreated = function() {
 			}, (index + 1) * 50);
 		});
 	});
+	
+	setTimeout(function() {
+		$column.find('.column_label').animate({bottom: -4}, 300, 'easeOutExpo');
+	}, 700);
 };
 
 Template.search_column.helpers({
@@ -33,9 +37,11 @@ Template.search_column.helpers({
 Template.search_column.events({
 	'mouseenter .search_result_column': function(e) {
 		$(e.currentTarget).addClass('selected_column');
+		$(e.currentTarget).find('.column_label').animate({bottom: -28}, 300, 'easeOutExpo');
 	},
 	'mouseleave .search_result_column': function(e) {
 		$(e.currentTarget).removeClass('selected_column');
+		$(e.currentTarget).find('.column_label').animate({bottom: -4}, 300, 'easeOutExpo');
 	},
 	'click .delete_column': function(e) {
 		var column = this,

@@ -8,7 +8,8 @@ Template.search_bar_side.helpers({
 		return Session.equals('filter', '#from_friends_side') ? 'checked' : '';
 	},
 	categories: function() {
-		return Categories.find({name: {$not: 'all'}});
+		return YoutubeCategories;
+		//return Categories.find({name: {$not: 'all'}});
 	},
 	categoryName: function() {
 		if(Session.equals('mouse_over_category_dropdown', true)) return 'Select a Category';
@@ -94,7 +95,7 @@ Template.search_bar_side.events({
 	'mouseenter #search_category_dropdown': function(e) {
 		Session.set('mouse_over_category_dropdown', true);
 		$('#search_category_options').show();
-		$('.search_category_option').slideDownCollection(150, 'easeOutBack', 25);
+		$('.search_category_option').slideDownCollection(150, 'easeOutBack', 25, null, .9);
 	},
 	'mouseleave #search_category_dropdown': function(e) {
 		Session.set('mouse_over_category_dropdown', false);
@@ -106,9 +107,17 @@ Template.search_bar_side.events({
 		Session.set('selected_search_category_id', this.category_id);
 		Session.set('mouse_over_category_dropdown', false);
 		
+		YoutubeSearcher.popular(this);
+		
 		$('.search_category_option').slideUpCollection(150, 'easeInBack', 25, function() {
 			if(Session.equals('mouse_over_category_dropdown', false)) $('#search_category_options').hide();
 		});
+	},
+	'mouseenter .search_category_option': function(e) {
+		$(e.currentTarget).css('opacity', '1');
+	},
+	'mouseleave .search_category_option': function(e) {
+		$(e.currentTarget).css('opacity', '.9');
 	},
 	'click #history_button': function() {	
 		Session.set('search_side', '#history_side');

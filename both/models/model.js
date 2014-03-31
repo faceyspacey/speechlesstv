@@ -6,6 +6,10 @@ Model = {
 				case 'Columns':       	 return Columns;
             	case 'Videos':       	 return Videos;
 				case 'Categories':       return Categories;
+				case 'Favorites':      	 return Favorites;
+            	case 'Suggestions':      return Suggestions;
+				case 'Follows':          return Follows;
+				case 'Watches':          return Watches;
         }
     },
 	db: function() {

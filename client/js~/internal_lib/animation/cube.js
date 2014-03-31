@@ -3,13 +3,13 @@ Cube = function(element) {
 	this.currentSide = element.find('.backface').first();
 	
 	this._notRotatedYetX = this._notRotatedYetY = true;
+	
+	this.previousSide = {};
 };
 
 thirtyDegreesLeftPX = null;
 
 Cube.prototype = {
-	previousSide: {},
-	
 	rotate: function(params, newSide, duration, easing, callback) {
 		var newSide = newSide || this._findSide(params),
 			duration = duration || 1500,
@@ -162,6 +162,7 @@ Cube.prototype = {
 		else this.previousSide['rotateY'] = this.currentSide;
 	},
 	_findSide: function(params) {
+		console.log('SIDE INITIAL', this.previousSide['rotateX'], this.previousSide['rotateY']);
 		if(params.rotateX && this.previousSide['rotateX']) return this.previousSide['rotateX'];
 		else if(params.rotateY && this.previousSide['rotateY']) return this.previousSide['rotateY'];
 		

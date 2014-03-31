@@ -44,11 +44,11 @@ PlayerComponentFullscreen.prototype = {
 		clearInterval(YoutubePlayer.mousemoveInterval);
 		this.lastMoved = Date.now();
 		YoutubePlayer.mousemoveInterval = setInterval(function() {
-			if(Date.now() - this.lastMoved > 3000) this._backface().find('.controls, .fullscreen_back_next').fadeOut();
+			if(Date.now() - this.lastMoved > 3000) this._backface().find('.message_cube, .fullscreen_back_next').fadeOut();
 		}.bind(this), 1000);
 
 		$('body').bind('mousemove.hideControls', function() {
-			this._backface().find('.controls, .fullscreen_back_next').fadeIn();
+			this._backface().find('.message_cube, .fullscreen_back_next').fadeIn();
 			this.lastMoved = Date.now();
 		}.bind(this));
 	},

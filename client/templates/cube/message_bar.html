@@ -1,20 +1,38 @@
 <template name="message_bar_side">
-	<div class="backface message_bar_side" style="display:none;">
+	<div id="{{id}}" class="message_bar_side backface" style="display:none;">
+		
 		<div class="message_form bar_tab">
-			<input class="message_field" placeholder="SAY SOMETHING"/>
+			{{#isolate}}
+				{{#if isPostingComment}}
+					<div class="message_left" style="float:left;">
+						<img class="profile_pic" src="https://graph.facebook.com/16404762/picture?width=75&height=75" style="float:left; height: 61px; padding: 4px;" />
+						<img class="profile_vid" src="http://img.youtube.com/vi/Oh_qdGlVN1c/mqdefault.jpg" style="float:left; height: 61px; padding: 4px; padding-left: 0px"  />		
+					</div>
+					<div class="message_right" style="float:left; margin-top: 10px;">
+						<div class="comment_message" style="font-size: 24px;">Yo bla bla jlksdfljk jlksdf jlksdf jklsdf</div>
+						<div style="font-size: 14px;float: left; margin-top: 5px">WATCHING: some stupid fucking video</div>
+					</div>
+				{{else}}
+					<input class="message_field" placeholder="SAY SOMETHING"/>
+				{{/if}}
+			{{/isolate}}
 		</div>
 		
+		{{#unless fullscreen}}
 		<div class="watch bar_tab">
 			<i class="fa fa-desktop" style="font-size: 30px; position: relative; top: 7px; left: 4px;"></i>
 			<span style="font-size: 16px; position: relative; top: -6px; line-height: 2; left: 4px;">WATCH</span>
 		</div>
+		{{/unless}}
 		
 		<div class="post_to_twitter bar_tab selected">
 			<i class="fa fa-twitter" style="font-size: 24px; position: relative; top: 9px; left: 4px;"></i>
 			<span style="font-size: 16px; position: relative; top: -44px; line-height: 2; left: 4px;">post to twitter</span>
 		</div>
 		
-		<div class="respond bar_tab">RESPOND</div>
+		{{#isolate}}
+			<div class="respond bar_tab">{{#if isPostingComment}}POST{{else}}RESPOND{{/if}}</div>
+		{{/isolate}}
 		<div class="dismiss bar_tab">DISMISS</div>
 	</div>
 </template>

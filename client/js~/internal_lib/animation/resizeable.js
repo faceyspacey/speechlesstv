@@ -42,8 +42,7 @@ Resizeable = {
 			messageFormWidth -= $('.message_bar_side .dismiss').first().outerWidth();
 			$('#bar_cube_container .message_form ').css('width', messageFormWidth - 5); 
 			
-			var messageFormWidth = $('#controls_cube_container').outerWidth();
-			messageFormWidth -= $('.message_bar_side .watch').first().outerWidth();
+			var messageFormWidth = 980;
 			messageFormWidth -= $('.message_bar_side .post_to_twitter').first().outerWidth();
 			messageFormWidth -= $('.message_bar_side .respond').first().outerWidth();
 			messageFormWidth -= $('.message_bar_side .dismiss').first().outerWidth();

@@ -134,11 +134,10 @@
 	
 	cursor: pointer;
 	
-	opacity: 1;
+	opacity: .9;
 }
 
 #search_bar > #search_category_dropdown #search_category_options  .search_category_option:hover {
-	background-color: rgb(42, 103, 160);
 	text-shadow: 1px 1px 1px rgb(33, 67, 78);
 }
 

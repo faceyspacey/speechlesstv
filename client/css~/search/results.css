@@ -39,7 +39,8 @@
 	
 	width: 100%;
 	
-	overflow: hidden;
+	/**overflow: hidden;**/
+	overflow:hidden;
 }
 
 #search_results_scroller {

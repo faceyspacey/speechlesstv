@@ -1,3 +1,17 @@
+.column_label {
+	position: absolute;
+	bottom: -28px;
+	left: 5%;
+	width: 90%;
+	height: 24px;
+	
+	background: #559afe;
+	color: white;
+	font-size: 18px;
+	padding-top: 4px;
+	text-align: center;
+}
+
 .search_result_column {
 	float:left;	
 	border: 3px solid #fff;

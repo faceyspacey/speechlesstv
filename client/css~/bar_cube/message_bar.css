@@ -3,8 +3,6 @@
 }
 
 .message_bar_side {
-	height: 60px;
-	margin: 0 auto;
 	z-index: 3;
 }
 
@@ -41,17 +39,17 @@
 }
 
 .message_bar_side .watch {
-	width: 65px;
+	width: 60px;
 	text-align: center;
 	padding-top: 0px;
-	padding-left: 5px;
+	padding-left: 3px;
 }
 
 .message_bar_side .post_to_twitter {
-	width: 65px;
+	width: 60px;
 	text-align: center;
 	padding-top: 0px;
-	padding-left: 5px;
+	padding-left: 3px;
 }
 
 
@@ -65,11 +63,11 @@
 
 
 .message_bar_side .respond {
-	width: 150px;
+	width: 130px;
 }
 
 .message_bar_side .dismiss {
-	width: 150px;
+	width: 130px;
 }
 
 

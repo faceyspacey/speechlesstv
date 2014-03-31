@@ -1,8 +1,9 @@
 /** ColumnModel attributes:
  *
- * _id: "X5NnRaXiE5iu5xCnc"
- * index: 		Int
- *
+ * _id "		X5NnRaXiE5iu5xCnc"
+ * index		Int
+ * label		string
+ * color		string (#559afe)
  **/
 
 Columns = new Meteor.Collection('columns', {
