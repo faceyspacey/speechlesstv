@@ -41,3 +41,8 @@ YoutubeCategories = [
 	{name: 'Movies', id: 30, color: '#FFA045'},
 	{name: 'Education', id: 27, color: '#FF7745'}
 ];
+
+YoutubeCategorySearchCounts = {};
+_.each(YoutubeCategorySearchCounts, function(cat) {
+	YoutubeCategorySearchCounts[cat.id] = 0;
+});

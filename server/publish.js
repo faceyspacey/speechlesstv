@@ -31,18 +31,55 @@ Meteor.publish(null, function (){
 });
 
 
-Meteor.publish('watches', function(userId) {
-	return Watches.find({user_id: userId}, {limit: 5, sort: {updated_at: -1}});
+Meteor.publish('watches', function(limit) {
+	return Watches.find({user_id: this.userId}, {limit: limit, sort: {updated_at: -1}});
 });
 
-Meteor.publish('favorites', function(userId) {
-	return Favorites.find({user_id: userId});
+Meteor.publish('favorites', function(limit) {
+	return Favorites.find({user_id: this.userId}, {limit: limit, sort: {updated_at: -1}});
 });
 
-Meteor.publish('suggestions', function(userId) {
-	return Suggestions.find({recipient_user_id: userId});
+Meteor.publish('comments', function(limit) {
+	return Comments.find({user_id: this.userId}, {limit: limit, sort: {updated_at: -1}});
 });
 
-Meteor.publish('follows', function(userId) {
-	return Follows.find({$or: [{follower_user_id: userId}, {followed_user_id: userId}]});
+Meteor.publish('suggestions', function(limit) {
+	return Suggestions.find({recipient_user_id: this.userId}, {limit: limit, sort: {updated_at: -1}});
+});
+
+
+
+Meteor.startup(function() {
+	var friendIds = Follows.find({follower_user_id: this.userId}).map(function(follow) {
+		return follow.followed_user_id;
+	});
+
+	Meteor.publish('watchesFromFriends', function() {
+		return Watches.find({user_id: {$in: friendIds}}, {limit: 48, sort: {updated_at: -1}});
+	});
+
+	Meteor.publish('favoritesFromFriends', function() {
+		return Favorites.find({user_id: {$in: friendIds}}, limit: 48, sort: {updated_at: -1}});
+	});
+
+	Meteor.publish('commentsFromFriendss', function() {
+		return Comments.find({user_id: {$in: friendIds}}, {limit: 48, sort: {updated_at: -1}});
+	});
+
+	Meteor.publish('suggestionsFromFriends', function() {
+		return Suggestions.find({recipient_user_id: {$in: friendIds}}, limit: 48, sort: {updated_at: -1}});
+	});
+})
+
+
+
+
+Meteor.publish('youtube_videos', function() {
+	return YoutubeVideos.find();
+});
+
+
+
+Meteor.publish('follows', function() {
+	return Follows.find({$or: [{follower_user_id: this.userId}, {followed_user_id: this.userId}]});
 });

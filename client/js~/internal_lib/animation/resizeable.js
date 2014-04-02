@@ -31,7 +31,7 @@ Resizeable = {
 				barWidth = width - padding,
 				searchFieldWidth = barWidth - SearchSizes.toolbarWidth - SearchSizes.toolbarSpacing - SearchSizes.buddyListButton;
 			
-			$('#bar_cube_container').css('width', barWidth);
+			$('#bar_cube_container, #add_videos_wrapper').css('width', barWidth);
 			$('#search_bar input#search_query').css('width', searchFieldWidth);
 			$('#search_bar .enter_button ').css('left', searchFieldWidth - 30);
 			

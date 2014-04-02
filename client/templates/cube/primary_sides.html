@@ -1,33 +1,42 @@
 <template name="popular_side">
 	<div class="backface primary_side" id="popular_side" style="display:none;">
 		{{>search_bar}}
-		{{>search_results}}
+		
+		<div id="search_results_container">
+			<div id="search_results_wrapper">
+				<div id="search_results_scroller">
+					{{>search_columns_popular}}
+					<div style="clear:both;"></div>
+				</div>
+			</div>
+
+			{{>back_next_buttons}}
+			{{>search_video_info}}
+			{{>hover_player}}
+		</div>
 	</div>
 </template>
 
 <template name="from_friends_side">
 	<div class="backface primary_side" id="from_friends_side" style="display:none;">
 		{{>search_bar}}
-		{{>search_results}}
-	</div>
-</template>
-
-<template name="search_results">
-	<div id="search_results_container">
-		<div id="search_results_wrapper">
-			<div id="search_results_scroller">
-				{{>search_columns}}
-				<div style="clear:both;"></div>
-			</div>
-		</div>
-
-		{{>back_next_buttons}}
-		{{>search_video_info}}
-		{{>hover_player}}
 		
-		{{>search_help_graphic}}
+		<div id="search_results_container">
+			<div id="search_results_wrapper">
+				<div id="search_results_scroller">
+					{{>search_columns_popular_from_friends}}
+					<div style="clear:both;"></div>
+				</div>
+			</div>
+
+			{{>back_next_buttons}}
+			{{>search_video_info}}
+			{{>hover_player}}
+		</div>
 	</div>
 </template>
+
+
 
 <template name="search_help_graphic">
 	{{#if show}}

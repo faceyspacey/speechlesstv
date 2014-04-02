@@ -19,25 +19,79 @@ YoutubeSearcher = {
 			Session.set('predictive_results', predictiveResults);
 		});
 	},
+	setupPopularColumns: function() {
+		var columnCount = SearchSizes.columnsCapacityCount();
+		
+		for(var i = 0; i < columnCount; i++) {
+			var index = i % YoutubeCategories.length,
+				category = YoutubeCategories[index];
+				
+			this.popular(category);
+		}
+	},
 	popular: function(category) {
+		Deps.afterFlush(BackNext.addColumn.bind(BackNext));
+		
+		var side = 'popular', 
+			limit = SearchSizes.thumbsPerColumn,
+			skip = YoutubeCategorySearchCounts[category.id] * limit,
+			videos = YoutubeVideos.find({category_id: category.id}, {limit: limit, skip: skip}),
+			column = this._newColumn(side, category.name, category.color),
+			availableCategoryColumns = 8;
+
+		//this allows to produce the next page of results by category each time the category is selected
+		YoutubeCategorySearchCounts[category.id] = (YoutubeCategorySearchCounts[category.id] + 1) % availableCategoryColumns;
+		
+		_.each(videos, function(video, index) {
+			video.addToPage(side, column, index);
+		}.bind(this));
+	},
+	setupFromFriendsColumns: function() {
+		var friendIds = Follows.find({follower_user_id: this.userId}).map(function(follow) {
+			return follow.followed_user_id;
+		});
+		
+		var watches = Watches.find({user_id: {$in: friendIds}}, {limit: 48, sort: {updated_at: -1}}),
+			favorites = Favorites.find({user_id: {$in: friendIds}}, {limit: 48, sort: {updated_at: -1}}),
+			comments = Comments.find({user_id: {$in: friendIds}}, {limit: 48, sort: {updated_at: -1}}),
+			suggestions = Suggestions.find({user_id: {$in: friendIds}}, {limit: 48, sort: {updated_at: -1}}),
+			videoTypes = [watches, favorites, comments, suggestions];
+		
+		
+		var columnCount = SearchSizes.columnsCapacityCount(),
+			thumbCount = SearchSizes.thumbsPerColumn;
+		
+		for(var i = 0; i < columnCount; i++) {
+			var typeIndex = i % videoTypes.length,
+				columnCountOfType = Math.floor((i+1)/videoTypes.length);
+			
+			return videoTypes[typeIndex].slice(columnCountOfType, columnCountOfType + thumbCount);
+		}
+	},
+	popularAll: function() {
+		_.each(YoutubeCategories, function(category) {
+			YoutubeSearcher._popularAllExecute(category);
+		});
+	},
+	_popularAllExecute: function(category) {
 		if(!gapi.client.youtube) {
 			setTimeout(function() {
-				this.popular(category);
+				this.popularAll(category);
 			}.bind(this), 200);
 			return;
 		}
-		
-		Deps.afterFlush(BackNext.addColumn.bind(BackNext));
-		
+
 		gapi.client.youtube.videos.list({
 			part: 'snippet', 
 			chart: 'mostPopular',
-			maxResults: SearchSizes.thumbsPerColumn,
+			maxResults: 50,
 			regionCode: 'US',
 			videoCategoryId: category.id,
 		}).execute(function(response) {
-			console.log(response);
-			this._store(response.items, null, null, category.name, category.color);
+			var videos = response.items;
+			_.each(videos, function(video) {
+				YoutubeVideoModel.add(video);
+			})
 		}.bind(this));
 	},
 	query: function(query) {
@@ -74,7 +128,7 @@ YoutubeSearcher = {
 		}.bind(this));
 	},
 	_store: function(newVideos, q, relatedToVideoId, label, color) {	
-		var column = this._newColumn(label, color),
+		var column = this._newColumn('popular', label, color),
 			videosAdded = [],
 			currentVideos = Videos.find({_local: true}).map(function(video) { return video.youtube_id; });
 		
@@ -96,10 +150,13 @@ YoutubeSearcher = {
 	_skipDuplicates: function(videos, column, videosAdded, isTrueFunc) {
 		_.each(videos, function(video, index) {
 			if(videosAdded.length >= this.maxThumbs) return;
-			if(!isTrueFunc || isTrueFunc.call(this, video)) this._addVideo(video, column, index, videosAdded);
+			if(!isTrueFunc || isTrueFunc.call(this, video)) {
+				this._addVideo(video, column, index);
+				videosAdded.push(v.youtube_id);
+			}
 		}.bind(this));
 	},
-	_addVideo: function(video, column, index, videosAdded) {
+	_addVideo: function(video, column, index) {
 		var v = new VideoModel;
 		v.youtube_id = video.id.videoId || video.id;
 		v.title = video.snippet.title;
@@ -110,11 +167,10 @@ YoutubeSearcher = {
 		v.length = '00:00';
 		v.created_at = moment().toDate();
 		v.store();
-		
-		videosAdded.push(v.youtube_id);
 	},
-	_newColumn: function(label, color) {
+	_newColumn: function(side, label, color) {
 		var c = new ColumnModel;
+		c.side = side;
 		c.index = ColumnModel.nextIndex();
 		c.created_at = moment().toDate();
 		c.label = label;

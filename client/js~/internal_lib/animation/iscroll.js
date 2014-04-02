@@ -1162,23 +1162,33 @@ stopPropOnInputs = function() {
 
 allScrolls = {};
 
-vScroll = function(id) {
+vScroll = function(id, options) {
+	var options = options || {};
+	options.vScroll = true;
+	
 	stopPropOnInputs();
 	if(allScrolls[id]) return allScrolls[id].refresh();
-	else return allScrolls[id] = newScroll(id, {vScroll: true});
+	else return allScrolls[id] = newScroll(id, options);
 };
 
-hScroll = function(id) {
+hScroll = function(id, options) {
+	var options = options || {};
+	options.hScroll = true;
+	
 	stopPropOnInputs();
 	if(allScrolls[id]) return allScrolls[id].refresh();
-	else return allScrolls[id] = newScroll(id, {hScroll: true});
+	else return allScrolls[id] = newScroll(id, options);
 };
 
 
-hvScroll = function(id) {
+hvScroll = function(id, options) {
+	var options = options || {};
+	options.vScroll = true;
+	options.hScroll = true;
+	
 	stopPropOnInputs();
 	if(allScrolls[id]) return allScrolls[id].refresh();
-	else return allScrolls[id] = newScroll(id, {hScroll: true, vScroll: true});
+	else return allScrolls[id] = newScroll(id, options);
 };
 
 

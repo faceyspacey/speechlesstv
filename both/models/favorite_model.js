@@ -17,6 +17,7 @@ FavoriteModel = function(doc){
 	this.collectionName = 'Favorites';
     this.defaultValues = {};
 
+	_.extend(this, AbstractVideoModel);
 	_.extend(this, Model);
 	this.extend(doc);
 	

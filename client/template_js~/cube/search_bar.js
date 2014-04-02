@@ -2,10 +2,10 @@ Session.set('filter', '#popular_side');
 
 Template.search_bar_side.helpers({
 	popularChecked: function() {
- 		return Session.equals('filter', '#popular_side') ? 'checked' : '';
+ 		return Session.equals('search_side', '#popular_side') ? 'checked' : '';
 	},
 	fromFriendsChecked: function() {
-		return Session.equals('filter', '#from_friends_side') ? 'checked' : '';
+		return Session.equals('search_side', '#from_friends_side') ? 'checked' : '';
 	},
 	categories: function() {
 		return YoutubeCategories;
@@ -86,10 +86,11 @@ Template.search_bar_side.events({
 	},
 
 	'click #popular': function() {
-		Session.set('filter', '#popular_side');
+		if(!Session.equals('search_side', '#popular_side')) Cube.popularSide();
+		
 	},
 	'click #from_friends': function() {
-		Session.set('filter', '#from_friends_side');
+		if(!Session.equals('search_side', '#from_friends_side')) Cube.fromFriendsSide();
 	},
 	
 	'mouseenter #search_category_dropdown': function(e) {
@@ -122,11 +123,7 @@ Template.search_bar_side.events({
 	'click #history_button': function() {	
 		Session.set('search_side', '#history_side');
 		
-		$('.cube').cube().nextSideHorizontal('#dummy_side', 1000, 'easeInBack', function() {
-			$('.cube').cube().nextSideHorizontal('#history_side', 1000, 'easeOutBack', function() {
-				vScroll('add_videos_wrapper');
-			});
-		});
+		Cube.historySide();
 	}
 });
 

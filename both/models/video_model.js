@@ -3,7 +3,6 @@
  * _id: "X5NnRaXiE5iu5xCnc"
  * category_id: 1
  * channel: "faceyspacey"
- * comments: Array[0]
  * complete: true
  * description: "ba sdf"
  * length: "18:34"

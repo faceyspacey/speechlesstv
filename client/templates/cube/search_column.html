@@ -1,17 +1,25 @@
-<template name="search_columns">
+<template name="search_columns_popular">
+	{{#each columns}}
+		{{>search_column}}
+	{{/each}}
+</template>
+
+<template name="search_columns_popular_from_friends">
 	{{#each columns}}
 		{{>search_column}}
 	{{/each}}
 </template>
 
 <template name="search_column">
-	<div class="search_result_column" index="{{index}}" style="display:none;">
-		{{#each videos}}
-			{{>search_result}}
-		{{/each}}
-		
-		<div class="delete_column">x</div>
-		
-		<div class="column_label" style="background-color:{{color}};">{{label}}</div>
-	</div>
+	{{#if isVideos}}
+		<div class="search_result_column" index="{{index}}" style="display:none;">
+			{{#each videos}}
+				{{>search_result}}
+			{{/each}}
+
+			<div class="delete_column">x</div>
+
+			<div class="column_label" style="background-color:{{color}};">{{label}}</div>
+		</div>
+	{{/if}}
 </template>

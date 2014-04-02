@@ -1,0 +1,40 @@
+#search_video_info {
+	position: absolute;
+	top: 0;
+	left: 0;
+	
+	z-index: 99999;
+	overflow: hidden;
+	
+	background: #559afe;
+	border: 2px solid #3476D6;
+	
+	color: white;
+	font-size: 14px;
+	font-weight: bold;
+	text-shadow: 1px 1px 1px #3476D6;
+	line-height: 1.35;
+	
+}
+
+#search_video_title {
+	width: 100%;
+	padding: 4px;		
+}
+
+#search_video_duration {
+	position: absolute;
+	bottom: 4px;
+	
+	font-size: 12px;
+}
+
+#search_video_stats {
+	position: absolute;
+	bottom: 4px;
+	font-size: 12px;
+}
+
+#search_video_stats i {
+	margin-left: 3px;
+}

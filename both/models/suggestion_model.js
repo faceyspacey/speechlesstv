@@ -18,6 +18,7 @@ SuggestionModel = function(doc){
 	this.collectionName = 'Suggestions';
     this.defaultValues = {};
 
+	_.extend(this, AbstractVideoModel);
 	_.extend(this, Model);
 	this.extend(doc);
 	

@@ -10,6 +10,8 @@ Model = {
             	case 'Suggestions':      return Suggestions;
 				case 'Follows':          return Follows;
 				case 'Watches':          return Watches;
+				case 'Comments':         return Comments;
+				case 'YoutubeVideos':    return YoutubeVideos;
         }
     },
 	db: function() {

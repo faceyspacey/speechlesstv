@@ -18,6 +18,7 @@ WatchModel = function(doc){
 	this.collectionName = 'Watches';
     this.defaultValues = {};
 
+	_.extend(this, AbstractVideoModel);
 	_.extend(this, Model);
 	this.extend(doc);
 	
@@ -25,7 +26,5 @@ WatchModel = function(doc){
 };
 
 WatchModel.prototype = {
-	src: function() {
-		return 'http://img.youtube.com/vi/'+this.youtube_id+'/mqdefault.jpg'
-	}
+
 };

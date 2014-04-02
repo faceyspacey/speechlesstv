@@ -1,0 +1,48 @@
+<template name="history_row">
+	<div class="history_row">
+		{{#isolate}}
+			<div class="video_info_left">
+				<div class="add_video_image_container">
+					{{#isolate}}
+						<img id="{{youtube_id}}" class="add_video_row_image" src="{{src}}" />
+					{{/isolate}}
+
+					<div class="search_fullscreen">
+						<i class="fa fa-arrows-alt"></i>
+					</div>
+
+					<div class="fast_forward">
+						{{#isolate}} {{timeFormatted}} {{/isolate}}
+						<i class="fa fa-forward"></i>
+					</div>
+				</div>
+
+
+			</div>
+		{{/isolate}}
+		
+		{{#isolate}}
+			<div class="video_info_right">
+				<div class="video_title">{{title}}</div>
+				<div class="video_comment">{{title}} {{title}}</div>
+				<div class="video_note">Watched: Monday April 1st</div>
+				<div class="video_stats">
+					<i class="fa fa-desktop"></i> 3 Views
+					<i class="fa fa-star"></i> 1 Favorites
+					<i class="fa fa-comments"></i> 30 Comments
+					<i class="fa fa-user"></i> 17 Suggestions
+				</div>
+			</div>
+		{{/isolate}}
+		
+		
+		<div class="stats_container">
+			<i class="fa fa-desktop"></i> {{watchesCount}} Views
+			<i class="fa fa-star"></i> {{favoritesCount}} Favorites
+			<i class="fa fa-comments"></i> {{commentsCount}} Comments
+			<i class="fa fa-user"></i> {{SuggestionsCount}} Suggestions
+		</div>
+		
+		<div style="clear:both;"></div>
+	</div>
+</template>

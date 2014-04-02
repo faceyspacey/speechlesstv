@@ -2,11 +2,18 @@ Template.history_side.created = function() {
 	Deps.afterFlush(function() {
 		Resizeable.resizeAllElements();
 	});
+	Session.set('history_filter', 'WATCHED');
+	
+	Session.set('history_watches_limit', 8);
+	Session.set('history_favorites_limit', 8);
+	Session.set('history_comments_limit', 8);
+	Session.set('history_suggestions_limit', 8);
+	
 };
 
 Template.history_side.helpers({
 	videos: function() {
-		return Videos.find({_local: true, checked: true});
+		return getHistorySideVideos();
 	},
 	tabSelected: function(tabName) {
 		return Session.equals('history_filter', tabName) ? 'selected' : '';
@@ -15,13 +22,18 @@ Template.history_side.helpers({
 
 Template.history_side.events({
 	'click #history_back': function() {
-		$('.cube').cube().prevSideHorizontal('#dummy_side', 1000, 'easeInBack', function() {
-			$('.cube').cube().prevSideHorizontal(Session.get('filter'), 1000, 'easeOutBack', function() {
-				Session.set('search_side', Session.get('filter'));
-			});
-		});
+		Cube.back();
 	},
 	'click .history_filter_tab': function(e) {
 		Session.set('history_filter', $(e.currentTarget).text());
 	}
 });
+
+
+getHistorySideVideos = function() {
+	if(Session.equals('history_filter', 'WATCHED')) return Watches.find({user_id: Meteor.userId()}, {limit: Session.get('history_watches_limit')});
+	if(Session.equals('history_filter', 'STARRED')) return Favorites.find({user_id: Meteor.userId()}, {limit: Session.get('history_favorites_limit')});
+	if(Session.equals('history_filter', 'COMMENTED')) return Comments.find({user_id: Meteor.userId()}, {limit: Session.get('history_comments_limit')});
+	if(Session.equals('history_filter', 'SUGGESTED')) return Suggestions.find({user_id: Meteor.userId()}, {limit: Session.get('history_suggestions_limit')});
+};
+

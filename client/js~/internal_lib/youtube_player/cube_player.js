@@ -68,14 +68,11 @@ SearchVideos = {
 		return Session.get('current_youtube_id');
 	},
 	_videos: function() {
-		if(Session.equals('search_side', '#popular_side')) return Videos.find({_local: true}).fetch();
-		else if(Session.equals('search_side', '#from_friends_side')) return Videos.find({_local: true}).fetch();
-		else if(Session.equals('search_side', '#history_side')) return Videos.find({_local: true}).fetch();
+		if(Session.equals('search_side', '#popular_side')) return Videos.find({_local: true, side: 'popular'}).fetch();
+		else if(Session.equals('search_side', '#from_friends_side')) return Videos.find({_local: true, side: 'from_friends'}).fetch();
+		else if(Session.equals('search_side', '#history_side')) {
+			return getHistorySideVideos().fetch();
+		}
 		else return Videos.find({_local: true}).fetch();
-		
-		/**
-		var videos =  Session.equals('search_side', '#search_results_side') ? Videos.find({_local: true}) : Videos.find({_local: true, checked: true});
-		return videos.fetch();
-		**/
 	}
 };

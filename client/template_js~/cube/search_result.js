@@ -1,6 +1,6 @@
 Template.search_result.helpers({
-	show: function() {
-		return this.checked ? 'display:block; color: rgb(31, 65, 170); text-shadow: 1px 1px 1px white; opacity: .9;' : 'display:none;';
+	showStar: function() {
+		return this.favorite ? 'display:block; color: rgb(31, 65, 170); text-shadow: 1px 1px 1px white; opacity: .9;' : 'display:none;';
 	}
 });
 
@@ -37,6 +37,15 @@ Template.search_result.events({
 			height: $result.height() + 4
 		}).show();
 		
+		if(percentAcrossPage < .35) {
+			Session.set('duration_position', 'left: 4px;');
+			Session.set('stats_position', 'right: 4px;');
+		}
+		else {
+			Session.set('duration_position', 'right: 4px;');
+			Session.set('stats_position', 'left: 4px;');
+		}
+		
 		
 		YoutubePlayer.mini('hover_player').setVideo(this.youtube_id, true);
 		
@@ -71,10 +80,7 @@ Template.search_result.events({
 		if(suggestButton.css('left') != '23px') suggestButton.animate({left: '+=23'}, 150, 'easeOutExpo');
 	},
 	'click .check_video': function(e) {
-		Meteor.user().favorite(this.youtube_id);
-		
-		this.checked = this.checked ? null : true;
-		this.store();
+		Meteor.user().favorite(this);
 		e.stopPropagation();
 	},
 	'click .suggest_video': function(e) {

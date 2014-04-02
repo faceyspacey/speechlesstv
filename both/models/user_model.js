@@ -26,21 +26,17 @@ UserModel.prototype = {
 	isAdmin: function() {
 		return Roles.userIsInRole(this._id, ['admin']);
 	},
-	watched: function() {
-		return Watches.find({user_id: this._id}, {limit: 5, sort: {updated_at: -1}});
+	watched: function(limit) {
+		var limit = limit || 5
+		return Watches.find({user_id: this._id}, {limit: limit, sort: {updated_at: -1}});
 	},
 	watch: function(video) {
-		var watch = new WatchModel;
-		watch.user_id = this._id;
-		watch.youtube_id = video.youtube_id;
-		watch.title = video.title;
-		watch.save();
+		var watch = new WatchModel
+		watch.saveWithAttributesOfVideo(video);
 	},
-	favorite: function(youtubeId) {
+	favorite: function(video) {
 		var favorite = new FavoriteModel;
-		favorite.user_id = this._id;
-		favorite.youtube_id = youtubeId;
-		favorite.save();
+		favorite.saveWithAttributesOfVideo(video);
 	},
 	unFavorite: function(youtubeId) {
 		Favorites.remove({user_id: this._id, youtube_id: youtubeId});

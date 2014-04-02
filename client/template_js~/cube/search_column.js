@@ -1,6 +1,12 @@
-Template.search_columns.helpers({
+Template.search_columns_popular.helpers({
 	columns: function() {
-		return Columns.find({_local: true}, {sort: {created_at: 1}});
+		return Columns.find({_local: true, side: 'popular'}, {sort: {created_at: 1}});
+	}
+});
+
+Template.search_columns_popular_from_friends.helpers({
+	columns: function() {
+		return Columns.find({_local: true, side: 'from_friends'}, {sort: {created_at: 1}});
 	}
 });
 
@@ -29,8 +35,13 @@ Template.search_column.afterCreated = function() {
 };
 
 Template.search_column.helpers({
+	isVideos: function() {
+		var side = Session.equals('search_side', '#popular_side') ? 'popular' : 'from_friends';
+		return Videos.find({_local: true, side: side, column_index: this.index}).count();
+	},
 	videos: function() {
-		return Videos.find({_local: true, column_index: this.index});
+		var side = Session.equals('search_side', '#popular_side') ? 'popular' : 'from_friends';
+		return Videos.find({_local: true, side: side, column_index: this.index});
 	}
 });
 
