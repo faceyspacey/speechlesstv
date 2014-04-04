@@ -8,3 +8,11 @@ getParameterByName = function(url, name) {
 scrollToTop = function() {
 	$('html,body').animate({scrollTop: 0}, 1000, 'easeOutBounce');
 };
+
+currentHoverPlayer = function() {
+	return 'hover_player_' + currentSide();
+};
+
+currentSide = function() {
+	return Session.get('search_side').replace('_side', '').substr(1);
+};

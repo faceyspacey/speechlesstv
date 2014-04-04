@@ -5,7 +5,6 @@ AbstractVideoModel = {
 	addVideoToPage: function(side, column, index) {
 		var v = new VideoModel;
 		
-		_.extend(v, this);
 		v.youtube_id = this.youtube_id;
 		v.title = this.title;
 		v.published_at = this.published_at;
@@ -16,6 +15,13 @@ AbstractVideoModel = {
 		v.length = v.length || '00:00';
 		v.created_at = v.created_at || moment().toDate();
 		v.side = side;
+		
+		if(this.category_name) {
+			v.category_name = this.category_name;
+			v.category_id = this.category_id;
+			v.category_color = this.category_color;
+		}	
+		
 		v.store();
 	},
 	saveWithAttributesOfVideo: function(video) {

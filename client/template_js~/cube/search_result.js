@@ -10,10 +10,10 @@ Template.search_result.events({
 		$result.removeClass('selected_result');
 		$result.find('img.video_image').css('opacity', 1);
 		
-		$('#search_video_info').hide();
-		$('#hover_player_container').css('opacity', 0);
+		$('.search_video_info').hide();
+		$('.hover_player_container').css('opacity', 0);
 		
-		YoutubePlayer.get('hover_player').pause();
+		YoutubePlayer.get(currentHoverPlayer()).pause();
 		
 		YoutubeSearcher.related(this.youtube_id, this.title);
 	},
@@ -24,13 +24,13 @@ Template.search_result.events({
 		var $result = $(e.currentTarget),
 			resultOffsetLeft = $result.offset().left,
 			percentAcrossPage = resultOffsetLeft / SearchSizes.pageWidth(),
-			containerOffsetLeft = $('#search_video_info').parent().offset().left,
+			containerOffsetLeft = $('.search_video_info').first().parent().offset().left,
 			left;
 			
 		if(percentAcrossPage < .35) left = resultOffsetLeft + SearchSizes.columnAndMarginWidth();
 		else left = resultOffsetLeft - (SearchSizes.columnAndMarginWidth() * 2);
 
-		$('#search_video_info').css({
+		$('.search_video_info').css({
 			left: left - containerOffsetLeft - 1, 
 			top: $result.offset().top - SearchSizes.header - 1, 
 			width: SearchSizes.videoInfoBoxWidth() + 2,
@@ -40,16 +40,18 @@ Template.search_result.events({
 		if(percentAcrossPage < .35) {
 			Session.set('duration_position', 'left: 4px;');
 			Session.set('stats_position', 'right: 4px;');
+			$('.search_video_stats').css('text-align', 'right');
 		}
 		else {
 			Session.set('duration_position', 'right: 4px;');
 			Session.set('stats_position', 'left: 4px;');
+			$('.search_video_stats').css('text-align', 'left');
 		}
 		
 		
-		YoutubePlayer.mini('hover_player').setVideo(this.youtube_id, true);
+		YoutubePlayer.mini(currentHoverPlayer()).setVideo(this.youtube_id, true);
 		
-		$('#hover_player_container').css({
+		$('.hover_player_container').css({
 			left: resultOffsetLeft - containerOffsetLeft,
 			top: $result.offset().top - SearchSizes.header + 1,
 			opacity: 1
@@ -65,11 +67,11 @@ Template.search_result.events({
 		$result.css('background', 'rgb(42, 103, 160)');
 		$result.removeClass('selected_result');
 		
-		$('#search_video_info').hide();
+		$('.search_video_info').hide();
 		
-		if(YoutubePlayer.get('hover_player').isPlaying()) YoutubePlayer.get('hover_player').pause();
+		if(YoutubePlayer.get(currentHoverPlayer()).isPlaying()) YoutubePlayer.get(currentHoverPlayer()).pause();
 
-		$('#hover_player_container').css('opacity', 0);
+		$('.hover_player_container').css('opacity', 0);
 		$result.find('img.video_image').css('opacity', 1);
 		
 		$(e.currentTarget).find('.suggest_video').animate({left: 0}, 150, 'easeOutExpo');
@@ -91,15 +93,15 @@ Template.search_result.events({
 	'click .fast_forward': function(e) {
 		e.stopPropagation();
 		
-		YoutubePlayer.get('hover_player').skip();
+		YoutubePlayer.get(currentHoverPlayer()).skip();
 	},
 	'click .search_fullscreen': function(e) {
 		e.stopPropagation();
 		
-		$('#search_video_info').hide();
-		YoutubePlayer.get('hover_player').pause();
+		$('.search_video_info').hide();
+		YoutubePlayer.get(currentHoverPlayer()).pause();
 			
-		Meteor.user().watch(this);	
+		Meteor.user().watch(this);		
 		CubePlayer.start(this.youtube_id);
 	}
 });

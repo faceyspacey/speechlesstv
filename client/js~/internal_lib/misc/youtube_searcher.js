@@ -3,6 +3,7 @@ YoutubeSearcher = {
 	maxThumbs: SearchSizes.thumbsPerColumn,
 	queries: {},
 	related: {},
+	popularsDownloaded: 0,
 	
 	predictiveResults: function(query) {
 		gapi.client.youtube.search.list({
@@ -20,22 +21,30 @@ YoutubeSearcher = {
 		});
 	},
 	setupPopularColumns: function() {
+		if(!YoutubeSearcher.youtubeVideosDownloaded) {
+			setTimeout(function() {
+				this.setupPopularColumns();
+			}.bind(this), 200);
+			return;
+		}
+		
 		var columnCount = SearchSizes.columnsCapacityCount();
 		
 		for(var i = 0; i < columnCount; i++) {
 			var index = i % YoutubeCategories.length,
 				category = YoutubeCategories[index];
-				
+			
+			console.log(category.name);	
 			this.popular(category);
 		}
 	},
 	popular: function(category) {
-		Deps.afterFlush(BackNext.addColumn.bind(BackNext));
+		Deps.afterFlush(BackNext.all['#popular_side'].addColumn.bind(BackNext.all['#popular_side']));
 		
 		var side = 'popular', 
 			limit = SearchSizes.thumbsPerColumn,
 			skip = YoutubeCategorySearchCounts[category.id] * limit,
-			videos = YoutubeVideos.find({category_id: category.id}, {limit: limit, skip: skip}),
+			videos = YoutubeVideos.find({category_id: category.id}, {limit: limit, skip: skip}).fetch(),
 			column = this._newColumn(side, category.name, category.color),
 			availableCategoryColumns = 8;
 
@@ -43,7 +52,7 @@ YoutubeSearcher = {
 		YoutubeCategorySearchCounts[category.id] = (YoutubeCategorySearchCounts[category.id] + 1) % availableCategoryColumns;
 		
 		_.each(videos, function(video, index) {
-			video.addToPage(side, column, index);
+			video.addVideoToPage(side, column, index);
 		}.bind(this));
 	},
 	setupFromFriendsColumns: function() {
@@ -51,32 +60,48 @@ YoutubeSearcher = {
 			return follow.followed_user_id;
 		});
 		
-		var watches = Watches.find({user_id: {$in: friendIds}}, {limit: 48, sort: {updated_at: -1}}),
-			favorites = Favorites.find({user_id: {$in: friendIds}}, {limit: 48, sort: {updated_at: -1}}),
-			comments = Comments.find({user_id: {$in: friendIds}}, {limit: 48, sort: {updated_at: -1}}),
-			suggestions = Suggestions.find({user_id: {$in: friendIds}}, {limit: 48, sort: {updated_at: -1}}),
+		var params = {},//{user_id: {$in: friendIds},
+			watches = Watches.find(params, {limit: 48, sort: {updated_at: -1}}).fetch(),
+			favorites = Favorites.find(params, {limit: 48, sort: {updated_at: -1}}).fetch(),
+			comments = Comments.find(params, {limit: 48, sort: {updated_at: -1}}).fetch(),
+			suggestions = Suggestions.find(params, {limit: 48, sort: {updated_at: -1}}).fetch(),
 			videoTypes = [watches, favorites, comments, suggestions];
 		
+		console.log('VIDEO TYPES', videoTypes);
 		
 		var columnCount = SearchSizes.columnsCapacityCount(),
-			thumbCount = SearchSizes.thumbsPerColumn;
+			thumbCount = SearchSizes.thumbsPerColumn,
+			side = 'from_friends',
+			columnInfo = [
+				{name: 'Watched', color: 'orange'}, 
+				{name: 'Starred', color: 'yellow'}, 
+				{name: 'Commented', color: 'blue'}, 
+				{name: 'Suggested', color: 'red'}
+			];
 		
 		for(var i = 0; i < columnCount; i++) {
-			var typeIndex = i % videoTypes.length,
-				columnCountOfType = Math.floor((i+1)/videoTypes.length);
+			Deps.afterFlush(BackNext.all['#from_friends_side'].addColumn.bind(BackNext.all['#from_friends_side']));
 			
-			return videoTypes[typeIndex].slice(columnCountOfType, columnCountOfType + thumbCount);
+			var typeIndex = i % videoTypes.length,
+				columnCountOfType = Math.floor((i+1)/videoTypes.length),
+				column = this._newColumn(side, columnInfo[typeIndex].name, columnInfo[typeIndex].color),
+				videos = videoTypes[typeIndex].slice(columnCountOfType, columnCountOfType + thumbCount);
+			
+			console.log('VIDEOS', videos, typeIndex, columnCountOfType, thumbCount);
+			_.each(videos, function(video, index) {
+				video.addVideoToPage(side, column, index);
+			}.bind(this));
 		}
 	},
-	popularAll: function() {
+	popularAll: function(callback) {
 		_.each(YoutubeCategories, function(category) {
-			YoutubeSearcher._popularAllExecute(category);
+			YoutubeSearcher._popularAllExecute(category, callback);
 		});
 	},
-	_popularAllExecute: function(category) {
-		if(!gapi.client.youtube) {
+	_popularAllExecute: function(category, callback) {
+		if(!gapi.client || !gapi.client.youtube) {
 			setTimeout(function() {
-				this.popularAll(category);
+				this._popularAllExecute(category, callback);
 			}.bind(this), 200);
 			return;
 		}
@@ -90,12 +115,16 @@ YoutubeSearcher = {
 		}).execute(function(response) {
 			var videos = response.items;
 			_.each(videos, function(video) {
-				YoutubeVideoModel.add(video);
-			})
+				YoutubeVideoModel.add(video, category);
+			});
+			
+			this.popularsDownloaded++;
+			
+			if(this.popularsDownloaded == YoutubeCategories.length) callback();
 		}.bind(this));
 	},
 	query: function(query) {
-		Deps.afterFlush(BackNext.addColumn.bind(BackNext));
+		Deps.afterFlush(BackNext.current.addColumn.bind(BackNext.current));
 		
 		if(this.queries[query]) return this._store(this.queries[query]);
 		
@@ -108,7 +137,7 @@ YoutubeSearcher = {
 		}, label, '#559afe');
 	},
 	related: function(relatedToVideoId, title) {
-		Deps.afterFlush(BackNext.addColumn.bind(BackNext));
+		Deps.afterFlush(BackNext.current.addColumn.bind(BackNext.current));
 		
 		if(this.related[relatedToVideoId]) return this._store(this.related[relatedToVideoId]);
 		
@@ -152,7 +181,7 @@ YoutubeSearcher = {
 			if(videosAdded.length >= this.maxThumbs) return;
 			if(!isTrueFunc || isTrueFunc.call(this, video)) {
 				this._addVideo(video, column, index);
-				videosAdded.push(v.youtube_id);
+				videosAdded.push(video.youtube_id);
 			}
 		}.bind(this));
 	},

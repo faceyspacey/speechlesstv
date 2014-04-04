@@ -2,7 +2,7 @@
 	background: white;
 }
 
-#search_results_container {
+.search_results_container {
 	position: relative;
 	width: 99%;
 	margin: 75px auto 0px;
@@ -34,7 +34,7 @@
 	padding: 15px;
 }
 
-#search_results_wrapper {
+.search_results_wrapper {
 	position: relative;
 	
 	width: 100%;
@@ -43,7 +43,7 @@
 	overflow:hidden;
 }
 
-#search_results_scroller {
+.search_results_scroller {
 	width: 10000px;
 }
 
@@ -65,12 +65,12 @@
 	
 	cursor: pointer;
 }
-#search_results_back {
+.search_results_back {
 	left:0px;
 	padding-left: 4px;
 }
 
-#search_results_next {
+.search_results_next {
 	right: 0px;
 	padding-left: 8px;
 }

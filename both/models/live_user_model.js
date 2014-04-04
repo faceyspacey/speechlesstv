@@ -1,21 +1,20 @@
-/** WatchModel attributes:
+/** LiveUserModel attributes:
  *
  * _id: "X5NnRaXiE5iu5xCnc"
  * user_id: "7suR9CJzAsiMN6ry2"
- * youtube_id: "4mInhfiDyTA"
- * title: 		string
+ * name		string
  *
 **/
 
-Watches = new Meteor.Collection('watches', {
+LiveUsers = new Meteor.Collection('live_users', {
 	transform: function(doc) {
-		return new WatchModel(doc);
+		return new LiveUserModel(doc);
 	}
 });
 
 
-WatchModel = function(doc){
-	this.collectionName = 'Watches';
+LiveUserModel = function(doc){
+	this.collectionName = 'LiveUsers';
     this.defaultValues = {};
 
 	_.extend(this, AbstractVideoModel);
@@ -25,6 +24,6 @@ WatchModel = function(doc){
     return this;
 };
 
-WatchModel.prototype = {
+LiveUserModel.prototype = {
 
 };

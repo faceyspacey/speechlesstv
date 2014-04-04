@@ -59,7 +59,7 @@ Meteor.startup(function() {
 	});
 
 	Meteor.publish('favoritesFromFriends', function() {
-		return Favorites.find({user_id: {$in: friendIds}}, limit: 48, sort: {updated_at: -1}});
+		return Favorites.find({user_id: {$in: friendIds}}, {limit: 48, sort: {updated_at: -1}});
 	});
 
 	Meteor.publish('commentsFromFriendss', function() {
@@ -67,7 +67,7 @@ Meteor.startup(function() {
 	});
 
 	Meteor.publish('suggestionsFromFriends', function() {
-		return Suggestions.find({recipient_user_id: {$in: friendIds}}, limit: 48, sort: {updated_at: -1}});
+		return Suggestions.find({recipient_user_id: {$in: friendIds}}, {limit: 48, sort: {updated_at: -1}});
 	});
 })
 
@@ -77,6 +77,21 @@ Meteor.startup(function() {
 Meteor.publish('youtube_videos', function() {
 	return YoutubeVideos.find();
 });
+
+
+
+Meteor.publish('live_video', function(youtubeId) {
+	return LiveVideos.find({youtube_id: youtubeId});
+});
+
+Meteor.publish('live_users', function(youtubeId) {
+	return LiveUsers.find({youtube_id: youtubeId});
+});
+
+Meteor.publish('live_comments', function(youtubeId) {
+	return Comments.find({youtube_id: youtubeId});
+});
+
 
 
 

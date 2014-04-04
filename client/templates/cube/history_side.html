@@ -1,16 +1,26 @@
 <template name="history_side">
 	<div class="backface primary_side" id="history_side" style="display:none;" >
 
-			<div id="add_videos_bar">
-				<div id="history_back">BACK</div>
-				<div id="history_spacer"></div>
-				{{#isolate}}
-					<div id="history_watched" class="history_filter_tab {{tabSelected 'WATCHED'}}">WATCHED</div>
-					<div id="history_starred" class="history_filter_tab {{tabSelected 'STARRED'}}">STARRED</div>
-					<div id="history_commented" class="history_filter_tab {{tabSelected 'COMMENTED'}}">COMMENTED</div>
-					<div id="history_suggested" class="history_filter_tab {{tabSelected 'SUGGESTED'}}">SUGGESTED</div>
-				{{/isolate}}
+		<div id="history_bar_cube_container" class="c_container" style="position:absolute; top:5px; left: 5px; overflow:visible; height: 60px; z-index:5;">
+			<div class="c message_cube" id="history_bar_cube" style="overflow-y:visible; ">
+				<div id="add_videos_bar" class="backface">
+					<div class="buddy_list_button bar_tab">
+						<i class="fa fa-users" style="font-size:42px;"></i>
+					</div>
+					<div id="history_back">BACK</div>
+					<div id="history_spacer"></div>
+					{{#isolate}}
+						<div id="history_watched" class="history_filter_tab {{tabSelected 'WATCHED'}}">WATCHED</div>
+						<div id="history_starred" class="history_filter_tab {{tabSelected 'STARRED'}}">STARRED</div>
+						<div id="history_commented" class="history_filter_tab {{tabSelected 'COMMENTED'}}">COMMENTED</div>
+						<div id="history_suggested" class="history_filter_tab {{tabSelected 'SUGGESTED'}}">SUGGESTED</div>
+					{{/isolate}}
+				</div>
+				
+				{{{message_bar_side 'history_side_cube'}}}
 			</div>
+		</div>
+		
 		
 		<div id="add_videos_wrapper">
 			<div id="add_videos_scroller">

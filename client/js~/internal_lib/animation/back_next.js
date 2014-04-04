@@ -1,25 +1,32 @@
-BackNext = {
-	leftColumns: 0,
-	rightColumns: 0,
-	totalColumns: 0,
-	
+BackNext = function(side) {
+	this.leftColumns = 0;
+	this.rightColumns = 0;
+	this.totalColumns = 0;
+	this.side = side;
+};
+
+
+BackNext.prototype = {
+	getScroller: function() {
+		return $(this.side).find('.search_results_scroller');
+	},
 	incrementLeft: function() {
-		Session.set('left_column_count', ++this.leftColumns);
+		Session.set('left_column_count'+this.side, ++this.leftColumns);
 	},
 	decrementLeft: function() {
-		Session.set('left_column_count', --this.leftColumns);
+		Session.set('left_column_count'+this.side, --this.leftColumns);
 	},
 	incrementRight: function() {
-		Session.set('right_column_count', ++this.rightColumns);
+		Session.set('right_column_count'+this.side, ++this.rightColumns);
 	},
 	decrementRight: function() {
-		Session.set('right_column_count', --this.rightColumns);
+		Session.set('right_column_count'+this.side, --this.rightColumns);
 	},
 	setLeft: function(value) {
-		Session.set('left_column_count', this.leftColumns = value);
+		Session.set('left_column_count'+this.side, this.leftColumns = value);
 	},
 	setRight: function(value) {
-		Session.set('right_column_count', this.rightColumns = value);
+		Session.set('right_column_count'+this.side, this.rightColumns = value);
 	},
 	
 	back: function() {
@@ -69,14 +76,37 @@ BackNext = {
 	slideToEnd: function() {
 		console.log(this);
 		var distance = this.surplusColumns() * this.columnWidth() * -1;
-		$('#search_results_scroller').hardwareAnimate({translateX: distance});
+		this.getScroller().hardwareAnimate({translateX: distance});
 	},
 	slideLeft: function() {
 		console.log(this);
-		$('#search_results_scroller').hardwareAnimate({translateX: '-='+this.columnWidth()});
+		this.getScroller().hardwareAnimate({translateX: '-='+this.columnWidth()});
 	},
 	slideRight: function() {
 		console.log(this);
-		$('#search_results_scroller').hardwareAnimate({translateX: '+='+this.columnWidth()});
+		this.getScroller().hardwareAnimate({translateX: '+='+this.columnWidth()});
+	},
+	
+	showBack: function() {
+		return Session.get('left_column_count'+this.side) > 0 ? 'block' : 'none';
+	},
+	showNext: function() {
+		return Session.get('right_column_count'+this.side) > 0 ? 'block' : 'none';
 	}
 };
+
+
+Meteor.startup(function() {
+	BackNext.all = {};
+	BackNext.all['#popular_side'] = BackNext.current = new BackNext('#popular_side');
+	BackNext.all['#from_friends_side'] = new BackNext('#from_friends_side');
+	
+	Deps.autorun(function() {
+		var currentSide = Session.get('search_side');
+		BackNext.current = BackNext.all[currentSide];
+		if(BackNext.current) Session.set('back_next_ready', true);
+	});
+});
+
+
+

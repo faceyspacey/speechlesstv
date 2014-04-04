@@ -45,7 +45,7 @@ SearchSizes = {
 	
 	
 	pageWidth: function() {
-		return $('#search_results_wrapper').width();
+		return $('.search_results_wrapper').first().width();
 	},
 	
 	backNextPaddingTop: function() {

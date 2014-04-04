@@ -121,8 +121,6 @@ Template.search_bar_side.events({
 		$(e.currentTarget).css('opacity', '.9');
 	},
 	'click #history_button': function() {	
-		Session.set('search_side', '#history_side');
-		
 		Cube.historySide();
 	}
 });

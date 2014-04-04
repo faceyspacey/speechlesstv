@@ -26,5 +26,16 @@ SuggestionModel = function(doc){
 };
 
 SuggestionModel.prototype = {
-
+	sender: function() {
+		return Meteor.users.findOne(this.sender_user_id);
+	},
+	recipient: function() {
+		return Meteor.users.findOne(this.recipient_user_id);
+	},
+	date: function() {
+		return 'Suggested on: '+moment(this.created_at).format("dddd MMMM do @ h:mma");
+	},
+	note: function() {
+		return 'Suggested to ' + this.recipient().name + ' by ' + this.sender().name;
+	}
 };

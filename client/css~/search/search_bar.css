@@ -2,7 +2,7 @@
 	z-index: 3;
 }
 
-#search_bar > .bar_tab {
+.bar_tab {
 	float:left;
 	height: 60px;
 	margin-right: 1px;
@@ -20,7 +20,7 @@
 	z-index: 2;
 }
 
-#search_bar > .buddy_list_button {
+.buddy_list_button {
 	width: 70px;
 	
 	background: #559afe;

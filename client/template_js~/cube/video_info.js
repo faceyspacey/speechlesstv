@@ -1,13 +1,3 @@
-Template.hover_player.afterCreated = function() {
-	YoutubePlayer.mini('hover_player');
-};
-
-Template.hover_player.destroyed = function() {
-	YoutubePlayer.mini('hover_player').destroy();
-};
-
-
-
 Template.search_video_info.helpers({
 	title: function() {
 		if(!Session.get('current_search_video_id')) return '';
@@ -17,10 +7,15 @@ Template.search_video_info.helpers({
 	
 	time: function() {
 		if(!Session.get('current_player_id')) return '00:00';
-		return YoutubePlayer.get('hover_player').timeFormatted();
+		
+		var player = YoutubePlayer.get(currentHoverPlayer());
+		return player ? YoutubePlayer.get(currentHoverPlayer()).timeFormatted() : '00:00';
 	},
 	duration: function() {
-		return YoutubePlayer.get('hover_player').durationFormatted();
+		if(!Session.get('current_player_id')) return '00:00';
+		
+		var player = YoutubePlayer.get(currentHoverPlayer());
+		return player ? YoutubePlayer.get(currentHoverPlayer()).durationFormatted() : '00:00';
 	},
 	
 	

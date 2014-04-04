@@ -1,17 +1,17 @@
 <template name="search_video_info">
-	<div id="search_video_info" style="display:none;">
+	<div class="search_video_info" style="display:none;">
 		{{#isolate}}
 			{{#with current_search_video}}
 				{{#isolate}}
-					<div id="search_video_title">{{title}}</div>
+					<div class="search_video_title">{{title}}</div>
 				{{/isolate}}
 				
-				<div id="search_video_duration" style="{{duration_position}}">
+				<div class="search_video_duration" style="{{duration_position}}">
 					{{#isolate}}<span>{{time}}/{{duration}}</span>{{/isolate}}
 				</div>
 				
 				{{#isolate}}
-					<div id="search_video_stats" style="{{stats_position}}">
+					<div class="search_video_stats" style="{{stats_position}}">
 						<i class="fa fa-desktop"></i> {{watchesCount}}
 						<i class="fa fa-star"></i> {{favoritesCount}}
 						<i class="fa fa-comments"></i> {{commentsCount}}
@@ -20,11 +20,5 @@
 				{{/isolate}}
 			{{/with}}
 		{{/isolate}}
-	</div>
-</template>
-
-<template name="hover_player">
-	<div id="hover_player_container">
-		<div id="hover_player"></div>
 	</div>
 </template>

@@ -34,7 +34,7 @@ YoutubeVideoModel.prototype = {
 	}
 };
 
-YoutubeVideoModel.add = function(video) {
+YoutubeVideoModel.add = function(video, category) {
 	var v = new YoutubeVideoModel;
 	v.youtube_id = video.id.videoId || video.id;
 	v.title = video.snippet.title;
@@ -49,12 +49,18 @@ YoutubeVideoModel.add = function(video) {
 }
 
 
-if(Meteor.isClient) {
-	Meteor.startup(function() {
-		if(moment().format('DDDD') != YoutubeVideos.findOne().getDayAdded()) {
-			Meteor.call('deleteYoutubeVideos', function() {
-				YoutubeSearcher.popularAll();
-			});
-		}
-	});
-}
+Meteor.startup(function() {
+	if(Meteor.isClient) {
+		Meteor.subscribe('youtube_videos', function() {
+			if(!YoutubeVideos.findOne() || moment().format('DDDD') != YoutubeVideos.findOne().getDayAdded()) {
+				Meteor.call('deleteYoutubeVideos', function() {
+					YoutubeSearcher.popularAll(function() {
+						YoutubeSearcher.youtubeVideosDownloaded = true;
+					});
+				});
+			}
+			else YoutubeSearcher.youtubeVideosDownloaded = true;;
+		});
+	}
+});
+

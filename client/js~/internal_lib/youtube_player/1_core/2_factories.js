@@ -1,6 +1,10 @@
 YoutubePlayers = {};
 
 YoutubePlayer.current = null;
+YoutubePlayer.current_play_time = function() {
+ return (YoutubePlayer.current && YoutubePlayer.current.time()) ? YoutubePlayer.current.time(): 0;	
+};
+
 
 YoutubePlayer.get = function(playerId) {
 	return YoutubePlayers[playerId];

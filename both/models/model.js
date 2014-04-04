@@ -12,6 +12,8 @@ Model = {
 				case 'Watches':          return Watches;
 				case 'Comments':         return Comments;
 				case 'YoutubeVideos':    return YoutubeVideos;
+				case 'LiveVideos':       return LiveVideos;
+				case 'LiveUsers': 		 return LiveUsers;
         }
     },
 	db: function() {
@@ -48,6 +50,24 @@ Model = {
 		this.refresh();
 		
 		return this._id;
+	},
+	increment: function() {
+		this.db().update(this._id, {$inc: attVal});
+		this.refresh();
+		
+		return this._id;
+	},
+	push: function(attVal) {
+		this.db().update(this._id, {$push: attVal});
+	},
+	pop: function(att) {
+		this.db().update(this._id, {$pop: {att: 1}});
+	},
+	shift: function(att) {
+		this.db().update(this._id, {$pop: {att: -1}});
+	},
+	remove: function() {
+		this.db().remove(this._id);
 	},
     refresh: function(){
         this.extend(this.collection().findOne(this._id));

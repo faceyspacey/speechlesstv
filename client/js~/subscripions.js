@@ -27,3 +27,5 @@ Deps.autorun(function() {
 
 
 Meteor.subscribe('follows', Meteor.userId());
+
+Meteor.subscribe('live_users', Session.get('current_live_youtube_id'));

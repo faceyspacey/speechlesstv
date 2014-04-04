@@ -21,11 +21,19 @@ Template.history_side.helpers({
 });
 
 Template.history_side.events({
+	'click .buddy_list_button': function() {
+		$('.cube').getCube().toggleBuddyList();
+	},
 	'click #history_back': function() {
 		Cube.back();
 	},
 	'click .history_filter_tab': function(e) {
 		Session.set('history_filter', $(e.currentTarget).text());
+	},
+	'click #history_spacer': function(e) {
+		$(e.currentTarget).parents('.message_cube').cube().rotate({rotateX: '+=90'}, null, null, null, function() {
+			
+		});
 	}
 });
 

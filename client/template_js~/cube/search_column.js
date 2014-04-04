@@ -1,46 +1,63 @@
 Template.search_columns_popular.helpers({
 	columns: function() {
 		return Columns.find({_local: true, side: 'popular'}, {sort: {created_at: 1}});
+	},
+	isVideos: function() {
+		return Videos.find({_local: true, side: 'popular', column_index: this.index}).count();
 	}
 });
 
-Template.search_columns_popular_from_friends.helpers({
+Template.search_columns_from_friends.helpers({
 	columns: function() {
 		return Columns.find({_local: true, side: 'from_friends'}, {sort: {created_at: 1}});
+	},
+	isVideos: function(column) {
+		return Videos.find({_local: true, side: 'from_friends', column_index: this.index}).count();
 	}
 });
 
 
 
+ColumnCue = {
+	buffer: [],
+	cue: function(column) {
+		this.buffer.push(column);
+		if(!this.isTicking) this.tick();
+	},
+	animateInColumn: function(column) {
+		var $column = $(column);
+
+		$column.fadeIn('slow');
+
+		$column.find('.search_result').each(function(index, el) {
+			var $el = $(el),
+				top = $el.offset().top + $el.height();
+
+			$el.hardwareAnimate({translateY: '-='+top}, 0, 'linear', function() {
+				setTimeout(function() {
+					$el.hardwareAnimate({translateY: '+='+top}, 400, 'easeOutBack');
+				}, (index + 1) * 50);
+			});
+		});
+
+		setTimeout(function() {
+			$column.find('.column_label').animate({bottom: -4}, 300, 'easeOutExpo');
+		}, 700);
+	},
+	tick: function() {
+		this.isTicking = true;
+		setInterval(function() {
+			if(this.buffer.length > 0) this.animateInColumn(this.buffer.shift());
+		}.bind(this), 200);
+	}
+};
 
 Template.search_column.afterCreated = function() {
-	var $column = $(this.firstNode);
-	
-	$column.fadeIn('slow');
-	
-	$column.find('.search_result').each(function(index, el) {
-		var $el = $(el),
-			top = $el.offset().top + $el.height();
-			
-		$el.hardwareAnimate({translateY: '-='+top}, 0, 'linear', function() {
-			setTimeout(function() {
-				$el.hardwareAnimate({translateY: '+='+top}, 400, 'easeOutBack');
-			}, (index + 1) * 50);
-		});
-	});
-	
-	setTimeout(function() {
-		$column.find('.column_label').animate({bottom: -4}, 300, 'easeOutExpo');
-	}, 700);
+	ColumnCue.cue(this.find('.search_result_column'));
 };
 
 Template.search_column.helpers({
-	isVideos: function() {
-		var side = Session.equals('search_side', '#popular_side') ? 'popular' : 'from_friends';
-		return Videos.find({_local: true, side: side, column_index: this.index}).count();
-	},
-	videos: function() {
-		var side = Session.equals('search_side', '#popular_side') ? 'popular' : 'from_friends';
+	videos: function(side) {
 		return Videos.find({_local: true, side: side, column_index: this.index});
 	}
 });

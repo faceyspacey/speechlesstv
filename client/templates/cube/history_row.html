@@ -24,14 +24,9 @@
 		{{#isolate}}
 			<div class="video_info_right">
 				<div class="video_title">{{title}}</div>
-				<div class="video_comment">{{title}} {{title}}</div>
-				<div class="video_note">Watched: Monday April 1st</div>
-				<div class="video_stats">
-					<i class="fa fa-desktop"></i> 3 Views
-					<i class="fa fa-star"></i> 1 Favorites
-					<i class="fa fa-comments"></i> 30 Comments
-					<i class="fa fa-user"></i> 17 Suggestions
-				</div>
+				{{#if date}}<div class="video_comment">{{date}}</div>{{/if}}
+				{{#if note}}<div class="video_note">{{note}}</div>{{/if}}
+				{{#if info}}<div class="video_stats" style="display:none;">{{info}}</div>{{/if}}
 			</div>
 		{{/isolate}}
 		
@@ -40,7 +35,7 @@
 			<i class="fa fa-desktop"></i> {{watchesCount}} Views
 			<i class="fa fa-star"></i> {{favoritesCount}} Favorites
 			<i class="fa fa-comments"></i> {{commentsCount}} Comments
-			<i class="fa fa-user"></i> {{SuggestionsCount}} Suggestions
+			<i class="fa fa-user"></i> {{suggestionsCount}} Suggestions
 		</div>
 		
 		<div style="clear:both;"></div>

@@ -43,6 +43,6 @@ YoutubeCategories = [
 ];
 
 YoutubeCategorySearchCounts = {};
-_.each(YoutubeCategorySearchCounts, function(cat) {
+_.each(YoutubeCategories, function(cat) {
 	YoutubeCategorySearchCounts[cat.id] = 0;
 });

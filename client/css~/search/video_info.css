@@ -1,4 +1,4 @@
-#search_video_info {
+.search_video_info {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -17,24 +17,28 @@
 	
 }
 
-#search_video_title {
+.search_video_title {
 	width: 100%;
 	padding: 4px;		
 }
 
-#search_video_duration {
+.search_video_duration {
 	position: absolute;
 	bottom: 4px;
 	
 	font-size: 12px;
 }
 
-#search_video_stats {
+.search_video_stats {
 	position: absolute;
 	bottom: 4px;
 	font-size: 12px;
+	
+	height: 14px;
+	overflow: hidden;
+	width: 144px;
 }
 
-#search_video_stats i {
+.search_video_stats i {
 	margin-left: 3px;
 }

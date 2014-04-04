@@ -27,5 +27,10 @@ CommentModel = function(doc){
 };
 
 CommentModel.prototype = {
-	
+	date: function() {
+		return 'Commented: '+moment(this.created_at).format("dddd MMMM do @ h:mma")
+	},
+	note: function() {
+		return 'YOUR LAST COMMENT: "'+message+'"';
+	}
 };

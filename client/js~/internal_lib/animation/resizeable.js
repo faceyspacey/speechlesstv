@@ -31,7 +31,7 @@ Resizeable = {
 				barWidth = width - padding,
 				searchFieldWidth = barWidth - SearchSizes.toolbarWidth - SearchSizes.toolbarSpacing - SearchSizes.buddyListButton;
 			
-			$('#bar_cube_container, #add_videos_wrapper').css('width', barWidth);
+			$('#bar_cube_container, #history_bar_cube_container, #add_videos_wrapper').css('width', barWidth);
 			$('#search_bar input#search_query').css('width', searchFieldWidth);
 			$('#search_bar .enter_button ').css('left', searchFieldWidth - 30);
 			
@@ -40,7 +40,7 @@ Resizeable = {
 			messageFormWidth -= $('.message_bar_side .post_to_twitter').first().outerWidth();
 			messageFormWidth -= $('.message_bar_side .respond').first().outerWidth();
 			messageFormWidth -= $('.message_bar_side .dismiss').first().outerWidth();
-			$('#bar_cube_container .message_form ').css('width', messageFormWidth - 5); 
+			$('#bar_cube_container .message_form, #history_bar_cube_container .message_form').css('width', messageFormWidth - 5); 
 			
 			var messageFormWidth = 980;
 			messageFormWidth -= $('.message_bar_side .post_to_twitter').first().outerWidth();
@@ -53,7 +53,12 @@ Resizeable = {
 			
 			$('#add_videos_wrapper').css('height', height - SearchSizes.header);
 			$('#add_videos_bar').css('width', barWidth);
-			$('#add_videos_bar #add_videos_spacer').css('width', barWidth - SearchSizes.toolbarWidth - 40 - SearchSizes.toolbarSpacing);
+			
+			var buddyListButton = 70,
+				tabs = 800,
+				back = 100,
+				margins = 7;
+			$('#history_spacer').css('width', barWidth - back - buddyListButton - tabs - margins);
 			injectCSS('.add_video_row', 'width: '+barWidth+'px;');
 		},
 		searchResults: function(width, height) {	
@@ -91,7 +96,7 @@ Resizeable = {
 		injectCSS('.search_result_column', 'width: '+SearchSizes.columnWidth+'px');
 		injectCSS('.video_image', 'height: '+height+'px');
 		injectCSS('.search_result', 'height: '+height+'px');
-		$('#hover_player_container').css({width: width+1, height: height});
+		$('.hover_player_container').css({width: width+1, height: height});
 
 		injectCSS('.search_result_column', 'margin-right: '+SearchSizes.columnMarginRight()+'px');	
 		//Session.set('total_column_capacity', SearchSizes.columnsCapacityCount());

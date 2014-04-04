@@ -1,7 +1,3 @@
-Template.history_row.rendered = function() {
-	Session.set('category_id_'+this.data.youtube_id, $('select', this.firstNode).val());
-};
-
 Template.history_row.helpers({
 	timeFormatted: function() {
 		var playerId = Session.get('current_player_id'),

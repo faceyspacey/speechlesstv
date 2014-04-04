@@ -14,7 +14,7 @@ Template.search.created = function() {
 
 Template.search_help_graphic.helpers({
 	show: function() {
-		return Videos.find({_local: true}).count() === 0;
+		return Videos.find({_local: true, side: 'from_friends'}).count() === 0;
 	}
 });
 
@@ -23,19 +23,19 @@ Template.search_help_graphic.helpers({
 
 Template.back_next_buttons.helpers({
 	showBack: function() {
-		return Session.get('left_column_count') > 0 ? 'block' : 'none';
+		return Session.get('back_next_ready') ? BackNext.current.showBack() : 'none';
 	},
 	showNext: function() {
-		return Session.get('right_column_count') > 0 ? 'block' : 'none';
+		return Session.get('back_next_ready') ? BackNext.current.showNext() : 'none';
 	}
 });
 
 Template.back_next_buttons.events({
-	'click #search_results_back': function() {
-		BackNext.back();
+	'click .search_results_back': function() {
+		BackNext.current.back();
 	},
-	'click #search_results_next': function() {
-		BackNext.next();
+	'click .search_results_next': function() {
+		BackNext.current.next();
 	}
 });
 

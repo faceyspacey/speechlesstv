@@ -1,20 +1,21 @@
-/** FavoriteModel attributes:
+/** WatchModel attributes:
  *
  * _id: "X5NnRaXiE5iu5xCnc"
  * user_id: "7suR9CJzAsiMN6ry2"
  * youtube_id: "4mInhfiDyTA"
+ * title: 		string
  *
 **/
 
-Favorites = new Meteor.Collection('favorites', {
+Watches = new Meteor.Collection('watches', {
 	transform: function(doc) {
-		return new FavoriteModel(doc);
+		return new WatchModel(doc);
 	}
 });
 
 
-FavoriteModel = function(doc){
-	this.collectionName = 'Favorites';
+WatchModel = function(doc){
+	this.collectionName = 'Watches';
     this.defaultValues = {};
 
 	_.extend(this, AbstractVideoModel);
@@ -24,8 +25,8 @@ FavoriteModel = function(doc){
     return this;
 };
 
-FavoriteModel.prototype = {
+WatchModel.prototype = {
 	date: function() {
-		return 'Starred on: '+moment(this.created_at).format("dddd MMMM do @ h:mma");
+		return 'Watched on: '+moment(this.created_at).format("dddd MMMM do @ h:mma");
 	}
 };
