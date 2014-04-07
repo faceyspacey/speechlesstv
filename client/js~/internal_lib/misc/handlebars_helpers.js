@@ -141,6 +141,10 @@ Handlebars.registerHelper('message_bar_side', function(id) {
 	else return Template.message_bar_side({id: id, fullscreen: false});
 });
 
+Handlebars.registerHelper('get_search_side', function(id) {
+	return Template.search_bar_side({id: id});
+});
+
 Handlebars.registerHelper('playerReady', function(playerId) {		
 	return Session.get('player_ready_'+playerId);
 });

@@ -72,7 +72,6 @@ UserModel.prototype = {
 			liveUser.user_id = Meteor.userId();
 			liveUser.saveWithAttributesOfVideo(video);
 		});
-		
 		this.liveCommentsSubscription = Meteor.subscribe('live_comments', video.youtube_id);
 	},
 	exitLiveMode: function(video) {
@@ -89,7 +88,6 @@ UserModel.prototype = {
 	},
 	startTrackingVideoTime: function(liveVideo) {
 		this._updateStartTime();
-		
 		this.timeChecker = setInterval(function() {	
 			//if the player's time is more than 2 seconds out of sync with the last recorded start_time update start time
 			if(this._getStartTime() - liveVideo.start_time > 2 || this._getStartTime() - liveVideo.start_time < -2) this._updateStartTime();

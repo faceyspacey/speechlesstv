@@ -24,23 +24,23 @@ Resizeable = {
 		    $('.cube_container').css('height', height);
 		},
 		searchContainer: function(width, height) {
-			$('#search_results_container').css('width', width - SearchSizes.pagePadding);
+			$('.search_results_container').css('width', width - SearchSizes.pagePadding);
 		},
 		searchBar: function(width, height) {
 			var padding = SearchSizes.pagePadding,
 				barWidth = width - padding,
 				searchFieldWidth = barWidth - SearchSizes.toolbarWidth - SearchSizes.toolbarSpacing - SearchSizes.buddyListButton;
 			
-			$('#bar_cube_container, #history_bar_cube_container, #add_videos_wrapper').css('width', barWidth);
-			$('#search_bar input#search_query').css('width', searchFieldWidth);
-			$('#search_bar .enter_button ').css('left', searchFieldWidth - 30);
+			$('.bar_cube_container, #history_bar_cube_container, #add_videos_wrapper').css('width', barWidth);
+			$('.search_bar input.search_query').css('width', searchFieldWidth);
+			$('.search_bar .enter_button ').css('left', searchFieldWidth - 30);
 			
 			var messageFormWidth = barWidth;
 			messageFormWidth -= $('.message_bar_side .watch').first().outerWidth();
 			messageFormWidth -= $('.message_bar_side .post_to_twitter').first().outerWidth();
 			messageFormWidth -= $('.message_bar_side .respond').first().outerWidth();
 			messageFormWidth -= $('.message_bar_side .dismiss').first().outerWidth();
-			$('#bar_cube_container .message_form, #history_bar_cube_container .message_form').css('width', messageFormWidth - 5); 
+			$('.bar_cube_container .message_form, #history_bar_cube_container .message_form').css('width', messageFormWidth - 5); 
 			
 			var messageFormWidth = 980;
 			messageFormWidth -= $('.message_bar_side .post_to_twitter').first().outerWidth();

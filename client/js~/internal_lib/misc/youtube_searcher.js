@@ -80,17 +80,20 @@ YoutubeSearcher = {
 			];
 		
 		for(var i = 0; i < columnCount; i++) {
-			Deps.afterFlush(BackNext.all['#from_friends_side'].addColumn.bind(BackNext.all['#from_friends_side']));
-			
 			var typeIndex = i % videoTypes.length,
 				columnCountOfType = Math.floor((i+1)/videoTypes.length),
-				column = this._newColumn(side, columnInfo[typeIndex].name, columnInfo[typeIndex].color),
 				videos = videoTypes[typeIndex].slice(columnCountOfType, columnCountOfType + thumbCount);
-			
-			console.log('VIDEOS', videos, typeIndex, columnCountOfType, thumbCount);
-			_.each(videos, function(video, index) {
-				video.addVideoToPage(side, column, index);
-			}.bind(this));
+				
+			if(videos.length > 0) {
+				var column = this._newColumn(side, columnInfo[typeIndex].name, columnInfo[typeIndex].color);
+				
+				Deps.afterFlush(BackNext.all['#from_friends_side'].addColumn.bind(BackNext.all['#from_friends_side']));
+				
+				console.log('VIDEOS', videos, typeIndex, columnCountOfType, thumbCount);
+				_.each(videos, function(video, index) {
+					video.addVideoToPage(side, column, index);
+				}.bind(this));
+			}
 		}
 	},
 	popularAll: function(callback) {
@@ -157,7 +160,7 @@ YoutubeSearcher = {
 		}.bind(this));
 	},
 	_store: function(newVideos, q, relatedToVideoId, label, color) {	
-		var column = this._newColumn('popular', label, color),
+		var column = this._newColumn(currentSide(), label, color),
 			videosAdded = [],
 			currentVideos = Videos.find({_local: true}).map(function(video) { return video.youtube_id; });
 		
@@ -187,6 +190,7 @@ YoutubeSearcher = {
 	},
 	_addVideo: function(video, column, index) {
 		var v = new VideoModel;
+		v.side = column.side;
 		v.youtube_id = video.id.videoId || video.id;
 		v.title = video.snippet.title;
 		v.published_at = moment(video.snippet.publishedAt).toDate();
@@ -200,7 +204,7 @@ YoutubeSearcher = {
 	_newColumn: function(side, label, color) {
 		var c = new ColumnModel;
 		c.side = side;
-		c.index = ColumnModel.nextIndex();
+		c.index = ColumnModel.nextIndex(side);
 		c.created_at = moment().toDate();
 		c.label = label;
 		c.color = color;

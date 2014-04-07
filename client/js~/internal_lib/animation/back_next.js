@@ -42,6 +42,7 @@ BackNext.prototype = {
 	
 	
 	addColumn: function() {
+		console.log('COLUMN ADDED', this.totalColumns, this.leftColumns);
 		this.totalColumns++;
 		
 		if(this.isTooManyColumns()) {

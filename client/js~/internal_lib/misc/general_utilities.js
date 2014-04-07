@@ -14,5 +14,14 @@ currentHoverPlayer = function() {
 };
 
 currentSide = function() {
+	if(!Session.get('search_side')) return 'popular';
 	return Session.get('search_side').replace('_side', '').substr(1);
+};
+
+$currentSide = function() {
+	return $('#'+currentSide()+'_side');
+};
+
+$currentSearchBar = function() {
+	return $('#'+currentSide()+'_side').find('.search_bar');
 };

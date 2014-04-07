@@ -24,7 +24,7 @@ Cube.prototype = {
 		this.element.hardwareAnimate(params, duration, easing, function() {
 			if(this._getDegrees() != 30) this.currentSide.hide();
 			
-			this._applyCover();
+			this.applyCover();
 			
 			this._setPreviousSide(params);
 			
@@ -36,21 +36,23 @@ Cube.prototype = {
 		}.bind(this));
 	},
 	
-	_applyCover: function() {
-		if(this._getDegrees() == 30) {
-			console.log('apply cover');
-			
-			$('<div />', {
-				class: 'cover_sheet'
-			}).click(function() {
-				$('.cube').getCube().toggleBuddyList();
-			}).bind('mouseenter', function() {
-				$(this).css('opacity', .3);
-			}).bind('mouseleave', function() {
-				$(this).css('opacity', .1);
-			}).appendTo(this.currentSide);
-		}
-		else if(this._getDegrees() == -30) $('.cover_sheet').remove();
+	applyCover: function() {
+		if(this._getDegrees() == 30) this.appendCover(102);
+		else if(this._getDegrees() == -30) this.removeCover();
+	},
+	appendCover: function(zIndex) {
+		$('<div />', {
+			class: 'cover_sheet'
+		}).css('z-index', zIndex || 100).click(function() {
+			$('.cube').getCube().toggleBuddyList();
+		}).bind('mouseenter', function() {
+			$(this).css('opacity', .3);
+		}).bind('mouseleave', function() {
+			$(this).css('opacity', .1);
+		}).appendTo(this.currentSide);
+	},
+	removeCover: function() {
+		$('.cover_sheet').remove();
 	},
 	
 	_prepareRotateX: function(params, newSide) {
@@ -243,25 +245,27 @@ jQuery.fn.rotate = function(rotateParams, newSide, duration, easing, callback) {
 	return this;
 };
 
-Cube.popularSide = function() {
+Cube.popularSide = function(callback) {
 	$('.cube').cube().nextSideHorizontal('#dummy_side', 1000, 'easeInBack', function() {
 		$('.cube').cube().nextSideHorizontal('#popular_side', 1000, 'easeOutBack', function() {
 			Session.set('previous_side', Session.get('search_side'));
 			Session.set('search_side', '#popular_side');
+			if(callback) callback.call();
 		});
 	});
 };
 
-Cube.fromFriendsSide = function() {
+Cube.fromFriendsSide = function(callback) {
 	$('.cube').cube().nextSideHorizontal('#dummy_side', 1000, 'easeInBack', function() {
 		$('.cube').cube().nextSideHorizontal('#from_friends_side', 1000, 'easeOutBack', function() {
 			Session.set('previous_side', Session.get('search_side'));
 			Session.set('search_side', '#from_friends_side');
+			if(callback) callback.call();
 		});
 	});
 };
 
-Cube.historySide = function() {
+Cube.historySide = function(callback) {
 	$('.cube').cube().nextSideHorizontal('#dummy_side', 1000, 'easeInBack', function() {
 		$('.cube').cube().nextSideHorizontal('#history_side', 1000, 'easeOutBack', function() {
 			Session.set('previous_side', Session.get('search_side'));
@@ -279,16 +283,18 @@ Cube.historySide = function() {
 					}
 				}
 			});
+			if(callback) callback.call();
 		});
 	});
 };
 
-Cube.back = function() {
+Cube.back = function(callback) {
 	$('.cube').cube().prevSideHorizontal('#dummy_side', 1000, 'easeInBack', function() {
 		$('.cube').cube().prevSideHorizontal(Session.get('previous_side'), 1000, 'easeOutBack', function() {
 			var previousSide = Session.get('previous_side');
 			Session.set('previous_side', Session.get('search_side'));
 			Session.set('search_side', previousSide);
+			if(callback) callback.call();
 		});
 	});
 };

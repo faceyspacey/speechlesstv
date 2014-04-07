@@ -1,5 +1,9 @@
-#search_bar {
-	z-index: 3;
+.search_bar {
+	z-index: 101;
+}
+
+.bar_cube_container {
+	z-index: 101;
 }
 
 .bar_tab {
@@ -30,18 +34,18 @@
 	padding-left: 8px;
 }
 
-#search_bar > .buddy_list_button:hover {
+.search_bar > .buddy_list_button:hover {
 	background-color: rgb(42, 103, 160);
 	text-shadow: 1px 1px 1px rgb(33, 67, 78);
 	cursor: pointer;
 }
 
-#search_bar > input#search_query {
+.search_bar > input.search_query {
 	width: 40%;	
 	cursor: text;
 }
 
-#search_bar > .enter_button {
+.search_bar > .enter_button {
 	box-shadow: 0px 0px 6px 3px rgb(37, 95, 168);
 	height: 25px;
 	width: 88px;
@@ -55,14 +59,14 @@
 }
 
 
-#search_bar > #popular_vs_friends {
+.search_bar > .side_selector {
 	width: 100px;
 	background: none;
 	
 	padding: 0px;
 }
 
-#search_bar > #popular_vs_friends .popular_vs_friends {
+.search_bar > .side_selector .popular_vs_friends {
 	width: 100%;
 	height: 30px;
 	background: #559afe;
@@ -71,30 +75,30 @@
 	text-align: center;
 }
 
-#search_bar > #popular_vs_friends .popular_vs_friends:hover {
+.search_bar > .side_selector .popular_vs_friends:hover {
 	background-color: rgb(42, 103, 160);
 	text-shadow: 1px 1px 1px rgb(33, 67, 78);
 }
 
-#search_bar > #popular_vs_friends .popular_vs_friends:active {
+.search_bar > .side_selector .popular_vs_friends:active {
 	background-color: black;
 }
 
-#search_bar > #popular_vs_friends .popular_vs_friends.checked {
+.search_bar > .side_selector .popular_vs_friends.checked {
 	background: #3A414D;
 }
 
-#search_bar > #popular_vs_friends #popular {
+.search_bar > .side_selector .popular {
 }
 
-#search_bar > #popular_vs_friends #from_friends {
+.search_bar > .side_selector .from_friends {
 	margin-top: 1px;
 	height: 29px;;
 }
 
 
 
-#search_bar > #search_category_dropdown {
+.search_bar > .search_category_dropdown {
 	width: 250px;
 	
 	font-size: 28px;
@@ -106,20 +110,21 @@
 	z-index: 3;
 }
 
-#search_bar > #search_category_dropdown:hover {
+.search_bar > .search_category_dropdown:hover {
 	background-color: rgb(42, 103, 160);
 	text-shadow: 1px 1px 1px rgb(33, 67, 78);
 }
 
 
-#search_bar > #search_category_dropdown #search_category_options {
+.search_bar > .search_category_dropdown .search_category_options {
 	width: 250px;
 	position: absolute;
 	top: 62px;
+	overflow-y: hidden;
 }
 
 
-#search_bar > #search_category_dropdown #search_category_options  .search_category_option {
+.search_bar > .search_category_dropdown .search_category_options  .search_category_option {
 	width: 100%;
 	margin-top: 3px;
 	
@@ -137,12 +142,12 @@
 	opacity: .9;
 }
 
-#search_bar > #search_category_dropdown #search_category_options  .search_category_option:hover {
+.search_bar > .search_category_dropdown .search_category_options  .search_category_option:hover {
 	text-shadow: 1px 1px 1px rgb(33, 67, 78);
 }
 
 
-#search_bar > #history_button {
+.search_bar > .history_button {
 	width: 110px;
 	margin-right: 0px;
 	
@@ -152,44 +157,44 @@
 	padding-top: 16px;
 }
 
-#search_bar > #history_button:hover {
+.search_bar > .history_button:hover {
 	background-color: rgb(42, 103, 160);
 	text-shadow: 1px 1px 1px rgb(33, 67, 78);	
 }
 
-#search_bar > #history_button:active {
+.search_bar > .history_button:active {
 	background-color: black;
 	text-shadow: gray;
 }
 
 
 
-#search_bar input::-webkit-input-placeholder {
+.search_bar input::-webkit-input-placeholder {
 	color: white !important;
 	font-size: 32px !important;
 	
 }
 
 
-#search_bar ::-webkit-input-placeholder {
+.search_bar ::-webkit-input-placeholder {
    	color: white !important;
 	font-size: 32px !important;
 	
 }
 
-#search_bar :-moz-placeholder { /* Firefox 18- */
+.search_bar :-moz-placeholder { /* Firefox 18- */
    	color: white !important;
 	font-size: 32px !important;
 	
 }
 
-#search_bar ::-moz-placeholder {  /* Firefox 19+ */
+.search_bar ::-moz-placeholder {  /* Firefox 19+ */
    	color: white !important;
 	font-size: 32px !important;
 	
 }
 
-#search_bar :-ms-input-placeholder{  
+.search_bar :-ms-input-placeholder{  
    	color: white !important;
 	font-size: 32px !important;
 	

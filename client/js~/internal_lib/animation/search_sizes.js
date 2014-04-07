@@ -40,12 +40,12 @@ SearchSizes = {
 		return this.columnsCapacityCount() * this.columnWidth;
 	},
 	columnsCapacityCount: function() {
-		return Math.floor(this.pageWidth() / this.columnWidth)
+		return Math.floor(this.pageWidth() / this.columnWidth);
 	},
 	
 	
 	pageWidth: function() {
-		return $('.search_results_wrapper').first().width();
+		return $currentSide().find('.search_results_wrapper').width();
 	},
 	
 	backNextPaddingTop: function() {

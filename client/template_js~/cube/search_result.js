@@ -24,7 +24,7 @@ Template.search_result.events({
 		var $result = $(e.currentTarget),
 			resultOffsetLeft = $result.offset().left,
 			percentAcrossPage = resultOffsetLeft / SearchSizes.pageWidth(),
-			containerOffsetLeft = $('.search_video_info').first().parent().offset().left,
+			containerOffsetLeft = $currentSide().find('.search_video_info').parent().offset().left,
 			left;
 			
 		if(percentAcrossPage < .35) left = resultOffsetLeft + SearchSizes.columnAndMarginWidth();

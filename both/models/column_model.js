@@ -30,8 +30,8 @@ ColumnModel.prototype = {
 	}
 };
 
-ColumnModel.nextIndex = function() {
-	var columns = Columns.find({}, {sort: {created_at: -1}, limit: 1}).fetch();
+ColumnModel.nextIndex = function(side) {
+	var columns = Columns.find({side: side}, {sort: {created_at: -1}, limit: 1}).fetch();
 	
 	if(columns.length === 0) return 0;
 	else return columns[0].index + 1;
