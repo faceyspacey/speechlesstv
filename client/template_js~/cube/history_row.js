@@ -6,16 +6,16 @@ Template.history_row.helpers({
 		return YoutubePlayer.get(playerId) ? YoutubePlayer.get(playerId).timeFormatted() : '00:00';
 	},
 	watchesCount: function() {
-		return Watches.find(this.youtube_id).count();
+		return Watches.find({youtube_id: this.youtube_id}).count();
 	},
 	favoritesCount: function() {
-		return Favorites.find(this.youtube_id).count();
+		return Favorites.find({youtube_id: this.youtube_id}).count();
 	},
 	commentsCount: function() {
-		return Comments.find(this.youtube_id).count();
+		return Comments.find({youtube_id: this.youtube_id}).count();
 	},
 	suggestionsCount: function() {
-		return Suggestions.find(this.youtube_id).count();
+		return Suggestions.find({youtube_id: this.youtube_id}).count();
 	}
 });
 
@@ -31,13 +31,14 @@ Template.history_row.events({
 	},
 	'mouseenter .history_row': function(e) {
 		var playerId = $(e.currentTarget).find('.add_video_row_image').attr('id'),
-			youtubeId = playerId; 
+			youtubeId = $(e.currentTarget).find('.add_video_row_image').attr('title'); 
 
 		YoutubePlayer.mini(playerId).setVideo(youtubeId, true);
+		
+		console.log('PLAYER', playerId);
 	},
 	'mouseleave .history_row': function(e) {
-		var playerId = $(e.currentTarget).find('object').attr('id'),
-			youtubeId = playerId; 
+		var playerId = $(e.currentTarget).find('object').attr('id'); 
 
 		if(YoutubePlayer.get(playerId)) YoutubePlayer.get(playerId).destroy();
 	}

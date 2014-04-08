@@ -37,13 +37,12 @@ Template.online_buddy_row.events({
 	},
 	'mouseenter .buddy_row': function(e) {
 		var playerId = $(e.currentTarget).find('.profile_vid img').first().attr('id'),
-			youtubeId = playerId; 
-
+			youtubeId = $(e.currentTarget).find('.profile_vid img').first().attr('title'); 
+		
 		YoutubePlayer.mini(playerId).setVideo(youtubeId, true);
 	},
 	'mouseleave .buddy_row': function(e) {
-		var playerId = $(e.currentTarget).find('object').attr('id'),
-			youtubeId = playerId; 
+		var playerId = $(e.currentTarget).find('object').attr('id'); 
 
 		if(YoutubePlayer.get(playerId)) YoutubePlayer.get(playerId).destroy();
 	}

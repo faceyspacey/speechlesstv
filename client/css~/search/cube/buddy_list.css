@@ -151,10 +151,11 @@
 	display:block;
 	
 	position: absolute;
-	top: 0px;
+	top: -1px;
 	right: 0px;
-	width: 400px;
-	height: 20px;
+	width: 100%;
+	height: 13px;
+	overflow: hidden;
 }
 
 .buddy_row .profile_videos {
@@ -166,6 +167,7 @@
 	float:right;	
 	margin-right: 3px;
 	height: 30px;
+	overflow:hidden;
 }
 
 
@@ -179,8 +181,9 @@
 }
 
 .buddy_row .profile_vid object {
-	height: 30px;
+	height: 67px;
 	width: 53px;
+	margin-top: -17px;
 }
 
 #buddy_list_scroller {

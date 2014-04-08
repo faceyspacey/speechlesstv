@@ -36,7 +36,7 @@ UserModel.prototype = {
 	},
 	watched: function(limit) {
 		var limit = limit || 5
-		return Watches.find({user_id: this._id}, {limit: limit, sort: {updated_at: -1}});
+		return Watches.find({user_id: this._id}, {limit: limit, sort: {created_at: -1}});
 	},
 	watch: function(video) {
 		var watch = new WatchModel

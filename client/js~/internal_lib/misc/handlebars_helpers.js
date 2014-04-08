@@ -55,7 +55,7 @@ Handlebars.registerHelper('categories', function(isDropdown) {
 
 shortenText = function(text, maxChars) {
 	if(text.length <= maxChars) return text;
-    else return text.substr(0, maxChars) + '..';
+    else return text.substr(0, maxChars) + ' ..';
 }
 
 Handlebars.registerHelper('shorten', function(text, maxChars) {
@@ -132,18 +132,7 @@ Handlebars.registerHelper('current_search_video', function() {
 
 
 
-Handlebars.registerHelper('control_bar', function(playerId) {
-	return Template.control_bar({playerId: playerId});
-});
 
-Handlebars.registerHelper('message_bar_side', function(id) {
-	if(id == 'message_side_a' || id == 'message_side_b') return Template.message_bar_side({id: id, fullscreen: true});
-	else return Template.message_bar_side({id: id, fullscreen: false});
-});
-
-Handlebars.registerHelper('get_search_side', function(id) {
-	return Template.search_bar_side({id: id});
-});
 
 Handlebars.registerHelper('playerReady', function(playerId) {		
 	return Session.get('player_ready_'+playerId);
@@ -152,4 +141,9 @@ Handlebars.registerHelper('playerReady', function(playerId) {
 Handlebars.registerHelper('player', function(playerId) {
 	if(!Session.get('player_ready_'+playerId)) return {playPauseClass: 'pause', fullScreenClass: 'shrink'};
     return YoutubePlayers[playerId];
+});
+
+
+Handlebars.registerHelper('dynamicTpl', function(name) {
+	return Template[name];
 });

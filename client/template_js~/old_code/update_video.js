@@ -38,10 +38,10 @@ Template.description_box.events({
 Template.submit_video.helpers({
 	bulletCheckmarkCategory: function() {
 		console.log('CURRENT VID', Session.get('current_video'));
-		return !!Videos.findOne(Session.get('current_video')._id).category_id ? '&#10003' : '&#149;';
+		return !!Videos.findOne(Session.get('current_video')._id).category_id ? '&#10003;' : '&#149;';
 	},
 	bulletCheckmarkDescription: function() {
-		return !!Videos.findOne(Session.get('current_video')._id).description ? '&#10003' : '&#149;';
+		return !!Videos.findOne(Session.get('current_video')._id).description ? '&#10003;' : '&#149;';
 	}
 });
 

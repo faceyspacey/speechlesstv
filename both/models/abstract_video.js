@@ -29,10 +29,12 @@ AbstractVideoModel = {
 		
 		delete video.column_index;
 		delete video.index;
+		delete video._id;
 		
 		_.extend(this, video);
 		
 		this.user_id = Meteor.userId();
-		this.save();
+		if(this._local) this.persist();
+		else this.save();
 	}
 };

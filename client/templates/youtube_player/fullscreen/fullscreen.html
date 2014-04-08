@@ -6,8 +6,8 @@
 		<div style="position:absolute; z-index: 99; bottom: 60px; width: 980px; height:60px; left:50%; margin-left: -490px;">
 			<div id="controls_cube_container_a" class="c_container" style="width: 100%; height: 100%;">
 				<div class="c message_cube" id="controls_cube_a">
-					{{{control_bar 'search_fullscreen_player'}}}
-					{{{message_bar_side 'message_side_a'}}}
+					{{>control_bar playerId='search_fullscreen_player'}}
+					{{>message_bar_side id='message_side_a' fullscreen=true}}
 				</div>
 			</div>
 		</div>
@@ -37,8 +37,8 @@
 		<div style="position:absolute; z-index: 99; bottom: 60px; width: 980px; height:60px; left:50%; margin-left: -490px;">
 			<div id="controls_cube_container_b" class="c_container" style="width: 100%; height: 100%;">
 				<div class="c message_cube" id="controls_cube_b">
-					{{{control_bar 'search_fullscreen_player_alt'}}}
-					{{{message_bar_side 'message_side_b'}}}
+					{{>control_bar playerId='search_fullscreen_player_alt'}}
+					{{>message_bar_side id='message_side_b' fullscreen=true}}
 				</div>
 			</div>
 		</div>

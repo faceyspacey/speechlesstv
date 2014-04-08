@@ -131,7 +131,7 @@ YoutubeSearcher = {
 		
 		if(this.queries[query]) return this._store(this.queries[query]);
 		
-		var label = shortenText(query, 12);
+		var label = shortenText(query, Math.floor(SearchSizes.columnAndMarginWidth()/10));
 		
 		this._execute({
 			part: 'snippet', 
@@ -144,7 +144,7 @@ YoutubeSearcher = {
 		
 		if(this.related[relatedToVideoId]) return this._store(this.related[relatedToVideoId]);
 		
-		var label = shortenText(title, 12);
+		var label = shortenText(title, Math.floor(SearchSizes.columnAndMarginWidth()/10));
 		
 		this._execute({
 			part: 'snippet', 

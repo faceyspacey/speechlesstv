@@ -118,8 +118,8 @@
 
 .search_bar > .search_category_dropdown .search_category_options {
 	width: 250px;
-	position: absolute;
-	top: 62px;
+	position: relative;
+	top: 15px;
 	overflow-y: hidden;
 }
 

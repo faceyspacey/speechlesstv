@@ -27,6 +27,6 @@ WatchModel = function(doc){
 
 WatchModel.prototype = {
 	date: function() {
-		return 'Watched on: '+moment(this.created_at).format("dddd MMMM do @ h:mma");
+		return 'Watched on: '+moment(this.updated_at).format("dddd MMMM do @ h:mma");
 	}
 };

@@ -156,6 +156,7 @@ jQuery.fn.slideDownCollection = function(duration, easing, latency, callback, op
 			
 		$el.hardwareAnimate({translateY: top * -1}, 0, 'linear', function() {
 			setTimeout(function() {
+				console.log("DURATION", duration);
 				$el.hardwareAnimate({translateY: 0}, duration, easing);
 				$el.animate({opacity: opacity}, duration);
 			}, wait);

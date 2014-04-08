@@ -1,7 +1,7 @@
 <template name="buddy_list">
 	<div class="backface" id="buddy_list" style="display:none;">
-		<div id="buddy_list_scroller">
-			{{#isolate}}
+		{{#isolate}}
+			<div id="buddy_list_scroller">
 				<div id="buddy_list_toolbar">
 					{{#if isSuggest}}
 						<input class="suggest_search" placeholder="Search Friends"/>
@@ -72,7 +72,7 @@
 				{{#each watched}}
 					<div class="profile_vid">
 						{{#isolate}}
-							<img id="{{youtube_id}}" src="{{src}}" />
+							<img title="{{youtube_id}}" id="buddy_v_{{youtube_id}}" src="{{src}}" />
 						{{/isolate}}
 					</div>
 				{{/each}}

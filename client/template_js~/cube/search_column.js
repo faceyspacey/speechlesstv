@@ -91,7 +91,7 @@ Template.search_column.events({
 		setTimeout(function() {
 			$column.animate({opacity: 0}, function() {
 				column.delete();		
-				BackNext.subtractColumn();
+				BackNext.current.subtractColumn();
 			});
 		}, 400);
 	}

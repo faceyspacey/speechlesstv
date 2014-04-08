@@ -43,7 +43,7 @@
 
 <template name="blank_layout">
 	<div class="liquid_container" style="background: url('/images/creampaper.png');">
-		{{yield}}
+		{{>yield}}
 	</div>
 </template>
 
@@ -53,7 +53,7 @@
 	{{>header}}
 	
 	 <div id="container" class="page"> 		
-		{{yield}}
+		{{>yield}}
 	 </div>
 	
 	{{>footer}}
@@ -96,3 +96,16 @@
 
 <template name="none"></template>
 <template name="google_analytics"></template>
+
+
+<template name="dynamicTemplate">
+	{{#with chooseTemplate name}}
+		{{#if data}}
+    		{{#with ../data}}  
+      			{{> ..}}        
+    		{{/with}}
+		{{else}}
+			{{> ..}}
+		{{/if}}
+	{{/with}}
+</template>

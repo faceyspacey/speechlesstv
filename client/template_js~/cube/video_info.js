@@ -5,13 +5,13 @@ Template.search_video_info.helpers({
 	},
 	
 	
-	time: function() {
+	playerTime: function() {
 		if(!Session.get('current_player_id')) return '00:00';
 		
 		var player = YoutubePlayer.get(currentHoverPlayer());
 		return player ? YoutubePlayer.get(currentHoverPlayer()).timeFormatted() : '00:00';
 	},
-	duration: function() {
+	playerDuration: function() {
 		if(!Session.get('current_player_id')) return '00:00';
 		
 		var player = YoutubePlayer.get(currentHoverPlayer());
@@ -27,15 +27,15 @@ Template.search_video_info.helpers({
 	},
 	
 	watchesCount: function() {
-		return Watches.find(Videos.findOne(Session.get('current_search_video_id')).youtube_id).count();
+		return Watches.find({youtube_id: Videos.findOne(Session.get('current_search_video_id')).youtube_id}).count();
 	},
 	favoritesCount: function() {
-		return Favorites.find(Videos.findOne(Session.get('current_search_video_id')).youtube_id).count();
+		return Favorites.find({youtube_id: Videos.findOne(Session.get('current_search_video_id')).youtube_id}).count();
 	},
 	commentsCount: function() {
-		return Comments.find(Videos.findOne(Session.get('current_search_video_id')).youtube_id).count();
+		return Comments.find({youtube_id: Videos.findOne(Session.get('current_search_video_id')).youtube_id}).count();
 	},
 	suggestionsCount: function() {
-		return Suggestions.find(Videos.findOne(Session.get('current_search_video_id')).youtube_id).count();
+		return Suggestions.find({youtube_id: Videos.findOne(Session.get('current_search_video_id')).youtube_id}).count();
 	}
 });

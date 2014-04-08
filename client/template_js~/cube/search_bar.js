@@ -79,7 +79,10 @@ Template.search_bar_side.events({
 		$(e.currentTarget).animate({paddingTop: 20});
 		
 		$('.cube').getCube().appendCover();
-		var params = {rotateY: 'keep', rotateX: '+=2.5', translateZlast: true};
+		
+		if($('.cube').getCube().axis == 'horizontal') var params = {rotateY: 'keep', rotateX: '+=2.5', translateZlast: true};
+		else var params = {rotateX: '+=2.5', translateZlast: true};
+		
 		$('.cube').getCube().currentSide.hardwareAnimate(params, 300, 'easeOutBack');
 	},
 	'blur .search_bar input': function(e) {
@@ -92,7 +95,10 @@ Template.search_bar_side.events({
 		$currentSearchBar().find('.enter_button').hide();
 		
 		$('.cube').getCube().removeCover();
-		var params = {rotateY: 'keep', rotateX: '-=2.5', translateZlast: true};
+	
+		if($('.cube').getCube().axis == 'horizontal') var params = {rotateY: 'keep', rotateX: '-=2.5', translateZlast: true};
+		else var params = {rotateX: '-=2.5', translateZlast: true};
+		
 		$('.cube').getCube().currentSide.hardwareAnimate(params, 300, 'easeOutBack');
 	},
 
@@ -106,19 +112,21 @@ Template.search_bar_side.events({
 	
 	'mouseenter .search_category_dropdown': function(e) {
 		Session.set('mouse_over_category_dropdown', true);
-		$('.search_category_options').show()
-		$('.search_category_option').slideDownCollection(150, 'easeOutBack', 25, null, .9);
+		
+		$('.search_category_option').slideDownCollection(150, 'easeOutBack', 20, null, .9);
+		$('.search_category_options').show();
 	},
 	'mouseleave .search_category_dropdown': function(e) {
 		Session.set('mouse_over_category_dropdown', false);
-		$('.search_category_option').slideUpCollection(150, 'easeInBack', 25, function() {
+		
+		$('.search_category_option').slideUpCollection(300, 'easeInBack', 25, function() {
 			if(Session.equals('mouse_over_category_dropdown', false)) $('.search_category_options').hide();
 		});
 	},
 	'click .search_category_option': function() {
 		Session.set('mouse_over_category_dropdown', false);
 		
-		$('.search_category_option').slideUpCollection(150, 'easeInBack', 25, function() {
+		$('.search_category_option').slideUpCollection(300, 'easeInBack', 25, function() {
 			if(Session.equals('mouse_over_category_dropdown', false)) $('.search_category_options').hide();
 		});
 		if(currentSide() != 'popular') {

@@ -43,8 +43,7 @@ Router.map(function () {
 	this.route('search', {
     	path: '/search',
 		template: 'search',
-		fastRender: true,
-		controller: BlankController
+		layoutTemplate: 'blank_layout'
   	});
 
 	this.route('fullscreen', {

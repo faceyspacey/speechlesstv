@@ -1,15 +1,16 @@
 Template.header.events({
 	'click #facebook_connect': function() {
-		Meteor.loginWithFacebook(['email', 'publish_actions', 'user_about_me'], function(error) {
+		Meteor.loginWithTwitter(function(error) {
 			if(!error) Router.go('channel', {name: Meteor.user().profile.username});
-			else alert('Something went wrong with logging in to FacebooK!');
+			else alert('Something went wrong with logging in to Twitter!');
 		});
 	},
 	'click #upload_video_button': function() {
 		if(!Meteor.user()) {
-			Meteor.loginWithFacebook(['email', 'publish_actions', 'user_about_me'], function(error) {
+			Meteor.loginWithTwitter(function(error) {
+				console.log('ERROR', error);
 				if(!error) Router.go('add_video');
-				else alert('Something went wrong with logging in to FacebooK!');
+				else alert('Something went wrong with logging in to Twitter!');
 			});
 		}
 		else Router.go('add');

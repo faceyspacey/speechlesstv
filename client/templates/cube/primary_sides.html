@@ -3,8 +3,8 @@
 		{{#isolate}}
 			<div id="bar_popular" class="bar_cube_container c_container" style="position:absolute; top:5px; left: 5px; overflow:visible; height: 60px;">
 				<div class="c message_cube" id="bar_cube" style="overflow-y:visible; ">
-					{{{get_search_side 'popular'}}}
-					{{{message_bar_side 'popular_message'}}}
+					{{>search_bar_side id='popular'}}
+					{{>message_bar_side id='popular_message' fullscreen=false}}
 				</div>
 			</div>
 		{{/isolate}}
@@ -37,8 +37,8 @@
 		{{#isolate}}
 			<div id="bar_from_friends" class="bar_cube_container c_container" style="position:absolute; top:5px; left: 5px; overflow:visible; height: 60px;">
 				<div class="c message_cube" id="bar_cube" style="overflow-y:visible; ">
-					{{{get_search_side 'from_friends'}}}
-					{{{message_bar_side 'from_friends_message'}}}
+					{{>search_bar_side id='from_friends'}}
+					{{>message_bar_side id='from_friends_message' fullscreen=false}}
 				</div>
 			</div>
 		{{/isolate}}
