@@ -1,19 +1,15 @@
 /** UserModel attributes:
  *
  *  _id                      Str
- * status		Int	(1-4)
+ * status					Int	(1-4)
+ * watched_video_count		Int
 **/
 
 
 UserModel = function(doc) { 
     this.collectionName = 'Users';
 	this.defaultValues = {};
-	
-	this.liveVideoSubscription = null;
-	this.liveVideoSubscription = null;
-	this.liveCommentsSubscription = null;
-	this.timeChecker = null;
-	
+
     _.extend(this, Model);
 	this.extend(doc);
 
@@ -42,67 +38,87 @@ UserModel.prototype = {
 		var watch = new WatchModel
 		watch.saveWithAttributesOfVideo(video);
 		
+		this.increment({watched_video_count: 1});
+		
 		this.enterLiveMode(video);
 	},
 	enterLiveMode: function(video) {
+		Session.set('in_live_mode', true);
+		
+		
+		
 		Meteor.subscribe('live_video', video.youtube_id, function() {
 			var liveVideo = LiveVideos.findOne({youtube_id: video.youtube_id});
 			
-			if(!liveVIdeo) {
+			if(!liveVideo) {
+				console.log('NEW LIVEVIDEOMODEL');
 				liveVideo = new LiveVideoModel;
 				liveVideo.watchers_count = 1;
 				liveVideo.saveWithAttributesOfVideo(video);
 				this.startTrackingVideoTime(liveVideo);
 			}
 			else {
+				console.log('SUB: NEW JOINER/WATCHER - watcher count:', liveVideo.watchers_count);
 				if(liveVideo.watchers_count >= 1) this.moveToVideoTime(liveVideo);		
 				liveVideo.increment({watchers_count: 1});
 			}
 			
-			this.liveVideoSubscription = LiveVideos.find({youtube_id: video.youtube_id}).observeChanges({
+			UserModel.liveVideosObserver = LiveVideos.find({youtube_id: video.youtube_id}).observeChanges({
 				changed: function(id, liveVideo) {
+					console.log('OBSERVER: WATCHER JOINED - watcher count:', liveVideo.watchers_count);
 					if(liveVideo.watchers_count == 1) this.startTrackingVideoTime(liveVideo);
 					else if(liveVideo.watchers_count > 1) this.stopTrackingVideoTime(liveVideo);
-				}
+				}.bind(this)
 			});
-		});
+		}.bind(this));
 		
-		this.liveUsersSubscription = Meteor.subscribe('live_users', video.youtube_id, function() {
+		UserModel.liveUsersSubscription = Meteor.subscribe('live_users', video.youtube_id, function() {
+			console.log('NEW LIVE USER CREATED');
 			var liveUser = new LiveUserModel;
 			liveUser.user_id = Meteor.userId();
 			liveUser.saveWithAttributesOfVideo(video);
 		});
-		this.liveCommentsSubscription = Meteor.subscribe('live_comments', video.youtube_id);
+		//UserModel.liveCommentsSubscription = Meteor.subscribe('live_comments', video.youtube_id);
 	},
-	exitLiveMode: function(video) {
-		var liveVideo = LiveVideos.findOne({youtube_id: video.youtube_id});
+	exitLiveMode: function(youtubeId) {
+		Session.set('in_live_mode', false);
 		
-		if(liveVIdeo.watchers_count == 1) liveVideo.remove();
+		
+		var liveVideo = LiveVideos.findOne({youtube_id: youtubeId});
+		
+		console.log('EXIT LIVE MODE - watcher count:', liveVideo.watchers_count);
+		
+		if(liveVideo.watchers_count == 1) liveVideo.remove();
 		else liveVideo.increment({watchers_count: -1});
 		
-		LiveUsers.remove({user_id: Meteor.userId()});
+		Meteor.call('deleteLiveUser');
 		
-		this.liveVideoSubscription.stop();
-		this.liveUsersSubscription.stop();
-		this.liveCommentsSubscription.stop();
+		UserModel.liveVideosObserver.stop();
+		UserModel.liveUsersSubscription.stop();
+		//UserModel.liveCommentsSubscription.stop();
 	},
 	startTrackingVideoTime: function(liveVideo) {
-		this._updateStartTime();
-		this.timeChecker = setInterval(function() {	
+		this._updateStartTime(liveVideo);
+		UserModel.timeChecker = setInterval(function() {	
 			//if the player's time is more than 2 seconds out of sync with the last recorded start_time update start time
-			if(this._getStartTime() - liveVideo.start_time > 2 || this._getStartTime() - liveVideo.start_time < -2) this._updateStartTime();
-		}, 1000);
+			if(this._getStartTime() - liveVideo.start_time > 2 || this._getStartTime() - liveVideo.start_time < -2) {
+				console.log("SHOULD _updateStartTime", this._getStartTime(), liveVideo.start_time, this._getStartTime() - liveVideo.start_time);
+				this._updateStartTime(liveVideo);
+			}
+			
+		}.bind(this), 1000);
 	},
-	_updateStartTime: function() {
+	_updateStartTime: function(liveVideo) {
 		liveVideo.update({
 			start_time: this._getStartTime()
 		});
 	},
 	_getStartTime: function() {
-		return Math.round(moment().toDate().getTime()/1000) - YoutubePlayer.current_play_time();
+		var startTime = Math.round(moment().toDate().getTime()/1000) - YoutubePlayer.current_play_time();
+		return startTime;
 	},
 	stopTrackingVideoTime: function(liveVideo) {
-		clearInterval(this.timeChecker);
+		clearInterval(UserModel.timeChecker);
 	},
 	moveToVideoTime: function(liveVideo) {
 		var secondsPlayedAlready =  Math.round(moment().toDate().getTime()/1000) - liveVideo.start_time;

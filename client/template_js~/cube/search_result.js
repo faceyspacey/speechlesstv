@@ -1,6 +1,9 @@
 Template.search_result.helpers({
 	showStar: function() {
 		return this.favorite ? 'display:block; color: rgb(31, 65, 170); text-shadow: 1px 1px 1px white; opacity: .9;' : 'display:none;';
+	},
+	isLive: function() {
+		return LiveVideos.findOne({youtube_id: this.youtube_id});
 	}
 });
 

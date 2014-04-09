@@ -42,6 +42,8 @@ YoutubePlayer.fullscreenOnly = function(playerId, callback) {
 	player.addComponent(new PlayerComponentFullscreen, 'fullscreen');
 	player.addComponent({
 		onLeaveFullscreen: function() {
+			Meteor.user().exitLiveMode(this.player.getYoutubeId());
+			
 			$('.cube').cube().prevSideVertical('#dummy_side', 1000, 'easeInBack', function() {
 				$('.cube').cube().prevSideVertical(Session.get('search_side'), 1000, 'easeOutBack', function() {
 					Resizeable.resizeAllElements();

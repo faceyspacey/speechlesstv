@@ -51,6 +51,11 @@ Commenter = {
 	displayNotification: function(comment) {
 		console.log(comment);
 	}
-}
+};
+
+
+
+
+
 
 

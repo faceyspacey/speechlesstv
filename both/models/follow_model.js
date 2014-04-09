@@ -1,7 +1,7 @@
 /** FollowModel attributes:
  *
  * _id: "X5NnRaXiE5iu5xCnc"
- * user_id: "7suR9CJzAsiMN6ry2"
+ * follower_user_id: "7suR9CJzAsiMN6ry2"
  * followed_user_id: "7suR9CJzAsiMN6ry2"
  *
 **/

@@ -51,7 +51,7 @@ Model = {
 		
 		return this._id;
 	},
-	increment: function() {
+	increment: function(attVal) {
 		this.db().update(this._id, {$inc: attVal});
 		this.refresh();
 		

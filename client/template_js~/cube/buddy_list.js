@@ -14,13 +14,13 @@ Template.buddy_list.helpers({
 
 Template.online_buddy_row.helpers({
 	showBulb: function() {
-		if(this.status > 1) return true;
+		if(this.status > Statuses.AWAY) return true;
 		else return false;
 	},
 	bulbColor: function() {
-		if(this.status == 2) return 'orange';
-		if(this.status == 3) return 'green';
-		if(this.status == 4) return 'red';
+		if(this.status == Statuses.IDLE) return 'orange';
+		if(this.status == Statuses.ACTIVE) return 'green';
+		if(this.status == Statuses.LIVE) return 'red';
 	}
 });
 

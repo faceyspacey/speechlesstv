@@ -49,18 +49,5 @@ YoutubeVideoModel.add = function(video, category) {
 }
 
 
-Meteor.startup(function() {
-	if(Meteor.isClient) {
-		Meteor.subscribe('youtube_videos', function() {
-			if(!YoutubeVideos.findOne() || moment().format('DDDD') != YoutubeVideos.findOne().getDayAdded()) {
-				Meteor.call('deleteYoutubeVideos', function() {
-					YoutubeSearcher.popularAll(function() {
-						YoutubeSearcher.youtubeVideosDownloaded = true;
-					});
-				});
-			}
-			else YoutubeSearcher.youtubeVideosDownloaded = true;;
-		});
-	}
-});
+
 

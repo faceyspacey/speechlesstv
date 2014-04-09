@@ -23,7 +23,7 @@ Template.popular_side.destroyed = function() {
 
 Template.from_friends_side.afterCreated = function() {
 	setTimeout(function() {
-		YoutubeSearcher.setupFromFriendsColumns();
+		//YoutubeSearcher.setupFromFriendsColumns();
 	}, 1000);
 	
 	//YoutubePlayer.mini('hover_player_from_friends');

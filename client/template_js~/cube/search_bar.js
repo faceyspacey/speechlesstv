@@ -44,7 +44,7 @@ Template.autocompletion.events({
 
 
 
-var predictiveTimer;
+var predictiveTimer, isFromFriendsSetup;
 Template.search_bar_side.events({
 	'click .buddy_list_button': function() {
 		$('.cube').getCube().toggleBuddyList();
@@ -103,11 +103,36 @@ Template.search_bar_side.events({
 	},
 
 	'click .popular': function() {
-		if(!Session.equals('search_side', '#popular_side')) Cube.popularSide();
+		if(Session.equals('search_side', '#popular_side')) return;
+		Cube.popularSide();
 		
 	},
 	'click .from_friends': function() {
-		if(!Session.equals('search_side', '#from_friends_side')) Cube.fromFriendsSide();
+		if(Session.equals('search_side', '#from_friends_side')) return;
+		Cube.fromFriendsSide();
+		
+		if(!isFromFriendsSetup) {
+			var timerStarted = Date.now(),
+				fromFriendsSetupTimer = setInterval(function() {
+				var socialSubscriptions = [usersSub, watchesFromFriendsSub, favoritesFromFriendsSub, commentsFromFriendsSub, suggestionsFromFriendsSub];
+
+				console.log("DISPLAY SOCIAL SUB FROM FRIENDS CONTENT!!!", subscriptionsReady(socialSubscriptions));
+
+				if(subscriptionsReady(socialSubscriptions)) {
+					var timePassed = Date.now() - timerStarted,
+						delay = 2000 - timePassed + 100;
+						
+					if(timePassed < 2000) {
+						Meteor.setTimeout(function() {
+							YoutubeSearcher.setupFromFriendsColumns(); //make animation happen visibly to user after cube flip
+						}, delay);
+					}
+					else YoutubeSearcher.setupFromFriendsColumns();
+					isFromFriendsSetup = true;
+					clearInterval(fromFriendsSetupTimer);
+				}
+			}, 100);
+		}
 	},
 	
 	'mouseenter .search_category_dropdown': function(e) {

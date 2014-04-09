@@ -10,7 +10,9 @@
 			<i class="fa fa-user"></i>
 		</div>
 		
-		<img class="being_watched_bulb" src="/images/bulbs/green.png" />
+		{{#if isLive}}
+			<div class="live">LIVE!</div>
+		{{/if}}
 		
 		<div class="search_fullscreen">
 			<i class="fa fa-arrows-alt"></i>
