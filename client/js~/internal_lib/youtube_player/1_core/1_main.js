@@ -55,7 +55,8 @@ YoutubePlayer.prototype = {
 		if(this.setupCallback) this.setupCallback();
 	},
 	onStateChange: function(newState) {
-		if(this._shouldReplay() && newState == 0) this.replay();
+		if(newState == 0 && this.isFullscreen && this.isFullscreen()) CubePlayer.next();
+		else if(this._shouldReplay() && newState == 0) this.replay();
 		else if(newState == 0) this._call('onEnd');
 		else if (newState == 1) {
 			if(this.onPlayCallback) this.onPlayCallback();

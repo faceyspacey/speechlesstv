@@ -105,3 +105,28 @@ Resizeable = {
 
 
 
+//resizeEnd event code from the internet; yes this is shitty organization. 
+$(function() {
+	var rtime = new Date(1, 1, 2000, 12,00,00);
+	var timeout = false;
+	var delta = 200;
+	$(window).resize(function() {
+	    rtime = new Date();
+	    if (timeout === false) {
+	        timeout = true;
+	        setTimeout(resizeend, delta);
+	    }
+	});
+
+	resizeend = function() {
+	    if (new Date() - rtime < delta) {
+	        setTimeout(resizeend, delta);
+	    } else {
+	        timeout = false;
+	        BackNext.all['#popular_side'].slideToEnd();
+			BackNext.all['#from_friends_side'].slideToEnd();
+	    }               
+	}
+});
+
+

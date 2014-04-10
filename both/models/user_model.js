@@ -24,9 +24,6 @@ UserModel.prototype = {
 	getEmail: function() {
 		return this.emails[0].address;
 	},
-	name: function() {
-		return this.profile.name;
-	},
 	isAdmin: function() {
 		return Roles.userIsInRole(this._id, ['admin']);
 	},
@@ -44,7 +41,9 @@ UserModel.prototype = {
 	},
 	enterLiveMode: function(video) {
 		Session.set('in_live_mode', true);
+		Session.set('buddy_tab', 'right');
 		
+		this.update({current_youtube_id: video.youtube_id});
 		
 		
 		Meteor.subscribe('live_video', video.youtube_id, function() {
@@ -125,6 +124,7 @@ UserModel.prototype = {
 			
 		secondsPlayedAlready += this._estimatedLoadTime();
 		YoutubePlayer.current.seek(secondsPlayedAlready);
+		this.update({current_video_time: secondsPlayedAlready});
 	}, 
 	_estimatedLoadTime: function() {
 		return 0;
@@ -149,17 +149,105 @@ UserModel.prototype = {
 		suggestion.youtube_id = youtubeId; 
 		suggestion.save();
 	},
+	followToggle: function(followedUserId) {
+		if(this.isFollowed(followedUserId)) this.unFollow(followedUserId);
+		else this.follow(followedUserId);
+	},
 	follow: function(followedUserId) {
 		var follow = new FollowModel;
 		follow.follower_user_id = this._id;
 		follow.followed_user_id = followedUserId;
+		follow.followed = true;
 		follow.save();
+		Session.increment('followedCount');
 	},
 	unFollow: function(followedUserId) {
-		Follows.remove({follower_user_id: this._id, followed_user_id: followedUserId});
+		var follow = Follows.findOne({follower_user_id: this._id, followed_user_id: followedUserId});
+		follow.update({followed: false});
+		Session.decrement('followedCount');
+	},
+	followers: function() {
+		return Follows.find({followed_user_id: Meteor.userId(), followed: true}, {limit: 30, fields: {follower_user_id: 1}}).map(function(follow) {
+			return follow.follower_user_id;
+		});
+	},
+	followed: function() {
+		return Follows.find({follower_user_id: Meteor.userId(), followed: true}, {limit: 30, fields: {followed_user_id: 1}}).map(function(follow) {
+			return follow.followed_user_id;
+		});
+	},
+	isFollower: function(followerId) {
+		return _.contains(this.followers(), followerId);
+	},
+	isFollowed: function(followedId) {
+		return _.contains(this.followed(), followedId);
+	},
+	followerUsers: function() {
+		return Meteor.users.find({_id: {$in: this.followers()}}, {limit: 30, sort: {updated_at: -1}});
+	},
+	followedUsers: function() {
+		return Meteor.users.find({_id: {$in: this.followed()}}, {limit: 30, sort: {updated_at: -1}});
+	},
+	followedUsersOnline: function() {
+		return Meteor.users.find({_id: {$in: this.followers()}, status: {$gt: Statuses.AWAY}}, {limit: 30, sort: {updated_at: -1}});
+	},
+	popularUsers: function() {
+		return Meteor.users.find({}, {limit: 10, sort: {watched_video_count: -1}});
+	},
+	liveUserIds: function() {
+		return LiveUsers.find().map(function(liveUser) {
+			return liveUser.user_id;
+		});
+	},
+	watchingUsers: function() {
+		return Meteor.users.find({_id: {$in: this.liveUserIds()}});
+	},
+	watchingUsersCount: function() {
+		return Meteor.users.find({_id: {$in: this.liveUserIds()}}).count()
+	},
+	followerCount: function() {
+		var count = Session.get('followerCount');
+		if(!count) {
+			Meteor.call('followerCount', function(error, resultCount) {
+				Session.set('followerCount', resultCount);
+			});
+			return 0; //for now
+		}
+		else return count;
+	},
+	followedCount: function() {
+		var count = Session.get('followedCount');
+		if(!count) {
+			Meteor.call('followedCount', function(error, resultCount) {
+				Session.set('followedCount', resultCount);
+			});
+			return 0; //for now
+		}
+		else return count;
+	},
+	multipleUsersWatching: function() {
+		var youtubeId = YoutubePlayer.current.getYoutubeId(),
+			liveVideo = LiveVideos.findOne({youtube_id: youtubeId});
+			
+		if(liveVideo && liveVideo.watchers_count > 1) return true;
+		else return false;
+	},
+	inTrueLiveMode: function() {
+		return this.multipleUsersWatching() && !Session.get('turned_off_live_mode');
 	}
 };
 
 Meteor.users._transform = function(doc) {
 	return new UserModel(doc);
 };
+
+
+Meteor.startup(function() {
+	if(Meteor.isClient) {
+		setInterval(function() {
+			Meteor.call('followerCount', function(error, resultCount) {
+				Session.set('followerCount', resultCount);
+			});
+		}, 1000);
+	}
+})

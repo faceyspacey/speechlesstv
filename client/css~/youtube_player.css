@@ -449,23 +449,16 @@ font-smoothing: antialiased;
 text-rendering: optimizeLegibility;
 margin-right: 1%;
 
-  -webkit-transition: all 0.5s ease;
-     -moz-transition: all 0.5s ease;
-       -o-transition: all 0.5s ease;
-      -ms-transition: all 0.5s ease;
-          transition: all 0.5s ease;
+  -webkit-transition: all 0.2s ease;
+     -moz-transition: all 0.2s ease;
+       -o-transition: all 0.2s ease;
+      -ms-transition: all 0.2s ease;
+          transition: all 0.2s ease;
 top: 6px;
 }
 
 
- 
-div.minilogo:hover {
-  -webkit-transform: rotate(720deg);
-     -moz-transform: rotate(720deg);
-       -o-transform: rotate(720deg);
-      -ms-transform: rotate(720deg);
-          transform: rotate(720deg);
-}
+
 
 
 
@@ -743,4 +736,13 @@ z-index: 2;
 
 #editFlyup:hover {
 opacity: 1;
+}
+
+
+.controls .buddy_list_button {
+	color: rgb(32, 71, 153);
+	cursor: pointer;
+}
+.controls .buddy_list_button:hover {
+	color: white;
 }

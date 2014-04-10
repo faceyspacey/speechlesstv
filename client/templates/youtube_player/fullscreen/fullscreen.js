@@ -17,15 +17,22 @@ Template.search.events({
 	}
 });
 
+Template.search_fullscreen_side.helpers({
+	liveModeSelected: function() {
+		return Meteor.user().inTrueLiveMode() ? 'selected' : '';
+	}
+});
 
 Template.search_fullscreen_side.events({
 	'click .live_button': function(e) {
-		$(e.currentTarget).toggleClass('selected');
+		if(Meteor.user().inTrueLiveMode()) Session.set('turned_off_live_mode', true);
+		else Session.set('turned_off_live_mode', false);
 	}
 });
 
 Template.search_fullscreen_side_alt.events({
 	'click .live_button': function(e) {
-		$(e.currentTarget).toggleClass('selected');
+		if(Meteor.user().inTrueLiveMode()) Session.set('turned_off_live_mode', true);
+		else Session.set('turned_off_live_mode', false);
 	}
 });

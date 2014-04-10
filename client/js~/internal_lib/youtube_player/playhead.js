@@ -5,7 +5,8 @@ PlayerComponentPlayhead.prototype = {
 		$('body').bind('mouseup.timeBall', this.mouseup.bind(this));
 		$('body').bind('mousemove.timeBall', this.mousemove.bind(this));
 	},
-	mouseup: function() {	
+	mouseup: function() {
+		Session.set('turned_off_live_mode', true)	
 		$('body').unbind('.timeBall');
 	},
 	mousemove: function(e) {

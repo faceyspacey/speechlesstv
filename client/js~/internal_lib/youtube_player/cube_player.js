@@ -51,18 +51,24 @@ CubePlayer = {
 
 SearchVideos = {
 	prev: function() {
-		var youtubeId = this._youtubeId();
+		var youtubeId = this._youtubeId(),
+			videos = this._videos();
 				
-		return _.find(this._videos(), function(video, index, videos) {
+		var video = _.find(videos, function(video, index, videos) {
 			return videos[index+1] && videos[index+1].youtube_id == youtubeId;
 		}.bind(this));
+		
+		if(!video) return videos[videos.length - 1];
 	},
 	next: function() {	
-		var youtubeId = this._youtubeId();
+		var youtubeId = this._youtubeId(),
+			videos = this._videos();
 		
-		return _.find(this._videos(), function(video, index, videos) {
+		return _.find(videos, function(video, index, videos) {
 			return videos[index-1] && videos[index-1].youtube_id == youtubeId;
 		}.bind(this));
+		
+		if(!video) return videos[0];
 	},
 	_youtubeId: function() {
 		return Session.get('current_youtube_id');

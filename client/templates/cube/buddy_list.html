@@ -1,58 +1,57 @@
 <template name="buddy_list">
-	<div class="backface" id="buddy_list" style="display:none;">
-		{{#isolate}}
-			<div id="buddy_list_scroller">
-				<div id="buddy_list_toolbar">
-					{{#if isSuggest}}
-						<input class="suggest_search" placeholder="Search Friends"/>
+	<div class="backface" id="buddy_list" style="display:none; overflow:visible;">
+		<div id="buddy_list_container">
+			{{#isolate}}
+				<div id="buddy_list_scroller">
+					<div id="buddy_list_toolbar">
+						{{#if isSuggest}}
+							<input class="suggest_search" placeholder="Search Friends"/>
+						{{else}}
+							<div class="right {{selected 'right'}}">
+								<span style="float:left;">WATCHING (17)</span> 
+								<img src="http://img.youtube.com/vi/Oh_qdGlVN1c/mqdefault.jpg"/>
+							</div>
+							<div class="left {{selected 'left'}}">
+								<span>ONLINE (33)</span>
+								<img class="bulb" src="/images/bulbs/green.png" />
+							</div>
+						{{/if}}
+					</div>
+
+					{{#if watchingTabSelected}}
+						{{#each watchingUsers}}
+							{{> online_buddy_row}}
+						{{/each}}
 					{{else}}
-						<div class="right">
-							<span style="float:left;">WATCHING (17)</span> 
-							<img src="http://img.youtube.com/vi/Oh_qdGlVN1c/mqdefault.jpg"/>
-						</div>
-						<div class="left">
-							<span>ONLINE (33)</span>
-							<img class="bulb" src="/images/bulbs/green.png" />
-						</div>
+						{{#each onlineUsers}}
+							{{> online_buddy_row}}
+						{{/each}}
+
+
+						<div class="title_bar">FOLLOWING ({{followedCount}})</div>
+						{{#each followedUsers}}
+							{{> online_buddy_row}}
+						{{/each}}
+
+
+						<div class="title_bar">FOLLOWERS ({{followerCount}})</div>
+						{{#each followerUsers}}
+							{{> online_buddy_row}}
+						{{/each}}
+
+
+						<div class="title_bar">POPULAR USERS</div>
+						{{#each popularUsers}}
+							{{> online_buddy_row}}
+						{{/each}}
+
+						{{#if isSuggest}}
+							<div class="submit_suggestion">SUGGEST TO SElECTED</div>
+							{{/if}}			
 					{{/if}}
 				</div>
-
-				{{#each onlineUsers}}
-					{{> online_buddy_row}}
-				{{/each}}
-
-
-				<div class="title_bar">FOLLOWING (133)</div>
-				{{>buddy_row}}
-				{{>buddy_row}}
-				{{>buddy_row}}
-				{{>buddy_row}}
-				{{>buddy_row}}
-				{{>buddy_row}}
-
-
-				<div class="title_bar">FOLLOWERS (133)</div>
-				{{>buddy_row}}
-				{{>buddy_row}}
-				{{>buddy_row}}
-				{{>buddy_row}}
-				{{>buddy_row}}
-				{{>buddy_row}}
-
-
-				<div class="title_bar">POPULAR USERS</div>
-				{{>buddy_row}}
-				{{>buddy_row}}
-				{{>buddy_row}}
-				{{>buddy_row}}
-				{{>buddy_row}}
-				{{>buddy_row}}
-			</div>
-
-			{{#if isSuggest}}
-				<div class="submit_suggestion">SUGGEST TO SElECTED</div>
-			{{/if}}
-		{{/isolate}}
+			{{/isolate}}
+		</div>
 	</div>
 </template>
 
@@ -67,37 +66,23 @@
 		</div>
 		
 		<div class="profile_left">
-			<h1 class="profile_name" title="{{profile.name}}">{{profile.name}}</h1>
+			<h1 class="profile_name" title="{{name}}">{{name}}</h1>
 			<div class="profile_videos">
 				{{#each watched}}
-					<div class="profile_vid">
-						{{#isolate}}
-							<img title="{{youtube_id}}" id="buddy_v_{{youtube_id}}" src="{{src}}" />
-						{{/isolate}}
-					</div>
+					{{>watched_vid}}
 				{{/each}}
 			</div>
 		</div>
 	</div>
 </template>
 
-
-<template name="buddy_row">
-	<div class="buddy_row">
-		<div class="profile_pic_container">
-			<img class="profile_pic" src="https://graph.facebook.com/16404762/picture?width=75&height=75">
-			<img class="online_bulb" src="/images/bulbs/green.png" />
-		</div>
-		
-		<div class="profile_left">
-			<h1 class="profile_name">James Gill</h1>
-			<div class="profile_videos">
-				<img class="profile_vid" src="http://img.youtube.com/vi/Oh_qdGlVN1c/mqdefault.jpg" />
-				<img class="profile_vid" src="http://img.youtube.com/vi/Oh_qdGlVN1c/mqdefault.jpg" />
-				<img class="profile_vid" src="http://img.youtube.com/vi/Oh_qdGlVN1c/mqdefault.jpg" />
-				<img class="profile_vid" src="http://img.youtube.com/vi/Oh_qdGlVN1c/mqdefault.jpg" />
-				<img class="profile_vid" src="http://img.youtube.com/vi/Oh_qdGlVN1c/mqdefault.jpg" />
-			</div>
-		</div>
+<template name ="watched_vid">
+	<div class="profile_vid">
+		<img title="{{youtube_id}}" id="{{_id}}_{{youtube_id}}_{{randomNumber}}" src="{{src}}" />
+		<div class="cover"></div>
+		{{#if isLive ../_id}}
+			<div class="live">Live!</div>
+		{{/if}}
 	</div>
 </template>
+

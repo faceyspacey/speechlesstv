@@ -32,7 +32,9 @@ Meteor.subscribe('youtube_videos', function() {
 	Deps.autorun(function() {
 		console.log("LIVE SUBS");
 		Meteor.subscribe('live_video', Session.get('current_live_youtube_id'));
-		Meteor.subscribe('live_users', Session.get('current_live_youtube_id'));
+		Meteor.subscribe('live_users', Session.get('current_live_youtube_id'), function() {
+			Meteor.subscribe('live_usersUsers', Meteor.user().liveUserIds());
+		});
 		//Meteor.subscribe('live_comments', Session.get('current_live_youtube_id'));
 	});
 
@@ -54,12 +56,8 @@ Meteor.subscribe('youtube_videos', function() {
 		console.log("SOCIAL SUBS!!!!!!!", subscriptionsReady(baseSocialSubscriptions));
 		if(!subscriptionsReady(baseSocialSubscriptions)) return;
 
-		var followedIds = Follows.find({follower_user_id: Meteor.userId()}, {limit: 30, fields: {followed_user_id: 1}}).map(function(follow) {
-				return follow.followed_user_id;
-			}),
-			followerIds = Follows.find({followed_user_id: Meteor.userId()}, {limit: 30, fields: {follower_user_id: 1}}).map(function(follow) {
-				return follow.follower_user_id;
-			}),
+		var followedIds = Meteor.user().followed(),
+			followerIds = Meteor.user().followers(),
 			popularUserIds = Meteor.users.find({}, {limit: 10, sort: {watched_video_count: -1}, fields: {_id: 1}}).map(function(user) {
 				return user._id;
 			}),

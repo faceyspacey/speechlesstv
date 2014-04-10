@@ -25,3 +25,14 @@ $currentSide = function() {
 $currentSearchBar = function() {
 	return $('#'+currentSide()+'_side').find('.search_bar');
 };
+
+
+Session.increment = function(key) {
+	var val = Session.get(key);
+	Session.set(key, ++val);
+};
+
+Session.decrement = function(key) {
+	var val = Session.get(key);
+	Session.set(key, --val);
+};

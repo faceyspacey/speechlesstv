@@ -2,8 +2,13 @@
 	
 }
 
-#buddy_list_scroller {
+#buddy_list_container {
 	float: right;
+	height: 100%;
+	width: 100%;
+}
+#buddy_list_scroller {
+
 }
 
 .title_bar {
@@ -87,6 +92,11 @@
 #buddy_list_toolbar .left {
 	border: none;
 }
+
+#buddy_list_toolbar .selected {
+	background: rgb(20, 63, 90);
+}
+
 #buddy_list_toolbar .left span {
 	float: right;
 }
@@ -98,6 +108,7 @@
 }
 
 #buddy_list div.buddy_row {
+	position: relative;
 	width: 100%;
 	height: 62px;
 	border-bottom: 2px solid white;
@@ -165,9 +176,12 @@
 
 .buddy_row .profile_vid {
 	float:right;	
-	margin-right: 3px;
+	margin-right: 5px;
 	height: 30px;
+	width: 53px;
 	overflow:hidden;
+	cursor: pointer;
+	position: relative;
 }
 
 
@@ -184,6 +198,35 @@
 	height: 67px;
 	width: 53px;
 	margin-top: -17px;
+	cursor: pointer;
+}
+
+.buddy_row .profile_vid .cover {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	
+	width: 100%; 
+	height: 100%; 
+	z-index: 3; 
+	opacity: 0; 
+	cursor: pointer;
+	
+}
+
+.buddy_row .profile_vid  .live {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	height: 14px;
+	width: 23px;
+	background: red;
+	color: white;
+	font-size: 11px;
+	padding: 1px 0px 0px 1px;
+	opacity: 1;
+	border: 1px solid black;
+	opacity: 1;
 }
 
 #buddy_list_scroller {
@@ -260,3 +303,23 @@
 	text-shadow: 1px 1px 1px rgb(33, 67, 78);
 }
 
+.follow_button {
+	position: absolute;
+
+	height: 60px;
+	width: 160px;
+	
+	background-color: rgb(46, 103, 156);
+	font-size: 40px;
+	text-align: center;
+	line-height: 61px;
+	color: white;
+	
+	border: 1px solid white;
+	z-index: 9999999;
+	cursor: pointer;
+}
+
+.follow_button:hover {
+	background-color: rgb(59, 134, 204);
+}

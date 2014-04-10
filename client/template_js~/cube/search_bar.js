@@ -120,7 +120,7 @@ Template.search_bar_side.events({
 
 				if(subscriptionsReady(socialSubscriptions)) {
 					var timePassed = Date.now() - timerStarted,
-						delay = 2000 - timePassed + 100;
+						delay = 2000 - timePassed + 300;
 						
 					if(timePassed < 2000) {
 						Meteor.setTimeout(function() {

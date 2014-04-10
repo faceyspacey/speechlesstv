@@ -24,7 +24,7 @@
 	z-index: 2;
 }
 
-.buddy_list_button {
+.bar_cube_container .buddy_list_button {
 	width: 70px;
 	
 	background: #559afe;

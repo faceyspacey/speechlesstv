@@ -1,5 +1,5 @@
 Deps.autorun(function() {
-	var videoIds = Videos.find({_local: true}).map(function(video) {
+	var videoIds = Videos._collection.find({_local: true}).map(function(video) {
         return video.youtube_id;
     });
 
@@ -14,7 +14,7 @@ Deps.autorun(function() {
 });
 
 Deps.autorun(function() {
-	var videoIds = Videos.find({_local: true}).map(function(video) {
+	var videoIds = Videos._collection.find({_local: true}).map(function(video) {
         return video.youtube_id;
     });
 
@@ -30,7 +30,7 @@ Deps.autorun(function() {
 
 
 Deps.autorun(function() {
-    var videoIds = Videos.find({_local: true}).map(function(video) {
+    var videoIds = Videos._collection.find({_local: true}).map(function(video) {
         return video.youtube_id;
     });
 

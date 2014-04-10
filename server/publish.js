@@ -11,10 +11,10 @@ Meteor.publish('popularUsers', function() {
 	return Meteor.users.find({}, {limit: 10, sort: {watched_video_count: -1}});
 });
 Meteor.publish('followers', function() {
-	return Follows.find({followed_user_id: this.userId}, {limit: 30, sort: {updated_at: -1}});
+	return Follows.find({followed_user_id: this.userId, followed: true}, {limit: 30, sort: {updated_at: -1}});
 });
 Meteor.publish('followed', function() {
-	return Follows.find({follower_user_id: this.userId}, {limit: 30, sort: {updated_at: -1}});
+	return Follows.find({follower_user_id: this.userId, followed: true}, {limit: 30, sort: {updated_at: -1}});
 });
 
 
@@ -43,6 +43,12 @@ Meteor.publish('live_users', function(youtubeId) {
 /**Meteor.publish('live_comments', function(youtubeId) {
 	return Comments.find({youtube_id: youtubeId}, {limit: 30, sort: {updated_at: -1}});
 });**/
+
+
+Meteor.publish('live_usersUsers', function(liveUserIds) {
+	return Meteor.users.find({_id: {$in: liveUserIds}});
+});
+
 
 Meteor.publish('all_live_videos', function(videoIds) {
 	return LiveVideos.find({youtube_id: {$in: videoIds}});

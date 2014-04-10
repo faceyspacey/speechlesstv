@@ -171,10 +171,10 @@ Follows.allow({
 	},
 	update: function (userId, doc, fields, modifier) {
 		doc.updated_at = moment().toDate();
-		return (doc.user_id == userId || Roles.userIsInRole(userId, ['admin']));
+		return (doc.follower_user_id == userId || Roles.userIsInRole(userId, ['admin']));
 	},
 	remove: function (userId, doc) {
-		return (doc.user_id == userId || Roles.userIsInRole(userId, ['admin']));
+		return (doc.follower_user_id == userId || Roles.userIsInRole(userId, ['admin']));
 	},
-	fetch: ['user_id']
+	fetch: ['follower_user_id']
 });

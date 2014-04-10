@@ -134,8 +134,8 @@ Cube.prototype = {
 				$('#buddy_list').hardwareAnimate(params, 250, 'easeOutCirc');	
 				
 				var sideBarWidth = $(window).width() + thirtyDegreesLeftPX;
-				$('#buddy_list_scroller').css('width', sideBarWidth);
-				$('#buddy_list_toolbar .left').css('width', sideBarWidth - $('#buddy_list_toolbar .right').outerWidth() - 1);
+				$('#buddy_list_scroller, #buddy_list_container').css('width', sideBarWidth);
+				$('#buddy_list_toolbar .left').css('width', sideBarWidth - $('#buddy_list_toolbar .right').outerWidth());
 			}.bind(this), 500);
 			
 			var percentAcross = Math.pow(parseFloat(Math.cos(this._getDegrees() * Math.PI/180).toFixed(20)), 2);
@@ -174,8 +174,10 @@ Cube.prototype = {
 	
 	
 	showBuddyList: function() {
-		this.rotate({rotateY: '+=30'}, '#buddy_list', 500, 'easeOutExpo');
-		this._buddyListShown = true;
+		this.rotate({rotateY: '+=30'}, '#buddy_list', 500, 'easeOutExpo', function() {
+			this._buddyListShown = true;
+			vScroll('buddy_list_container');
+		}.bind(this));
 	},
 	hideBuddyList: function() {
 		$('.cube').rotate({rotateY: '-=30'}, null, 500, 'easeOutExpo');

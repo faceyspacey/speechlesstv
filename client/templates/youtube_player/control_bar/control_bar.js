@@ -28,6 +28,10 @@ Template.control_bar.events({
 	},
 	'mouseleave .currentTimeBall': function(e, t) {
 		$('.innerTimeBallCircle', t.firstNode).removeClass('hover');
+	},
+	
+	'click .buddy_list_button': function() {
+		$('.cube').getCube().toggleBuddyList();
 	}
 });
 

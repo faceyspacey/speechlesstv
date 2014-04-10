@@ -1,6 +1,6 @@
 <template name="search_fullscreen_side">
 	<div class="backface" id="search_fullscreen_side"  style="display:none;">
-		<div class="live_button">LIVE!</div>
+		<div class="live_button {{liveModeSelected}}">LIVE!</div>
 		{{>search_fullscreen_player}}
 		
 		<div style="position:absolute; z-index: 99; bottom: 60px; width: 980px; height:60px; left:50%; margin-left: -490px;">
@@ -32,7 +32,7 @@
 
 <template name="search_fullscreen_side_alt">
 	<div class="backface" id="search_fullscreen_side_alt" style="display:none;">
-		<div class="live_button">LIVE!</div>
+		<div class="live_button {{liveModeSelected}}">LIVE!</div>
 		{{>search_fullscreen_player_alt}}
 		
 		<div style="position:absolute; z-index: 99; bottom: 60px; width: 980px; height:60px; left:50%; margin-left: -490px;">
