@@ -29,7 +29,7 @@ Template.history_side.helpers({
 
 Template.history_side.events({
 	'click .buddy_list_button': function() {
-		$('.cube').getCube().toggleBuddyList();
+		Cube.toggleBuddyList();
 	},
 	'click #history_back': function() {
 		Cube.back();

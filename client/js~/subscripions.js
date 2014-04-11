@@ -59,6 +59,7 @@ Meteor.subscribe('youtube_videos', function() {
 		var followedIds = Meteor.user().followed(),
 			followerIds = Meteor.user().followers(),
 			popularUserIds = Meteor.users.find({}, {limit: 10, sort: {watched_video_count: -1}, fields: {_id: 1}}).map(function(user) {
+				console.log('USER SUB', user);
 				return user._id;
 			}),
 			userIds = followedIds.concat(followerIds).concat(popularUserIds);

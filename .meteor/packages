@@ -11,9 +11,9 @@ accounts-twitter
 email
 accounts-base
 spiderable
-iron-router
 roles
 standard-app-packages
 http
 moment
 twit
+iron-router

@@ -44,7 +44,7 @@ Cube.prototype = {
 		$('<div />', {
 			class: 'cover_sheet'
 		}).css('z-index', zIndex || 100).click(function() {
-			$('.cube').getCube().toggleBuddyList();
+			Cube.toggleBuddyList();
 		}).bind('mouseenter', function() {
 			$(this).css('opacity', .3);
 		}).bind('mouseleave', function() {
@@ -135,7 +135,10 @@ Cube.prototype = {
 				
 				var sideBarWidth = $(window).width() + thirtyDegreesLeftPX;
 				$('#buddy_list_scroller, #buddy_list_container').css('width', sideBarWidth);
-				$('#buddy_list_toolbar .left').css('width', sideBarWidth - $('#buddy_list_toolbar .right').outerWidth());
+				$('#buddy_list_toolbar').css('width', sideBarWidth + 2);
+				//$('#buddy_list_toolbar .left').css('width', sideBarWidth - $('#buddy_list_toolbar .right').outerWidth());
+				
+				injectCSS('#buddy_list_toolbar .left', 'width: '+ (sideBarWidth - 197) + 'px');	
 			}.bind(this), 500);
 			
 			var percentAcross = Math.pow(parseFloat(Math.cos(this._getDegrees() * Math.PI/180).toFixed(20)), 2);
@@ -170,22 +173,6 @@ Cube.prototype = {
 		
 		console.log('SIDE', this.currentSide.next().length, this.currentSide.next(), this.element.find('.backface').first());
 		return this.currentSide.next().length > 0 ? this.currentSide.next() : this.element.find('.backface').first();
-	},
-	
-	
-	showBuddyList: function() {
-		this.rotate({rotateY: '+=30'}, '#buddy_list', 500, 'easeOutExpo', function() {
-			this._buddyListShown = true;
-			vScroll('buddy_list_container');
-		}.bind(this));
-	},
-	hideBuddyList: function() {
-		$('.cube').rotate({rotateY: '-=30'}, null, 500, 'easeOutExpo');
-		this._buddyListShown = false;
-	},
-	toggleBuddyList: function() {
-		if(this._buddyListShown) this.hideBuddyList();
-		else this.showBuddyList();
 	}
 };
 
@@ -248,26 +235,37 @@ jQuery.fn.rotate = function(rotateParams, newSide, duration, easing, callback) {
 };
 
 Cube.popularSide = function(callback) {
+	history.pushState({side: 'popularSide'}, null, "/");
+	StateStack.push({side: 'popularSide', path: '/'});
+	
 	$('.cube').cube().nextSideHorizontal('#dummy_side', 1000, 'easeInBack', function() {
 		$('.cube').cube().nextSideHorizontal('#popular_side', 1000, 'easeOutBack', function() {
 			Session.set('previous_side', Session.get('search_side'));
 			Session.set('search_side', '#popular_side');
+			
 			if(callback) callback.call();
 		});
 	});
 };
 
 Cube.fromFriendsSide = function(callback) {
+	history.pushState({side: 'fromFriendsSide'}, null, "/from-friends");
+	StateStack.push({side: 'fromFriendsSide', path: '/from-friends'});
+
 	$('.cube').cube().nextSideHorizontal('#dummy_side', 1000, 'easeInBack', function() {
 		$('.cube').cube().nextSideHorizontal('#from_friends_side', 1000, 'easeOutBack', function() {
 			Session.set('previous_side', Session.get('search_side'));
 			Session.set('search_side', '#from_friends_side');
+			
 			if(callback) callback.call();
 		});
 	});
 };
 
 Cube.historySide = function(callback) {
+	history.pushState({side: 'historySide'}, null, "/history");
+	StateStack.push({side: 'historySide', path: '/history'});
+	
 	$('.cube').cube().nextSideHorizontal('#dummy_side', 1000, 'easeInBack', function() {
 		$('.cube').cube().nextSideHorizontal('#history_side', 1000, 'easeOutBack', function() {
 			Session.set('previous_side', Session.get('search_side'));
@@ -291,6 +289,11 @@ Cube.historySide = function(callback) {
 };
 
 Cube.back = function(callback) {
+	StateStack.pop();
+	var popState = StateStack[StateStack.length - 1];
+
+	history.pushState({side: popState.side}, null, popState.path);
+	
 	$('.cube').cube().prevSideHorizontal('#dummy_side', 1000, 'easeInBack', function() {
 		$('.cube').cube().prevSideHorizontal(Session.get('previous_side'), 1000, 'easeOutBack', function() {
 			var previousSide = Session.get('previous_side');
@@ -300,4 +303,50 @@ Cube.back = function(callback) {
 		});
 	});
 };
+
+
+Cube.showBuddyList = function(callback) {
+	history.pushState({side: 'showBuddyList'}, null, "/friends");
+	StateStack.push({side: 'showBuddyList', path: '/friends'});
+	
+	$('.cube').cube().rotate({rotateY: '+=30'}, '#buddy_list', 500, 'easeOutExpo', function() {
+		Cube._buddyListShown = true;
+		vScroll('buddy_list_container');
+		if(callback) callback.call();
+	});
+};
+
+Cube.hideBuddyList = function(callback) {
+	if(StateStack[StateStack.length -1].side == 'showBuddyList') StateStack.pop();
+	var popState = StateStack[StateStack.length - 1];
+	
+	history.pushState({side: popState.side}, null, popState.path);
+	
+	$('.cube').cube().rotate({rotateY: '-=30'}, null, 500, 'easeOutExpo', function() {
+		Cube._buddyListShown = false;
+		if(callback) callback.call();
+	});
+	
+
+	$('.follow_button').hide();
+	Session.set('buddy_list_suggest', false);
+	Meteor.users._collection.find().forEach(function(user) {
+		Session.set('buddy_row_suggest_'+user._id, false);
+	});
+};
+
+Cube.toggleBuddyList = function() {
+	if(Cube._buddyListShown) Cube.hideBuddyList();
+	else Cube.showBuddyList();
+};
+
+window.onpopstate = function(e) {
+	var side = e.state.side,
+		func = Cube[side];
+		
+	var popState = StateStack.pop();
+	if(popState.side == 'showBuddyList') Cube.hideBuddyList();
+	else if(func) func.call();
+};
+
 

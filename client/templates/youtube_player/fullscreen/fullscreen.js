@@ -19,6 +19,7 @@ Template.search.events({
 
 Template.search_fullscreen_side.helpers({
 	liveModeSelected: function() {
+		if(!Meteor.user()) return;
 		return Meteor.user().inTrueLiveMode() ? 'selected' : '';
 	}
 });

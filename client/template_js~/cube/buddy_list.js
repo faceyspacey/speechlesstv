@@ -3,7 +3,9 @@ Template.buddy_list.afterCreated = function() {
 };
 
 Session.set('buddy_tab', 'left');
-Template.buddy_list.helpers({
+Session.set('search_friend_name', '');
+
+Template.buddy_list_toolbar.helpers({
 	selected: function(tab) {
 		var selectedTab = Session.get('buddy_tab');
 		
@@ -11,39 +13,117 @@ Template.buddy_list.helpers({
 		else if(tab == 'left' && selectedTab == 'left') return 'selected';
 		else return '';
 	},
-	watchingTabSelected: function() {
-		return Session.get('buddy_tab') == 'right';
+	liveUsersCount: function() {
+		return LiveUsers.find().count();
+	},
+	currentYoutubeId: function() {
+		if(!Meteor.user()) return;
+		return Meteor.user().current_youtube_id;
 	},
 	isSuggest: function() {
 		return Session.get('buddy_list_suggest');
+	}
+});
+
+Template.buddy_list_toolbar.events({
+	'click #buddy_list_toolbar .left': function() {
+		Session.set('buddy_tab', 'left');
+	},
+	'click #buddy_list_toolbar .right': function() {
+		Session.set('buddy_tab', 'right');
+	},
+	'keyup input': function(e) {
+		var val = $(e.currentTarget).val();
+		Session.set('search_friend_name', val);
+	}
+});
+
+
+Template.buddy_list.helpers({
+	watchingTabSelected: function() {
+		return Session.get('buddy_tab') == 'right';
+	},
+	showSuggest: function() {
+		return Session.get('buddy_list_suggest') ? 'block;' : 'none;';
+	},
+	showWatchingGroup: function() {
+		return LiveUsers.find().count() > 0 && Session.get('in_live_mode') && Session.get('buddy_list_suggest');
+	},
+	liveUsersCount: function() {
+		return LiveUsers.find().count();
 	},
 	onlineUsers: function() {
 		if(!Meteor.user()) return;
-		return Meteor.user().followedUsersOnline();
+		
+		var users = Meteor.user().followedUsersOnline(),
+			searchedName = Session.get('search_friend_name').toLowerCase();
+		
+		if(!Session.get('buddy_list_suggest')) return users;		
+		else {
+				users = users.fetch().concat(Meteor.user().watchingUsers().fetch());
+				return _.reject(users, function(user) {
+					return user.name.toLowerCase().indexOf(searchedName) == -1;
+				});
+			}
 	},
 	followedUsers: function() {
 		if(!Meteor.user()) return;
-		return Meteor.user().followedUsers();
+		
+		var users = Meteor.user().followedUsers(),
+			searchedName = Session.get('search_friend_name').toLowerCase();
+		
+		if(!Session.get('buddy_list_suggest')) return users;		
+		else return _.reject(users.fetch(), function(user) {
+			return user.name.toLowerCase().indexOf(searchedName) == -1;
+		});
 	},
 	followerUsers: function() {
 		if(!Meteor.user()) return;
-		return Meteor.user().followerUsers();
+		
+		var users = Meteor.user().followerUsers(),
+			searchedName = Session.get('search_friend_name').toLowerCase();
+		
+		if(!Session.get('buddy_list_suggest')) return users;		
+		else return _.reject(users.fetch(), function(user) {
+			return user.name.toLowerCase().indexOf(searchedName) == -1;
+		});
 	},
 	popularUsers: function() {
 		if(!Meteor.user()) return;
-		return Meteor.user().popularUsers();
+		
+		var users = Meteor.user().popularUsers(),
+			searchedName = Session.get('search_friend_name').toLowerCase();
+		
+		if(!Session.get('buddy_list_suggest')) return users;		
+		else return _.reject(users.fetch(), function(user) {
+			return user.name.toLowerCase().indexOf(searchedName) == -1;
+		});
 	},
 	watchingUsers: function() {
 		if(!Meteor.user()) return;
-		return Meteor.user().watchingUsers();
+				
+		var users = Meteor.user().watchingUsers(),
+			searchedName = Session.get('search_friend_name').toLowerCase();
+	
+		if(!Session.get('buddy_list_suggest')) return users;		
+		else return _.reject(users.fetch(), function(user) {
+			return user.name.toLowerCase().indexOf(searchedName) == -1;
+		});
+	},
+	onlineCount: function() {
+		if(!Meteor.user()) return '(0)';
+		if(Session.get('search_friend_name').length > 0) return '';
+		return '('+Meteor.user().followedUsersOnline().count()+')';
 	},
 	followedCount: function() {
-		if(!Meteor.user()) return 0;
-		return Meteor.user().followedCount();
+		if(!Meteor.user()) return '(0)';
+		if(Session.get('search_friend_name').length > 0) return '';
+		return '('+Meteor.user().followedCount()+')';
 	},
 	followerCount: function() {
-		if(!Meteor.user()) return 0;
-		return Meteor.user().followerCount();
+		if(!Meteor.user()) return '(0)';
+		if(Session.get('search_friend_name').length > 0) return '';
+		return '('+Meteor.user().followerCount()+')';
 	},
 	watchingUsersCount: function() {
 		if(!Meteor.user()) return 0;
@@ -51,15 +131,28 @@ Template.buddy_list.helpers({
 	}
 });
 
+
 Template.buddy_list.events({
-	'click #buddy_list_toolbar .left': function() {
-		Session.set('buddy_tab', 'left');
+	'mouseenter .submit_suggestion': function() {
+		$('.follow_button').hide();
 	},
-	'click #buddy_list_toolbar .right': function() {
-		Session.set('buddy_tab', 'right');
+	'click .submit_suggestion': function() {
+		var users = Meteor.users.find().fetch();
+		
+		var suggestedUserIds = [];
+		_.each(users, function(user) {
+			var isSuggestedTo = Session.get('buddy_row_suggest_'+user._id); //hacky shit, i know; should use a new local-only model
+			if(isSuggestedTo) {
+				if(!_.contains(suggestedUserIds, user._id)) {
+					Meteor.user().suggest(Session.get('current_suggested_youtube_id'), user._id);
+					suggestedUserIds.push(user._id);
+				}
+			}
+		});
+		
+		Cube.toggleBuddyList();
 	}
 });
-
 
 Template.online_buddy_row.helpers({
 	showBulb: function() {
@@ -73,6 +166,10 @@ Template.online_buddy_row.helpers({
 	},
 	randomNumber: function() {
 		return Math.floor((Math.random()*10000)+1);
+	},
+	backgroundColor: function() {
+		if(Session.get('buddy_row_suggest_'+this._id)) return 'background:black;';
+		else return '';
 	}
 });
 
@@ -141,8 +238,31 @@ $(function() {
 		}, 300);
 	}).on('click', '.follow_button', function() {
 		var userId = Session.get('current_buddy_row_user_id');
-		Meteor.user().followToggle(userId);
+		
+		
+		if(Session.get('buddy_list_suggest')) {
+			var isSuggested = Session.get('buddy_row_suggest_'+userId);
+			if(isSuggested) Session.set('buddy_row_suggest_'+userId, false);
+			else Session.set('buddy_row_suggest_'+userId, true);
+		}
+		else Meteor.user().followToggle(userId);
 	});
+});
+
+
+Template.follow_button.helpers({
+	followText: function() {
+		if(!Meteor.user()) return 'follow';
+		var userId = Session.get('current_buddy_row_user_id');
+		
+		if(Session.get('buddy_list_suggest')) {
+			if(!Session.get('buddy_row_suggest_'+userId)) return 'suggest';
+			else return 'nevermind';
+		}
+		else return Meteor.user().isFollowed(userId) ? 'unfollow' : 'follow';
+		
+		Session.get('buddy_list_suggest')
+	}
 });
 
 

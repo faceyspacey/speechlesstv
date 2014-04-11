@@ -81,8 +81,7 @@ UserModel.prototype = {
 	},
 	exitLiveMode: function(youtubeId) {
 		Session.set('in_live_mode', false);
-		
-		
+
 		var liveVideo = LiveVideos.findOne({youtube_id: youtubeId});
 		
 		console.log('EXIT LIVE MODE - watcher count:', liveVideo.watchers_count);
@@ -101,7 +100,7 @@ UserModel.prototype = {
 		UserModel.timeChecker = setInterval(function() {	
 			//if the player's time is more than 2 seconds out of sync with the last recorded start_time update start time
 			if(this._getStartTime() - liveVideo.start_time > 2 || this._getStartTime() - liveVideo.start_time < -2) {
-				console.log("SHOULD _updateStartTime", this._getStartTime(), liveVideo.start_time, this._getStartTime() - liveVideo.start_time);
+				//console.log("SHOULD _updateStartTime", this._getStartTime(), liveVideo.start_time, this._getStartTime() - liveVideo.start_time);
 				this._updateStartTime(liveVideo);
 			}
 			
@@ -226,7 +225,7 @@ UserModel.prototype = {
 		else return count;
 	},
 	multipleUsersWatching: function() {
-		var youtubeId = YoutubePlayer.current.getYoutubeId(),
+		var youtubeId = Session.get('current_youtube_id'),
 			liveVideo = LiveVideos.findOne({youtube_id: youtubeId});
 			
 		if(liveVideo && liveVideo.watchers_count > 1) return true;

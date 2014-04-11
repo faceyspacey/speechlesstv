@@ -90,7 +90,15 @@ Template.search_result.events({
 	},
 	'click .suggest_video': function(e) {
 		Session.set('buddy_list_suggest', true);
-		$('.cube').getCube().toggleBuddyList();
+		Session.set('buddy_tab', 'left');
+		
+		Session.set('current_suggested_youtube_id', this.youtube_id);
+		
+		setTimeout(function() {
+			$('.suggest_search').focus();
+		}, 1000);
+		
+		Cube.toggleBuddyList();
 		e.stopPropagation();
 	},
 	'click .fast_forward': function(e) {

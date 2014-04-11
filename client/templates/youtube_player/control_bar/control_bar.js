@@ -31,7 +31,7 @@ Template.control_bar.events({
 	},
 	
 	'click .buddy_list_button': function() {
-		$('.cube').getCube().toggleBuddyList();
+		Cube.toggleBuddyList();
 	}
 });
 

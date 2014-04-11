@@ -1,64 +1,72 @@
 <template name="buddy_list">
 	<div class="backface" id="buddy_list" style="display:none; overflow:visible;">
+		{{>buddy_list_toolbar}}
 		<div id="buddy_list_container">
-			{{#isolate}}
-				<div id="buddy_list_scroller">
-					<div id="buddy_list_toolbar">
-						{{#if isSuggest}}
-							<input class="suggest_search" placeholder="Search Friends"/>
-						{{else}}
-							<div class="right {{selected 'right'}}">
-								<span style="float:left;">WATCHING (17)</span> 
-								<img src="http://img.youtube.com/vi/Oh_qdGlVN1c/mqdefault.jpg"/>
-							</div>
-							<div class="left {{selected 'left'}}">
-								<span>ONLINE (33)</span>
-								<img class="bulb" src="/images/bulbs/green.png" />
-							</div>
-						{{/if}}
-					</div>
-
-					{{#if watchingTabSelected}}
+			<div id="buddy_list_scroller">
+				{{#if watchingTabSelected}}
+					{{#each watchingUsers}}
+						{{> online_buddy_row}}
+					{{/each}}
+				{{else}}
+					{{#if showWatchingGroup}}
+						<div class="title_bar">WATCHING {{liveUsersCount}}</div>
 						{{#each watchingUsers}}
 							{{> online_buddy_row}}
 						{{/each}}
-					{{else}}
-						{{#each onlineUsers}}
-							{{> online_buddy_row}}
-						{{/each}}
-
-
-						<div class="title_bar">FOLLOWING ({{followedCount}})</div>
-						{{#each followedUsers}}
-							{{> online_buddy_row}}
-						{{/each}}
-
-
-						<div class="title_bar">FOLLOWERS ({{followerCount}})</div>
-						{{#each followerUsers}}
-							{{> online_buddy_row}}
-						{{/each}}
-
-
-						<div class="title_bar">POPULAR USERS</div>
-						{{#each popularUsers}}
-							{{> online_buddy_row}}
-						{{/each}}
-
-						{{#if isSuggest}}
-							<div class="submit_suggestion">SUGGEST TO SElECTED</div>
-							{{/if}}			
 					{{/if}}
-				</div>
-			{{/isolate}}
+					
+					<div class="title_bar">ONLINE NOW {{onlineCount}}</div>
+					{{#each onlineUsers}}
+						{{> online_buddy_row}}
+					{{/each}}
+
+
+					<div class="title_bar">FOLLOWING {{followedCount}}</div>
+					{{#each followedUsers}}
+						{{> online_buddy_row}}
+					{{/each}}
+
+
+					<div class="title_bar">FOLLOWERS {{followerCount}}</div>
+					{{#each followerUsers}}
+						{{> online_buddy_row}}
+					{{/each}}
+
+
+					<div class="title_bar">POPULAR USERS</div>
+					{{#each popularUsers}}
+						{{> online_buddy_row}}
+					{{/each}}		
+				{{/if}}
+			</div>
 		</div>
+		<div class="submit_suggestion" style="display:{{showSuggest}}">SUGGEST TO SElECTED</div>
+	</div>
+</template>
+
+<template name="buddy_list_toolbar">
+	<div id="buddy_list_toolbar">
+		{{#if isSuggest}}
+			<input class="suggest_search" placeholder="Search Friends"/>
+		{{else}}
+			<div class="right {{selected 'right'}}">
+				<span style="float:left;">WATCHING ({{liveUsersCount}})</span> 
+				{{#if currentYoutubeId}}
+					<img src="http://img.youtube.com/vi/{{currentYoutubeId}}/mqdefault.jpg"/>
+				{{/if}}
+			</div>
+			<div class="left {{selected 'left'}}">
+				<span>ONLINE (33)</span>
+				<img class="bulb" src="/images/bulbs/green.png" />
+			</div>
+		{{/if}}
 	</div>
 </template>
 
 
 <template name="online_buddy_row">
-	<div class="buddy_row">
-		<div class="profile_pic_container">
+	<div class="buddy_row" style="{{backgroundColor}}">
+		<div class="profile_pic_container" id="buddy_{{_id}}">
 			<img class="profile_pic" src="{{pic}}">
 			{{#if showBulb}}
 				<img class="online_bulb" src="/images/bulbs/{{bulbColor}}.png" />
@@ -85,4 +93,10 @@
 		{{/if}}
 	</div>
 </template>
+
+
+<template name="follow_button">
+	<div class="follow_button" style="display:none;">{{followText}}</div>
+</template>
+
 

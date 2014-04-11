@@ -44,10 +44,10 @@ Template.autocompletion.events({
 
 
 
-var predictiveTimer, isFromFriendsSetup;
+var predictiveTimer;
 Template.search_bar_side.events({
 	'click .buddy_list_button': function() {
-		$('.cube').getCube().toggleBuddyList();
+		Cube.toggleBuddyList();
 	},
 	'keyup .search_bar input': function(e) {
 		var value = $(e.currentTarget).val();
@@ -110,29 +110,6 @@ Template.search_bar_side.events({
 	'click .from_friends': function() {
 		if(Session.equals('search_side', '#from_friends_side')) return;
 		Cube.fromFriendsSide();
-		
-		if(!isFromFriendsSetup) {
-			var timerStarted = Date.now(),
-				fromFriendsSetupTimer = setInterval(function() {
-				var socialSubscriptions = [usersSub, watchesFromFriendsSub, favoritesFromFriendsSub, commentsFromFriendsSub, suggestionsFromFriendsSub];
-
-				console.log("DISPLAY SOCIAL SUB FROM FRIENDS CONTENT!!!", subscriptionsReady(socialSubscriptions));
-
-				if(subscriptionsReady(socialSubscriptions)) {
-					var timePassed = Date.now() - timerStarted,
-						delay = 2000 - timePassed + 300;
-						
-					if(timePassed < 2000) {
-						Meteor.setTimeout(function() {
-							YoutubeSearcher.setupFromFriendsColumns(); //make animation happen visibly to user after cube flip
-						}, delay);
-					}
-					else YoutubeSearcher.setupFromFriendsColumns();
-					isFromFriendsSetup = true;
-					clearInterval(fromFriendsSetupTimer);
-				}
-			}, 100);
-		}
 	},
 	
 	'mouseenter .search_category_dropdown': function(e) {
