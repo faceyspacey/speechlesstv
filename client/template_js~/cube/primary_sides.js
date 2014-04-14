@@ -1,6 +1,6 @@
 Template.popular_side.afterCreated = function() {
 	setTimeout(function() {
-		YoutubeSearcher.setupPopularColumns();
+		//YoutubeSearcher.setupPopularColumns();
 	}, 1000);
 	
 
@@ -19,7 +19,7 @@ Template.popular_side.afterCreated = function() {
 
 Template.from_friends_side.afterCreated = function() {
 	setTimeout(function() {
-		YoutubeSearcher.setupFromFriendsColumns();
+		//YoutubeSearcher.setupFromFriendsColumns();
 	}, 1000);
 	
 };

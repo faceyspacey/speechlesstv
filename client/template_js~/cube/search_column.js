@@ -16,7 +16,14 @@ Template.search_columns_from_friends.helpers({
 	}
 });
 
-
+Template.search_columns_user_profile.helpers({
+	columns: function() {
+		return Columns.find({_local: true, side: 'user_profile'}, {sort: {created_at: 1}});
+	},
+	isVideos: function(column) {
+		return Videos.find({_local: true, side: 'user_profile', column_index: this.index}).count();
+	}
+});
 
 ColumnCue = {
 	buffer: [],

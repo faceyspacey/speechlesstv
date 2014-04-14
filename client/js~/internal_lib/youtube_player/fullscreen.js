@@ -22,13 +22,19 @@ PlayerComponentFullscreen.prototype = {
 	
 	onEnterFullscreen: function() {
 		console.log('fullscreen onEnterFullscreen');
-		this.bindEscapeKey();
-		this.bindControlsFade();
+		this.bindAll();
 	},
 	onLeaveFullscreen: function() {
 		_.each(YoutubePlayers, function(player, id) {
 			if(player.getComponent('fullscreen')) player.getComponent('fullscreen').unbindAll();
 		});
+	},
+	
+	onPause: function() {
+		this.unbindAll();
+	},
+	onPlay: function() {
+		this.bindAll();
 	},
 	
 	bindEscapeKey: function() {
@@ -53,6 +59,10 @@ PlayerComponentFullscreen.prototype = {
 		}.bind(this));
 	},
 	
+	bindAll: function() {
+		this.bindEscapeKey();
+		this.bindControlsFade();
+	},
 	unbindAll: function() {
 		$(document).unbind('keyup.escapeKey');
 		$('body').unbind('.hideControls');

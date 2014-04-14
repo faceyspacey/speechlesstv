@@ -30,6 +30,15 @@ Meteor.subscribe('youtube_videos', function() {
 
 
 	Deps.autorun(function() {
+		console.log("USER PROFILE SUBS");
+		Meteor.subscribe('watchesUserProfile', 30, Session.get('current_user_profile_id'));
+		Meteor.subscribe('commentsUserProfile', 30, Session.get('current_user_profile_id'));
+		Meteor.subscribe('favoritesUserProfile', 30, Session.get('current_user_profile_id'));
+		Meteor.subscribe('suggestionsUserProfile', 30, Session.get('current_user_profile_id'));
+	});
+	
+	
+	Deps.autorun(function() {
 		console.log("LIVE SUBS");
 		Meteor.subscribe('live_video', Session.get('current_live_youtube_id'));
 		Meteor.subscribe('live_users', Session.get('current_live_youtube_id'), function() {

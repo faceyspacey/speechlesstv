@@ -27,6 +27,11 @@ UserModel.prototype = {
 	isAdmin: function() {
 		return Roles.userIsInRole(this._id, ['admin']);
 	},
+	comment: function(video, message) {
+		var c = new CommentModel;
+		c.message = message;
+		c.saveWithAttributesOfVideo(video);
+	},
 	watched: function(limit) {
 		var limit = limit || 5
 		return Watches.find({user_id: this._id}, {limit: limit, sort: {created_at: -1}});
@@ -145,8 +150,7 @@ UserModel.prototype = {
 		var suggestion = new SuggestionModel;
 		suggestion.sender_user_id = this._id;
 		suggestion.recipient_user_id = suggestedUserId;
-		suggestion.youtube_id = youtubeId; 
-		suggestion.save();
+		suggestion.saveWithAttributesOfVideo(Videos.findOne({youtube_id: youtubeId}));
 	},
 	followToggle: function(followedUserId) {
 		if(this.isFollowed(followedUserId)) this.unFollow(followedUserId);
@@ -188,7 +192,7 @@ UserModel.prototype = {
 		return Meteor.users.find({_id: {$in: this.followed()}}, {limit: 30, sort: {updated_at: -1}});
 	},
 	followedUsersOnline: function() {
-		return Meteor.users.find({_id: {$in: this.followers()}, status: {$gt: Statuses.AWAY}}, {limit: 30, sort: {updated_at: -1}});
+		return Meteor.users.find({_id: {$in: this.followed()}, status: {$gt: Statuses.AWAY}}, {limit: 30, sort: {updated_at: -1}});
 	},
 	popularUsers: function() {
 		return Meteor.users.find({}, {limit: 10, sort: {watched_video_count: -1}});

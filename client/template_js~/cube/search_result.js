@@ -51,6 +51,7 @@ Template.search_result.events({
 			$('.search_video_stats').css('text-align', 'left');
 		}
 		
+		setupVideoInfoStats();
 		
 		YoutubePlayer.mini(currentHoverPlayer()).setVideo(this.youtube_id, true);
 		

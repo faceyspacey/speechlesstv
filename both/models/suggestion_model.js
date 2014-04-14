@@ -37,5 +37,8 @@ SuggestionModel.prototype = {
 	},
 	note: function() {
 		return 'Suggested to ' + this.recipient().name + ' by ' + this.sender().name;
+	},
+	socialNote: function() {
+		return 'Suggested to you by ' + this.sender().name + ' on ' + moment(this.created_at).format("dddd MMMM do @ h:mma");
 	}
 };

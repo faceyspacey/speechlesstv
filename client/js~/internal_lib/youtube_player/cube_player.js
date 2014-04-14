@@ -16,15 +16,19 @@ CubePlayer = {
 		$('.cube').cube().prevSideHorizontal(this._side(), null, null, function() {
 			this._fadeOutLoading();
 		}.bind(this));
+		
 		this._player()._call('onPrev').setVideo(SearchVideos.prev().youtube_id, true);
 	},
-	next: function() {
+	next: function(youtubeId) {
 		this._changeSide();
 		
 		$('.cube').cube().nextSideHorizontal(this._side(), null, null, function() {
 			this._fadeOutLoading();
 		}.bind(this));
-		this._player()._call('onNext').setVideo(SearchVideos.next().youtube_id, true);
+		
+		var youtubeId = youtubeId || SearchVideos.next().youtube_id;
+		
+		this._player()._call('onNext').setVideo(youtubeId, true);
 	},
 	_changeSide: function() {
 		this.currentSide = this.currentSide == 'main' ? 'alt' : 'main';

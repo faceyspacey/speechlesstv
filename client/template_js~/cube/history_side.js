@@ -49,6 +49,6 @@ getHistorySideVideos = function() {
 	if(Session.equals('history_filter', 'WATCHED')) return Watches.find({user_id: Meteor.userId()}, {sort: {created_at: -1}, limit: Session.get('history_watches_limit')});
 	if(Session.equals('history_filter', 'STARRED')) return Favorites.find({user_id: Meteor.userId()}, {sort: {created_at: -1}, limit: Session.get('history_favorites_limit')});
 	if(Session.equals('history_filter', 'COMMENTED')) return Comments.find({user_id: Meteor.userId()}, {sort: {created_at: -1}, limit: Session.get('history_comments_limit')});
-	if(Session.equals('history_filter', 'SUGGESTED')) return Suggestions.find({user_id: Meteor.userId()}, {sort: {created_at: -1}, limit: Session.get('history_suggestions_limit')});
+	if(Session.equals('history_filter', 'SUGGESTED')) return Suggestions.find({$or: [{sender_user_id: Meteor.userId()}, {recipient_user_id: Meteor.userId()}]}, {sort: {created_at: -1}, limit: Session.get('history_suggestions_limit')});
 };
 

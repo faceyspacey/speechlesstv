@@ -138,7 +138,7 @@ Cube.prototype = {
 				$('#buddy_list_toolbar').css('width', sideBarWidth + 2);
 				//$('#buddy_list_toolbar .left').css('width', sideBarWidth - $('#buddy_list_toolbar .right').outerWidth());
 				
-				injectCSS('#buddy_list_toolbar .left', 'width: '+ (sideBarWidth - 197) + 'px');	
+				injectCSS('#buddy_list_toolbar .left', 'width: '+ (sideBarWidth - $('#buddy_list_toolbar .right').outerWidth()) + 'px');	
 			}.bind(this), 500);
 			
 			var percentAcross = Math.pow(parseFloat(Math.cos(this._getDegrees() * Math.PI/180).toFixed(20)), 2);
@@ -234,6 +234,20 @@ jQuery.fn.rotate = function(rotateParams, newSide, duration, easing, callback) {
 	return this;
 };
 
+Cube.start = function(callback) {
+	var popState = StateStack[StateStack.length - 1];
+	$('.cube').cube().prevSide(popState.id, null, null, function() {
+		if(popState.id == '#popular_side') YoutubeSearcher.setupPopularColumns();
+		else if(popState.id == '#from_friends_side') YoutubeSearcher.setupFromFriendsColumns();
+		else if(popState.id == '#user_profile_side') {
+			$('input.search_query').val(Meteor.users.findOne(Session.get('current_user_profile_id')).name);
+			YoutubeSearcher.setupUserProfileColumns(Session.get('current_user_profile_id'));
+		}
+		
+		if(callback) callback.call();
+	});
+};
+
 Cube.popularSide = function(callback) {
 	history.pushState({side: 'popularSide'}, null, "/");
 	StateStack.push({side: 'popularSide', path: '/'});
@@ -242,6 +256,8 @@ Cube.popularSide = function(callback) {
 		$('.cube').cube().nextSideHorizontal('#popular_side', 1000, 'easeOutBack', function() {
 			Session.set('previous_side', Session.get('search_side'));
 			Session.set('search_side', '#popular_side');
+			
+			if(!Columns.findOne({side: 'popular'})) YoutubeSearcher.setupPopularColumns();
 			
 			if(callback) callback.call();
 		});
@@ -257,6 +273,26 @@ Cube.fromFriendsSide = function(callback) {
 			Session.set('previous_side', Session.get('search_side'));
 			Session.set('search_side', '#from_friends_side');
 			
+			if(!Columns.findOne({side: 'from_friends'})) YoutubeSearcher.setupFromFriendsColumns();
+			
+			if(callback) callback.call();
+		});
+	});
+};
+
+Cube.userProfileSide = function(userId, callback) {
+	history.pushState({side: 'userProfileSide'}, null, "/user/"+userId);
+	StateStack.push({side: 'userProfileSide', path: '/user/'+userId});
+
+	$('.cube').cube().nextSideHorizontal('#dummy_side', 1000, 'easeInBack', function() {
+		YoutubeSearcher.clearUserProfile();
+		
+		$('.cube').cube().nextSideHorizontal('#user_profile_side', 1000, 'easeOutBack', function() {
+			Session.set('previous_side', Session.get('search_side'));
+			Session.set('search_side', '#user_profile_side');
+			
+			YoutubeSearcher.setupUserProfileColumns(userId);
+			
 			if(callback) callback.call();
 		});
 	});
@@ -271,18 +307,10 @@ Cube.historySide = function(callback) {
 			Session.set('previous_side', Session.get('search_side'));
 			Session.set('search_side', '#history_side');
 			
-			vScroll('add_videos_wrapper', {
-				onScrollEnd: function() {
-					if(this.y == this.maxScrollY) {
-						console.log('reached end of scroller');
-						
-						if(Session.equals('history_filter', 'WATCHED')) Session.set('history_watches_limit', Session.get('history_watches_limit')+8);
-						if(Session.equals('history_filter', 'STARRED')) Session.set('history_favorites_limit', Session.get('history_favorites_limit')+8);
-						if(Session.equals('history_filter', 'COMMENTED')) Session.set('history_comments_limit', Session.get('history_comments_limit')+8);
-						if(Session.equals('history_filter', 'SUGGESTED')) Session.set('history_suggestions_limit', Session.get('history_suggestions_limit')+8);
-					}
-				}
-			});
+			Meteor.setTimeout(function() {
+				historyScroll();
+			}, 700);
+			
 			if(callback) callback.call();
 		});
 	});
@@ -292,6 +320,14 @@ Cube.back = function(callback) {
 	StateStack.pop();
 	var popState = StateStack[StateStack.length - 1];
 
+	if(!popState) {
+		popState = {side: 'popularSide', id: '#popular_side', path: '/'};
+		StateStack.push(popState);
+		Session.set('previous_side', '#popular_side');
+		
+		var noPopState = true;
+	}
+	
 	history.pushState({side: popState.side}, null, popState.path);
 	
 	$('.cube').cube().prevSideHorizontal('#dummy_side', 1000, 'easeInBack', function() {
@@ -299,6 +335,9 @@ Cube.back = function(callback) {
 			var previousSide = Session.get('previous_side');
 			Session.set('previous_side', Session.get('search_side'));
 			Session.set('search_side', previousSide);
+			
+			if(noPopState) if(!Columns.findOne({side: 'popular'})) YoutubeSearcher.setupPopularColumns();
+			
 			if(callback) callback.call();
 		});
 	});
@@ -335,9 +374,9 @@ Cube.hideBuddyList = function(callback) {
 	});
 };
 
-Cube.toggleBuddyList = function() {
-	if(Cube._buddyListShown) Cube.hideBuddyList();
-	else Cube.showBuddyList();
+Cube.toggleBuddyList = function(callback) {
+	if(Cube._buddyListShown) Cube.hideBuddyList(callback);
+	else Cube.showBuddyList(callback);
 };
 
 window.onpopstate = function(e) {

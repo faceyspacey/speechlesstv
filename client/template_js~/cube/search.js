@@ -1,14 +1,9 @@
-/** SEARCH **/
-
 Template.search.created = function() {
 	Deps.afterFlush(function() {
 		Resizeable.resizeAllElements();;
-		
-		var popState = StateStack[StateStack.length - 1];
-		$('.cube').cube().prevSide(popState.id);
+		Cube.start();
 	});
 };
-
 
 /** SEARCH_HELP_GRAPHIC **/
 

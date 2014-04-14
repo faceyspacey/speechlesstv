@@ -39,7 +39,7 @@ YoutubePlayer.prototype = {
 	},
 	makeCurrent: function() {
 		Session.set('current_player_id', this.playerId);
-		YoutubePlayer.current = this;
+		return YoutubePlayer.current = this;
 	},
 	
 	
@@ -236,7 +236,10 @@ YoutubePlayer.prototype = {
 	/** REACTIVE PLAYERID **/
 	
 	getPlayerId: function() {
-		return Session.get('current_player_id');
+		return this.playerId;
+		
+		//before Blaze we needed the session var below's reactivity, but now we dont (and as a result, fixes a few other things)
+		//return Session.get('current_player_id');
 	},
 	
 	

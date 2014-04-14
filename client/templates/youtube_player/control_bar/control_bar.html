@@ -2,38 +2,38 @@
 	<div class="controls backface">
 	
 			{{#with player playerId}}
-	        	{{#isolate}}
+	        	
 	 				<div class="smallPlayPauseButton {{playPauseClass}}">
 			        	<div class="miniPausePlay"></div>
 			        </div>
-				{{/isolate}}
+				
 
 		    	<div class="groove"></div>
 
 		        <div class="bars">
 		            <div class="barsInner">
-						{{#isolate}}<div class="loadingBar" style="width:{{loadedPercent}}%"></div>{{/isolate}}
-		            	{{#isolate}}<div class="progressBar" style="width:{{playedPercent}}%"></div>{{/isolate}}
-		            	{{#isolate}}
+						<div class="loadingBar" style="width:{{loadedPercent}}%"></div>
+		            	<div class="progressBar" style="width:{{playedPercent}}%"></div>
+		            	
 							<div class="currentTimeBall" style="left:{{playedPercent}}%">
 								<div class="innerTimeBallCircle"></div>
 							</div>
-						{{/isolate}}
+						
 					</div>
 		        </div>
 
-				{{#isolate}}
+				
 					<div class="videoTime">
 						<p>
 							<span class="videoCurrentTime">{{timeFormatted}}</span> <span>/</span> <span class="videoDuration">{{durationFormatted}}</span>
 						</p>
 					</div>
-				{{/isolate}}
+				
 
 
-				{{#isolate}}
+				
 			        {{>volume}}
-				{{/isolate}}
+				
 
 		    	<div class="minilogo buddy_list_button">
 					<i class="fa fa-users" style="font-size:42px;"></i>
@@ -41,11 +41,11 @@
 
 				<div class="groove"></div>
 
-		        {{#isolate}}
+		        
 					<div class="fullscreen {{fullScreenClass}}">
 			        	<div class="fullscreenButton"></div>
 			        </div>
-				{{/isolate}}
+				
 			{{/with}}
 
     </div>

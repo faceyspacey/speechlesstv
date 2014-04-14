@@ -34,6 +34,22 @@ Meteor.publish('suggestions', function(limit) {
 
 
 
+Meteor.publish('watchesUserProfile', function(limit, userId) {
+	return Watches.find({user_id: userId}, {limit: limit, sort: {updated_at: -1}});
+});
+Meteor.publish('favoritesUserProfile', function(limit, userId) {
+	return Favorites.find({user_id: userId}, {limit: limit, sort: {updated_at: -1}});
+});
+Meteor.publish('commentsUserProfile', function(limit, userId) {
+	return Comments.find({user_id: userId}, {limit: limit, sort: {updated_at: -1}});
+});
+Meteor.publish('suggestionsUserProfile', function(limit, userId) {
+	return Suggestions.find({$or: [{recipient_user_id: userId}, {sender_user_id: this.userId}]}, {limit: limit, sort: {updated_at: -1}});
+});
+
+
+
+
 Meteor.publish('live_video', function(youtubeId) {
 	return LiveVideos.find({youtube_id: youtubeId}, {limit: 1});
 });

@@ -19,6 +19,7 @@ Router.map(function () {
 		}
   	});
 
+
 	this.route('other', {
     	path: '/:path',
 		template: 'search',
@@ -38,4 +39,19 @@ Router.map(function () {
 			}
 		}
   	});
+
+
+	this.route('user', {
+    	path: '/user/:id',
+		template: 'search',
+		layoutTemplate: 'blank_layout',
+		data: function() {
+			Session.set('search_side', '#user_profile_side');
+			Session.set('current_user_profile_id', this.params.id);
+			
+			history.pushState({side: 'userProfileSide'}, null, this.params.path);
+			StateStack.push({side: 'userProfileSide', id: '#user_profile_side', path: this.params.path});
+		}
+  	});
 });
+

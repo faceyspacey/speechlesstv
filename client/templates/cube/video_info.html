@@ -1,24 +1,22 @@
 <template name="search_video_info">
 	<div class="search_video_info" style="display:none;">
-		{{#isolate}}
-			{{#with current_search_video}}
-				{{#isolate}}
-					<div class="search_video_title">{{title}}</div>
-				{{/isolate}}
-				
-				<div class="search_video_duration" style="{{duration_position}}">
-					{{#isolate}}<span>{{playerTime}}/{{playerDuration}}</span>{{/isolate}}
-				</div>
-				
-				{{#isolate}}
-					<div class="search_video_stats" style="{{stats_position}}">
-						<i class="fa fa-desktop"></i> {{watchesCount}}
-						<i class="fa fa-star"></i> {{favoritesCount}}
-						<i class="fa fa-comments"></i> {{commentsCount}}
-						<i class="fa fa-user"></i> {{suggestionsCount}}
-					</div>
-				{{/isolate}}
-			{{/with}}
-		{{/isolate}}
+		{{#with current_search_video}}
+			<div class="search_video_title">{{title}}</div>
+			
+			{{#if socialNote}}
+				<div class="search_video_social_note">{{socialNote}}</div>
+			{{/if}}
+			
+			<div class="search_video_duration" style="{{duration_position}}">
+				<span>{{playerTime}}/{{playerDuration}}</span>
+			</div>
+			
+			<div class="search_video_stats" style="{{stats_position}}">
+				<i class="fa fa-desktop"></i> {{watchesCount}}
+				<i class="fa fa-star"></i> {{favoritesCount}}
+				<i class="fa fa-comments"></i> {{commentsCount}}
+				<i class="fa fa-user"></i> {{suggestionsCount}}
+			</div>
+		{{/with}}
 	</div>
 </template>

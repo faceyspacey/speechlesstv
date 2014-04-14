@@ -2,6 +2,9 @@ AbstractVideoModel = {
 	src: function() {
 		return 'http://img.youtube.com/vi/'+this.youtube_id+'/mqdefault.jpg'
 	},
+	user: function() {
+		return Meteor.users.findOne(this.user_id);
+	},
 	addVideoToPage: function(side, column, index) {
 		var v = new VideoModel;
 		
@@ -15,6 +18,8 @@ AbstractVideoModel = {
 		v.length = v.length || '00:00';
 		v.created_at = v.created_at || moment().toDate();
 		v.side = side;
+		
+		if(this.socialNote) v.socialNote = this.socialNote();
 		
 		if(this.category_name) {
 			v.category_name = this.category_name;

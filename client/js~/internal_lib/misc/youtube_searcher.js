@@ -56,27 +56,46 @@ YoutubeSearcher = {
 		}.bind(this));
 	},
 	setupFromFriendsColumns: function() {
-		var friendIds = Follows.find({follower_user_id: this.userId}).map(function(follow) {
-			return follow.followed_user_id;
-		});
+		this._setupSocialSide(Meteor.userId(), 'from_friends');
+	},
+	setupUserProfileColumns: function(userId) {
+		this._setupSocialSide(userId, 'user_profile');
+	},
+	clearUserProfile: function() {
+		Columns._collection.remove({side: 'user_profile'});
+		Videos._collection.remove({side: 'user_profile'});
 		
-		var params = {},//{user_id: {$in: friendIds},
-			watches = Watches.find(params, {limit: 48, sort: {updated_at: -1}}).fetch(),
+		BackNext.all['#user_profile_side'].clear();
+	},
+	_setupSocialSide: function(userId, side) {
+		if(side == 'from_friends') {
+			var friendIds = Follows.find({follower_user_id: userId}).map(function(follow) {
+				return follow.followed_user_id;
+			});
+
+			var params = {user_id: {$in: friendIds}},
+				suggestionParams = {recipient_user_id: userId};
+		}
+		else {
+			var params = {user_id: userId},
+				suggestionParams = {sender_user_id: userId};
+		}
+	
+		var watches = Watches.find(params, {limit: 48, sort: {updated_at: -1}}).fetch(),
 			favorites = Favorites.find(params, {limit: 48, sort: {updated_at: -1}}).fetch(),
 			comments = Comments.find(params, {limit: 48, sort: {updated_at: -1}}).fetch(),
-			suggestions = Suggestions.find(params, {limit: 48, sort: {updated_at: -1}}).fetch(),
+			suggestions = Suggestions.find(suggestionParams, {limit: 48, sort: {updated_at: -1}}).fetch(),
 			videoTypes = [watches, favorites, comments, suggestions];
 		
-		console.log('VIDEO TYPES', videoTypes);
-		
+
 		var columnCount = SearchSizes.columnsCapacityCount(),
 			thumbCount = SearchSizes.thumbsPerColumn,
-			side = 'from_friends',
+			side = side,
 			columnInfo = [
 				{name: 'Watched', color: 'orange'}, 
-				{name: 'Starred', color: 'yellow'}, 
-				{name: 'Commented', color: 'blue'}, 
-				{name: 'Suggested', color: 'red'}
+				{name: 'Starred', color: 'rgb(226, 226, 52)'}, 
+				{name: 'Commented', color: 'rgb(52, 87, 226)'}, 
+				{name: 'Suggested', color: 'rgb(221, 72, 43)'}
 			];
 		
 		for(var i = 0; i < columnCount; i++) {
@@ -87,7 +106,8 @@ YoutubeSearcher = {
 			if(videos.length > 0) {
 				var column = this._newColumn(side, columnInfo[typeIndex].name, columnInfo[typeIndex].color);
 				
-				Deps.afterFlush(BackNext.all['#from_friends_side'].addColumn.bind(BackNext.all['#from_friends_side']));
+				var sideId = '#'+side+'_side';
+				Deps.afterFlush(BackNext.all[sideId].addColumn.bind(BackNext.all[sideId]));
 				
 				console.log('VIDEOS', videos, typeIndex, columnCountOfType, thumbCount);
 				_.each(videos, function(video, index) {

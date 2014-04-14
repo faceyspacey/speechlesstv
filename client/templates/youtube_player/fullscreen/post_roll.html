@@ -1,0 +1,27 @@
+<template name="post_roll_overlay">
+	<div class="post_roll_overlay" style="display:none;">
+		{{#each videos}}
+			{{>post_roll_video}}
+		{{/each}}
+	</div>
+</template>
+
+<template name="post_roll_video">
+	<div class="post_roll_video">
+		<div style="position: absolute; top:0px; left: 0px; width: 100%; height: 100%; z-index: 100;cursor:pointer;"></div>
+		<img id="{{../fullscreen_side}}_{{_id}}" src="{{src}}" />
+				
+		<div class="suggest_video">
+			<i class="fa fa-user"></i>
+		</div>
+		
+		{{#if isLive}}
+			<div class="live">LIVE!</div>
+		{{/if}}
+		
+
+		<div class="fast_forward">
+			<i class="fa fa-forward"></i>
+		</div>
+	</div>
+</template>

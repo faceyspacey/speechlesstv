@@ -28,5 +28,8 @@ WatchModel = function(doc){
 WatchModel.prototype = {
 	date: function() {
 		return 'Watched on: '+moment(this.updated_at).format("dddd MMMM do @ h:mma");
+	},
+	socialNote: function() {
+		return 'Watched by '+this.user().name+' on: '+moment(this.created_at).format("dddd MMMM do @ h:mma");
 	}
 };

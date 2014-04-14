@@ -69,7 +69,7 @@ Resizeable = {
 			injectCSS('.search_back_next', 'padding-top: '+SearchSizes.backNextPaddingTop()+'px;');
 		},
 		buddyList: function(width, height) {
-			$('#buddy_list_container').css('height', height - 94);
+			$('#buddy_list_container').css('height', height - 44);
 		}
 	},
 	

@@ -49,9 +49,6 @@ Template.buddy_list.helpers({
 	showWatchingGroup: function() {
 		return LiveUsers.find().count() > 0 && Session.get('in_live_mode') && Session.get('buddy_list_suggest');
 	},
-	liveUsersCount: function() {
-		return LiveUsers.find().count();
-	},
 	onlineUsers: function() {
 		if(!Meteor.user()) return;
 		
@@ -110,6 +107,11 @@ Template.buddy_list.helpers({
 			return user.name.toLowerCase().indexOf(searchedName) == -1;
 		});
 	},
+	liveUsersCount: function() {
+		if(!Meteor.user()) return '(0)';
+		if(Session.get('search_friend_name').length > 0) return '';
+		return '('+LiveUsers.find().count()+')';
+	},
 	onlineCount: function() {
 		if(!Meteor.user()) return '(0)';
 		if(Session.get('search_friend_name').length > 0) return '';
@@ -153,6 +155,8 @@ Template.buddy_list.events({
 		Cube.toggleBuddyList();
 	}
 });
+
+Session.set('current_user_profile_id', Meteor.userId());
 
 Template.online_buddy_row.helpers({
 	showBulb: function() {
@@ -210,11 +214,26 @@ Template.online_buddy_row.events({
 	'mouseleave .buddy_row': function(e) {
 		followTimer = setTimeout(function() {
 			$('.follow_button').hide();
-		}, 300);
+		}, 100);
 		
 		var playerId = $(e.currentTarget).find('object').attr('id'); 
 
 		if(YoutubePlayer.get(playerId)) YoutubePlayer.get(playerId).destroy();
+	},
+	
+	'click .profile_pic': function() {
+		var userId = this._id,
+			userName = this.name;
+		
+		Session.set('current_user_profile_id', userId);
+		
+		Cube.hideBuddyList(function() {
+			Meteor.setTimeout(function() {
+				Cube.userProfileSide(userId, function() {
+					$('input.search_query').val(userName);
+				});
+			}, 100);
+		});
 	}
 });
 
@@ -235,7 +254,7 @@ $(function() {
 	}).on('mouseleave', '.follow_button', function() {
 		followTimer = setTimeout(function() {
 			$('.follow_button').hide();
-		}, 300);
+		}, 100);
 	}).on('click', '.follow_button', function() {
 		var userId = Session.get('current_buddy_row_user_id');
 		

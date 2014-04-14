@@ -87,7 +87,7 @@
 }
 
 #buddy_list_toolbar .right {
-	
+	width: 200px;
 	border-left: 1px solid white;
 }
 
@@ -137,6 +137,10 @@
 	
 }
 
+#buddy_list div.buddy_row:hover {
+	background: #559afe;
+}
+
 #buddy_list div.buddy_row:last-child {
 	border-bottom:none;
 }
@@ -149,6 +153,10 @@
 	position:relative;
 	margin-right: 11px;
 }
+.buddy_row .profile_pic_container:hover {
+	border: 1px solid rgb(42, 103, 160);
+}
+
 .buddy_row .profile_pic {
 	height: 100%;
 }
@@ -200,7 +208,7 @@
 }
 
 .buddy_row .profile_vid:hover {
-	box-shadow: 0px 0px 21px 4px rgb(14, 48, 92);
+	border: 1px solid white;
 	cursor: pointer;
 }
 
@@ -230,12 +238,12 @@
 	right: 2px;
 	height: 14px;
 	width: 23px;
-	background: red;
+	background: #559afe;
 	color: white;
 	font-size: 11px;
 	padding: 1px 0px 0px 1px;
 	opacity: 1;
-	border: 1px solid black;
+	/**border: 1px solid black;**/
 	opacity: 1;
 }
 

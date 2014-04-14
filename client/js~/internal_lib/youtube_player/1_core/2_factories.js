@@ -10,7 +10,7 @@ YoutubePlayer.get = function(playerId) {
 	return YoutubePlayers[playerId];
 };
 
-YoutubePlayer.mini = function(playerId, callback) {
+YoutubePlayer.mini = function(playerId, callback, dontMakeCurrent) {
 	var player;
 	
 	if(YoutubePlayers[playerId]) player = YoutubePlayers[playerId];
@@ -25,14 +25,20 @@ YoutubePlayer.mini = function(playerId, callback) {
 		}, 'cookie_volume');
 	}
 	
-	player.makeCurrent();
+	if(!dontMakeCurrent) player.makeCurrent();
 	
 	return YoutubePlayers[playerId] = player;
 };
 
 
 YoutubePlayer.fullscreenOnly = function(playerId, callback) {
-	if(YoutubePlayers[playerId]) YoutubePlayers[playerId].destroy();
+	if(YoutubePlayers[playerId]) {
+		YoutubePlayers[playerId].enterFullscreen();
+		YoutubePlayers[playerId].makeCurrent();
+		return YoutubePlayers[playerId];
+	}
+	
+	//if(YoutubePlayers[playerId]) YoutubePlayers[playerId].destroy();
 	
 	var player = new YoutubePlayer(playerId, callback);
 
@@ -57,5 +63,5 @@ YoutubePlayer.fullscreenOnly = function(playerId, callback) {
 	player.enterFullscreen();
 	player.makeCurrent();
 	
-	return YoutubePlayers[playerId] = player;;
+	return YoutubePlayers[playerId] = player;
 };

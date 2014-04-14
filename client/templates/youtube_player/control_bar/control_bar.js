@@ -1,25 +1,27 @@
 Template.control_bar.events({
 	'click .smallPlayPauseButton.play': function() {
-		YoutubePlayer.current.play();
+		$('.post_roll_overlay').fadeOut('fast');
+		CubePlayer._player().play();
 	},
 	'click .smallPlayPauseButton.pause': function() {
-		YoutubePlayer.current.pause();
+		$('.post_roll_overlay').fadeIn('fast');
+		CubePlayer._player().pause();
 	},
 	
 	
 	'click .fullscreen.enlarge': function() {	
-		YoutubePlayer.current.enterFullscreen();	
+		CubePlayer._player().enterFullscreen();	
 	},
 	'click .fullscreen.shrink': function() {	
-		YoutubePlayer.current.leaveFullscreen();	
+		CubePlayer._player().leaveFullscreen();	
 	},
 	
 
 	'mousedown .currentTimeBall': function(e) {
-		YoutubePlayer.current.getComponent('playhead').mousedown();
+		CubePlayer._player().getComponent('playhead').mousedown();
 	},
 	'click .barsInner': function(e) {
-		YoutubePlayer.current.getComponent('playhead').clickProgressBar(e);
+		CubePlayer._player().getComponent('playhead').clickProgressBar(e);
 	},
 
 

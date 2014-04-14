@@ -5,17 +5,15 @@ Template.history_row.helpers({
 
 		return YoutubePlayer.get(playerId) ? YoutubePlayer.get(playerId).timeFormatted() : '00:00';
 	},
-	watchesCount: function() {
-		return Watches.find({youtube_id: this.youtube_id}).count();
-	},
-	favoritesCount: function() {
-		return Favorites.find({youtube_id: this.youtube_id}).count();
-	},
-	commentsCount: function() {
-		return Comments.find({youtube_id: this.youtube_id}).count();
-	},
-	suggestionsCount: function() {
-		return Suggestions.find({youtube_id: this.youtube_id}).count();
+	setupCounts: function() {
+		Meteor.call('videoStats', this.youtube_id, function(error, counts) {
+			if(!error) this.update({
+				watches_count: counts.watchesCount,
+				favorites_count: counts.favoritesCount,
+				comments_count: counts.commentsCount,
+				suggestions_count: counts.suggestionsCount
+			});
+		}.bind(this));
 	}
 });
 
@@ -43,3 +41,7 @@ Template.history_row.events({
 		if(YoutubePlayer.get(playerId)) YoutubePlayer.get(playerId).destroy();
 	}
 });
+
+Template.history_row.rendered = function() {
+	historyScroll();
+};

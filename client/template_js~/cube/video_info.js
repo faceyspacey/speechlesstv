@@ -1,6 +1,8 @@
 Template.search_video_info.helpers({
 	title: function() {
 		if(!Session.get('current_search_video_id')) return '';
+		if(!Videos.findOne(Session.get('current_search_video_id'))) return '';
+		
 		return Videos.findOne(Session.get('current_search_video_id')).title;
 	},
 	
@@ -27,15 +29,29 @@ Template.search_video_info.helpers({
 	},
 	
 	watchesCount: function() {
-		return Watches.find({youtube_id: Videos.findOne(Session.get('current_search_video_id')).youtube_id}).count();
+		return Session.get('video_info_watches_count');
 	},
 	favoritesCount: function() {
-		return Favorites.find({youtube_id: Videos.findOne(Session.get('current_search_video_id')).youtube_id}).count();
+		return Session.get('video_info_favorites_count');
 	},
 	commentsCount: function() {
-		return Comments.find({youtube_id: Videos.findOne(Session.get('current_search_video_id')).youtube_id}).count();
+		return Session.get('video_info_comments_count');
 	},
 	suggestionsCount: function() {
-		return Suggestions.find({youtube_id: Videos.findOne(Session.get('current_search_video_id')).youtube_id}).count();
+		return Session.get('video_info_suggestions_count');
 	}
 });
+
+
+setupVideoInfoStats = function() {
+	var youtubeId = Videos.findOne(Session.get('current_search_video_id')).youtube_id;
+	
+	Meteor.call('videoStats', youtubeId, function(error, counts) {
+		if(!error) {
+			Session.set('video_info_watches_count', counts.watchesCount);
+			Session.set('video_info_favorites_count', counts.favoritesCount);
+			Session.set('video_info_comments_count', counts.commentsCount);
+			Session.set('video_info_suggestions_count', counts.suggestionsCount);
+		}
+	});
+}

@@ -93,6 +93,12 @@ BackNext.prototype = {
 	},
 	showNext: function() {
 		return Session.get('right_column_count'+this.side) > 0 ? 'block' : 'none';
+	},
+	
+	clear: function() {
+		this.setLeft(0);
+		this.setRight(0);
+		this.totalColumns = 0;
 	}
 };
 
@@ -101,6 +107,7 @@ Meteor.startup(function() {
 	BackNext.all = {};
 	BackNext.all['#popular_side'] = BackNext.current = new BackNext('#popular_side');
 	BackNext.all['#from_friends_side'] = new BackNext('#from_friends_side');
+	BackNext.all['#user_profile_side'] = new BackNext('#user_profile_side');
 	
 	Deps.autorun(function() {
 		var currentSide = Session.get('search_side');

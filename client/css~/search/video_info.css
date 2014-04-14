@@ -22,6 +22,17 @@
 	padding: 4px;		
 }
 
+.search_video_social_note {
+	width: 100%;
+	margin-top: 5px;
+	
+	background: rgb(42, 103, 160);
+	padding: 3px 5px;
+	
+	font-size: 14px;
+	line-height: 18px;
+}
+
 .search_video_duration {
 	position: absolute;
 	bottom: 4px;

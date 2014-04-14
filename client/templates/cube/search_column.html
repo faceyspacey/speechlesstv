@@ -14,6 +14,14 @@
 	{{/each}}
 </template>
 
+<template name="search_columns_user_profile">
+	{{#each columns}}
+		{{#if isVideos}}
+			{{>search_column}}
+		{{/if}}
+	{{/each}}
+</template>
+
 <template name="search_column">
 	<div class="search_result_column" index="{{index}}" style="display:none;">
 		{{#each videos side}}

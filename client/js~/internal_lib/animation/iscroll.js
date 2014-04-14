@@ -1200,5 +1200,20 @@ clearScrolls = function() {
 };
 
 
+historyScroll = function() {
+	vScroll('add_videos_wrapper', {
+		onScrollEnd: function() {
+			if(this.y == this.maxScrollY) {
+				console.log('reached end of scroller');
+				
+				if(Session.equals('history_filter', 'WATCHED')) Session.set('history_watches_limit', Session.get('history_watches_limit')+8);
+				if(Session.equals('history_filter', 'STARRED')) Session.set('history_favorites_limit', Session.get('history_favorites_limit')+8);
+				if(Session.equals('history_filter', 'COMMENTED')) Session.set('history_comments_limit', Session.get('history_comments_limit')+8);
+				if(Session.equals('history_filter', 'SUGGESTED')) Session.set('history_suggestions_limit', Session.get('history_suggestions_limit')+8);
+			}
+		}
+	});
+};
+
 
 

@@ -1,71 +1,106 @@
 <template name="popular_side">
 	<div class="backface primary_side" id="popular_side" style="display:none;">
-		{{#isolate}}
-			<div id="bar_popular" class="bar_cube_container c_container" style="position:absolute; top:5px; left: 5px; overflow:visible; height: 60px;">
-				<div class="c message_cube" id="bar_cube" style="overflow-y:visible; ">
-					{{>search_bar_side id='popular'}}
-					{{>message_bar_side id='popular_message' fullscreen=false}}
-				</div>
-			</div>
-		{{/isolate}}
 		
-		{{#isolate}}
-			<div class="search_results_container">
-				{{#isolate}}
-					<div class="search_results_wrapper">
-						<div class="search_results_scroller">
-							{{>search_columns_popular}}
-							<div style="clear:both;"></div>
-						</div>
-					</div>
-				{{/isolate}}
-
-				{{#isolate}}
-					{{>back_next_buttons}}
-					{{>search_video_info}}
-					<div class="hover_player_container" id="hover_player_container_popular">
-						<div class="hover_player" id="hover_player_popular"></div>
-					</div>
-				{{/isolate}}
+		<div id="bar_popular" class="bar_cube_container c_container" style="position:absolute; top:5px; left: 5px; overflow:visible; height: 60px;">
+			<div class="c message_cube" id="bar_cube" style="overflow-y:visible; ">
+				{{>search_bar_side id='popular'}}
+				{{>message_bar_side id='popular_message' fullscreen=false}}
 			</div>
-		{{/isolate}}
+		</div>
+	
+	
+	
+		<div class="search_results_container">
+			
+				<div class="search_results_wrapper">
+					<div class="search_results_scroller">
+						{{>search_columns_popular}}
+						<div style="clear:both;"></div>
+					</div>
+				</div>
+			
+
+			
+				{{>back_next_buttons}}
+				{{>search_video_info}}
+				<div class="hover_player_container" id="hover_player_container_popular">
+					<div class="hover_player" id="hover_player_popular"></div>
+				</div>
+			
+		</div>
+		
 	</div>
 </template>
 
 <template name="from_friends_side">
 	<div class="backface primary_side" id="from_friends_side" style="display:none;">
-		{{#isolate}}
-			<div id="bar_from_friends" class="bar_cube_container c_container" style="position:absolute; top:5px; left: 5px; overflow:visible; height: 60px;">
-				<div class="c message_cube" id="bar_cube" style="overflow-y:visible; ">
-					{{>search_bar_side id='from_friends'}}
-					{{>message_bar_side id='from_friends_message' fullscreen=false}}
-				</div>
+	
+		<div id="bar_from_friends" class="bar_cube_container c_container" style="position:absolute; top:5px; left: 5px; overflow:visible; height: 60px;">
+			<div class="c message_cube" id="bar_cube" style="overflow-y:visible; ">
+				{{>search_bar_side id='from_friends'}}
+				{{>message_bar_side id='from_friends_message' fullscreen=false}}
 			</div>
-		{{/isolate}}
-		
-		{{#isolate}}
-			<div class="search_results_container">
-				{{#isolate}}
-					<div class="search_results_wrapper">
-						<div class="search_results_scroller">
-							{{>search_columns_from_friends}}
-							<div style="clear:both;"></div>
-						</div>
-					</div>
-				{{/isolate}}
+		</div>
+	
+	
+	
+		<div class="search_results_container">
 			
-				{{#isolate}}
-					{{>back_next_buttons}}
-					{{>search_video_info}}
-					<div class="hover_player_container" id="hover_player_container_from_friends">
-						<div class="hover_player" id="hover_player_from_friends"></div>
+				<div class="search_results_wrapper">
+					<div class="search_results_scroller">
+						{{>search_columns_from_friends}}
+						<div style="clear:both;"></div>
 					</div>
-				{{/isolate}}
-			</div>
-		{{/isolate}}
+				</div>
+			
+		
+			
+				{{>back_next_buttons}}
+				{{>search_video_info}}
+				<div class="hover_player_container" id="hover_player_container_from_friends">
+					<div class="hover_player" id="hover_player_from_friends"></div>
+				</div>
+			
+		</div>
+	
 	</div>
 </template>
 
+
+
+<template name="user_profile_side">
+	<div class="backface primary_side" id="user_profile_side" style="display:none;">
+		
+		<div id="bar_popular" class="bar_cube_container c_container" style="position:absolute; top:5px; left: 5px; overflow:visible; height: 60px;">
+			<div class="c message_cube" id="bar_cube" style="overflow-y:visible; ">
+				{{>search_bar_side id='user_profile'}}
+				{{>message_bar_side id='user_profile_message' fullscreen=false}}
+			</div>
+		</div>
+	
+	
+	
+		<div class="search_results_container">
+			
+				<div class="search_results_wrapper">
+					<div class="search_results_scroller">
+						{{>search_columns_user_profile}}
+						<div style="clear:both;"></div>
+					</div>
+				</div>
+			
+
+			
+				{{>back_next_buttons}}
+				{{>search_video_info}}
+				<div class="hover_player_container" id="hover_player_container_popular">
+					<div class="hover_player" id="hover_player_popular"></div>
+				</div>
+			
+		</div>
+		
+	</div>
+</template>
 
 
 <template name="search_help_graphic">

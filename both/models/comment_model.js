@@ -31,6 +31,9 @@ CommentModel.prototype = {
 		return 'Commented: '+moment(this.created_at).format("dddd MMMM do @ h:mma")
 	},
 	note: function() {
-		return 'YOUR LAST COMMENT: "'+message+'"';
+		return 'YOUR LAST COMMENT: "'+this.message+'"';
+	},
+	socialNote: function() {
+		return this.user().name + ' commented: "' + this.message + '"';
 	}
 };
