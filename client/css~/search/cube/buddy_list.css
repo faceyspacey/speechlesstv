@@ -101,6 +101,7 @@
 
 #buddy_list_toolbar .left {
 	border: none;
+	position: relative;
 }
 
 #buddy_list_toolbar .selected {
@@ -109,12 +110,18 @@
 
 #buddy_list_toolbar .left span {
 	float: right;
+	height: 18px;
+	overflow: hidden;
 }
 #buddy_list_toolbar .left .bulb {
-	float: right;
+	/*float: right;*/
+	
 	height: 18px;
 	margin-right: 5px;
 	margin-top: 1px;
+	
+	position: absolute;
+	right: 110px;
 }
 
 #buddy_list div.buddy_row {
@@ -171,6 +178,9 @@
 	float: right;
 	margin-top: 8px;
 	position: relative;
+	
+	overflow: hidden;
+	height: 46px;
 }
 
 .buddy_row .profile_name {

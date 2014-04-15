@@ -112,8 +112,7 @@ Template.search_result.events({
 		
 		$('.search_video_info').hide();
 		YoutubePlayer.get(currentHoverPlayer()).pause();
-			
-		Meteor.user().watch(this);		
+					
 		CubePlayer.start(this.youtube_id);
 	}
 });

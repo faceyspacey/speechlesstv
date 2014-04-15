@@ -7,7 +7,8 @@ CubePlayer = {
 			$('.cube').cube().nextSideVertical(this._side(), 1000, 'easeOutBack', function() {
 				this._fadeOutLoading();
 			}.bind(this));
-			this._player().setVideo(youtubeId, true);
+			
+			this._player().setVideo(youtubeId, true)._call('onEnterVideo');
 		}.bind(this));
 	},
 	prev: function() {
@@ -17,7 +18,8 @@ CubePlayer = {
 			this._fadeOutLoading();
 		}.bind(this));
 		
-		this._player()._call('onPrev').setVideo(SearchVideos.prev().youtube_id, true);
+		this._playerAlt()._call('onExitVideo');
+		this._player()._call('onPrev').setVideo(SearchVideos.prev().youtube_id, true)._call('onEnterVideo');
 	},
 	next: function(youtubeId) {
 		this._changeSide();
@@ -28,7 +30,8 @@ CubePlayer = {
 		
 		var youtubeId = youtubeId || SearchVideos.next().youtube_id;
 		
-		this._player()._call('onNext').setVideo(youtubeId, true);
+		this._playerAlt()._call('onExitVideo');
+		this._player()._call('onNext').setVideo(youtubeId, true)._call('onEnterVideo');
 	},
 	_changeSide: function() {
 		this.currentSide = this.currentSide == 'main' ? 'alt' : 'main';
@@ -42,6 +45,10 @@ CubePlayer = {
 	_player: function() {
 		var YP = YoutubePlayer;
 		return this.currentSide == 'main' ? YP.fullscreenOnly('search_fullscreen_player_alt') : YP.fullscreenOnly('search_fullscreen_player');
+	},
+	_playerAlt: function() {
+		var YP = YoutubePlayer;
+		return this.currentSide == 'alt' ? YP.fullscreenOnly('search_fullscreen_player_alt') : YP.fullscreenOnly('search_fullscreen_player');
 	},
 	_fadeOutLoading: function() {
 		$(this._side()).find('.video_cover').animate({opacity: 0}, 1500).find('.bar').animate({opacity: 0}, 750);
@@ -63,16 +70,18 @@ SearchVideos = {
 		}.bind(this));
 		
 		if(!video) return videos[videos.length - 1];
+		else return video;
 	},
 	next: function() {	
 		var youtubeId = this._youtubeId(),
 			videos = this._videos();
 		
-		return _.find(videos, function(video, index, videos) {
+		var video = _.find(videos, function(video, index, videos) {
 			return videos[index-1] && videos[index-1].youtube_id == youtubeId;
 		}.bind(this));
 		
 		if(!video) return videos[0];
+		else return video;
 	},
 	_youtubeId: function() {
 		return Session.get('current_youtube_id');

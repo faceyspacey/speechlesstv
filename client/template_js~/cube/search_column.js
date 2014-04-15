@@ -49,6 +49,7 @@ ColumnCue = {
 
 		setTimeout(function() {
 			$column.find('.column_label').animate({bottom: -4}, 300, 'easeOutExpo');
+			$column.find('.column_cover').hide();
 		}, 700);
 	},
 	tick: function() {

@@ -30,16 +30,21 @@ AbstractVideoModel = {
 		v.store();
 	},
 	saveWithAttributesOfVideo: function(video) {
-		var video = video.getMongoAttributes();
+		_.extend(this, this.getClonedAttributes(video));
+		
+		this.user_id = Meteor.userId();
+		
+		if(this._local) this.persist();
+		else this.save();
+	},
+	getClonedAttributes: function(video, userId) {
+		var video = video ? video.getMongoAttributes() : this.getMongoAttributes();
 		
 		delete video.column_index;
 		delete video.index;
 		delete video._id;
 		
-		_.extend(this, video);
-		
-		this.user_id = Meteor.userId();
-		if(this._local) this.persist();
-		else this.save();
+		if(userId) video.user_id = userId;
+		return video;
 	}
 };

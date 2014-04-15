@@ -26,5 +26,7 @@ LiveVideoModel = function(doc){
 };
 
 LiveVideoModel.prototype = {
-
+	secondsPlayed: function() {
+		return moment().toDate().getTime() - this.start_time;
+	}
 };

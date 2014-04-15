@@ -47,8 +47,14 @@ YoutubePlayer.fullscreenOnly = function(playerId, callback) {
 	player.addComponent(new PlayerComponentPlayhead, 'playhead');
 	player.addComponent(new PlayerComponentFullscreen, 'fullscreen');
 	player.addComponent({
+		onEnterVideo: function() {
+			Meteor.user().enterLiveMode(this.player.video());
+		},
+		onExitVideo: function() {
+			Meteor.user().exitLiveMode(this.player.video());
+		},
 		onLeaveFullscreen: function() {
-			Meteor.user().exitLiveMode(this.player.getYoutubeId());
+			Meteor.user().exitLiveMode(this.player.video());
 			
 			$('.cube').cube().prevSideVertical('#dummy_side', 1000, 'easeInBack', function() {
 				$('.cube').cube().prevSideVertical(Session.get('search_side'), 1000, 'easeOutBack', function() {

@@ -2,7 +2,7 @@ YoutubePlayer = function(playerId, callback) {
 	this.setup(playerId, callback);
 };
 
-
+Session.set('load_time', 0);
 YoutubePlayer.prototype = {
 	_ready: false,
 	player: null,
@@ -55,7 +55,10 @@ YoutubePlayer.prototype = {
 		if(this.setupCallback) this.setupCallback();
 	},
 	onStateChange: function(newState) {
-		if(newState == 0 && this.isFullscreen && this.isFullscreen()) CubePlayer.next();
+		if(newState == 0 && this.isFullscreen && this.isFullscreen()) {
+			console.log('ON STATE CHANGE', this.getPlayerId(), this);
+			CubePlayer.next();
+		}
 		else if(this._shouldReplay() && newState == 0) this.replay();
 		else if(newState == 0) this._call('onEnd');
 		else if (newState == 1) {
@@ -64,7 +67,7 @@ YoutubePlayer.prototype = {
 		}
 	},
 	onError: function(error) {
-		console.log('player error', error);
+		console.log('player error', error, e.stack);
 	},
 	
 	
@@ -97,13 +100,15 @@ YoutubePlayer.prototype = {
 	},
 	_try: function(func) {
 		try {func.call(this);}
-		catch(e) {console.log(e);}
+		catch(e) {console.log(e, e.stack);}
 	},
 	
 	
 	/** REPLACE VIDEO METHODS **/
 	
 	setVideo: function(youtubeId, autoplay, onPlayCallback) {
+		this.start_time = moment().toDate().getTime();
+		
 		if(!this._isNewVideo(youtubeId)) return;
 
 		this.setYoutubeId(youtubeId);
@@ -128,12 +133,17 @@ YoutubePlayer.prototype = {
 
 		this._call('onReplaceVideo');
 	},
-	
+	onUpdate: function(currentPlayTime) {
+		if(currentPlayTime >= 1) Session.set('load_time', Math.max(Math.round((moment().toDate().getTime() - this.start_time)/1000) - currentPlayTime, 0));
+	},
 	
 	/** NEW VIDEO REPLACE METHODS **/
 	
 	_isNewVideo: function(youtubeId) {
 		return !Session.get('current_youtube_id_'+this.playerId) || Session.get('current_youtube_id_'+this.playerId)._id != youtubeId;
+	},
+	setSkipTime: function(seconds) {
+		Session.set('last_video_time_'+this.getYoutubeId(), seconds);
 	},
 	lastPlayed: function() {
 		var last = Session.get('last_video_time_'+this.getYoutubeId());
@@ -153,6 +163,7 @@ YoutubePlayer.prototype = {
 			}.bind(this), 200);
 		}
 		else {
+			console.log('PLAYER READY: ', this.getPlayerId());
 			callback.call(this);
 			this._setOnReady();
 		}
@@ -228,6 +239,7 @@ YoutubePlayer.prototype = {
 		_.each(this.components, function(component, id) {
 			if(_.isFunction(component[method])) component[method].apply(component, args);
 		});
+		if(_.isFunction(this[method])) this[method].apply(this, args);
 		
 		return this;
 	},

@@ -31,12 +31,19 @@ PlayerComponentFullscreen.prototype = {
 	},
 	
 	onPause: function() {
+		console.log(this);
+		//this.getPostRoll().fadeIn('fast');
 		this.unbindAll();
 	},
 	onPlay: function() {
+		console.log(this);
+		//this.getPostRoll().fadeOut('fast');
 		this.bindAll();
 	},
 	
+	getPostRoll: function() {
+		return this._backface().find('.post_roll_overlay');
+	},
 	bindEscapeKey: function() {
 		$(document).unbind('keyup.escapeKey');
 		$(document).bind('keyup.escapeKey', function(e) {

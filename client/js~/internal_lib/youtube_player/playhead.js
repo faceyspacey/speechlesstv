@@ -6,7 +6,7 @@ PlayerComponentPlayhead.prototype = {
 		$('body').bind('mousemove.timeBall', this.mousemove.bind(this));
 	},
 	mouseup: function() {
-		Session.set('turned_off_live_mode', true)	
+		Session.set('turned_off_live_mode', true);	
 		$('body').unbind('.timeBall');
 	},
 	mousemove: function(e) {
@@ -20,6 +20,7 @@ PlayerComponentPlayhead.prototype = {
 	clickProgressBar: function(e) {
 		var x = this._getX(e);
 		this.seek(x);
+		Session.set('turned_off_live_mode', true)
 	},
 	
 	

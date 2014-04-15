@@ -1,6 +1,7 @@
 <template name="search_fullscreen_side">
 	<div class="backface" id="search_fullscreen_side"  style="display:none;">
 		<div class="live_button {{liveModeSelected}}">LIVE!</div>
+		<div class="syncing_indicator" style="display:none;">SYNCING...</div>
 		{{>search_fullscreen_player}}
 		{{>post_roll_overlay fullscreen_side='full'}}
 		
@@ -34,6 +35,7 @@
 <template name="search_fullscreen_side_alt">
 	<div class="backface" id="search_fullscreen_side_alt" style="display:none;">
 		<div class="live_button {{liveModeSelected}}">LIVE!</div>
+		<div class="syncing_indicator" style="display:none;">SYNCING...</div>
 		{{>search_fullscreen_player_alt}}
 		{{>post_roll_overlay fullscreen_side='alt'}}
 		

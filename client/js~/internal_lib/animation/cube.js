@@ -21,6 +21,7 @@ Cube.prototype = {
 		if(params.rotateX) this._prepareRotateX(params, newSide);
 		else this._prepareRotateY(params, newSide);
 		
+		$('.whole_page_cover').show();
 		this.element.hardwareAnimate(params, duration, easing, function() {
 			if(this._getDegrees() != 30) this.currentSide.hide();
 			
@@ -32,6 +33,7 @@ Cube.prototype = {
 			this.currentSide = newSide;
 			this.currentSide.addClass('active_side');
 			
+			$('.whole_page_cover').hide();
 			callback();
 		}.bind(this));
 	},
@@ -127,7 +129,7 @@ Cube.prototype = {
 			if(thirtyDegreesLeftPX) return thirtyDegreesLeftPX;
 			
 			setTimeout(function() {
-				thirtyDegreesLeftPX = $('.backface:visible').last().offset().left;
+				thirtyDegreesLeftPX = $('.backface:visible:not(.controls)').last().offset().left;
 				thirtyDegreesLeftPX = ($(window).width() - thirtyDegreesLeftPX) * this._getDirection() * -1;
 				
 				var params = {rotateY: '+=0', translateX: thirtyDegreesLeftPX, translateZlast: true};
@@ -138,7 +140,9 @@ Cube.prototype = {
 				$('#buddy_list_toolbar').css('width', sideBarWidth + 2);
 				//$('#buddy_list_toolbar .left').css('width', sideBarWidth - $('#buddy_list_toolbar .right').outerWidth());
 				
-				injectCSS('#buddy_list_toolbar .left', 'width: '+ (sideBarWidth - $('#buddy_list_toolbar .right').outerWidth()) + 'px');	
+				injectCSS('#buddy_list_toolbar .left', 'width: '+ (sideBarWidth - $('#buddy_list_toolbar .right').outerWidth()) + 'px');
+					
+				injectCSS('.buddy_row .profile_left ', 'width: '+ (sideBarWidth - 66) + 'px');
 			}.bind(this), 500);
 			
 			var percentAcross = Math.pow(parseFloat(Math.cos(this._getDegrees() * Math.PI/180).toFixed(20)), 2);

@@ -1,11 +1,7 @@
 Meteor.methods({
-	deleteLiveUser: function() {
-		LiveUsers.remove({user_id: this.userId});
-	}
-});
-
-
-Meteor.methods({
+	deleteLiveUser: function(youtubeId) {
+		LiveUsers.remove({user_id: this.userId, youtube_id: youtubeId});
+	},
 	followerCount: function() {
 		return Follows.find({followed_user_id: this.userId, followed: true}).count();
 	},

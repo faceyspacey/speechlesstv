@@ -26,6 +26,7 @@ VideoModel = function(doc) {
 	this.collectionName = 'Videos';
     this.defaultValues = {};
 
+	_.extend(this, AbstractVideoModel);
 	_.extend(this, Model);
 	this.extend(doc);
 	

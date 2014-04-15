@@ -119,7 +119,8 @@ LiveVideos.allow({
 	},
 	update: function (userId, doc, fields, modifier) {
 		doc.updated_at = moment().toDate();
-		return (doc.user_id == userId || Roles.userIsInRole(userId, ['admin']));
+		return true;
+		//return (doc.user_id == userId || Roles.userIsInRole(userId, ['admin']));
 	},
 	remove: function (userId, doc) {
 		return (doc.user_id == userId || Roles.userIsInRole(userId, ['admin']));

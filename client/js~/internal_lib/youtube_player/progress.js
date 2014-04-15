@@ -12,6 +12,7 @@ PlayerComponentProgress.prototype = {
 	
 	update: function() {
 		if(!this.player._isReady()) return;
+		
 		var currentTime = Math.floor(this._player().getCurrentTime());
 
 		if(currentTime != this._lastCheckedTime) { 

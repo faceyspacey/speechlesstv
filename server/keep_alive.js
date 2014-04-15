@@ -18,5 +18,16 @@ Meteor.startup(function() {
 		Meteor.users.update({last_keepalive: {$lt: away_threshold}}, 
 					{$set: {status: Statuses.AWAY}}, 
 					{multi: true});
+					
+		Meteor.users.find({last_keepalive: {$lt: away_threshold}}).forEach(function(user) {
+			LiveUsers.remove({user_id: user._id});
+			
+			//remove liveVideos whose last viewer was this user, and then remove liveVideos if no other users still watching
+			LiveVideos.find({user_id: user._id}).forEach(function(liveVideo) {
+				var userCount = LiveUsers.find({youtube_id: liveVideo.youtube_id}).count();
+				if(userCount == 0) LiveVideos.remove(liveVideo._id);
+			});
+		});
+		
 	}, 5*1000);
 })

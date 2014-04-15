@@ -24,16 +24,29 @@ Template.search_fullscreen_side.helpers({
 	}
 });
 
+Template.search_fullscreen_side_alt.helpers({
+	liveModeSelected: function() {
+		if(!Meteor.user()) return;
+		return Meteor.user().inTrueLiveMode() ? 'selected' : '';
+	}
+});
+
 Template.search_fullscreen_side.events({
 	'click .live_button': function(e) {
 		if(Meteor.user().inTrueLiveMode()) Session.set('turned_off_live_mode', true);
-		else Session.set('turned_off_live_mode', false);
+		else {
+			Session.set('turned_off_live_mode', false);
+			Meteor.user().moveToVideoTime(true);
+		}
 	}
 });
 
 Template.search_fullscreen_side_alt.events({
 	'click .live_button': function(e) {
 		if(Meteor.user().inTrueLiveMode()) Session.set('turned_off_live_mode', true);
-		else Session.set('turned_off_live_mode', false);
+		else {
+			Session.set('turned_off_live_mode', false);
+			Meteor.user().moveToVideoTime(true);
+		}
 	}
 });

@@ -28,11 +28,13 @@ $currentSearchBar = function() {
 
 
 Session.increment = function(key) {
-	var val = Session.get(key);
+	var val = Session.get(key) || 0;
 	Session.set(key, ++val);
+	return val;
 };
 
 Session.decrement = function(key) {
-	var val = Session.get(key);
+	var val = Session.get(key) || 0;
 	Session.set(key, --val);
+	return val;
 };
