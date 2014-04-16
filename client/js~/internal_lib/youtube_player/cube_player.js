@@ -3,12 +3,12 @@ CubePlayer = {
 	start: function(youtubeId) {
 		this._changeSide();
 			
+		this._player().setVideo(youtubeId, true)._call('onEnterVideo');
 		$('.cube').cube().nextSideVertical('#dummy_side', 1000, 'easeInBack', function() {
 			$('.cube').cube().nextSideVertical(this._side(), 1000, 'easeOutBack', function() {
 				this._fadeOutLoading();
 			}.bind(this));
 			
-			this._player().setVideo(youtubeId, true)._call('onEnterVideo');
 		}.bind(this));
 	},
 	prev: function() {

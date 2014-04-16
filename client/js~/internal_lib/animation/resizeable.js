@@ -43,13 +43,12 @@ Resizeable = {
 			$('.bar_cube_container .message_form, #history_bar_cube_container .message_form').css('width', messageFormWidth - 5); 
 			
 			var messageFormWidth = 980;
+			messageFormWidth -= $('.message_bar_side .watch').first().outerWidth();
 			messageFormWidth -= $('.message_bar_side .post_to_twitter').first().outerWidth();
 			messageFormWidth -= $('.message_bar_side .respond').first().outerWidth();
 			messageFormWidth -= $('.message_bar_side .dismiss').first().outerWidth();
 			$('#controls_cube_container_a .message_form ').css('width', messageFormWidth - 5);
 			$('#controls_cube_container_b .message_form ').css('width', messageFormWidth - 5);
-			
-			$('#history_spacer').css('width', barWidth - 906);
 			
 			$('#add_videos_wrapper').css('height', height - SearchSizes.header);
 			$('#add_videos_bar').css('width', barWidth);
@@ -58,7 +57,7 @@ Resizeable = {
 				tabs = 800,
 				back = 100,
 				margins = 7;
-			$('#history_spacer').css('width', barWidth - back - buddyListButton - tabs - margins);
+			$('#history_spacer').css('width', barWidth - back - buddyListButton - tabs - margins + 5);
 			injectCSS('.add_video_row', 'width: '+barWidth+'px;');
 		},
 		searchResults: function(width, height) {	
@@ -70,6 +69,10 @@ Resizeable = {
 		},
 		buddyList: function(width, height) {
 			$('#buddy_list_container').css('height', height - 44);
+		},
+		preloader: function(width, height) {
+			$('.preload_cover').css('padding-top', height/2 - 75);
+			$('.video_cover .bar').css('margin-top', height/2 - 10);
 		}
 	},
 	

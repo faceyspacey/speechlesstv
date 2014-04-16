@@ -55,3 +55,9 @@ Router.map(function () {
   	});
 });
 
+Meteor.startup(function() {
+	if(Meteor.isClient) {
+		for(var key in Session.keys) if(key.indexOf('player_ready') === 0) Session.set(key, null);
+	}
+});
+

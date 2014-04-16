@@ -1,6 +1,6 @@
 Template.search.created = function() {
 	Deps.afterFlush(function() {
-		Resizeable.resizeAllElements();;
+		Resizeable.resizeAllElements();
 		Cube.start();
 	});
 };

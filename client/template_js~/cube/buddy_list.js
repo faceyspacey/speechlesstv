@@ -168,9 +168,6 @@ Template.online_buddy_row.helpers({
 		if(this.status == Statuses.ACTIVE) return 'green';
 		if(this.status == Statuses.LIVE) return 'red';
 	},
-	randomNumber: function() {
-		return Math.floor((Math.random()*10000)+1);
-	},
 	backgroundColor: function() {
 		if(Session.get('buddy_row_suggest_'+this._id)) return 'background:black;';
 		else return '';
@@ -197,18 +194,19 @@ Template.online_buddy_row.events({
 		var row = $(e.currentTarget);
 			
 		$('.follow_button').css({
-			left: row.offset().left + row.width() - 6,
+			left: row.offset().left + row.width(),
 			top: row.offset().top
 		}).show();
 		
 		Session.set('current_buddy_row_user_id', this._id);
 		
 		if(this.status == Statuses.LIVE) {
-			var playerId = $(e.currentTarget).find('.profile_vid img').first().attr('id'),
-				youtubeId = $(e.currentTarget).find('.profile_vid img').first().attr('title')
-				secondsPlayedAlready = this.current_video_time; 
+			var playerId = $(e.currentTarget).find('.profile_vid').first().find('img').attr('id'),
+				youtubeId = $(e.currentTarget).find('.profile_vid').first().find('img').attr('title'),
+				secondsPlayedAlready = (this._nowInSeconds() - this.current_video_start_time) || 0; 
 
-			YoutubePlayer.mini(playerId).setVideo(youtubeId, true).seek(secondsPlayedAlready);
+			YoutubePlayer.current.pause();
+			YoutubePlayer.mini(playerId, null, true).setVideo(youtubeId, true).seek(secondsPlayedAlready);
 		}
 	},
 	'mouseleave .buddy_row': function(e) {
@@ -230,7 +228,7 @@ Template.online_buddy_row.events({
 		Cube.hideBuddyList(function() {
 			Meteor.setTimeout(function() {
 				Cube.userProfileSide(userId, function() {
-					$('input.search_query').val(userName);
+					$('#search_side_user_profile input.search_query').val(userName);
 				});
 			}, 100);
 		});
@@ -245,6 +243,9 @@ Template.watched_vid.helpers({
 			iteratedVid = this.youtube_id == userId.current_youtube_id;
 			
 		return (isLive && iteratedVid);
+	},
+	randomNumber: function() {
+		return Math.floor((Math.random()*10000)+1);
 	}
 });
 $(function() {

@@ -144,6 +144,16 @@ Handlebars.registerHelper('player', function(playerId) {
 });
 
 
+
+
 Handlebars.registerHelper('dynamicTpl', function(name) {
 	return Template[name];
 });
+
+Handlebars.registerHelper('notEmpty', function(arrayOrVal) {
+	if(!arrayOrVal) return false;
+	if(arrayOrVal.length == 0) return false;
+	if(arrayOrVal.count && arrayOrVal.count() == 0) return false;
+	return true;
+});
+

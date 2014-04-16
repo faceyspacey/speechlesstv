@@ -34,6 +34,11 @@ Template.control_bar.events({
 	
 	'click .buddy_list_button': function() {
 		Cube.toggleBuddyList();
+	},
+	
+	'click .controls_comment_button': function() {
+		Cube.getCurrentSide().find('.message_cube').cube().rotate({rotateX: '+=90'}, '.message_bar_side', 300);
+		Session.set('is_posting_comment', true);
 	}
 });
 

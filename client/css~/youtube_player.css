@@ -268,7 +268,7 @@ border-right: 1px solid rgb(155,155,155);
 div.bars {
 position:relative; 
 float:left; 
-width: 62%; 
+width: 50%; 
 height: 50%;
 padding-top:.6%; 
 margin-top:1.2%; 
@@ -337,7 +337,7 @@ background:url('../../images/progress_ball.png') no-repeat;
 left: 0; 
 width: 3%; 
 height: 100%; 
-top: -3px;
+top: -2px;
 margin-left: -2px;
 cursor: pointer;
 
@@ -745,4 +745,21 @@ opacity: 1;
 }
 .controls .buddy_list_button:hover {
 	color: white;
+}
+
+.controls_comment_button {
+	width: 115px;
+	cursor:pointer;
+	color: white;
+	font-size: 24px;
+	float: left;
+	padding-top: 18px;
+	text-align: center;
+	height: 100%;
+	
+	background: rgb(157, 183, 218);
+}
+
+.controls_comment_button:hover {
+	background: #559afe;
 }

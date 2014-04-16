@@ -1,5 +1,5 @@
 <template name="control_bar">
-	<div class="controls backface">
+	<div class="controls backface" style="overflow:hidden;">
 	
 			{{#with player playerId}}
 	        	
@@ -40,12 +40,15 @@
 				</div>
 
 				<div class="groove"></div>
-
-		        
-					<div class="fullscreen {{fullScreenClass}}">
-			        	<div class="fullscreenButton"></div>
-			        </div>
 				
+				<div class="controls_comment_button">COMMENT</div>
+		        
+				<div class="groove"></div>
+		
+				<div class="fullscreen {{fullScreenClass}}">
+		        	<div class="fullscreenButton"></div>
+		        </div>
+			
 			{{/with}}
 
     </div>

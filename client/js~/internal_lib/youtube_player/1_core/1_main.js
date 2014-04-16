@@ -56,7 +56,6 @@ YoutubePlayer.prototype = {
 	},
 	onStateChange: function(newState) {
 		if(newState == 0 && this.isFullscreen && this.isFullscreen()) {
-			console.log('ON STATE CHANGE', this.getPlayerId(), this);
 			CubePlayer.next();
 		}
 		else if(this._shouldReplay() && newState == 0) this.replay();
@@ -89,7 +88,14 @@ YoutubePlayer.prototype = {
 	},
 	seek: function(seconds) {
 		this._try(function() {
-			this.player.seekTo(Math.floor(seconds), true);
+			if(seconds > this.player.duration()) {
+				this.player.seekTo(0, true);
+				
+				//this shouldn't be here; i appologize
+				var liveVideo = LiveVideos.findOne({youtube_id: this.getYoutubeId()});
+				if(liveVideo) liveVideo.update({start_time: Math.round(moment().toDate().getTime()/1000)});
+			}
+			else this.player.seekTo(Math.floor(seconds), true);
 		});
 	},
 	skip: function(seconds) {
@@ -261,6 +267,15 @@ YoutubePlayer.prototype = {
 		return $('#'+this.playerId).parents('.backface');
 	},
 	video: function() {
-		return Videos.findOne({youtube_id: this.getYoutubeId()});
+		var video = Videos.findOne({youtube_id: this.getYoutubeId()});
+		
+		if(!video) video = Watches.findOne({youtube_id: this.getYoutubeId()});
+		if(!video) video = Comments.findOne({youtube_id: this.getYoutubeId()});
+		if(!video) video = Favorites.findOne({youtube_id: this.getYoutubeId()});
+		if(!video) video = Suggestions.findOne({youtube_id: this.getYoutubeId()});
+		if(!video) video = LiveVideos.findOne({youtube_id: this.getYoutubeId()});
+		if(!video) video = {youtube_id: this.getYoutubeId()};
+		
+		return video;
 	}
 };

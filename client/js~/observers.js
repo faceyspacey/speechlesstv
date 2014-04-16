@@ -29,16 +29,22 @@ Deps.autorun(function() {
 });
 
 
-Deps.autorun(function() {
-    var videoIds = Videos._collection.find({_local: true}).map(function(video) {
-        return video.youtube_id;
-    });
+initializingCommentsObserver = true;
+liveCommentsReadyYoutubeIds = false;
+liveCommentsReadyFollowed = false;
+Deps.autorun(function() {	
+	initializingCommentsObserver = true;
 
-    Comments.find({youtube_id: {$in: videoIds}}).observeChanges({
-        added: function(id, comment) {
-               Commenter.buffer.push(comment);
-         }
+	Comments.find().observeChanges({
+		added: function(id, comment) {
+			if(initializingCommentsObserver || !liveCommentsReadyYoutubeIds || !liveCommentsReadyFollowed) return;
+			
+			console.log('NEW COMMENT', comment.message, comment);
+			Commenter.buffer.push(comment);
+		}
 	});
+	
+	initializingCommentsObserver = false;
 });
 
 Commenter = {
@@ -49,10 +55,29 @@ Commenter = {
 		}.bind(this), 250);
 	},
 	displayNotification: function(comment) {
+		if(Session.get('is_posting_comment') || Session.get('is_responding') || Session.get('response_youtube_id')) return;
+		if(comment.user_id == Meteor.userId() && comment.type != 'enter') return;
+		
 		console.log(comment);
+		
+		//var delay = comment.user_id == Meteor.userId() ? 3000 : 0;
+		
+		var isUserEntranceComment = comment.user_id == Meteor.userId() && comment.type == 'enter',
+			delay = isUserEntranceComment ? 3000 : 0;
+		
+		Meteor.setTimeout(function() {
+			Session.set('is_responding', false);
+			Session.set('is_posting_comment', false);
+			Session.set('response_youtube_id', comment.youtube_id);
+
+			Cube.getCurrentSide().find('.message_cube').cube().rotate({rotateX: '+=90'}, '.message_bar_side', 300, null);
+			Meteor.setTimeout(function() {
+				Cube.getCurrentSide().find('.message_cube').cube().rotate({rotateX: '-=90'}, '.controls', 300, null);
+			}, 3000);
+		}, delay);
 	}
 };
-
+Commenter.setInterval();
 
 
 

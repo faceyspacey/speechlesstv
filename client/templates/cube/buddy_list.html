@@ -14,29 +14,38 @@
 							{{> online_buddy_row}}
 						{{/each}}
 					{{/if}}
+
+					{{#if notEmpty onlineUsers}}
+						<div class="title_bar">ONLINE NOW {{onlineCount}}</div>
+						{{#each onlineUsers}}
+							{{> online_buddy_row}}
+						{{/each}}
+					{{/if}}
 					
-					<div class="title_bar">ONLINE NOW {{onlineCount}}</div>
-					{{#each onlineUsers}}
-						{{> online_buddy_row}}
-					{{/each}}
+					
+					{{#if notEmpty followedUsers}}
+						<div class="title_bar">FOLLOWING {{followedCount}}</div>
+						{{#each followedUsers}}
+							{{> online_buddy_row}}
+						{{/each}}
+					{{/if}}
 
-
-					<div class="title_bar">FOLLOWING {{followedCount}}</div>
-					{{#each followedUsers}}
-						{{> online_buddy_row}}
-					{{/each}}
-
-
-					<div class="title_bar">FOLLOWERS {{followerCount}}</div>
-					{{#each followerUsers}}
-						{{> online_buddy_row}}
-					{{/each}}
-
-
-					<div class="title_bar">POPULAR USERS</div>
-					{{#each popularUsers}}
-						{{> online_buddy_row}}
-					{{/each}}		
+					
+					{{#if notEmpty followerUsers}}
+						<div class="title_bar">FOLLOWERS {{followerCount}}</div>
+						{{#each followerUsers}}
+							{{> online_buddy_row}}
+						{{/each}}
+					{{/if}}
+					
+					
+					{{#if notEmpty popularUsers}}
+						<div class="title_bar">POPULAR USERS</div>
+						{{#each popularUsers}}
+							{{> online_buddy_row}}
+						{{/each}}
+					{{/if}}
+						
 				{{/if}}
 			</div>
 		</div>

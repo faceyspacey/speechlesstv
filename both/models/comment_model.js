@@ -28,7 +28,7 @@ CommentModel = function(doc){
 
 CommentModel.prototype = {
 	date: function() {
-		return 'Commented: '+moment(this.created_at).format("dddd MMMM do @ h:mma")
+		return 'Commented: '+moment(this.created_at).format("dddd MMMM Do @ h:mma")
 	},
 	note: function() {
 		return 'YOUR LAST COMMENT: "'+this.message+'"';

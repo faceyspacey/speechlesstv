@@ -38,6 +38,13 @@
 	padding: 0px;
 }
 
+.message_bar_side .message_form:hover {
+	background-color: rgb(42, 103, 160);
+	cursor: default;
+	text-shadow: none;
+}
+
+
 .message_bar_side .watch {
 	width: 60px;
 	text-align: center;

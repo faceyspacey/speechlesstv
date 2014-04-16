@@ -1,35 +1,32 @@
 <template name="history_row">
 	<div class="history_row">
-		{{#isolate}}
-			<div class="video_info_left">
-				<div class="add_video_image_container">
-					{{#isolate}}
-						<img title="{{youtube_id}}" id="hv_{{_id}}_{{youtube_id}}" class="add_video_row_image" src="{{src}}" />
-					{{/isolate}}
 
-					<div class="search_fullscreen">
-						<i class="fa fa-arrows-alt"></i>
-					</div>
+		<div class="video_info_left">
+			<div class="add_video_image_container">
+				{{#isolate}}
+					<img title="{{youtube_id}}" id="hv_{{_id}}_{{youtube_id}}" class="add_video_row_image" src="{{src}}" />
+				{{/isolate}}
 
-					<div class="fast_forward">
-						{{#isolate}} {{timeFormatted}} {{/isolate}}
-						<i class="fa fa-forward"></i>
-					</div>
+				<div class="search_fullscreen">
+					<i class="fa fa-arrows-alt"></i>
 				</div>
 
+				<div class="fast_forward">
+					{{#isolate}} {{timeFormatted}} {{/isolate}}
+					<i class="fa fa-forward"></i>
+				</div>
+			</div>
 
-			</div>
-		{{/isolate}}
+
+		</div>
 		
-		{{#isolate}}
-			<div class="video_info_right">
-				<div class="video_title">{{title}}</div>
-				{{#if date}}<div class="video_comment">{{date}}</div>{{/if}}
-				{{#if note}}<div class="video_note">{{note}}</div>{{/if}}
-				{{#if info}}<div class="video_stats" style="display:none;">{{info}}</div>{{/if}}
-			</div>
-		{{/isolate}}
-		
+		<div class="video_info_right">
+			<div class="video_title">{{title}}</div>
+			{{#if date}}<div class="video_comment">{{date}}</div>{{/if}}
+			{{#if note}}<div class="video_note">{{note}}</div>{{/if}}
+			{{#if info}}<div class="video_stats" style="display:none;">{{info}}</div>{{/if}}
+		</div>
+	
 		
 		<div class="stats_container" title="{{setupCounts}}">
 			<i class="fa fa-desktop"></i> {{watches_count}} Views

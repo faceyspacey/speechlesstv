@@ -26,9 +26,9 @@ FavoriteModel = function(doc){
 
 FavoriteModel.prototype = {
 	date: function() {
-		return 'Starred on: '+moment(this.created_at).format("dddd MMMM do @ h:mma");
+		return 'Starred on: '+moment(this.created_at).format("dddd MMMM Do @ h:mma");
 	},
 	socialNote: function() {
-		return 'Starred by '+this.user().name+' on: '+moment(this.created_at).format("dddd MMMM do @ h:mma");
+		return 'Starred by '+this.user().name+' on: '+moment(this.created_at).format("dddd MMMM Do @ h:mma");
 	}
 };

@@ -1,12 +1,11 @@
 #preloader {
-height: 590px;
-paddding: 115px 0;
+
 }
 
 #warningGradientOuterBarG {
 margin: 0 auto;
 position: relative;
-top: 180px;
+top: 0px;
 height:100px;
 width:800px;
 border: 6px solid #559AFD;

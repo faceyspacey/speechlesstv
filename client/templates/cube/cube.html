@@ -3,6 +3,7 @@
 		<div class="cube" id="search_cube">
 			{{>dummy_side}}
 			{{>buddy_list}}
+			{{>dummy_side_b}}
 			{{>popular_side}}
 			{{>from_friends_side}}
 			{{>history_side}}
@@ -15,6 +16,12 @@
 
 <template name="dummy_side">
 	<div class="backface" id="dummy_side" style="background: white;border: 25px solid #559afe;">
+		<img class="scrablam_side" src="/images/scrablam.png" />
+	</div>
+</template>
+
+<template name="dummy_side_b">
+	<div class="backface" id="dummy_side_b" style="background: white;border: 25px solid #559afe; display:none;">
 		<img class="scrablam_side" src="/images/scrablam.png" />
 	</div>
 </template>

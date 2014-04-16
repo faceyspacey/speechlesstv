@@ -20,31 +20,31 @@ Meteor.publish('followed', function() {
 
 
 Meteor.publish('watches', function(limit) {
-	return Watches.find({user_id: this.userId}, {limit: limit, sort: {updated_at: -1}});
+	return Watches.find({user_id: this.userId}, {limit: limit, sort: {created_at: -1}});
 });
 Meteor.publish('favorites', function(limit) {
-	return Favorites.find({user_id: this.userId}, {limit: limit, sort: {updated_at: -1}});
+	return Favorites.find({user_id: this.userId}, {limit: limit, sort: {created_at: -1}});
 });
 Meteor.publish('comments', function(limit) {
-	return Comments.find({user_id: this.userId}, {limit: limit, sort: {updated_at: -1}});
+	return Comments.find({user_id: this.userId}, {limit: limit, sort: {created_at: -1}});
 });
 Meteor.publish('suggestions', function(limit) {
-	return Suggestions.find({$or: [{recipient_user_id: this.userId}, {sender_user_id: this.userId}]}, {limit: limit, sort: {updated_at: -1}});
+	return Suggestions.find({$or: [{recipient_user_id: this.userId}, {sender_user_id: this.userId}]}, {limit: limit, sort: {created_at: -1}});
 });
 
 
 
 Meteor.publish('watchesUserProfile', function(limit, userId) {
-	return Watches.find({user_id: userId}, {limit: limit, sort: {updated_at: -1}});
+	return Watches.find({user_id: userId}, {limit: limit, sort: {created_at: -1}});
 });
 Meteor.publish('favoritesUserProfile', function(limit, userId) {
-	return Favorites.find({user_id: userId}, {limit: limit, sort: {updated_at: -1}});
+	return Favorites.find({user_id: userId}, {limit: limit, sort: {created_at: -1}});
 });
 Meteor.publish('commentsUserProfile', function(limit, userId) {
-	return Comments.find({user_id: userId}, {limit: limit, sort: {updated_at: -1}});
+	return Comments.find({user_id: userId}, {limit: limit, sort: {created_at: -1}});
 });
 Meteor.publish('suggestionsUserProfile', function(limit, userId) {
-	return Suggestions.find({$or: [{recipient_user_id: userId}, {sender_user_id: this.userId}]}, {limit: limit, sort: {updated_at: -1}});
+	return Suggestions.find({$or: [{recipient_user_id: userId}, {sender_user_id: this.userId}]}, {limit: limit, sort: {created_at: -1}});
 });
 
 
@@ -56,9 +56,12 @@ Meteor.publish('live_video', function(youtubeId) {
 Meteor.publish('live_users', function(youtubeId) {
 	return LiveUsers.find({youtube_id: youtubeId}, {limit: 30, sort: {updated_at: -1}});
 });
-/**Meteor.publish('live_comments', function(youtubeId) {
-	return Comments.find({youtube_id: youtubeId}, {limit: 30, sort: {updated_at: -1}});
-});**/
+Meteor.publish('live_commentsYoutubeId', function(youtubeId) {
+	return Comments.find({youtube_id: youtubeId}, {limit: 30, sort: {created_at: -1}});
+});
+Meteor.publish('live_commentsFollowed', function(userIds) {
+	return Comments.find({user_id: {$in: userIds}}, {limit: 30, sort: {created_at: -1}});
+});
 
 
 Meteor.publish('live_usersUsers', function(liveUserIds) {

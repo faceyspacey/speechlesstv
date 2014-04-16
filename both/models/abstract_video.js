@@ -32,13 +32,15 @@ AbstractVideoModel = {
 	saveWithAttributesOfVideo: function(video) {
 		_.extend(this, this.getClonedAttributes(video));
 		
-		this.user_id = Meteor.userId();
+		this.user_id = this.user_id || Meteor.userId();
 		
 		if(this._local) this.persist();
 		else this.save();
 	},
 	getClonedAttributes: function(video, userId) {
-		var video = video ? video.getMongoAttributes() : this.getMongoAttributes();
+		var video = video || this;
+		
+		video = video.getMongoAttributes ? video.getMongoAttributes() : video;
 		
 		delete video.column_index;
 		delete video.index;

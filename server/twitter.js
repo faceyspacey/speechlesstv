@@ -2,8 +2,8 @@ Meteor.methods({
 	tweet: function(status) {
 		T = Twitter.login();
 		T.post('statuses/update', {status: status}, function(error, response) {
-		  //  ...
-		})
+		  
+		});
 	},
 	syncFollowed: function() {
 		Twitter.syncFollowed();

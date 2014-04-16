@@ -20,7 +20,6 @@ Template.history_row.helpers({
 Template.history_row.events({
 	'click .search_fullscreen': function(e) {
 		e.stopPropagation();
-		
 		CubePlayer.start(this.youtube_id);
 	},
 	'click .fast_forward': function(e) {

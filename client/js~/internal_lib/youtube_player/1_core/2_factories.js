@@ -49,6 +49,7 @@ YoutubePlayer.fullscreenOnly = function(playerId, callback) {
 	player.addComponent({
 		onEnterVideo: function() {
 			Meteor.user().enterLiveMode(this.player.video());
+			$('.post_roll_overlay').fadeOut('fast');
 		},
 		onExitVideo: function() {
 			Meteor.user().exitLiveMode(this.player.video());

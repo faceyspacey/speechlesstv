@@ -41,7 +41,7 @@ UserModel.prototype = {
 		watch.saveWithAttributesOfVideo(video);
 		
 		this.increment({watched_video_count: 1});
-		this.update({current_youtube_id: video.youtube_id});
+		Meteor.call('enterVideo', video.youtube_id, video.title);
 	},
 	enterLiveMode: function(video) {
 		this.watch(video);
@@ -56,8 +56,6 @@ UserModel.prototype = {
 				this.observeLiveUsers(video);
 			}.bind(this));
 		}.bind(this));
-			
-		//UserModel.liveCommentsSubscription = Meteor.subscribe('live_comments', video.youtube_id);
 	},
 	addLiveUserAndVideo: function(video) {
 		var liveVideo = LiveVideos.findOne({youtube_id: video.youtube_id});
@@ -107,13 +105,24 @@ UserModel.prototype = {
 		}.bind(this), 1000);
 	},
 	_updateStartTime: function() {
-		LiveVideos.findOne({youtube_id: this.current_youtube_id}).update({
+		if(!YoutubePlayer.current.isPlaying()) return;
+		
+		var liveVideo = LiveVideos.findOne({youtube_id: this.current_youtube_id});
+		
+		if(liveVideo) liveVideo.update({
 			start_time: this._getStartTime()
 		});
+		this.update({current_video_start_time: this._getStartTime()});
 	},
 	_getStartTime: function() {
-		var startTime = Math.round(moment().toDate().getTime()/1000) - YoutubePlayer.current_play_time();
+		var seconds = YoutubePlayer.current_play_time();
+		if(seconds >= YoutubePlayer.current.duration()) seconds = 0;
+		
+		var startTime = this._nowInSeconds() - seconds;
 		return startTime;
+	},
+	_nowInSeconds: function() {
+		return Math.round(moment().toDate().getTime()/1000);
 	},
 	sync: function(isAlreadySyncUser) {
 		if(!isAlreadySyncUser) this.moveToVideoTime();
@@ -152,7 +161,7 @@ UserModel.prototype = {
 				$('.syncing_indicator').fadeOut('fast');
 			}, 1000 + (loadTime * 1000));
 			
-			user.update({current_video_time: secondsPlayedAlready});
+			user.update({current_video_start_time: this._nowInSeconds() - secondsPlayedAlready});
 		}.bind(this));
 	}, 
 	getLoadTime: function() {
@@ -171,7 +180,10 @@ UserModel.prototype = {
 		Session.set('buddy_tab', 'left');
 
 		console.log('EXIT LIVE MODE');	
-		Meteor.call('deleteLiveUser', video.youtube_id);
+		
+		Meteor.setTimeout(function() {
+			Meteor.call('leaveVideo', video.youtube_id);
+		}, 1000); //do this a bit later so on the server we can get a new youtube_id
 		
 		if(Session.equals('current_video_live_users', 1)) LiveVideos.findOne({youtube_id: video.youtube_id}).remove();
 		

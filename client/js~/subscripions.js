@@ -44,9 +44,25 @@ Meteor.subscribe('youtube_videos', function() {
 		Meteor.subscribe('live_users', Session.get('current_live_youtube_id'), function() {
 			Meteor.subscribe('live_usersUsers', Meteor.user().liveUserIds());
 		});
-		//Meteor.subscribe('live_comments', Session.get('current_live_youtube_id'));
 	});
 
+	Deps.autorun(function() {
+		var currentLiveYoutubeId = Session.get('current_live_youtube_id');
+		
+		Meteor.subscribe('live_commentsYoutubeId', currentLiveYoutubeId, function() {
+			liveCommentsReadyYoutubeIds = true;
+		});
+	});
+	Deps.autorun(function() {
+		var followedIds = Meteor.user().followed();
+		
+		Meteor.subscribe('live_commentsFollowed', followedIds, function() {
+			liveCommentsReadyFollowed = true;
+		});
+	});
+	
+	
+	
 	Deps.autorun(function() {
 		var videoIds = Videos._collection.find({_local: true}, {fields: {youtube_id: 1}}).map(function(video) {
 	        return video.youtube_id;

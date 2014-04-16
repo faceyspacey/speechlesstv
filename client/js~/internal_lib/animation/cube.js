@@ -16,7 +16,7 @@ Cube.prototype = {
 			easing = easing || 'easeInOutBack';
 			callback = callback || function() {};
 			
-		if(_.isString(newSide)) newSide = $(newSide);
+		if(_.isString(newSide)) newSide = this.element.find(newSide);
 			
 		if(params.rotateX) this._prepareRotateX(params, newSide);
 		else this._prepareRotateY(params, newSide);
@@ -239,18 +239,49 @@ jQuery.fn.rotate = function(rotateParams, newSide, duration, easing, callback) {
 };
 
 Cube.start = function(callback) {
-	var popState = StateStack[StateStack.length - 1];
-	$('.cube').cube().prevSide(popState.id, null, null, function() {
-		if(popState.id == '#popular_side') YoutubeSearcher.setupPopularColumns();
-		else if(popState.id == '#from_friends_side') YoutubeSearcher.setupFromFriendsColumns();
-		else if(popState.id == '#user_profile_side') {
-			$('input.search_query').val(Meteor.users.findOne(Session.get('current_user_profile_id')).name);
-			YoutubeSearcher.setupUserProfileColumns(Session.get('current_user_profile_id'));
-		}
-		
-		if(callback) callback.call();
+	Meteor.setTimeout(function() {
+		Cube.hideCover();
+		$('.cube').cube().prevSide('#dummy_side_b', null, null, function() {
+			Meteor.setTimeout(function() {
+				Cube.showCover();
+				Meteor.setTimeout(function() {
+					Cube.setupBuddyList(function() {
+						Cube.hideCover();
+
+						var popState = StateStack[StateStack.length - 1];
+						$('.cube').cube().nextSide(popState.id, null, null, function() {
+							Meteor.setTimeout(function() {
+								Resizeable.resizeAllElements();
+								if(popState.id == '#popular_side') YoutubeSearcher.setupPopularColumns();
+								else if(popState.id == '#from_friends_side') YoutubeSearcher.setupFromFriendsColumns();
+								else if(popState.id == '#user_profile_side') {
+									$('input.search_query').val(Meteor.users.findOne(Session.get('current_user_profile_id')).name);
+									YoutubeSearcher.setupUserProfileColumns(Session.get('current_user_profile_id'));
+								}
+							}, 250);
+
+							if(callback) callback.call();
+						});
+					});
+				}, 250);
+			}, 250);
+		});
+	}, 3000);
+};
+
+
+Cube.setupBuddyList = function(callback) {
+	$('.cube').cube().rotate({rotateY: '+=30'}, '#buddy_list', 250, 'easeOutExpo', function() {
+		Meteor.setTimeout(function() {
+			$('.cube').cube().rotate({rotateY: '-=30'}, null, 250, 'easeOutExpo', function() {
+				setTimeout(function() {
+					if(callback) callback.call();
+				}, 250);
+			});
+		}, 250);
 	});
 };
+
 
 Cube.popularSide = function(callback) {
 	history.pushState({side: 'popularSide'}, null, "/");
@@ -263,6 +294,7 @@ Cube.popularSide = function(callback) {
 			
 			if(!Columns.findOne({side: 'popular'})) YoutubeSearcher.setupPopularColumns();
 			
+			Resizeable.resizeAllElements();
 			if(callback) callback.call();
 		});
 	});
@@ -279,6 +311,7 @@ Cube.fromFriendsSide = function(callback) {
 			
 			if(!Columns.findOne({side: 'from_friends'})) YoutubeSearcher.setupFromFriendsColumns();
 			
+			Resizeable.resizeAllElements();
 			if(callback) callback.call();
 		});
 	});
@@ -297,6 +330,7 @@ Cube.userProfileSide = function(userId, callback) {
 			
 			YoutubeSearcher.setupUserProfileColumns(userId);
 			
+			Resizeable.resizeAllElements();
 			if(callback) callback.call();
 		});
 	});
@@ -315,6 +349,7 @@ Cube.historySide = function(callback) {
 				historyScroll();
 			}, 700);
 			
+			Resizeable.resizeAllElements();
 			if(callback) callback.call();
 		});
 	});
@@ -342,6 +377,7 @@ Cube.back = function(callback) {
 			
 			if(noPopState) if(!Columns.findOne({side: 'popular'})) YoutubeSearcher.setupPopularColumns();
 			
+			Resizeable.resizeAllElements();
 			if(callback) callback.call();
 		});
 	});
@@ -381,6 +417,20 @@ Cube.hideBuddyList = function(callback) {
 Cube.toggleBuddyList = function(callback) {
 	if(Cube._buddyListShown) Cube.hideBuddyList(callback);
 	else Cube.showBuddyList(callback);
+};
+
+
+
+Cube.showCover = function() {
+	$('.preload_cover').fadeIn('fast');
+};
+
+Cube.hideCover = function() {
+	$('.preload_cover').fadeOut('fast');
+};
+
+Cube.getCurrentSide = function() {
+	return $('.cube').getCube().currentSide;
 };
 
 window.onpopstate = function(e) {
