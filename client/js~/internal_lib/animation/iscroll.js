@@ -1205,6 +1205,7 @@ historyScroll = function() {
 		onScrollEnd: function() {
 			if(this.y == this.maxScrollY) {
 				console.log('reached end of scroller');
+				return;
 				
 				if(Session.equals('history_filter', 'WATCHED')) Session.set('history_watches_limit', Session.get('history_watches_limit')+8);
 				if(Session.equals('history_filter', 'STARRED')) Session.set('history_favorites_limit', Session.get('history_favorites_limit')+8);

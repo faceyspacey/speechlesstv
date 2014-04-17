@@ -3,16 +3,14 @@
 
 		<div class="video_info_left">
 			<div class="add_video_image_container">
-				{{#isolate}}
-					<img title="{{youtube_id}}" id="hv_{{_id}}_{{youtube_id}}" class="add_video_row_image" src="{{src}}" />
-				{{/isolate}}
+				<img title="{{youtube_id}}" id="hv_{{_id}}_{{youtube_id}}" class="add_video_row_image" src="{{src}}" />
 
 				<div class="search_fullscreen">
 					<i class="fa fa-arrows-alt"></i>
 				</div>
 
 				<div class="fast_forward">
-					{{#isolate}} {{timeFormatted}} {{/isolate}}
+					{{timeFormatted}} 
 					<i class="fa fa-forward"></i>
 				</div>
 			</div>

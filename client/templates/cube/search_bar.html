@@ -1,43 +1,33 @@
 <template name="search_bar_side">
-	<div id="{{idName}}" class="backface search_bar" style="">
-			<div class="buddy_list_button bar_tab">
-				<i class="fa fa-users" style="font-size:42px;"></i>
+	<div id="{{idName}}" class="backface search_bar">
+		<div class="buddy_list_button bar_tab">
+			<i class="fa fa-users" style="font-size:42px;"></i>
+		</div>
+
+		<input type="text" class="search_query bar_tab" placeholder="Search Away" />
+		<div class="enter_button bar_tab">PRESS ENTER</div>		
+
+
+		<div class="side_selector bar_tab">
+			<div class="popular popular_vs_friends {{popularChecked}}">POPULAR</div>
+			<div class="from_friends popular_vs_friends {{fromFriendsChecked}}">FROM FRIENDS</div>
+		</div>
+
+		<div class="search_category_dropdown bar_tab">
+			
+			<span>{{categoryName}}</span>
+	
+			<div class="search_category_options" style="display:none">
+		
+				{{#each categories}}
+					<div class="search_category_option" style="background-color:{{color}};">{{name}}</div>
+				{{/each}}
+	
 			</div>
-		{{#isolate}}
-			<input type="text" class="search_query bar_tab" placeholder="Search Away" />
-			<div class="enter_button bar_tab">PRESS ENTER</div>		
-		{{/isolate}}
-		
-		{{#isolate}}
-			<div class="side_selector bar_tab">
-				<div class="popular popular_vs_friends {{popularChecked}}">POPULAR</div>
-				<div class="from_friends popular_vs_friends {{fromFriendsChecked}}">FROM FRIENDS</div>
-			</div>
-		{{/isolate}}
-		
-		{{#isolate}}
-			<div class="search_category_dropdown bar_tab">
-				
-				{{#isolate}}
-					<span>{{categoryName}}</span>
-				{{/isolate}}
-				
-				{{#isolate}}
-					<div class="search_category_options" style="display:none">
-						{{#isolate}}
-							{{#each categories}}
-								<div class="search_category_option" style="background-color:{{color}};">{{name}}</div>
-							{{/each}}
-						{{/isolate}}
-					</div>
-				{{/isolate}}
-			</div>			
-		{{/isolate}}
-		
-		{{#isolate}}
-			<div  class="history_button bar_tab">HISTORY</div>
-		{{/isolate}}
-		
+	
+		</div>			
+
+		<div  class="history_button bar_tab">HISTORY</div>	
 	
 		{{>autocompletion}}
 	</div>

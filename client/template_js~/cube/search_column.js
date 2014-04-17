@@ -60,7 +60,7 @@ ColumnCue = {
 	}
 };
 
-Template.search_column.afterCreated = function() {
+Template.search_column.rendered = function() {
 	ColumnCue.cue(this.find('.search_result_column'));
 	this.$('.search_result_column').css('height', SearchSizes.resultsContainerHeight());
 };

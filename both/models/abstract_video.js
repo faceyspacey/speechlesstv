@@ -19,7 +19,7 @@ AbstractVideoModel = {
 		v.created_at = v.created_at || moment().toDate();
 		v.side = side;
 		
-		if(this.socialNote) v.socialNote = this.socialNote();
+		if(this.socialNote && _.isFunction(this.socialNote)) v._socialNote = this.socialNote();
 		
 		if(this.category_name) {
 			v.category_name = this.category_name;

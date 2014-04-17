@@ -18,7 +18,6 @@ afterCreatedCallback = function() {
 			tmpl.created = function() {
 				if(oldCreated) oldCreated(); //call original created function
 				
-				console.log('created', tmplName);
 				
 				//call afterCreated if it exists after page is flushed
 				if(_.isFunction(tmpl.afterCreated)) {

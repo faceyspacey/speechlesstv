@@ -1,4 +1,14 @@
 Meteor.methods({
+	popularUserIds: function() {
+		return Meteor.users.find({}, {limit: 10, sort: {watched_video_count: -1}, fields: {_id: 1}}).map(function(user) {
+			return user._id;
+		});
+	},
+	
+	removeFavorite: function(youtubeId) {
+		Favorites.remove({user_id: this.userId, youtube_id: youtubeId});
+	},
+	
 	newComment: function(message, video, postToTwitter) {	
 		var comment = {
 			youtube_id: video.youtube_id,
@@ -19,6 +29,8 @@ Meteor.methods({
 	
 	leaveVideo: function(youtubeId) {
 		LiveUsers.remove({user_id: this.userId, youtube_id: youtubeId});
+		
+		if(LiveUsers.find({user_id: this.userId, youtube_id: youtubeId}).count() == 0) LiveVideos.remove({youtube_id: youtubeId});
 		
 		var user = Meteor.users.findOne(this.userId);
 		

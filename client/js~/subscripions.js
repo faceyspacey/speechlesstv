@@ -4,14 +4,16 @@ Meteor.subscribe('youtube_videos', function() {
 	console.log("YOUTUBE VIDEOS SUBSCRIBED!");
 	
 	
-	if(!YoutubeVideos.findOne() || moment().format('DDDD') != YoutubeVideos.findOne().getDayAdded()) {
-		Meteor.call('deleteYoutubeVideos', function() {
-			YoutubeSearcher.popularAll(function() {
-				YoutubeSearcher.youtubeVideosDownloaded = true;
+	Meteor.setTimeout(function() {
+		if(!YoutubeVideos.findOne() || moment().format('DDDD') != YoutubeVideos.findOne().getDayAdded()) {
+			Meteor.call('deleteYoutubeVideos', function() {
+				YoutubeSearcher.popularAll(function() {
+					YoutubeSearcher.youtubeVideosDownloaded = true;
+				});
 			});
-		});
-	}
-	else YoutubeSearcher.youtubeVideosDownloaded = true;
+		}
+		else YoutubeSearcher.youtubeVideosDownloaded = true;
+	}, 2000);
 
 
 	var popularUsersSub = Meteor.subscribe('popularUsers'),
@@ -39,10 +41,16 @@ Meteor.subscribe('youtube_videos', function() {
 	
 	
 	Deps.autorun(function() {
+		return; 
+		
+		//remove below soon
 		console.log("LIVE SUBS");
-		Meteor.subscribe('live_video', Session.get('current_live_youtube_id'));
-		Meteor.subscribe('live_users', Session.get('current_live_youtube_id'), function() {
-			Meteor.subscribe('live_usersUsers', Meteor.user().liveUserIds());
+		var youtubeId = Session.get('current_live_youtube_id'),
+			liveUserids = Meteor.user().liveUserIds();
+			
+		Meteor.subscribe('live_video', youtubeId);
+		Meteor.subscribe('live_users', youtubeId, function() {
+			Meteor.subscribe('live_usersUsers', liveUserids);
 		});
 	});
 
@@ -50,14 +58,14 @@ Meteor.subscribe('youtube_videos', function() {
 		var currentLiveYoutubeId = Session.get('current_live_youtube_id');
 		
 		Meteor.subscribe('live_commentsYoutubeId', currentLiveYoutubeId, function() {
-			liveCommentsReadyYoutubeIds = true;
+			Session.set('liveCommentsReadyYoutubeIds', true);
 		});
 	});
 	Deps.autorun(function() {
 		var followedIds = Meteor.user().followed();
 		
 		Meteor.subscribe('live_commentsFollowed', followedIds, function() {
-			liveCommentsReadyFollowed = true;
+			Session.set('liveCommentsReadyFollowed', true);
 		});
 	});
 	
@@ -77,26 +85,28 @@ Meteor.subscribe('youtube_videos', function() {
 		});
 	};
 
+
+
+	var popularUserIds = Meteor.users.find({}, {limit: 10, sort: {watched_video_count: -1}, fields: {_id: 1}}).map(function(user) {
+			return user._id;
+			}),
+		followedIds = Meteor.user().followed(),
+		followerIds = Meteor.user().followers(),
+		userIds = followedIds.concat(followerIds).concat(popularUserIds);
+		
+	usersSub = Meteor.subscribe('users', userIds),
+	watchesFromFriendsSub = Meteor.subscribe('watchesFromFriends', userIds, historyScroll),
+	favoritesFromFriendsSub = Meteor.subscribe('favoritesFromFriends', userIds, historyScroll),
+	commentsFromFriendsSub = Meteor.subscribe('commentsFromFriends', userIds, historyScroll),
+	suggestionsFromFriendsSub = Meteor.subscribe('suggestionsFromFriends', userIds, historyScroll);
+
+	Session.set('friend_user_ids', userIds);
+	
+	
 	Deps.autorun(function() {
 		console.log("SOCIAL SUBS!!!!!!!", subscriptionsReady(baseSocialSubscriptions));
 		if(!subscriptionsReady(baseSocialSubscriptions)) return;
-
-		var followedIds = Meteor.user().followed(),
-			followerIds = Meteor.user().followers(),
-			popularUserIds = Meteor.users.find({}, {limit: 10, sort: {watched_video_count: -1}, fields: {_id: 1}}).map(function(user) {
-				console.log('USER SUB', user);
-				return user._id;
-			}),
-			userIds = followedIds.concat(followerIds).concat(popularUserIds);
-
-		/** global variables **/
-		usersSub = Meteor.subscribe('users', userIds),
-		watchesFromFriendsSub = Meteor.subscribe('watchesFromFriends', userIds),
-		favoritesFromFriendsSub = Meteor.subscribe('favoritesFromFriends', userIds),
-		commentsFromFriendsSub = Meteor.subscribe('commentsFromFriends', userIds),
-		suggestionsFromFriendsSub = Meteor.subscribe('suggestionsFromFriends', userIds);
-
-		Session.set('friend_user_ids', userIds);
+		///old code above used to go in here
 	});
 
 
@@ -106,12 +116,14 @@ Meteor.subscribe('youtube_videos', function() {
 		var userIds = LiveUsers.find({youtube_id: Session.get('current_live_youtube_id')}, {limit: 30, fields: {user_id: 1}}).map(function(liveUser) {
 			return liveUser.user_id;
 		});
-
-		Meteor.subscribe('usersLive', userIds);
-		Meteor.subscribe('watchesFromLiveUsers', userIds);
-		Meteor.subscribe('favoritesFromLiveUsers', userIds);
-		Meteor.subscribe('commentsFromLiveUsers', userIds);
-		Meteor.subscribe('suggestionsFromLiveUsers', userIds);
+		
+		Meteor.setTimeout(function() {
+			Meteor.subscribe('usersLive', userIds);
+			Meteor.subscribe('watchesFromLiveUsers', userIds);
+			Meteor.subscribe('favoritesFromLiveUsers', userIds);
+			Meteor.subscribe('commentsFromLiveUsers', userIds);
+			Meteor.subscribe('suggestionsFromLiveUsers', userIds);
+		}, 3000);
 	});
 });
 

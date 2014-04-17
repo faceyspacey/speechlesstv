@@ -29,50 +29,39 @@ Deps.autorun(function() {
 });
 
 
-initializingCommentsObserver = true;
-liveCommentsReadyYoutubeIds = false;
-liveCommentsReadyFollowed = false;
-Deps.autorun(function() {	
-	initializingCommentsObserver = true;
 
-	Comments.find().observeChanges({
-		added: function(id, comment) {
-			if(initializingCommentsObserver || !liveCommentsReadyYoutubeIds || !liveCommentsReadyFollowed) return;
-			
-			console.log('NEW COMMENT', comment.message, comment);
-			Commenter.buffer.push(comment);
-		}
-	});
-	
-	initializingCommentsObserver = false;
+var now = moment().toDate();
+Comments.find({created_at: {$gt: now}}).observeChanges({
+	added: function(id, comment) {
+		Commenter.buffer.push(comment);
+	}
 });
+
 
 Commenter = {
 	buffer: [],
 	setInterval: function() {
-		setInterval(function() {
+		Meteor.setInterval(function() {
 			if(this.buffer.length > 0) this.displayNotification(this.buffer.shift());
-		}.bind(this), 250);
+		}.bind(this), 1000);
 	},
 	displayNotification: function(comment) {
-		if(Session.get('is_posting_comment') || Session.get('is_responding') || Session.get('response_youtube_id')) return;
+		if(Session.get('is_displaying_comment')) return;
 		if(comment.user_id == Meteor.userId() && comment.type != 'enter') return;
 		
-		console.log(comment);
-		
-		//var delay = comment.user_id == Meteor.userId() ? 3000 : 0;
-		
-		var isUserEntranceComment = comment.user_id == Meteor.userId() && comment.type == 'enter',
-			delay = isUserEntranceComment ? 3000 : 0;
+		console.log('COMMENT', comment.type, comment.user_id, comment);
+
+		var delay = comment.user_id == Meteor.userId() && comment.type == 'enter' ? 3000 : 0;
 		
 		Meteor.setTimeout(function() {
-			Session.set('is_responding', false);
-			Session.set('is_posting_comment', false);
 			Session.set('response_youtube_id', comment.youtube_id);
-
-			Cube.getCurrentSide().find('.message_cube').cube().rotate({rotateX: '+=90'}, '.message_bar_side', 300, null);
+			Session.set('response_comment', comment);
+			Cube.showCommentCube();
+			
 			Meteor.setTimeout(function() {
-				Cube.getCurrentSide().find('.message_cube').cube().rotate({rotateX: '-=90'}, '.controls', 300, null);
+				if(Session.get('is_posting_comment') || Session.get('is_responding')) return;
+
+				Cube.hideCommentCube();
 			}, 3000);
 		}, delay);
 	}

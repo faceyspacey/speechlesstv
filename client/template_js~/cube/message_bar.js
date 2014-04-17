@@ -1,8 +1,16 @@
+Session.set('response_comment', {user_id: Meteor.userId(), message: '', title: ''});
+
 Template.message_bar_side.helpers({
 	isSubmittingComment: function() {
 		return Session.get('is_posting_comment') || Session.get('is_responding');
 	},
 	userPic: function() {
+		if(!Meteor.userId()) return;
+		
+		var user = Meteor.users.findOne(Session.get('response_comment').user_id)
+		if(user) return user.pic;
+		else return '';
+		
 		var comment = Comments.findOne({youtube_id: Session.get('response_youtube_id')});
 		if(comment) {
 			var user = Meteor.users.findOne(comment.user_id);
@@ -10,14 +18,18 @@ Template.message_bar_side.helpers({
 		}
 		else return '';
 	},
-	messageYoutubeId: function() {
-		return Session.get('response_youtube_id');
+	vidSrc: function() {
+		return Session.get('response_youtube_id') ? 'http://img.youtube.com/vi/'+Session.get('response_youtube_id')+'/mqdefault.jpg' : '';
 	},
 	commentMessage: function() {
+		return Session.get('response_comment').message;
+		
 		var comment = Comments.findOne({youtube_id: Session.get('response_youtube_id')}, {sort: {created_at: -1}});
 		return comment ? comment.message : '';
 	},
 	videoTitle: function() {
+		return Session.get('response_comment').title;
+		
 		var comment = Comments.findOne({youtube_id: Session.get('response_youtube_id')}, {sort: {created_at: -1}});
 		return comment ? comment.title : '';
 	},
@@ -28,6 +40,12 @@ Template.message_bar_side.helpers({
 
 Template.message_bar_side.events({
 	'click .watch': function() {
+		if(Session.get('is_posting_comment')) {
+			Cube.hideCommentCube(function() {
+				Session.set('is_posting_comment', false);
+			});
+		}
+		
 		if(Session.get('in_live_mode')) CubePlayer.next(Session.get('response_youtube_id'));
 		else CubePlayer.start(Session.get('response_youtube_id'));
 	},
@@ -43,16 +61,10 @@ Template.message_bar_side.events({
 		submitComment();
 	},
 	'click .back': function(e) {
-		$(e.currentTarget).parents('.message_cube').cube().rotate({rotateX: '-=90'}, '.controls', 300, null, function() {
-			Session.set('response_youtube_id', null);
-			Session.set('is_posting_comment', false);
-		});
+		Cube.hideCommentCube();
 	},
 	'click .dismiss': function(e) {
-		$(e.currentTarget).parents('.message_cube').cube().rotate({rotateX: '-=90'}, '.controls', 300, null, function() {
-			Session.set('response_youtube_id', null);
-			Session.set('is_responding', false);
-		});
+		Cube.hideCommentCube();
 	}
 });
 
@@ -73,11 +85,7 @@ submitComment = function() {
 	
 	Meteor.call('newComment', message, video, Session.get('post_to_twitter'));
 	
-	Cube.getCurrentSide().find('.message_cube').cube().rotate({rotateX: '-=90'}, '.controls', 300, null, function() {
-		Session.set('is_posting_comment', false);
-		Session.set('is_posting_comment', false);
-		Session.set('response_youtube_id', null);
-	});
+	Cube.hideCommentCube();
 };
 
 Deps.autorun(function() {
@@ -91,9 +99,9 @@ Deps.autorun(function() {
 	
 	
 	if(Session.get('is_posting_comment') || Session.get('is_responding') || Session.get('response_youtube_id')) {
-		if(YoutubePlayer.current) YoutubePlayer.current.components['fullscreen'].unbindAll();
+		if(YoutubePlayer.current && YoutubePlayer.current.components['fullscreen']) YoutubePlayer.current.components['fullscreen'].unbindAll();
 	}
 	else {
-		if(YoutubePlayer.current) YoutubePlayer.current.components['fullscreen'].bindAll();
+		if(YoutubePlayer.current && YoutubePlayer.current.components['fullscreen']) YoutubePlayer.current.components['fullscreen'].bindAll();
 	}
 });

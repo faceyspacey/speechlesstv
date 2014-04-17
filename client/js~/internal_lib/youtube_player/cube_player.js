@@ -31,6 +31,8 @@ CubePlayer = {
 		var youtubeId = youtubeId || SearchVideos.next().youtube_id;
 		
 		this._playerAlt()._call('onExitVideo');
+		console.log('PLAYER ALT', this._playerAlt().playerId)
+		console.log('PLAYER', this._player().playerId)
 		this._player()._call('onNext').setVideo(youtubeId, true)._call('onEnterVideo');
 	},
 	_changeSide: function() {
@@ -43,12 +45,18 @@ CubePlayer = {
 		return this.currentSide == 'alt' ? '#search_fullscreen_side_alt' : '#search_fullscreen_side';
 	},
 	_player: function() {
-		var YP = YoutubePlayer;
-		return this.currentSide == 'main' ? YP.fullscreenOnly('search_fullscreen_player_alt') : YP.fullscreenOnly('search_fullscreen_player');
+		var YP = YoutubePlayer,
+			playerId = this.currentSide == 'main' ? 'search_fullscreen_player_alt' : 'search_fullscreen_player';
+			
+		if(YoutubePlayer.get(playerId)) return YoutubePlayer.get(playerId).makeCurrent();
+		else return YP.fullscreenOnly(playerId);
 	},
 	_playerAlt: function() {
-		var YP = YoutubePlayer;
-		return this.currentSide == 'alt' ? YP.fullscreenOnly('search_fullscreen_player_alt') : YP.fullscreenOnly('search_fullscreen_player');
+		var YP = YoutubePlayer,
+			playerId = this.currentSide == 'alt' ? 'search_fullscreen_player_alt' : 'search_fullscreen_player';
+			
+		if(YoutubePlayer.get(playerId)) return YoutubePlayer.get(playerId).makeCurrent();
+		else return YP.fullscreenOnly(playerId);
 	},
 	_fadeOutLoading: function() {
 		$(this._side()).find('.video_cover').animate({opacity: 0}, 1500).find('.bar').animate({opacity: 0}, 750);

@@ -34,7 +34,6 @@ YoutubeSearcher = {
 			var index = i % YoutubeCategories.length,
 				category = YoutubeCategories[index];
 			
-			console.log(category.name);	
 			this.popular(category);
 		}
 	},

@@ -1,4 +1,4 @@
-Template.buddy_list.afterCreated = function() {
+Template.buddy_list.rendered = function() {
 	vScroll('buddy_list_container');
 };
 

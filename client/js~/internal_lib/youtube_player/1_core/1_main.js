@@ -1,13 +1,13 @@
 YoutubePlayer = function(playerId, callback) {
 	this.setup(playerId, callback);
+	
+	this._ready = false;
+	this.player = null;
+	this.components = {};
 };
 
 Session.set('load_time', 0);
 YoutubePlayer.prototype = {
-	_ready: false,
-	player: null,
-	components: {},
-	
 	
 	/** SETUP/DESTROY METHODS **/ 
 	
@@ -88,7 +88,11 @@ YoutubePlayer.prototype = {
 	},
 	seek: function(seconds) {
 		this._try(function() {
-			if(seconds > this.player.duration()) {
+			this.player.seekTo(Math.floor(seconds), true);
+			return; //the below code doesnt work cuz duration is zero
+			
+			if(seconds > this.duration()) {
+				console.log('VIDEO IS OVER, REPLAYING', this.duration());
 				this.player.seekTo(0, true);
 				
 				//this shouldn't be here; i appologize

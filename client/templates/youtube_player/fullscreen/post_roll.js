@@ -17,6 +17,10 @@ Template.post_roll_overlay.helpers({
 		else var moreVideos = [];
 		
 		return videos.concat(moreVideos);
+	},
+	videoTitle: function() {
+		var title = Session.get('fullscreen_hover_video_title') || (YoutubePlayer.current ? YoutubePlayer.current.video().title : '');
+		return shortenText(title, 60);
 	}
 });
 
@@ -30,31 +34,15 @@ Template.post_roll_video.helpers({
 
 
 
-Template.search_fullscreen_side.events({
-	'mouseenter .c_container': function() {
-		//Cube.getCurrentSide().find('.message_cube').cube().rotate({rotateX: '-=90'}, '.controls', 300);
-	},
-	'mouseleave .c_container': function() {
-		//Cube.getCurrentSide().find('.message_cube').cube().rotate({rotateX: '+=90'}, '.title_bar_side', 300);
-	}
-});
+
 
 Template.post_roll_video.events({
 	'click .post_roll_video': function(e) {
 		CubePlayer.next(this.youtube_id);
 	},
-	'mouseenter .post_roll_cover': function() {
-		return; 
-		
-		Session.set('fullscreen_hover_video_title', this.title);
-		Cube.getCurrentSide().find('.message_cube').cube().rotate({rotateX: '-=90'}, '.controls', 200, null, function() {
-			Cube.getCurrentSide().find('.message_cube').cube().rotate({rotateX: '+=90'}, '.title_bar_side', 400);
-		});
-	},
-	'mouseleave .post_roll_cover': function() {
-		
-	},
 	'mouseenter .post_roll_video': function(e) {
+		Session.set('fullscreen_hover_video_title', this.title);
+		
 		Session.set('current_search_video_id', this._id); //display video info box
 		$(e.currentTarget).find('.suggest_video, .fast_forward').fadeIn('fast');
 		
@@ -62,6 +50,8 @@ Template.post_roll_video.events({
 		YoutubePlayer.mini(id, null, true).setVideo(this.youtube_id, true);
 	},
 	'mouseleave .post_roll_video': function(e) {
+		Session.set('fullscreen_hover_video_title', null);
+		
 		$(e.currentTarget).find('.suggest_video, .fast_forward').fadeOut('fast');
 		
 		var id = $(e.currentTarget).find('img, object').first().attr('id');

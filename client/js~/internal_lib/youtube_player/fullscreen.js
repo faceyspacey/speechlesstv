@@ -46,6 +46,7 @@ PlayerComponentFullscreen.prototype = {
 	},
 	bindEscapeKey: function() {
 		$(document).unbind('keyup.escapeKey');
+		
 		$(document).bind('keyup.escapeKey', function(e) {
 		  	if (e.keyCode == 27) {//e.keyCode == 27 is the escape key
 				this.player.leaveFullscreen();
@@ -55,6 +56,8 @@ PlayerComponentFullscreen.prototype = {
 	},		
 	bindControlsFade: function() {
 		clearInterval(YoutubePlayer.mousemoveInterval);
+		$('body').unbind('.hideControls');
+		
 		this.lastMoved = Date.now();
 		YoutubePlayer.mousemoveInterval = setInterval(function() {
 			if(Date.now() - this.lastMoved > 3000) this._backface().find('.message_cube, .fullscreen_back_next').fadeOut();

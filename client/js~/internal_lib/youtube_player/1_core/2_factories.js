@@ -33,8 +33,8 @@ YoutubePlayer.mini = function(playerId, callback, dontMakeCurrent) {
 
 YoutubePlayer.fullscreenOnly = function(playerId, callback) {
 	if(YoutubePlayers[playerId]) {
-		YoutubePlayers[playerId].enterFullscreen();
 		YoutubePlayers[playerId].makeCurrent();
+		YoutubePlayers[playerId].enterFullscreen();
 		return YoutubePlayers[playerId];
 	}
 	
@@ -48,13 +48,17 @@ YoutubePlayer.fullscreenOnly = function(playerId, callback) {
 	player.addComponent(new PlayerComponentFullscreen, 'fullscreen');
 	player.addComponent({
 		onEnterVideo: function() {
+			console.log('ON ENTER VIDEO', this.player.playerId, this.player.video().title);
 			Meteor.user().enterLiveMode(this.player.video());
+			Session.set('fullscreen_hover_video_title', this.player.video().title);
 			$('.post_roll_overlay').fadeOut('fast');
 		},
 		onExitVideo: function() {
+			console.log('ON EXIT VIDEO', this.player.playerId, this.player.video().title);
 			Meteor.user().exitLiveMode(this.player.video());
 		},
 		onLeaveFullscreen: function() {
+			console.log('ON LEAVE FULLSCREEN!!!');
 			Meteor.user().exitLiveMode(this.player.video());
 			
 			$('.cube').cube().prevSideVertical('#dummy_side', 1000, 'easeInBack', function() {
@@ -67,8 +71,8 @@ YoutubePlayer.fullscreenOnly = function(playerId, callback) {
 		},
 	}, 'fullscreen_only');
 	
-	player.enterFullscreen();
 	player.makeCurrent();
+	player.enterFullscreen();
 	
 	return YoutubePlayers[playerId] = player;
 };

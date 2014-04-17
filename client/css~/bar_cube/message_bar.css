@@ -36,6 +36,8 @@
 
 .message_bar_side .message_form {
 	padding: 0px;
+	
+	overflow: hidden;
 }
 
 .message_bar_side .message_form:hover {
@@ -44,6 +46,11 @@
 	text-shadow: none;
 }
 
+.message_bar_side .message_form .message_right {
+	margin-top: 9px;
+	position: absolute;
+	left: 162px;
+}
 
 .message_bar_side .watch {
 	width: 60px;

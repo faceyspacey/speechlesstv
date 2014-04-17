@@ -26,21 +26,25 @@ Template.history_row.events({
 		YoutubePlayer.current.skip();
 		e.stopPropagation();
 	},
-	'mouseenter .history_row': function(e) {
-		var playerId = $(e.currentTarget).find('.add_video_row_image').attr('id'),
-			youtubeId = $(e.currentTarget).find('.add_video_row_image').attr('title'); 
-
-		YoutubePlayer.mini(playerId).setVideo(youtubeId, true);
+	
+	
+	'mousemove .history_row':function(e) {
+		var playerId = $(e.currentTarget).find('.add_video_row_image').attr('id'); 
 		
+		if(!mobileScrolling && !YoutubePlayer.get(playerId)) {
+			YoutubePlayer.mini(playerId).setVideo(this.youtube_id, true);
+		}
+	},
+	
+	
+	'mouseenter .video_info_left': function(e) {
+		//var playerId = $(e.currentTarget).find('.add_video_row_image').attr('id'); 
+		//YoutubePlayer.mini(playerId).setVideo(this.youtube_id, true);
 		console.log('PLAYER', playerId);
 	},
-	'mouseleave .history_row': function(e) {
+	'mouseleave': function(e) {
 		var playerId = $(e.currentTarget).find('object').attr('id'); 
 
 		if(YoutubePlayer.get(playerId)) YoutubePlayer.get(playerId).destroy();
 	}
 });
-
-Template.history_row.rendered = function() {
-	historyScroll();
-};

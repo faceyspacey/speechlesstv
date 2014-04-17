@@ -20,9 +20,7 @@
 </template>
 
 <template name="flash_video">
-	{{#constant}}
-		<div id="video"></div>
-	{{/constant}}
+	<div id="video"></div>
 </template>
 
 <template name="post_roll">
@@ -86,9 +84,7 @@
 					COMMENT HERE
 				</div>
 			</div>
-			{{#isolate}}
-				<div id="flyup_current_video_time">Comment Time: {{currentVideoTime}}</div>
-			{{/isolate}}
+			<div id="flyup_current_video_time">Comment Time: {{currentVideoTime}}</div>
 		{{/if}}
 	{{/if}}
 </template>
@@ -151,14 +147,12 @@
 			</div>
         </div>
 
-		{{#isolate}}
-			<div class="videoTime">
-				<p>
-					<span class="videoCurrentTime">{{currentVideoTime}}</span> <span>/</span> <span class="videoDuration">{{currentVideoDuration}}</span>
-				</p>
-			</div>
-		{{/isolate}}
-		
+		<div class="videoTime">
+			<p>
+				<span class="videoCurrentTime">{{currentVideoTime}}</span> <span>/</span> <span class="videoDuration">{{currentVideoDuration}}</span>
+			</p>
+		</div>
+	
         <div class="volume">
         	<ul>
 				<li></li>

@@ -41,18 +41,25 @@ UserModel.prototype = {
 		watch.saveWithAttributesOfVideo(video);
 		
 		this.increment({watched_video_count: 1});
+		
+		this.current_youtube_id = video.youtube_id;
 		Meteor.call('enterVideo', video.youtube_id, video.title);
 	},
 	enterLiveMode: function(video) {
+		console.log('WATCHING: ', video.title);
+		console.log('ENTER LIVE MODE');
+		
 		this.watch(video);
 		
 		Session.set('in_live_mode', true);
 		Session.set('buddy_tab', 'right');
 		Session.set('current_live_youtube_id', video.youtube_id);
 		
+		this.killSubscriptions();
 		UserModel.liveVideosSubscription = Meteor.subscribe('live_video', video.youtube_id, function() {
 			this.addLiveUserAndVideo(video);
 			UserModel.liveUsersSubscription = Meteor.subscribe('live_users', video.youtube_id, function() {
+				UserModel.liveUserUsersSubscription = Meteor.subscribe('live_usersUsers', Meteor.user().liveUserIds());
 				this.observeLiveUsers(video);
 			}.bind(this));
 		}.bind(this));
@@ -62,23 +69,29 @@ UserModel.prototype = {
 		if(!liveVideo) (new LiveVideoModel).saveWithAttributesOfVideo(video);
 		else liveVideo.update({user_id: Meteor.userId()}); //assign video to last user, for deletion in server keepallive function
 		
+		console.log('ADD VIDEO', video.youtube_id, liveVideo);
+		
 		var liveUser = LiveUsers.findOne({youtube_id: video.youtube_id, user_id: Meteor.userId()});
 		if(!liveUser) (new LiveUserModel).saveWithAttributesOfVideo(video);
 	},
 	observeLiveUsers: function(video) {
 		UserModel.initializingObserver = true;
 		
-		Session.set('current_video_live_users', 0)
+		//Session.set('current_video_live_users', 0);
 		UserModel.liveUsersObserver = LiveUsers.find({youtube_id: video.youtube_id}).observeChanges({
-			added: function() {
-				Session.increment('current_video_live_users');
-
+			added: function(id, fields) {
+				console.log("ADDED USER", id, fields);
+				//Session.increment('current_video_live_users');
+				Session.set('current_video_live_users', LiveUsers.find({youtube_id: video.youtube_id}).count());
+				
 				if(UserModel.initializingObserver) return;
 				else this.prepareSync(true);
 			}.bind(this),
-			removed: function() {
-				Session.decrement('current_video_live_users');
-
+			removed: function(id, fields) {
+				console.log("REMOVED USER", id, fields);
+				//Session.decrement('current_video_live_users');
+				Session.set('current_video_live_users', LiveUsers.find({youtube_id: video.youtube_id}).count());
+				
 				if(UserModel.initializingObserver) return;
 				else this.prepareSync(true);
 			}.bind(this)
@@ -94,7 +107,7 @@ UserModel.prototype = {
 		if(liveUserCount == 1) this.startTrackingVideoTime();
 		else this.sync(isAlreadySyncUser);
 		
-		console.log('LIVE USER COUNT:', liveUserCount, LiveVideos.findOne({youtube_id: this.current_youtube_id}).start_time);
+		console.log('LIVE USER COUNT:', liveUserCount);
 	},
 	startTrackingVideoTime: function() {
 		this._updateStartTime();
@@ -132,8 +145,8 @@ UserModel.prototype = {
 		clearInterval(UserModel.timeChecker);
 	},
 	moveToVideoTime: function(dontUseLoadTime) {
-		var youtubeId = this.current_youtube_id
-			user = this
+		var youtubeId = Session.get('current_live_youtube_id'),
+			user = this,
 			loadTime = dontUseLoadTime ? 0 : this.getLoadTime();
 		
 		$('.syncing_indicator').fadeIn('fast');
@@ -152,14 +165,22 @@ UserModel.prototype = {
 			}
 			**/
 			
-			console.log('MOVE TO VIDEO TIME', secondsPlayedAlready, Session.get('load_time'), liveVideo.start_time, liveVideo);
 			//YoutubePlayer.current.setSkipTime(secondsPlayedAlready);
-			setTimeout(function() {
-				YoutubePlayer.current.seek(secondsPlayedAlready + 1);
+			Meteor.setTimeout(function() {
+				var then = Math.round(moment().toDate().getTime()/1000);
+				YoutubePlayer.current._onReady(function() {
+					var extraSeconds = Math.round(moment().toDate().getTime()/1000) - then;
+					
+					secondsPlayedAlready += extraSeconds + 1;
+					console.log('MOVE TO VIDEO TIME', secondsPlayedAlready, Session.get('load_time'), liveVideo.start_time, liveVideo);
+					YoutubePlayer.current.seek(secondsPlayedAlready);
+					
+					setTimeout(function() {
+						$('.syncing_indicator').fadeOut('fast');
+					}, 0 + (loadTime * 1000));
+				});
 			}, 1000);
-			setTimeout(function() {
-				$('.syncing_indicator').fadeOut('fast');
-			}, 1000 + (loadTime * 1000));
+
 			
 			user.update({current_video_start_time: this._nowInSeconds() - secondsPlayedAlready});
 		}.bind(this));
@@ -176,34 +197,35 @@ UserModel.prototype = {
 		**/
 	},
 	exitLiveMode: function(video) {
-		Session.set('in_live_mode', false);
-		Session.set('buddy_tab', 'left');
-
-		console.log('EXIT LIVE MODE');	
+		console.log('EXIT LIVE MODE');
+		this.killSubscriptions();
 		
+		Session.set('in_live_mode', false);
+		Session.set('buddy_tab', 'left');	
+		
+		LiveUsers._collection.remove({user_id: this.userId, youtube_id: youtubeId});
+		var youtubeId = video.youtube_id;
 		Meteor.setTimeout(function() {
-			Meteor.call('leaveVideo', video.youtube_id);
+			Meteor.call('leaveVideo', youtubeId);
 		}, 1000); //do this a bit later so on the server we can get a new youtube_id
 		
-		if(Session.equals('current_video_live_users', 1)) LiveVideos.findOne({youtube_id: video.youtube_id}).remove();
-		
-		this.killSubscriptions();
 		this.stopTrackingVideoTime();
 	},
 	killSubscriptions: function() {
-		UserModel.liveUsersObserver.stop();
-		UserModel.liveUsersSubscription.stop();
-		UserModel.liveVideosSubscription.stop();
-		//UserModel.liveCommentsSubscription.stop();
+		if(UserModel.liveUsersSubscription) UserModel.liveUsersSubscription.stop();
+		if(UserModel.liveUserUsersSubscription) UserModel.liveUserUsersSubscription.stop();
+		if(UserModel.liveUsersObserver) UserModel.liveUsersObserver.stop();
+		
+		if(UserModel.liveVideosSubscription) UserModel.liveVideosSubscription.stop();
 	},
 	favorite: function(video) {
 		if(!video.favorite) {
 			var favorite = new FavoriteModel;
+			favorite.favorite = true;
 			favorite.saveWithAttributesOfVideo(video);
 		}
 		else {
-			var fav = Favorites.findOne({user_id: Meteor.userId(), youtube_id: video.youtube_id});
-			fav.remove();
+			Meteor.call('removeFavorite', video.youtube_id);
 		}
 	},
 	unFavorite: function(youtubeId) {

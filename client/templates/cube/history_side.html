@@ -9,12 +9,12 @@
 					</div>
 					<div id="history_back">BACK</div>
 					<div id="history_spacer"></div>
-					{{#isolate}}
-						<div id="history_watched" class="history_filter_tab {{tabSelected 'WATCHED'}}">WATCHED</div>
-						<div id="history_starred" class="history_filter_tab {{tabSelected 'STARRED'}}">STARRED</div>
-						<div id="history_commented" class="history_filter_tab {{tabSelected 'COMMENTED'}}">COMMENTED</div>
-						<div id="history_suggested" class="history_filter_tab {{tabSelected 'SUGGESTED'}}">SUGGESTED</div>
-					{{/isolate}}
+					
+					<div id="history_watched" class="history_filter_tab {{tabSelected 'WATCHED'}}">WATCHED</div>
+					<div id="history_starred" class="history_filter_tab {{tabSelected 'STARRED'}}">STARRED</div>
+					<div id="history_commented" class="history_filter_tab {{tabSelected 'COMMENTED'}}">COMMENTED</div>
+					<div id="history_suggested" class="history_filter_tab {{tabSelected 'SUGGESTED'}}">SUGGESTED</div>
+			
 				</div>
 				
 				{{>message_bar_side id='history_side_cube'}}
@@ -23,12 +23,10 @@
 		
 		
 		<div id="add_videos_wrapper">
-			<div id="add_videos_scroller">
-				{{#isolate}}
-					{{#each videos}}
-						{{>history_row}}
-					{{/each}}
-				{{/isolate}}
+			<div id="add_videos_scroller">	
+				{{#each videos}}
+					{{>history_row}}
+				{{/each}}	
 			</div>
 		</div>
 	</div>

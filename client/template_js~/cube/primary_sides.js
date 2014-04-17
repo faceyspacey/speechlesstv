@@ -1,27 +1,15 @@
-Template.popular_side.afterCreated = function() {
-	setTimeout(function() {
-		//YoutubeSearcher.setupPopularColumns();
-	}, 1000);
-	
-
+Template.popular_side.rendered = function() {
 	Deps.autorun(function() {
 		if(Session.equals('search_side', '#popular_side')) {
-			YoutubePlayer.mini('hover_player_from_friends').destroy();
+			if(YoutubePlayer.get('hover_player_from_friends')) YoutubePlayer.mini('hover_player_from_friends').destroy();
 			YoutubePlayer.mini('hover_player_popular');
 		}
 		else {
-			YoutubePlayer.mini('hover_player_popular').destroy();
+			if(YoutubePlayer.get('hover_player_popular')) YoutubePlayer.mini('hover_player_popular').destroy();
 			YoutubePlayer.mini('hover_player_from_friends');
 		}
 	});
 };
 
-
-Template.from_friends_side.afterCreated = function() {
-	setTimeout(function() {
-		//YoutubeSearcher.setupFromFriendsColumns();
-	}, 1000);
-	
-};
 
 

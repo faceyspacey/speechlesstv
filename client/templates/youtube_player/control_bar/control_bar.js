@@ -37,7 +37,7 @@ Template.control_bar.events({
 	},
 	
 	'click .controls_comment_button': function() {
-		Cube.getCurrentSide().find('.message_cube').cube().rotate({rotateX: '+=90'}, '.message_bar_side', 300);
+		Cube.showCommentCube();
 		Session.set('is_posting_comment', true);
 	}
 });

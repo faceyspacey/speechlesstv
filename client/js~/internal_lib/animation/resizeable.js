@@ -95,7 +95,6 @@ Resizeable = {
 		}	
 	},
 	configureSearchSizes: function(width, height) {
-		console.log('width!', width, height);
 		var width = Math.round(width); //now we have the actual photo width supported based on the height
 		SearchSizes.columnWidth = width + SearchSizes.bothColumnBorders();
 

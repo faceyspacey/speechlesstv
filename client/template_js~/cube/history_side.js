@@ -1,13 +1,10 @@
 Template.history_side.created = function() {
-	Deps.afterFlush(function() {
-		Resizeable.resizeAllElements();
-	});
 	Session.set('history_filter', 'WATCHED');
 	
-	Session.set('history_watches_limit', 8);
-	Session.set('history_favorites_limit', 8);
-	Session.set('history_comments_limit', 8);
-	Session.set('history_suggestions_limit', 8);
+	Session.set('history_watches_limit', 30);
+	Session.set('history_favorites_limit', 30);
+	Session.set('history_comments_limit', 30);
+	Session.set('history_suggestions_limit', 30);
 	
 };
 

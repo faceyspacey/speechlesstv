@@ -57,10 +57,10 @@ Meteor.publish('live_users', function(youtubeId) {
 	return LiveUsers.find({youtube_id: youtubeId}, {limit: 30, sort: {updated_at: -1}});
 });
 Meteor.publish('live_commentsYoutubeId', function(youtubeId) {
-	return Comments.find({youtube_id: youtubeId}, {limit: 30, sort: {created_at: -1}});
+	return Comments.find({youtube_id: youtubeId}, {limit: 1, sort: {created_at: -1}});
 });
 Meteor.publish('live_commentsFollowed', function(userIds) {
-	return Comments.find({user_id: {$in: userIds}}, {limit: 30, sort: {created_at: -1}});
+	return Comments.find({user_id: {$in: userIds}}, {limit: 1, sort: {created_at: -1}});
 });
 
 
