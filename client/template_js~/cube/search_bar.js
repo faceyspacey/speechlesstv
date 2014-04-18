@@ -47,6 +47,15 @@ Template.autocompletion.events({
 var predictiveTimer;
 Template.search_bar_side.events({
 	'click .buddy_list_button': function() {
+		if(!Meteor.user()) {
+			Meteor.loginWithTwitter(function(error) {
+				if(!error) console.log('in!');
+				else {
+					console.log(error);
+					alert('Something went wrong with logging in to Twitter!');
+				}
+			});
+		}
 		Cube.toggleBuddyList();
 	},
 	'keyup .search_bar input': function(e) {
@@ -109,6 +118,12 @@ Template.search_bar_side.events({
 	},
 	'click .from_friends': function() {
 		if(Session.equals('search_side', '#from_friends_side')) return;
+		if(!Meteor.user()) {
+			Meteor.loginWithTwitter(function(error) {
+				if(!error) console.log('in!');
+				else alert('Something went wrong with logging in to Twitter!');
+			});
+		}
 		Cube.fromFriendsSide();
 	},
 	

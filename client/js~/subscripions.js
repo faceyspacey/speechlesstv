@@ -62,6 +62,8 @@ Meteor.subscribe('youtube_videos', function() {
 		});
 	});
 	Deps.autorun(function() {
+		if(!Meteor.user()) return;
+		
 		var followedIds = Meteor.user().followed();
 		
 		Meteor.subscribe('live_commentsFollowed', followedIds, function() {
@@ -87,12 +89,11 @@ Meteor.subscribe('youtube_videos', function() {
 
 
 
-	var popularUserIds = Meteor.users.find({}, {limit: 10, sort: {watched_video_count: -1}, fields: {_id: 1}}).map(function(user) {
-			return user._id;
-			}),
-		followedIds = Meteor.user().followed(),
-		followerIds = Meteor.user().followers(),
-		userIds = followedIds.concat(followerIds).concat(popularUserIds);
+	var userIds = Meteor.users.find({}, {limit: 10, sort: {watched_video_count: -1}, fields: {_id: 1}}).map(function(user) {
+		return user._id;
+	});
+		
+	if(Meteor.user()) userIds = userIds.concat(Meteor.user().followed()).concat(Meteor.user().followers());
 		
 	usersSub = Meteor.subscribe('users', userIds),
 	watchesFromFriendsSub = Meteor.subscribe('watchesFromFriends', userIds, historyScroll),

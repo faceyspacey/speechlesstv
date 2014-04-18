@@ -11,7 +11,7 @@ Accounts.onCreateUser(function (options, user) {
 	if(_.contains(adminUsers, user.twitter)) user.roles = ['admin', 'user'];
 	else user.roles = ['user'];
 	
-	Twitter.syncFollowed();
+	//Twitter.syncFollowed();
 	
 	return user;
 });
